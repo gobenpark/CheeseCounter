@@ -1,0 +1,1 @@
+[![CircleCI](https://circleci.com/bb/Bumwoo/cheesecounter/tree/master.svg?style=svg)](https://circleci.com/bb/Bumwoo/cheesecounter/tree/master)
