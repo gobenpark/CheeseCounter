@@ -287,7 +287,6 @@ class CheeseResultViewController: CheeseBaseViewController {
       switch response.result {
       case .success(let value):
         self.resultData = value.data ?? []
-        self.addEmptyResultData()
       case .failure(let error):
         log.error(error.localizedDescription)
       }
@@ -296,20 +295,18 @@ class CheeseResultViewController: CheeseBaseViewController {
     fetchReply()
   }
   
-  
-  private func addEmptyResultData(){
-    if "\(self.resultData.count)" != (cheeseData?.type ?? "0") {
-      guard let id = self.resultData.first?.survay_id else {return}
-    }
-  }
-  
-  
   func searchOtherRankAction(){
     
     switch openData.openType {
     case .normal:
       let VC = CheeseResultOtherViewController()
+      
+      
+      
       VC.cheeseData = CheeseResult(cheeseData: self.cheeseData, resultData: self.resultData)
+      
+      
+      
       self.navigationController?.pushViewController(VC, animated: true)
 
     case .search:
@@ -444,7 +441,7 @@ extension CheeseResultViewController: UICollectionViewDataSource{
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing:RereplyViewCell.self), for: indexPath) as! RereplyViewCell
-    cell.fetchData(data: self.replyData[indexPath.item])
+    cell.model = self.replyData[indexPath.item]
     cell.tag = indexPath.item
     cell.writeReplyButton.tag = indexPath.item
     cell.sympathyButton.tag = indexPath.item

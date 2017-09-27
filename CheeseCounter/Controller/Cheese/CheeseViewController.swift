@@ -100,9 +100,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
     cheeseSelectedViewController.didTap = {[weak self] (_) in
       self?.lastSelectFixOffset(tag: tag, row: row)
     }
-//    cheeseSelectedViewController.isHeroEnabled = true
-//    cheeseSelectedViewController.view.heroModifiers = [.fade,.scale(0.4)]
-//    cheeseSelectedViewController.heroModalAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
+
     
     
     self.navigationController?.pushViewController(cheeseSelectedViewController, animated: true)

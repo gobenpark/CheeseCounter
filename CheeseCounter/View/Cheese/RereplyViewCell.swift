@@ -14,6 +14,46 @@ class RereplyViewCell: UICollectionViewCell{
   
   var profileimgLeft: Constraint?
   
+  var model: ReplyList.Data?{
+    didSet{
+      guard let replyList = model else {return}
+      self.userID = replyList.user_id
+      self.id = replyList.id
+      
+      if let parentId = replyList.parent_id {
+        if parentId != "0"{
+          profileimgLeft?.update(inset: 30)
+          self.writeReplyButton.isHidden = true
+          self.sympathyButton.isHidden = true
+        } else {
+          profileimgLeft?.update(inset: 10)
+          self.writeReplyButton.isHidden = false
+          self.sympathyButton.isHidden = false
+        }
+        
+        self.parentID = parentId
+      }
+      
+      self.tag = Int(replyList.id) ?? 0
+      self.replyLabel.text = replyList.contents
+      
+      if let imgurl = replyList.img_url {
+        let url = URL(string: imgurl)
+        self.profileimg.kf.setImage(with: url)
+      }
+      if let isLike = replyList.is_like{
+        self.sympathyButton.isSelected = isLike == "1" ?
+          true : false
+      }
+      
+      self.nickNameLabel.text = model?.nickname
+      self.hartCount.text = model?.like_count ?? "0"
+      
+      dateSet(of: createDateLabel, data: replyList)
+      setNeedsUpdateConstraints()
+    }
+  }
+  
   fileprivate(set) lazy var profileimg: UIImageView = {
     let img = UIImageView(image: UIImage(named: "profile_small"))
     img.contentMode = .scaleAspectFill
@@ -143,44 +183,6 @@ class RereplyViewCell: UICollectionViewCell{
     super.layoutSubviews()
     profileimg.layer.cornerRadius = profileimg.frame.height/2
     profileimg.layer.masksToBounds = true
-  }
-  
-  func fetchData(data: ReplyList.Data?){
-    guard let replyList = data else {return}
-    self.userID = replyList.user_id
-    self.id = replyList.id
-    
-    if let parentId = replyList.parent_id {
-      if parentId != "0"{
-        profileimgLeft?.update(inset: 30)
-        self.writeReplyButton.isHidden = true
-        self.sympathyButton.isHidden = true
-      } else {
-        profileimgLeft?.update(inset: 10)
-        self.writeReplyButton.isHidden = false
-        self.sympathyButton.isHidden = false
-      }
-      
-      self.parentID = parentId
-    }
-    
-    self.tag = Int(replyList.id) ?? 0
-    self.replyLabel.text = replyList.contents
-    
-    if let imgurl = replyList.img_url {
-      let url = URL(string: imgurl)
-      self.profileimg.kf.setImage(with: url)
-    }
-    if let isLike = replyList.is_like{
-      self.sympathyButton.isSelected = isLike == "1" ?
-        true : false
-    }
-    
-    self.nickNameLabel.text = data?.nickname
-    self.hartCount.text = data?.like_count ?? "0"
-    
-    dateSet(of: createDateLabel, data: replyList)
-    setNeedsUpdateConstraints()
   }
   
  fileprivate func dateSet(of label: UILabel, data: ReplyList.Data){

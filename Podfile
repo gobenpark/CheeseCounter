@@ -46,6 +46,7 @@ pod 'Hero'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxDataSources'
+pod 'RxGesture'
 #Animation
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 pod 'YLGIFImage'

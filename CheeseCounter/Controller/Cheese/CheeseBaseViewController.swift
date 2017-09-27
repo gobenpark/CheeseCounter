@@ -1,15 +1,3 @@
-//
-//  CheeseBaseViewController.swift
-//  CheeseCounter
-//
-//  Created by xiilab on 2017. 4. 5..
-//  Copyright © 2017년 xiilab. All rights reserved.
-//
-
-//
-//  CheeseResultOtherViewController.swift
-//  CheeseCounter
-//
 //  Created by xiilab on 2017. 4. 5..
 //  Copyright © 2017년 xiilab. All rights reserved.
 //
@@ -158,6 +146,7 @@ class CheeseBaseViewController: UIViewController {
             })
           })
           self.replyData = replyArray
+          
           self.collectionView.reloadData()
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -182,9 +171,7 @@ class CheeseBaseViewController: UIViewController {
       alertVC.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
       
       self.present(alertVC, animated: true, completion: nil)
-//      AlertView(title: "댓글을 입력해주세요")
-//        .addChildAction(title: "확인", style: .default, handeler: nil)
-//        .show()
+
       return
     }
     

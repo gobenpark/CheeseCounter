@@ -123,7 +123,7 @@ extension CheeseResultOtherViewController: UICollectionViewDataSource{
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RereplyViewCell.self), for: indexPath) as! RereplyViewCell
-    cell.fetchData(data: self.replyData[indexPath.row])
+    cell.model = self.replyData[indexPath.row]
     cell.tag = indexPath.item
     cell.writeReplyButton.tag = indexPath.item
     cell.sympathyButton.tag = indexPath.item

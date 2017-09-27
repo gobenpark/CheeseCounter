@@ -9,79 +9,14 @@
 import Foundation
 import UIKit
 
-enum AlertType{
-  case notice
-  case update
-  case event
-  case reply
-  case survey_done
-  case cheese_return
-  case qna
-  case answer_survey_done
-  case reply_empathy
-  
-  var typeString: String{
-    get{
-      switch self {
-      case .notice:
-        return " 공지사항 "
-      case .update:
-        return " 업데이트 "
-      case .event:
-        return " 이벤트 "
-      case .reply:
-        return " 댓글 "
-      case .survey_done:
-        return " 질문등록만료 "
-      case .cheese_return:
-        return " 골드환급 "
-      case .qna:
-        return " 답변 "
-      case .answer_survey_done:
-        return " 응답질문만료 "
-      case .reply_empathy:
-        return " 댓글공감 "
-      }
-    }
-  }
-}
-
-extension String{
-  func convertAlertType() -> AlertType?{
-    switch self{
-    case "notice":
-        return .notice
-    case "update":
-        return .update
-    case "event":
-      return .event
-    case "reply":
-      return .reply
-    case "survey_done":
-      return .survey_done
-    case "cheese_return":
-      return .cheese_return
-    case "qna":
-      return .qna
-    case "answer_survey_done":
-      return .answer_survey_done
-    case "reply_empathy":
-      return .reply_empathy
-    default:
-      return nil
-    }
-  }
-}
 
 class AlertViewCell: UICollectionViewCell{
   static let ID = "AlertViewCell"
-  
   
   var model: PushListData.Data? {
     didSet{
       self.titleLabel.text = model?.summary
       self.createLabel.text = model?.created_date?.components(separatedBy: " ")[0] ?? ""
-      
       guard let type = model?.type else {return}
       self.typeLabel.text = type.convertAlertType()?.typeString
       self.typeLabel.sizeToFit()

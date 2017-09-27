@@ -13,6 +13,7 @@ import Charts
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
+  import RxDataSources
 #endif
 
 enum foldStateType{
@@ -29,6 +30,8 @@ enum reloadStateType{
 
 class ListDetailResultViewController: UIViewController {
   
+  let disposeBag = DisposeBag()
+  
   var mainData:DetailResult?
   var totalCount:Int = 0
   var parameter:[String:String] = [:]
@@ -37,7 +40,11 @@ class ListDetailResultViewController: UIViewController {
   var surveyId: String?
   
   var surveyDetailResultData: DetailResult.Data?
-  var cheeseData: CheeseResult?
+  var cheeseData: CheeseResult?{
+    didSet{
+      self.collectionView.reloadData()
+    }
+  }
   
   var foldState: foldStateType = .fold{
     didSet{
@@ -74,13 +81,19 @@ class ListDetailResultViewController: UIViewController {
     super.viewDidLoad()
     self.navigationItem.title = "상세결과보기"
     
-    self.view.addSubview(collectionView)
+    self.view = collectionView
     
-    collectionView.snp.makeConstraints { (make) in
-      make.edges.equalToSuperview()
-    }
-    
+
     guard let ask = selectAsk , let surveyID = surveyId else {return}
+    CheeseService.provider.rx
+      .request(.getDetailResult(parameter: ["survey_id":surveyID,"select_ask":"\(ask)","addr":""]))
+      .asObservable()
+      .map(DetailResult.self)
+      .subscribe { (event) in
+        log.info(event)
+    }.disposed(by: disposeBag)
+    
+    
     self.fetch(selectAsk: "\(ask)", survey_id: surveyID, reloadType: .all)
   }
   
@@ -344,7 +357,7 @@ extension ListDetailResultViewController: UICollectionViewDelegateFlowLayout{
   }
 }
 
-extension ListDetailResultViewController: DZNEmptyDataSetSource{
+extension ListDetailResultViewController: DZNEmptyDataSetSource,DZNEmptyDataSetDelegate{
   
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "데이터가 비어있음"
@@ -353,10 +366,5 @@ extension ListDetailResultViewController: DZNEmptyDataSetSource{
     return NSAttributedString(string: text, attributes: attributes)
   }
 }
-
-extension ListDetailResultViewController: DZNEmptyDataSetDelegate{
-  
-}
-
 
 

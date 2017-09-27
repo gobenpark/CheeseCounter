@@ -165,10 +165,10 @@ extension CheeseCounter: TargetType{
   public var task: Task {
     switch self{
     case .getMyNotification(let pageNum):
-      return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.default)
+      return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.queryString)
       //      return ["page_num":pageNum]
-      //      case .getReplyList(let surveyId):
-      //      return ["survey_id":surveyId]
+    case .getReplyList(let surveyId):
+      return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.queryString)
       //      case .insertReply(let parameter):
       //      return parameter
       //      case .deleteReply(let id):
@@ -191,8 +191,8 @@ extension CheeseCounter: TargetType{
       //      return ["survey_id":id,"select_ask":select]
       //      case .getSurveyListByOption(let pageNum):
       //      return ["page_num":pageNum]
-      //      case .getDetailResult(let parameter):
-      //      return parameter
+    case .getDetailResult(let parameter):
+      return .requestParameters(parameters: parameter, encoding: URLEncoding.queryString)
       //      case .getMyRegSurveyList(let pageNum):
       //      return ["page_num":pageNum]
       //      case .getMyAnswerSurveyList(let pageNum):
