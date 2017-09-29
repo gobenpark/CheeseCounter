@@ -13,7 +13,10 @@ import SwiftyJSON
 import Moya
 import RxSwift
 import Crashlytics
-
+#if !RX_NO_MODULE
+  import RxSwift
+  import RxCocoa
+#endif
 
 struct CheeseService {
   
@@ -1076,6 +1079,21 @@ struct CheeseService {
     }
   }
   
+  
+  static func searchSurvey(surveyId: String, paging: Paging) -> Observable<CheeseResultByDate>{
+    var pageNumber: Int = 0
+    switch paging {
+    case .refresh:
+      break
+    case .next(let pageNum):
+      pageNumber = pageNum
+    }
+    return provider.rx
+      .request(.getSearchSurveyList(search: surveyId, page_num: pageNumber))
+      .asObservable()
+      .map(CheeseResultByDate.self)
+  }
+  
   static func getSearchSurveyList(search: String, paging: Paging, _ completion: @escaping (DataResponse<CheeseResultByDate>) -> Void){
     
     var pageNumber:Int = 0
@@ -1087,6 +1105,34 @@ struct CheeseService {
     }
 
     let url = "\(UserService.url)/survey/getSearchSurveyList.json"
+    let manager = Alamofire.SessionManager.default
+    manager.session.configuration.timeoutIntervalForRequest = 120
+    manager.request(url,method: .post, parameters:["search":search,"page_num":"\(0)"])
+      .validate(statusCode: 200..<400)
+      .responseJSON { (response) in
+        let response: DataResponse<CheeseResultByDate> = response.flatMap{ json in
+          if let user = Mapper<CheeseResultByDate>().map(JSONObject: json){
+            return .success(user)
+          } else {
+            let error = MappingError(from: json, to: CheeseResultByDate.self)
+            return .failure(error)
+          }
+        }
+        completion(response)
+    }
+  }
+  
+  static func getMySearchSurveyList(search: String, paging: Paging, _ completion: @escaping (DataResponse<CheeseResultByDate>) -> Void){
+    
+    var pageNumber:Int = 0
+    switch paging {
+    case .refresh:
+      break
+    case .next(let pageNum):
+      pageNumber = pageNum
+    }
+    
+    let url = "\(UserService.url)/survey/getMySearchSurveyList.json"
     let manager = Alamofire.SessionManager.default
     manager.session.configuration.timeoutIntervalForRequest = 120
     manager.request(url,method: .post, parameters:["search":search,"page_num":"\(0)"])

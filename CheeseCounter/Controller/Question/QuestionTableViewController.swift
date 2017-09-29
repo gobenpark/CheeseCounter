@@ -305,6 +305,7 @@ extension QuestionTableViewController {
     case 0:
       return 5
     case 1:
+      return 0
       if questionData.is_option == "1"{
         return CellIds.count
       } else {
@@ -534,7 +535,7 @@ extension QuestionTableViewController{
     }else if section == 2{
       return 63
     }else {
-      return 50
+      return 0
     }
   }
 }

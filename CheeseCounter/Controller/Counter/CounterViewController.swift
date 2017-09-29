@@ -28,7 +28,6 @@ class CounterViewController: UIViewController
   
   let currentGoldViewController = CurrentGoldViewController()
   let currentCheeseViewController = CurrentCheeseViewController()
-  
   let setupCounterViewController = SetupCounterViewController(style: .grouped)
   
   var rankData: RankData.Data?
@@ -44,9 +43,8 @@ class CounterViewController: UIViewController
     self.view.addSubview(childView)
     self.view.backgroundColor = UIColor.cheeseColor()
     self.extendView.setButton.addTarget(self, action: #selector(pushsetupCounterViewController), for: .touchUpInside)
-    self.extendView.segmentedControl.addTarget(self, action: #selector(segmentControlEvent(_:)), for: .valueChanged)
     let views = [currentGoldViewController,currentCheeseViewController]
-    self.childView.setupFragments(views, defaultIndex: 0)
+    self.childView.setupFragments(views, defaultIndex: 1)
     fetch()
     addConstraint()
   }
@@ -123,33 +121,36 @@ class CounterViewController: UIViewController
     PointService.getMyPoint { (response) in
       switch response.result {
       case .success(let value):
-        guard let cheese = Int(value.data?.cheese ?? ""),
-          let gold = Int(value.data?.gold ?? "") else {return}
-        self.extendView.segmentedControl.titles = ["\(gold.stringFormattedWithSeparator())골드"
-          ,"\(cheese.stringFormattedWithSeparator())치즈"]
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-    }
-    UserService.getMyInfo { [weak self] (response) in
-      guard let `self` = self else {return}
-      switch response.result{
-      case .success(let value):
-        guard let data = value.data else {return}
-        self.rankFetch(data: data)
+        guard let cheese = Int(value.data?.cheese ?? "") else {return}
+        self.infoFetch(cheese: cheese)
       case .failure(let error):
         log.error(error.localizedDescription)
       }
     }
   }
   
-  func rankFetch(data:UserResult.Data){
+  private func infoFetch(cheese: Int){
+    UserService.getMyInfo { [weak self] (response) in
+      guard let `self` = self else {return}
+      switch response.result{
+      case .success(let value):
+        guard let data = value.data else {return}
+        self.rankFetch(data: data, cheese: cheese)
+      case .failure(let error):
+        log.error(error.localizedDescription)
+      }
+    }
+  }
+  
+  func rankFetch(data:UserResult.Data, cheese: Int){
     PointService.getMyRank { (response) in
       switch response.result{
       case .success(let value):
         self.rankData = value.data
         let attributeText = NSMutableAttributedString(string: "\(data.nickname ?? "") (\(value.data?.title ?? ""), \(value.data?.rank ?? "")위)"
           , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)])
+        
+        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)]))
         
         attributeText.append(NSAttributedString(string: "\n\(self.getKoreanGenderName(gender: data.gender ?? ""))/\(data.age ?? "")세/\(data.addr2 ?? "")"
           , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 14),NSForegroundColorAttributeName:UIColor.lightGray]))
@@ -184,7 +185,7 @@ class CounterViewController: UIViewController
       make.top.equalToSuperview()
       make.left.equalToSuperview()
       make.right.equalToSuperview()
-      make.height.equalTo(117)
+      make.height.equalTo(100)
     }
     
     childView.snp.makeConstraints { (make) in
@@ -228,7 +229,7 @@ class ExtendedCounterNavBarView: UIView {
     label.textColor = .black
     label.font = UIFont.CheeseFontMedium(size: 16)
     label.sizeToFit()
-    label.numberOfLines = 2
+    label.numberOfLines = 0
     return label
   }()
   
@@ -237,22 +238,6 @@ class ExtendedCounterNavBarView: UIView {
     button.setImage(#imageLiteral(resourceName: "icon_setting@1x"), for: .normal)
     button.sizeToFit()
     return button
-  }()
-  
-  lazy var segmentedControl: BetterSegmentedControl = {
-    let sc = BetterSegmentedControl(frame: .zero
-      , titles: ["골드","치즈"]
-      , index: 0
-      , backgroundColor: .white
-      , titleColor: .lightGray
-      , indicatorViewBackgroundColor: #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-      , selectedTitleColor: .white)
-    sc.cornerRadius = 20
-    sc.layer.borderWidth = 0.5
-    sc.layer.borderColor = UIColor.lightGray.cgColor
-    sc.selectedTitleFont = UIFont.CheeseFontBold(size: 15)
-    sc.titleFont = UIFont.CheeseFontMedium(size: 15)
-    return sc
   }()
   
   /**
@@ -274,15 +259,12 @@ class ExtendedCounterNavBarView: UIView {
     super.willMove(toWindow: newWindow)
     let bottomView = UIView()
     bottomView.backgroundColor = #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1)
-    addSubview(segmentedControl)
     addSubview(bottomView)
     addSubview(nickNameLabel)
     addSubview(setButton)
     
     profileImg.layer.cornerRadius = 30
     profileImg.layer.masksToBounds = true
-    
-    segmentedControl.layer.borderWidth = 0
     
     profileImg.snp.makeConstraints { (make) in
       make.top.equalToSuperview().offset(5)
@@ -294,7 +276,6 @@ class ExtendedCounterNavBarView: UIView {
     nickNameLabel.snp.makeConstraints { (make) in
       make.left.equalTo(profileImg.snp.right).offset(20)
       make.top.equalTo(profileImg)
-      make.bottom.equalTo(profileImg)
     }
     
     setButton.snp.makeConstraints { (make) in
@@ -309,13 +290,6 @@ class ExtendedCounterNavBarView: UIView {
       make.left.equalToSuperview()
       make.right.equalToSuperview()
       make.height.equalTo(2)
-    }
-    
-    segmentedControl.snp.makeConstraints { (make) in
-      make.left.equalTo(self.snp.leftMargin)
-      make.right.equalTo(self.snp.rightMargin)
-      make.top.equalTo(profileImg.snp.bottom).offset(10)
-      make.height.equalTo(40)
     }
   }
 }

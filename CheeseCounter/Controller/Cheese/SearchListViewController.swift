@@ -15,15 +15,15 @@ import DZNEmptyDataSet
   import RxDataSources
 #endif
 
-class SearchViewController: UIViewController{
+class SearchListViewController: UIViewController{
   
   var isLoading: Bool = false
   var nextPageNumber: Int = 1
   var searchString: String = ""
   
-//  let disposeBag = DisposeBag()
-//  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>()
-//  let cellViewModels = Variable<[SearchViewModel]>([])
+  //  let disposeBag = DisposeBag()
+  //  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>()
+  //  let cellViewModels = Variable<[SearchViewModel]>([])
   
   var cheeseData: [CheeseResultByDate.Data]?{
     didSet{
@@ -64,9 +64,9 @@ class SearchViewController: UIViewController{
     
     self.view = collectionView
     
-//    cellViewModels.asDriver()
-//      .drive(collectionView.rx.items(dataSource: dataSource))
-//      .disposed(by: disposeBag)
+    //    cellViewModels.asDriver()
+    //      .drive(collectionView.rx.items(dataSource: dataSource))
+    //      .disposed(by: disposeBag)
     
     let navigationBarBackGroundImage =  UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image
     self.navigationController?.navigationBar.setBackgroundImage(navigationBarBackGroundImage, for: .default)
@@ -75,10 +75,9 @@ class SearchViewController: UIViewController{
   }
   
   func searchData(search: String, paging: Paging){
-    log.info(paging)
     guard !self.isLoading else {return}
     self.isLoading = true
-    CheeseService.getSearchSurveyList(search: search, paging: paging) { (response) in
+    CheeseService.getMySearchSurveyList(search: search, paging: paging) { (response) in
       self.isLoading = false
       switch response.result{
       case .success(let value):
@@ -103,7 +102,7 @@ class SearchViewController: UIViewController{
   }
 }
 
-extension SearchViewController: UISearchBarDelegate{
+extension SearchListViewController: UISearchBarDelegate{
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     guard let searchString = searchBar.text else {return}
     self.searchData(search: searchString, paging: .refresh)
@@ -111,23 +110,24 @@ extension SearchViewController: UISearchBarDelegate{
   }
 }
 
-extension SearchViewController: UISearchControllerDelegate{
+extension SearchListViewController: UISearchControllerDelegate{
 }
 
-extension SearchViewController: UICollectionViewDelegateFlowLayout{
+extension SearchListViewController: UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: collectionView.frame.width, height: 100)
   }
 }
 
-extension SearchViewController: UICollectionViewDelegate{
+extension SearchListViewController: UICollectionViewDelegate{
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cheeseSelectVC = CheeseSelectedViewController()
+    let cheeseResultVC = CheeseResultViewController()
+    
     guard let data = self.cheeseData?[indexPath.item] else {return}
-    cheeseSelectVC.cheeseData = data
-//    cheeseSelectVC.openType = .search
-    self.navigationController?.pushViewController(cheeseSelectVC, animated: true)
+    cheeseResultVC.cheeseData = data
+    //    cheeseSelectVC.openType = .search
+    self.navigationController?.pushViewController(cheeseResultVC, animated: true)
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -149,7 +149,7 @@ extension SearchViewController: UICollectionViewDelegate{
   }
 }
 
-extension SearchViewController: UICollectionViewDataSource{
+extension SearchListViewController: UICollectionViewDataSource{
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     guard let count = self.cheeseData?.count else {return 0}
@@ -164,10 +164,11 @@ extension SearchViewController: UICollectionViewDataSource{
   }
 }
 
-extension SearchViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
+extension SearchListViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     return NSAttributedString(string: "검색해 주세요~", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)])
   }
 }
+
 
 

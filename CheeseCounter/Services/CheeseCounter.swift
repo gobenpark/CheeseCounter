@@ -61,6 +61,8 @@ public enum CheeseCounter{
   
   case fcmSender(fcm_token: String)
   case getSurveyById(id: String)
+  case getSearchSurveyList(search: String, page_num: Int)
+  case getMySearchSurveyList(search: String, page_num: Int)
 }
 
 extension CheeseCounter: TargetType{
@@ -147,6 +149,10 @@ extension CheeseCounter: TargetType{
       return "/auth/updateFcmToken.json"
     case .getSurveyById:
       return "/survey/getSurveyById.json"
+    case .getSearchSurveyList:
+      return "/survey/getSearchSurveyList.json"
+    case .getMySearchSurveyList:
+      return "/survey/getMySearchSurveyList.json"
     }
   }
   
@@ -205,6 +211,10 @@ extension CheeseCounter: TargetType{
     //      return ["fcm_token":token]
     case .getSurveyById(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+    case .getMySearchSurveyList(let search, let pageNum):
+      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
+    case .getSearchSurveyList(let search, let pageNum):
+      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

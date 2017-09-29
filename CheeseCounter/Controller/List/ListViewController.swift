@@ -31,6 +31,10 @@ class ListViewController: UIViewController , listViewControllerDelegate
     return fragmanager
   }()
   
+  
+  
+  
+  let searchButton = UIBarButtonItem()
   let extendedNavBarView = ExtendedNavBarView()
   
   let listQuestionViewController = ListQuestionViewController()
@@ -42,6 +46,13 @@ class ListViewController: UIViewController , listViewControllerDelegate
     super.viewDidLoad()
     
     navigationBarSetup()
+    
+    let barbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "header_search@1x").withRenderingMode(.alwaysTemplate),
+                                    style: .plain,
+                                    target: self,
+                                    action: #selector(searchViewPresent))
+    barbutton.tintColor = .black
+    self.navigationItem.setRightBarButton(barbutton, animated: true)
     
     view.backgroundColor = .white
     view.addSubview(extendedNavBarView)
@@ -75,6 +86,13 @@ class ListViewController: UIViewController , listViewControllerDelegate
     }
     
     self.automaticallyAdjustsScrollViewInsets = false
+  }
+  
+  
+  private dynamic func searchViewPresent(){
+    let searchView = UINavigationController(rootViewController: SearchListViewController())
+    searchView.modalPresentationStyle = .overCurrentContext
+    AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

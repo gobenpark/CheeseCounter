@@ -18,8 +18,8 @@ class CoachViewController: UIViewController {
     return button
   }()
   
-  let images: [UIImage] = [#imageLiteral(resourceName: "5-1_answer_coach_mark"),#imageLiteral(resourceName: "6-1_list_coach_mark"),#imageLiteral(resourceName: "7-2_question_coach_mark")
-    ,#imageLiteral(resourceName: "7-4-1_question_coach_mark"),#imageLiteral(resourceName: "8_alarm_coach_mark"),#imageLiteral(resourceName: "9_1-1_counter_gold_coach_mark")]
+  let images: [UIImage] = [#imageLiteral(resourceName: "5-1_answer_coach_mark"),#imageLiteral(resourceName: "coach_mark_list"),#imageLiteral(resourceName: "coach_mark_question")
+    ,#imageLiteral(resourceName: "7-4-1_question_coach_mark"),#imageLiteral(resourceName: "8_alarm_coach_mark"),#imageLiteral(resourceName: "coach_mark_counter")]
   
   let imgView: UIImageView = {
     let img = UIImageView()

@@ -162,6 +162,8 @@
 		B1D309701EA48B0E00150107 /* PushListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3096F1EA48B0E00150107 /* PushListData.swift */; };
 		B1D309721EA6437A00150107 /* CalenderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D309711EA6437A00150107 /* CalenderSelectView.swift */; };
 		B1D309781EA735C500150107 /* PayForGoldViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D309771EA735C500150107 /* PayForGoldViewCell.swift */; };
+		B1D33A091F7DEB1600CFF19A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */; };
+		B1D33A0B1F7DED3100CFF19A /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */; };
 		B1DB28B11EDEB48C00294AB7 /* CurrentBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB28B01EDEB48C00294AB7 /* CurrentBaseViewController.swift */; };
 		B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */; };
 		B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5843A1E6FA18500D27F91 /* CircleView.swift */; };
@@ -365,6 +367,8 @@
 		B1D3096F1EA48B0E00150107 /* PushListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushListData.swift; sourceTree = "<group>"; };
 		B1D309711EA6437A00150107 /* CalenderSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderSelectView.swift; sourceTree = "<group>"; };
 		B1D309771EA735C500150107 /* PayForGoldViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayForGoldViewCell.swift; sourceTree = "<group>"; };
+		B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		B1DB28B01EDEB48C00294AB7 /* CurrentBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentBaseViewController.swift; sourceTree = "<group>"; };
 		B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx_AlertAction+Extensions.swift"; sourceTree = "<group>"; };
 		B1E5843A1E6FA18500D27F91 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleView.swift; path = Question/CircleView.swift; sourceTree = "<group>"; };
@@ -514,6 +518,7 @@
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
 				B17083B31EF75D3900E1641F /* ShareController.swift */,
 				B18D3F2F1F02319F007EFA1C /* SearchViewController.swift */,
+				B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */,
 			);
 			path = Cheese;
 			sourceTree = "<group>";
@@ -815,6 +820,7 @@
 				B1FFDFC21F70B355004591B3 /* AlertViewModel.swift */,
 				B18130451F79F644006F4FCB /* ResultOtherViewModel.swift */,
 				B18130471F7A093E006F4FCB /* ReplyViewModel.swift */,
+				B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1269,6 +1275,7 @@
 				B1F5BFFC1EB80DA5004A43D4 /* UsingPrivacyVC.swift in Sources */,
 				B157BB011E6FF9C0008F50AF /* ListDetailResultViewCell.swift in Sources */,
 				B15993BD1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift in Sources */,
+				B1D33A091F7DEB1600CFF19A /* SearchViewModel.swift in Sources */,
 				B168B74E1E70F8BF005CC981 /* ListDetailGraphViewCell.swift in Sources */,
 				B177206E1EAA009A00BE1B08 /* BaseCounterViewController.swift in Sources */,
 				B1F960FA1E63E90D00E87B02 /* AppDelegate.swift in Sources */,
@@ -1323,6 +1330,7 @@
 				443ADA471E9D24B200C16258 /* NoticeData.swift in Sources */,
 				B16A10831E9B8BB4007D83CF /* BaseListViewController.swift in Sources */,
 				44FAED901E9A1499003680FA /* QuestionSelectAgeVC.swift in Sources */,
+				B1D33A0B1F7DED3100CFF19A /* SearchListViewController.swift in Sources */,
 				B104EF2C1ECC66F60075D80C /* CoachViewController.swift in Sources */,
 				B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */,
 				449049FE1E93E3D300DC9ACD /* NoticeViewController.swift in Sources */,
