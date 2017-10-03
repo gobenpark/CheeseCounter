@@ -60,7 +60,7 @@ class ListQuestionViewController: BaseListViewController {
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseListCell.ID, for: indexPath) as! BaseListCell
-    cell.dataUpdate(data: cheeseData[indexPath.item])
+    cell.data = cheeseData[indexPath.item]
     return cell
   }
 }

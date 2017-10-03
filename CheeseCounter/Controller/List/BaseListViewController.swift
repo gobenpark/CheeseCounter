@@ -99,7 +99,7 @@ extension BaseListViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseListCell.ID, for: indexPath) as! BaseListCell
-    cell.dataUpdate(data: cheeseData[indexPath.item])
+    cell.data = cheeseData[indexPath.item]
     return cell
   }
   
@@ -198,6 +198,48 @@ extension BaseListViewController: UICollectionViewDelegateFlowLayout{
 class BaseListCell: UICollectionViewCell{
   
   static let ID = "BaseListCell"
+  
+  var data: CheeseResultByDate.Data?{
+    didSet{
+      self.titleLabel.text = data?.title ?? ""
+      if (data?.is_option ?? "") == "1"{
+        self.personLabel.text = (data?.total_count ?? "") + "/" + (data?.option_set_count ?? "")
+        self.cheeseIcon.image = UIImage(named: "badge_gold_right")
+        self.chneeseLabel.text = data?.option_cut_cheese ?? ""
+      } else {
+        self.personLabel.text = data?.total_count ?? ""
+        self.cheeseIcon.image = UIImage(named: "badge_cheese_right")
+        self.chneeseLabel.text = data?.option_cut_cheese ?? ""
+      }
+      
+      let startDate = Date()
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "YYYY-MM-dd"
+      let limitDate = dateFormatter.date(from: (data?.limit_date ?? "").components(separatedBy: " ")[0]) ?? Date()
+      let cal = Calendar.current
+      let component = cal.dateComponents([.day], from: startDate, to: limitDate).day ?? 0
+      
+      if component >= 0 {
+        calenderLabel.text = "\(component)일 남음"
+      }else {
+        calenderLabel.text = "기간만료"
+      }
+      
+      
+      self.sympathyLabel.text = data?.empathy_count ?? ""
+      let isEmpty = data?.is_empathy ?? "0"
+      if isEmpty == "0"{
+        self.sympathyImg.image =  #imageLiteral(resourceName: "result_like_big_nomal@1x")
+        self.sympathyLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
+      } else {
+        self.sympathyImg.image = #imageLiteral(resourceName: "result_like_big_select@1x")
+        self.sympathyLabel.textColor = #colorLiteral(red: 1, green: 0.5535024405, blue: 0.3549469709, alpha: 1)
+      }
+      
+      setNeedsLayout()
+      layoutIfNeeded()
+    }
+  }
   
   let sympathyImg: UIImageView = {
     let img = UIImageView()
@@ -316,47 +358,6 @@ class BaseListCell: UICollectionViewCell{
       make.bottom.equalToSuperview().inset(4)
       make.centerX.equalToSuperview()
     }
-  }
-  
-  func dataUpdate(data: CheeseResultByDate.Data){
-    
-    self.titleLabel.text = data.title ?? ""
-    if (data.is_option ?? "") == "1"{
-      self.personLabel.text = (data.total_count ?? "") + "/" + (data.option_set_count ?? "")
-      self.cheeseIcon.image = UIImage(named: "badge_gold_right")
-      self.chneeseLabel.text = data.option_cut_cheese ?? ""
-    } else {
-      self.personLabel.text = data.total_count ?? ""
-      self.cheeseIcon.image = UIImage(named: "badge_cheese_right")
-      self.chneeseLabel.text = data.option_cut_cheese ?? ""
-    }
-    
-    let startDate = Date()
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "YYYY-MM-dd"
-    let limitDate = dateFormatter.date(from: (data.limit_date ?? "").components(separatedBy: " ")[0]) ?? Date()
-    let cal = Calendar.current
-    let component = cal.dateComponents([.day], from: startDate, to: limitDate).day ?? 0
-    
-    if component >= 0 {
-      calenderLabel.text = "\(component)일 남음"
-    }else {
-      calenderLabel.text = "기간만료"
-    }
-    
-    
-    self.sympathyLabel.text = data.empathy_count ?? ""
-    let isEmpty = data.is_empathy ?? "0"
-    if isEmpty == "0"{
-      self.sympathyImg.image =  #imageLiteral(resourceName: "result_like_big_nomal@1x")
-      self.sympathyLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
-    } else {
-      self.sympathyImg.image = #imageLiteral(resourceName: "result_like_big_select@1x")
-      self.sympathyLabel.textColor = #colorLiteral(red: 1, green: 0.5535024405, blue: 0.3549469709, alpha: 1)
-    }
-    
-    setNeedsLayout()
-    layoutIfNeeded()
   }
   
   required init?(coder aDecoder: NSCoder) {

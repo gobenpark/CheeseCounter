@@ -131,7 +131,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   }
   
   private dynamic func searchViewPresent(){
-    let searchView = UINavigationController(rootViewController: SearchViewController())
+    let searchView = UINavigationController(rootViewController: SearchListViewController(type: .main))
     searchView.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
   }

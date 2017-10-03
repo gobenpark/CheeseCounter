@@ -90,7 +90,7 @@ class ListViewController: UIViewController , listViewControllerDelegate
   
   
   private dynamic func searchViewPresent(){
-    let searchView = UINavigationController(rootViewController: SearchListViewController())
+    let searchView = UINavigationController(rootViewController: SearchListViewController(type: .list))
     searchView.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
   }

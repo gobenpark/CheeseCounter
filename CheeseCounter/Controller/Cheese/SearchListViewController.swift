@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum SearchType{
+  case main
+  case list
+}
+
 import DZNEmptyDataSet
 #if !RX_NO_MODULE
   import RxSwift
@@ -19,26 +24,18 @@ class SearchListViewController: UIViewController{
   
   var isLoading: Bool = false
   var nextPageNumber: Int = 1
-  var searchString: String = ""
   
-  //  let disposeBag = DisposeBag()
-  //  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>()
-  //  let cellViewModels = Variable<[SearchViewModel]>([])
-  
-  var cheeseData: [CheeseResultByDate.Data]?{
-    didSet{
-      self.collectionView.reloadData()
-    }
-  }
+  var searchType: SearchType
+  let disposeBag = DisposeBag()
+  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>()
+  let cellViewModels = Variable<[SearchViewModel]>([])
   
   lazy var searchController: UISearchController = {
     let sc = UISearchController(searchResultsController: nil)
     sc.hidesNavigationBarDuringPresentation = false
     sc.dimsBackgroundDuringPresentation = false
     sc.searchBar.showsCancelButton = true
-    sc.delegate = self
     sc.searchBar.placeholder = "검색어를 입력하세요 "
-    sc.searchBar.delegate = self
     return sc
   }()
   
@@ -46,8 +43,6 @@ class SearchListViewController: UIViewController{
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.delegate = self
-    collectionView.dataSource = self
     collectionView.emptyDataSetSource = self
     collectionView.emptyDataSetDelegate = self
     collectionView.register(BaseListCell.self, forCellWithReuseIdentifier: String(describing: BaseListCell.self))
@@ -56,61 +51,87 @@ class SearchListViewController: UIViewController{
     return collectionView
   }()
   
+  init(type: SearchType) {
+    self.searchType = type
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.definesPresentationContext = true
+    collectionView.dataSource = nil
     
     self.view = collectionView
     
-    //    cellViewModels.asDriver()
-    //      .drive(collectionView.rx.items(dataSource: dataSource))
-    //      .disposed(by: disposeBag)
+    configure()
+    
+    collectionView.rx
+      .setDelegate(self)
+      .disposed(by: disposeBag)
+    
+    self.definesPresentationContext = true
+    
+    cellViewModels.asDriver()
+      .drive(collectionView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+    
+    switch searchType {
+    case .main:
+      searchController.searchBar
+        .rx
+        .text
+        .flatMap { text -> Observable<[SearchViewModel]> in
+          return CheeseService.provider.rx
+            .request(.getSearchSurveyList(search: text ?? "", page_num: 0))
+            .asObservable()
+            .map(CheeseResultByDate.self)
+            .map({ data in
+              return [SearchViewModel(items: data.data!)]
+            })
+        }.bind(to: self.cellViewModels)
+        .disposed(by: disposeBag)
+    case .list:
+      searchController.searchBar
+        .rx
+        .text
+        .flatMap { text -> Observable<[SearchViewModel]> in
+          return CheeseService.provider.rx
+            .request(.getMySearchSurveyList(search: text ?? "", page_num: 0))
+            .asObservable()
+            .map(CheeseResultByDate.self)
+            .map({ data in
+              return [SearchViewModel(items: data.data!)]
+            })
+        }.bind(to: self.cellViewModels)
+        .disposed(by: disposeBag)
+    }
+    
     
     let navigationBarBackGroundImage =  UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image
     self.navigationController?.navigationBar.setBackgroundImage(navigationBarBackGroundImage, for: .default)
-    self.navigationItem.setLeftBarButton(UIBarButtonItem(image: #imageLiteral(resourceName: "header_home@1x"), style: .plain, target: self, action: #selector(dismissAction)), animated: true)
+    self.navigationItem.setLeftBarButton(
+      UIBarButtonItem(
+      image: #imageLiteral(resourceName: "header_home@1x"), style: .plain, target: self, action: #selector(dismissAction)
+    ), animated: true
+    )
     self.navigationItem.titleView = searchController.searchBar
   }
-  
-  func searchData(search: String, paging: Paging){
-    guard !self.isLoading else {return}
-    self.isLoading = true
-    CheeseService.getMySearchSurveyList(search: search, paging: paging) { (response) in
-      self.isLoading = false
-      switch response.result{
-      case .success(let value):
-        let newData = value.data ?? []
-        switch paging{
-        case .refresh:
-          self.cheeseData = newData
-          self.nextPageNumber = 1
-        case .next:
-          guard !newData.isEmpty else {return}
-          self.cheeseData?.append(contentsOf: newData)
-        }
-        self.collectionView.reloadData()
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-    }
-  }
-  
+
   func dismissAction(){
     self.dismiss(animated: false, completion: nil)
   }
-}
-
-extension SearchListViewController: UISearchBarDelegate{
-  func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-    guard let searchString = searchBar.text else {return}
-    self.searchData(search: searchString, paging: .refresh)
-    self.searchString = searchString
+  
+  private func configure(){
+    dataSource.configureCell = { ds, cv, ip, item in
+      let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: BaseListCell.self), for: ip) as! BaseListCell
+      cell.data = item
+      return cell
+    }
   }
-}
-
-extension SearchListViewController: UISearchControllerDelegate{
 }
 
 extension SearchListViewController: UICollectionViewDelegateFlowLayout{
@@ -122,11 +143,10 @@ extension SearchListViewController: UICollectionViewDelegateFlowLayout{
 extension SearchListViewController: UICollectionViewDelegate{
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cheeseResultVC = CheeseResultViewController()
+    guard let cell = collectionView.cellForItem(at: indexPath) as? BaseListCell else {return}
     
-    guard let data = self.cheeseData?[indexPath.item] else {return}
-    cheeseResultVC.cheeseData = data
-    //    cheeseSelectVC.openType = .search
+    let cheeseResultVC = CheeseResultViewController()
+    cheeseResultVC.cheeseData = cell.data
     self.navigationController?.pushViewController(cheeseResultVC, animated: true)
   }
   
@@ -136,33 +156,18 @@ extension SearchListViewController: UICollectionViewDelegate{
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 100
     if didReachBottom {
-      self.searchData(search: searchString, paging: .refresh)
     }
   }
   
   func collectionView(_ collectionView: UICollectionView
     , layout collectionViewLayout: UICollectionViewLayout
     , referenceSizeForFooterInSection section: Int) -> CGSize {
-    
+
     let height: CGFloat = (self.isLoading) ? 44 : 0
     return CGSize(width: collectionView.width, height: height)
   }
 }
 
-extension SearchListViewController: UICollectionViewDataSource{
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let count = self.cheeseData?.count else {return 0}
-    return count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BaseListCell.self), for: indexPath) as! BaseListCell
-    guard let cheesedata = self.cheeseData?[indexPath.item] else {return cell}
-    cell.dataUpdate(data: cheesedata)
-    return cell
-  }
-}
 
 extension SearchListViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {

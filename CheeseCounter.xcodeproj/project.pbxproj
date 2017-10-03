@@ -140,7 +140,6 @@
 		B18A127C1E94B18C00D3A578 /* CheeseResultOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127B1E94B18C00D3A578 /* CheeseResultOtherViewController.swift */; };
 		B18A127E1E94B45100D3A578 /* CheeseBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127D1E94B45100D3A578 /* CheeseBaseViewController.swift */; };
 		B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */; };
-		B18D3F301F02319F007EFA1C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18D3F2F1F02319F007EFA1C /* SearchViewController.swift */; };
 		B1A16B2D1E7F6BB7007A1946 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */; };
 		B1A16B2F1E7F6BD4007A1946 /* Response+ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */; };
 		B1A16B331E7F84DA007A1946 /* NickResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B321E7F84DA007A1946 /* NickResult.swift */; };
@@ -344,7 +343,6 @@
 		B18A127B1E94B18C00D3A578 /* CheeseResultOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseResultOtherViewController.swift; sourceTree = "<group>"; };
 		B18A127D1E94B45100D3A578 /* CheeseBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseBaseViewController.swift; sourceTree = "<group>"; };
 		B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultOtherViewCell.swift; sourceTree = "<group>"; };
-		B18D3F2F1F02319F007EFA1C /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = ../List/SearchViewController.swift; sourceTree = "<group>"; };
 		B19991611E7BBEE20037E767 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
 		B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ErrorInfo.swift"; sourceTree = "<group>"; };
@@ -517,7 +515,6 @@
 				B18A127B1E94B18C00D3A578 /* CheeseResultOtherViewController.swift */,
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
 				B17083B31EF75D3900E1641F /* ShareController.swift */,
-				B18D3F2F1F02319F007EFA1C /* SearchViewController.swift */,
 				B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */,
 			);
 			path = Cheese;
@@ -1245,7 +1242,6 @@
 				440A5B961E6AD87400D8C74C /* CarouselCell2.swift in Sources */,
 				B15E4C761E8CE8D300C059D0 /* BaseSetupViewController.swift in Sources */,
 				B15A4CFC1EB096C7006F8022 /* QnaListData.swift in Sources */,
-				B18D3F301F02319F007EFA1C /* SearchViewController.swift in Sources */,
 				B1A6FE301ECBD348001E1ACD /* RefreshView.swift in Sources */,
 				B15E4C6E1E8CCACC00C059D0 /* SelectGenderViewController.swift in Sources */,
 				B18A127C1E94B18C00D3A578 /* CheeseResultOtherViewController.swift in Sources */,
