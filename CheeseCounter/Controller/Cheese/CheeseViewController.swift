@@ -101,8 +101,6 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
       self?.lastSelectFixOffset(tag: tag, row: row)
     }
 
-    
-    
     self.navigationController?.pushViewController(cheeseSelectedViewController, animated: true)
   }
  

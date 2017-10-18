@@ -1,3 +1,5 @@
-fastlane/
+*.ipa
 pods/
 .DS_Store
+*.dSYM
+*.zip

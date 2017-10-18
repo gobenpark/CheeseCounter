@@ -20,7 +20,6 @@ class KakaoLoginController: UIViewController{
     button.setAttributedTitle(attribute, for: .normal)
     button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)
     return button
-    
   }()
   
   let backgroundImageView: UIImageView = {

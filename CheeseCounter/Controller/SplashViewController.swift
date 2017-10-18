@@ -10,17 +10,8 @@ import Alamofire
 import ObjectMapper
 import NVActivityIndicatorView
 import Crashlytics
-import YLGIFImage
 
 class SplashViewController: UIViewController {
-  
-  //  let imgView: YLImageView = {
-  //    let imgView = YLImageView()
-  //    imgView.size = CGSize(width: 50, height: 50)
-  //    imgView.image = YLGIFImage(imageLiteralResourceName: "cheese_test.gif")
-  //    imgView.startAnimating()
-  //    return imgView
-  //  }()
   
   
   let activityView: UIActivityIndicatorView = {

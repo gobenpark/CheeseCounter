@@ -300,13 +300,7 @@ class CheeseResultViewController: CheeseBaseViewController {
     switch openData.openType {
     case .normal:
       let VC = CheeseResultOtherViewController()
-      
-      
-      
       VC.cheeseData = CheeseResult(cheeseData: self.cheeseData, resultData: self.resultData)
-      
-      
-      
       self.navigationController?.pushViewController(VC, animated: true)
 
     case .search:

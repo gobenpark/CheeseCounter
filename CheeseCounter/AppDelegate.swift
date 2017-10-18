@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let parameter: [String:String] = [:]
   let customURLScheme = "cheesecounter"
-//  var loginConfirm: LoginConfirmController!
+
   
   
   func application(
@@ -67,14 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     URLNavigationMap.initialize()
     
-    
-    
-//    if let url = launchOptions?[.url] as? URL {
-//      let opened = Navigator.open(url)
-//      if !opened {
-//        Navigator.push(url)
-//      }
-//    }
     if #available(iOS 10.0, *)
     {
       // For iOS 10 display notification (sent via APNS)
@@ -139,7 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // add the destinations to SwiftyBeaver
     log.addDestination(console)
-    log.addDestination(file)
     log.addDestination(cloud)
   }
   
@@ -159,7 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
       })
     }
-    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
+//    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
+    self.window?.rootViewController = CycleViewController()
   }
   
   func configureAppearance() {

@@ -263,25 +263,6 @@ struct CheeseService {
     let manager = Alamofire.SessionManager.default
     manager.session.configuration.timeoutIntervalForRequest = 120
     
-    
-    
-//    provider.request(.insertReply(parameter: parameter)) { (result) in
-//      switch result{
-//      case .success(let moyaResponse):
-//        let data = moyaResponse.data
-//        let statusCode = moyaResponse.statusCode
-//        
-//        let json = JSON(data: data)
-//        if let result = json["code"].string{
-//          print(result)
-//        }
-//        
-//      case .failure(let error):
-//        print(error)
-//      }
-//    }
-    
-    
     manager.request(url,method: .post, parameters: parameter)
       .validate(statusCode: 200..<400)
       .responseJSON { (response) in

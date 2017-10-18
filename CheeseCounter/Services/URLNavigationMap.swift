@@ -8,7 +8,6 @@
 import URLNavigator
 import AnyDate
 
-
 enum openType{
   case url(isEnd: Bool)
   case search
@@ -35,7 +34,6 @@ struct URLNavigationMap{
   }
   
   private static func checkProcess(surveyID: String){
-    
     getCheeseData(surveyID: surveyID) { (data) in
       checkSurveyLive(data: data)
     }

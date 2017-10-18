@@ -95,7 +95,7 @@ fileprivate class SendCheeseCell: UICollectionViewCell{
   
   let titleLabel: UILabel = {
     let label = UILabel()
-    let attribute = NSMutableAttributedString(string: "+ 500골드", attributes: [NSFontAttributeName:UIFont.CheeseFontBold(size: 30),NSForegroundColorAttributeName:#colorLiteral(red: 0.9979653955, green: 0.4697954655, blue: 0.2858062387, alpha: 1)])
+    let attribute = NSMutableAttributedString(string: "+ 500치즈", attributes: [NSFontAttributeName:UIFont.CheeseFontBold(size: 30),NSForegroundColorAttributeName:#colorLiteral(red: 0.9979653955, green: 0.4697954655, blue: 0.2858062387, alpha: 1)])
     attribute.append(NSAttributedString(string: "\n\n카운터에서 치즈내역을 확인하세요!",
                                         attributes: [
                                           NSFontAttributeName:UIFont.CheeseFontBold(size: 18),

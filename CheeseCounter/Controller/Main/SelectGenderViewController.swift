@@ -40,7 +40,6 @@ final class SelectGenderViewController: BaseSetupViewController {
     return fib
   }()
   
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setUp()
@@ -88,7 +87,6 @@ final class SelectGenderViewController: BaseSetupViewController {
         })
         .show()
     }
-
   }
   
   fileprivate dynamic func maleButtonClickAction(_ sender: UIButton)
@@ -120,7 +118,6 @@ final class SelectGenderViewController: BaseSetupViewController {
     if !sender.isSelected && !maleImageButton.isSelected {
       isdisableScroll = true
     }
-    
   }
   
   override func swipeAction() {
