@@ -74,6 +74,9 @@ class ListDetailResultViewController: UIViewController {
     collectionView.dataSource = self
     collectionView.backgroundColor = #colorLiteral(red: 0.9607003331, green: 0.9608381391, blue: 0.9606701732, alpha: 1)
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+    if #available(iOS 11.0, *) {
+      collectionView.contentInsetAdjustmentBehavior = .never
+    }
     return collectionView
   }()
   
@@ -127,7 +130,6 @@ class ListDetailResultViewController: UIViewController {
     }
   }
  
-  
   // 순서대로 소팅
   fileprivate func calculateRank() -> [SurveyResult.Data]?{
     
@@ -155,7 +157,6 @@ class ListDetailResultViewController: UIViewController {
   fileprivate func selectItemCell(cell: ListDetailTitleCell, selectAsk: String?) -> ListDetailTitleCell{
     
     guard let ask = Int(selectAsk ?? "0") else {return cell}
-//    cell.tag = ask
     switch ask {
     case 1:
       cell.titleLabel.text = self.cheeseData?.cheeseData.ask1

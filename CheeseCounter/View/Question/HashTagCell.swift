@@ -44,9 +44,9 @@ class HashTagCell: UITableViewCell {
     field.selectedColor = .lightGray
     field.selectedTextColor = .white
     field.delimiter = " "
-    field.placeholder = "태그를 입력해 주세요"
+    field.placeholder = "태그 후 Enter입력(필수)"
     field.layer.borderWidth = 0.5
-    field.acceptTagOption = .space
+    field.acceptTagOption = .return
     field.layer.borderColor = UIColor.lightGray.cgColor
     return field
   }()

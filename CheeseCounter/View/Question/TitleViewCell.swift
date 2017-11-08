@@ -25,6 +25,7 @@ class TitleViewCell: UITableViewCell {
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
     field.delegate = self
+    field.font = UIFont.systemFont(ofSize: 12)
     return field
   }()
   

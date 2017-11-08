@@ -73,6 +73,10 @@ class CheeseBaseViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    if #available(iOS 11.0, *) {
+      collectionView.contentInsetAdjustmentBehavior = .never
+    }
+    
     self.definesPresentationContext = true
     self.view.addSubview(collectionView)
     self.view.addSubview(replyView)

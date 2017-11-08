@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let customURLScheme = "cheesecounter"
 
   
-  
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
@@ -120,16 +119,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func loggingSetting(){
-    // add log destinations. at least one is needed!
+    
     let console = ConsoleDestination()  // log to Xcode Console
-    let file = FileDestination()  // log to default swiftybeaver.log file
     let cloud = SBPlatformDestination(appID: "VQnakm", appSecret: "ijpnVkji0funquPkTahs2efbst7gYihY", encryptionKey: "thylVjoZtl71krs32ogtM8ainhtgXzow") // to cloud
     
-    // use custom format and set console output to short time, log level & message
-    console.format = "$DHH:mm:ss$d $C$L$c $N.$F:$l - $M"
-    // or use this for JSON output: console.format = "$J"
     
-    // add the destinations to SwiftyBeaver
+    console.format = "$DHH:mm:ss$d $C$L$c $N.$F:$l - $M"
+    
     log.addDestination(console)
     log.addDestination(cloud)
   }
@@ -150,8 +146,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
       })
     }
-//    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
-    self.window?.rootViewController = CycleViewController()
+    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
+//    self.window?.rootViewController = CycleViewController()
   }
   
   func configureAppearance() {

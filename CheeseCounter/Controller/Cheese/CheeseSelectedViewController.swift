@@ -10,6 +10,10 @@ import UIKit
 
 import URLNavigator
 import Spring
+#if !RX_NO_MODULE
+  import RxSwift
+  import RxCocoa
+#endif
 
 enum isclick: Int {
   case True
@@ -97,7 +101,7 @@ final class CheeseSelectedViewController: UIViewController
     view.backgroundColor = UIColor.cheeseColor()
     view.addSubview(titleLabel)
     view.addSubview(divideLine)
-    self.navigationItem.title = "오늘의 질문"
+    self.navigationItem.title = "투표하기"
     
     // textView의 상단의 빈공간이 생기는 이유로 삽입
     self.automaticallyAdjustsScrollViewInsets = false
@@ -263,6 +267,10 @@ final class CheeseSelectedViewController: UIViewController
         
         let gifVC = GifViewController()
         cheeseResultVC.cheeseData = self.cheeseData
+        
+        
+        
+        
         if (self.cheeseData?.is_option ?? "0") == "0"{
           gifVC.imageType = .cheese
         }else {

@@ -19,12 +19,22 @@ import KakaoLink
 
 class CheeseResultViewController: CheeseBaseViewController {
   
+  let disposeBag = DisposeBag()
+  
   var cheeseData: CheeseResultByDate.Data?{
     didSet{
       fetchData()
     }
   }
   
+  
+  
+  let cheeseData2 = Variable([])
+  
+  
+  
+  var topRankSurveyData: SurveyResult.Data?
+  var totalCount = 0
   var openData: OpenData
   
   var resultData: [SurveyResult.Data] = []{
@@ -47,8 +57,6 @@ class CheeseResultViewController: CheeseBaseViewController {
     return refresh
   }()
   
-  var topRankSurveyData: SurveyResult.Data?
-  var totalCount = 0
   
   init(openData: OpenData) {
     self.openData = openData

@@ -47,7 +47,7 @@ class ListDetailGraphViewCell: UICollectionViewCell {
   
   private let maleImageView = UIImageView(image: #imageLiteral(resourceName: "male_nomal@1x"))
   private let femaleImageView = UIImageView(image: #imageLiteral(resourceName: "female_nomal@1x"))
-  
+
   private let maleLabel = UILabel()
   private let femaleLabel = UILabel()
   
@@ -209,6 +209,7 @@ class ListDetailGraphViewCell: UICollectionViewCell {
   
   func updateData(data: DetailResult.Data){
     
+    
     self.maleCount = 0
     self.femaleCount = 0
     var maxCount: Double = 0
@@ -217,9 +218,10 @@ class ListDetailGraphViewCell: UICollectionViewCell {
     var female: [Int:Double] = [:]
     
     for data in data.gender_age{
-      
+      log.info(data)
       let dataCount = Double(data.count) ?? 0
       maxCount = (maxCount > dataCount) ? maxCount : dataCount
+      
       
       switch data.category {
       case "male_10":
@@ -237,7 +239,7 @@ class ListDetailGraphViewCell: UICollectionViewCell {
       case "male_50":
         male[50] = Double(data.count)
         maleCount += Double(data.count) ?? 0
-      case "male_60":
+      case "male_60","male_70","male_80","male_90":
         male[60] = Double(data.count)
         maleCount += Double(data.count) ?? 0
       case "female_10":
@@ -255,7 +257,7 @@ class ListDetailGraphViewCell: UICollectionViewCell {
       case "female_50":
         female[50] = Double(data.count)
         femaleCount += Double(data.count) ?? 0
-      case "female_60":
+      case "female_60","female_70","female_80","female_90":
         female[60] = Double(data.count)
         femaleCount += Double(data.count) ?? 0
       default:
@@ -267,11 +269,6 @@ class ListDetailGraphViewCell: UICollectionViewCell {
     self.barChart.leftAxis.axisMinimum = -maxCount
     self.barChart.rightAxis.axisMinimum = -maxCount
     self.barChart.rightAxis.axisMaximum = maxCount
-    
-//    self.barChart.leftAxis.axisMaximum = maxCount
-//    self.barChart.leftAxis.axisMinimum = -maxCount
-//    self.barChart.rightAxis.axisMinimum = -maxCount
-//    self.barChart.rightAxis.axisMaximum = maxCount
     
     setChart(male: male, female: female)
   }

@@ -15,7 +15,6 @@ class KakaoLoginController: UIViewController{
     let attribute = NSAttributedString(string: "카카오톡으로 로그인",
                                        attributes: [NSForegroundColorAttributeName : UIColor.rgb(red: 255, green: 135, blue: 0),
                                                     NSFontAttributeName:UIFont.systemFont(ofSize: 20, weight: UIFontWeightMedium)])
-    
     button.backgroundColor = .white
     button.setAttributedTitle(attribute, for: .normal)
     button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)

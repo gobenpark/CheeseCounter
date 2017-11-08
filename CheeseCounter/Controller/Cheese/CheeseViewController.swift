@@ -31,8 +31,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   
   let activityView: UIActivityIndicatorView = {
     let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    view.frame 
-      = UIScreen.main.bounds
+    view.frame = UIScreen.main.bounds
     return view
   }()
   
@@ -54,6 +53,10 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    if #available(iOS 11.0, *) {
+      tableView.contentInsetAdjustmentBehavior = .never
+    }
     
     tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
     tableView.separatorStyle = .none
@@ -161,6 +164,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
       DispatchQueue.main.async {
         self.refreshView.endRefreshing()
         self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
       }
     }
   }
