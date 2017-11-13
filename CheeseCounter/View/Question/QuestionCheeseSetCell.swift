@@ -145,12 +145,11 @@ class QuestionCheeseSetCell: UITableViewCell {
   
   //MARK: - Action
   
-  func knowHowButtonTap(){
+  @objc func knowHowButtonTap(){
     guard let tap = knowHowTap else {return}
     tap()
   }
-  
-  fileprivate dynamic func cancelAction(){
+  @objc fileprivate dynamic func cancelAction(){
     self.questionViewController?.questionData.option_cut_cheese = "0"
     self.setGoldLabel.text = "설정골드: 0"
     calculateGold()
@@ -340,7 +339,7 @@ class QuestionCheeseSetCell: UITableViewCell {
     buttons[7].count = 1000
   }
   
-  func buttonAction(_ sender: UIButton){
+  @objc func buttonAction(_ sender: UIButton){
     
     switch sender.tag {
     case 0...2:

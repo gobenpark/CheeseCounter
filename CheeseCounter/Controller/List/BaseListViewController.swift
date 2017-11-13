@@ -84,7 +84,7 @@ class BaseListViewController: UIViewController{
   func setUp(){}
   func fetch(paging: Paging){}
   
-  dynamic func refreshAction(){
+  @objc dynamic func refreshAction(){
     self.fetch(paging: .refresh)
     self.nextPageNumber = 1
     self.refresh.endRefreshing()
@@ -142,8 +142,8 @@ extension BaseListViewController : DZNEmptyDataSetSource{
     let label = UILabel()
     label.textAlignment = .center
     label.attributedText = NSMutableAttributedString(string: defaultText
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName:UIColor.gray])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor:UIColor.gray])
     if isLoading{
       activityView.startAnimating()
       return activityView
@@ -154,7 +154,7 @@ extension BaseListViewController : DZNEmptyDataSetSource{
   
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = defaultText
-    let attributes = [NSFontAttributeName:UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName:UIColor.gray]
+    let attributes = [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15),NSAttributedStringKey.foregroundColor:UIColor.gray]
     return NSAttributedString(string: text, attributes: attributes)
   }
   
@@ -178,7 +178,7 @@ extension BaseListViewController: UICollectionViewDelegateFlowLayout{
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
-    let contentOffsetBottom = scrollView.contentOffset.y + scrollView.height
+    let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 100
     if didReachBottom {
@@ -191,7 +191,7 @@ extension BaseListViewController: UICollectionViewDelegateFlowLayout{
     , referenceSizeForFooterInSection section: Int) -> CGSize {
     
     let height: CGFloat = (self.isLoading) ? 44 : 0
-    return CGSize(width: collectionView.width, height: height)
+    return CGSize(width: collectionView.frame.width, height: height)
   }
 }
 

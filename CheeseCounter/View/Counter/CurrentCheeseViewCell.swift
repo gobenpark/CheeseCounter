@@ -120,8 +120,8 @@ extension CurrentCheeseViewCell: DZNEmptyDataSetSource{
     let label = UILabel()
     label.textAlignment = .center
     label.attributedText = NSAttributedString(string: "질문에 응답하고 치즈를 적립하세요."
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName:UIColor.gray])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor:UIColor.gray])
     activityView.startAnimating()
     
     if isLoading{
@@ -133,7 +133,7 @@ extension CurrentCheeseViewCell: DZNEmptyDataSetSource{
   
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "프리미엄질문에 응답하시면 치즈를 얻을 수 있습니다."
-    let attributes = [NSFontAttributeName:UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName:UIColor.gray]
+    let attributes = [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15),NSAttributedStringKey.foregroundColor:UIColor.gray]
     return NSAttributedString(string: text, attributes: attributes)
   }
   

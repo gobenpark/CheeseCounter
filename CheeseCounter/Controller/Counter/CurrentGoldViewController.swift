@@ -77,16 +77,16 @@ class CurrentGoldViewController: CurrentBaseViewController
     self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
   }
   
-  func upLoadData(_ sender: SpringButton){
+  @objc func upLoadData(_ sender: SpringButton){
     var parameter:[String:String] = [:]
     for (key,value) in Mirror(reflecting: self.goldReturnData).children{
       guard let key = key else {return}
       parameter[key] = "\(value)"
     }
     
-    PointService.insertGoldReturn(parameter: parameter) {[weak self] (data) in
+    PointService.insertGoldReturn(parameter: parameter) {[weak self] (status,data) in
       guard let `self` = self else {return}
-      if data.0 == "200" {
+      if status == "200" {
         let cheeseSaleVC = CheeseSaleCompleteVC()
         cheeseSaleVC.titleLabel.text = "\(self.goldReturnData.cash)원\n판매요청 되었습니다."
         cheeseSaleVC.subTitleLabel.text = "입력하신계좌를 통하여 입금됩니다.\n만일 계좌번호와 예금주가 동일하지 않을 경우\n입금은 자동 취소가 되며, 골드로 전환됩니다."
@@ -96,7 +96,7 @@ class CurrentGoldViewController: CurrentBaseViewController
         }
         AppDelegate.instance?.window?.rootViewController?.present(cheeseSaleVC, animated: true, completion: nil)
       } else {
-        AlertView(title: "알림", message: data.1, preferredStyle: .alert)
+        AlertView(title: "알림", message: data, preferredStyle: .alert)
           .addChildAction(title: "확인", style: .default, handeler: nil)
           .show()
         self.animationView(sender)
@@ -112,7 +112,7 @@ class CurrentGoldViewController: CurrentBaseViewController
     sender.animate()
   }
   
-  func popUpBankSelectView(_ sender: UIButton){
+  @objc func popUpBankSelectView(_ sender: UIButton){
     AppDelegate.instance?.window?.rootViewController?.present(bankVC, animated: true, completion: nil)
   }
   

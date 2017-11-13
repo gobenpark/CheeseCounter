@@ -53,7 +53,7 @@ class NoticeViewController: UIViewController{
         }
     }
     
-    fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){
+  @objc fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){
         notices[sender.view?.tag ?? 0].isExpand =
             notices[sender.view?.tag ?? 0].isExpand ? false : true
         self.collectionView.reloadSections(IndexSet(integer: sender.view?.tag ?? 0))
@@ -114,7 +114,7 @@ extension NoticeViewController: UICollectionViewDataSource{
         
         if let title = notices[section].title {
             let size = title.boundingRect(with: CGSize(width: 374-57, height: 100)
-                , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16)])
+              , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
             
             return CGSize(width: collectionView.frame.width, height: size.height+30)
         }
@@ -129,7 +129,7 @@ extension NoticeViewController: UICollectionViewDelegateFlowLayout{
         
         if let content = notices[indexPath.section].contents{
             let size = content.boundingRect(with: CGSize(width: 374-42, height: 1000)
-                , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14)])
+              , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 14)])
             return CGSize(width: collectionView.frame.width, height: size.height+81)
         }
         
@@ -240,11 +240,11 @@ class NoticeView: UICollectionReusableView{
             .components(separatedBy: " ")[0]
             .replacingOccurrences(of: "-", with: ".")
         let attribute = NSMutableAttributedString(string: data?.title ?? ""
-            , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16)])
+          , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
         attribute.append(NSAttributedString(string: " "+date
             , attributes: [
-                NSFontAttributeName:UIFont.systemFont(ofSize: 11)
-                ,NSForegroundColorAttributeName:UIColor.lightGray
+              NSAttributedStringKey.font:UIFont.systemFont(ofSize: 11)
+              ,NSAttributedStringKey.foregroundColor:UIColor.lightGray
             ]))
         titleLabel.attributedText = attribute
         

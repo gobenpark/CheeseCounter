@@ -47,7 +47,7 @@ class PaymentViewController: UIViewController{
     
     webView.loadRequest(request)
   }
-  fileprivate dynamic func payCancel(){
+  @objc fileprivate dynamic func payCancel(){
     self.presentingViewController?.dismiss(animated: true, completion: nil)
   }
   

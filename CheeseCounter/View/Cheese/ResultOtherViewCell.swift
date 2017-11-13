@@ -94,15 +94,15 @@ class ResultOtherViewCell: UICollectionReusableView {
     self.graphView.subLabels[0].text = cheeseData.cheeseData.ask1
     self.graphView.subLabels[1].text = cheeseData.cheeseData.ask2
     let attribute = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 0).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     attribute.append(NSAttributedString(string: "%"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     
     self.graphView.circleViews[0].percentLabel.attributedText = attribute
     let attribute1 = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 1).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     
-    attribute1.append(NSAttributedString(string: "%", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+    attribute1.append(NSAttributedString(string: "%", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     self.graphView.circleViews[1].percentLabel.attributedText = attribute1
     
     self.graphView.circleViews[0].circleProgressView.progress = (cheeseData.getPercent(number: 0))/100
@@ -114,15 +114,15 @@ class ResultOtherViewCell: UICollectionReusableView {
     self.graphView.subLabels[0].text = cheeseData.cheeseData.ask1
     self.graphView.subLabels[1].text = cheeseData.cheeseData.ask2
     let attribute = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 0).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     attribute.append(NSAttributedString(string: "%"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     
     self.graphView.circleViews[0].percentLabel.attributedText = attribute
     let attribute1 = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 1).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     
-    attribute1.append(NSAttributedString(string: "%", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+    attribute1.append(NSAttributedString(string: "%", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     self.graphView.circleViews[1].percentLabel.attributedText = attribute1
     
     self.graphView.circleViews[0].circleProgressView.progress = (cheeseData.getPercent(number: 0))/100
@@ -132,14 +132,14 @@ class ResultOtherViewCell: UICollectionReusableView {
     self.graphView.subLabels[3].text = cheeseData.cheeseData.ask4
     
     let attribute2 = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 2).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     attribute2.append(NSAttributedString(string: "%"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     
     let attribute3 = NSMutableAttributedString(string: "\(cheeseData.getPercent(number: 3).roundToPlaces(places: 1))"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 40)])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 40)])
     attribute3.append(NSAttributedString(string: "%"
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 24)]))
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 24)]))
     
     self.graphView.circleViews[2].percentLabel.attributedText = attribute2
     self.graphView.circleViews[3].percentLabel.attributedText = attribute3

@@ -232,7 +232,7 @@ final class CheeseSelectedViewController: UIViewController
     }
   }
   /// 이미지 클릭시 이벤트 발생
-  func pushResultPage(_ sender: UITapGestureRecognizer){
+  @objc func pushResultPage(_ sender: UITapGestureRecognizer){
     if !openData.isLogin{
       self.navigationController?.dismiss(animated: true, completion: { 
         AlertView(title: "알림", message: "설문에 응답하시려면\n 로그인 해주세요😁", preferredStyle: .alert)

@@ -12,6 +12,7 @@ import SwiftyJSON
 import Firebase
 import Moya
 import Crashlytics
+import FirebaseMessaging
 
 public enum serverType{
   case release

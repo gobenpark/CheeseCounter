@@ -101,7 +101,7 @@ class DropOutViewController: UIViewController
         }
     }
     
-    fileprivate dynamic func checkBoxAction(_ sender: UIButton){
+  @objc fileprivate dynamic func checkBoxAction(_ sender: UIButton){
         sender.isSelected = sender.isSelected ? false : true
         
         if sender.isSelected{
@@ -113,7 +113,7 @@ class DropOutViewController: UIViewController
         }
     }
     
-    func dropAction(_ button: UIButton){
+  @objc func dropAction(_ button: UIButton){
         
         let alertVC = UIAlertController(title: "탈퇴", message: "회원 탈퇴시, 보유 치즈(포인트),\n골드 모두 삭제되며, 이후 환급\n및\n환불되지 않습니다. 이미 등록한\n질문과 댓글은 삭제되지 않습니다.\n정말 탈퇴 하시겠습니까?", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "예", style: .destructive, handler: { (Action) in

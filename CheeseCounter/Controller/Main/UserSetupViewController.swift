@@ -79,7 +79,7 @@ class UserSetupViewController: UIViewController {
     
   }
   
-  func didChangePageControlValue() {
+  @objc func didChangePageControlValue() {
     setUpPageViewController.scrollToViewController(index: pageControl.currentPage)
   }
   

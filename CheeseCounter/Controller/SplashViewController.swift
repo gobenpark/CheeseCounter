@@ -25,8 +25,9 @@ class SplashViewController: UIViewController {
     
     view.backgroundColor = .white
     self.view.addSubview(activityView)
-    activityView.centerX = view.centerX
-    activityView.centerY = view.centerY
+    activityView.snp.makeConstraints{
+      $0.center.equalToSuperview()
+    }
     self.viewLoadAction()
   }
   

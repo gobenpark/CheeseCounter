@@ -114,7 +114,7 @@ class CompleteJoinViewController: BaseSetupViewController {
     }
   }
   
-  fileprivate dynamic func loginAction(){
+  @objc fileprivate dynamic func loginAction(){
     self.userSetupViewController?.uploadUserInfo()
   }
 }

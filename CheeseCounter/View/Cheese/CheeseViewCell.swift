@@ -116,7 +116,7 @@ extension CheeseViewCell{
     let data = MainCheeseData.shared.mainData[row]
     loadSurveyType(data: data)
     
-    DispatchQueue.main.async {[weak self] (_) in
+    DispatchQueue.main.async {[weak self] in
       self?.carouselView.reloadData()
     }
   }

@@ -8,8 +8,11 @@
 
 import UIKit
 
+
+
 class SelectAgeViewController: BaseSetupViewController{
   
+
   let mainLabel: UILabel = {
     let label = UILabel()
     label.text = "회원님의 나이를 입력해주세요."
@@ -112,3 +115,5 @@ extension SelectAgeViewController: UITextFieldDelegate{
     }
   }
 }
+
+

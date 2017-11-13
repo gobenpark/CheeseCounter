@@ -13,8 +13,8 @@ class KakaoLoginController: UIViewController{
   lazy var kakaoLoginButton : UIButton = {
     let button = UIButton()
     let attribute = NSAttributedString(string: "카카오톡으로 로그인",
-                                       attributes: [NSForegroundColorAttributeName : UIColor.rgb(red: 255, green: 135, blue: 0),
-                                                    NSFontAttributeName:UIFont.systemFont(ofSize: 20, weight: UIFontWeightMedium)])
+                                       attributes: [NSAttributedStringKey.foregroundColor : UIColor.rgb(red: 255, green: 135, blue: 0),
+                                                    NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)])
     button.backgroundColor = .white
     button.setAttributedTitle(attribute, for: .normal)
     button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)
@@ -60,7 +60,7 @@ class KakaoLoginController: UIViewController{
     }
   }
   
-  fileprivate dynamic func kakaoLogin(){
+  @objc fileprivate dynamic func kakaoLogin(){
     
     let session:KOSession = KOSession.shared()
     
@@ -68,9 +68,7 @@ class KakaoLoginController: UIViewController{
       session.close()
     }
     
-    
-    
-    session.open(completionHandler: { (error) in
+    session.open{ (error) in
       if !session.isOpen() {
         switch ((error as! NSError).code) {
         case Int(KOErrorCancelled.rawValue):
@@ -79,12 +77,9 @@ class KakaoLoginController: UIViewController{
           let alertController = UIAlertController(title: "에러", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
           let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
           alertController.addAction(defaultAction)
-//          self.loginViewController?.present(alertController, animated: true , completion: nil)
           break
         }
       }
-    }, authParams: nil, authTypes: nil)
+    }
   }
-  
-  
 }

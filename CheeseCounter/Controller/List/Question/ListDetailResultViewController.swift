@@ -142,7 +142,7 @@ class ListDetailResultViewController: UIViewController {
   }
   
   /// 폴딩효과를 위한 enum 세팅
-  fileprivate dynamic func foldingAction(_ sender: UIButton){
+  @objc fileprivate dynamic func foldingAction(_ sender: UIButton){
     
     if foldState == .expand{
       foldState = .fold
@@ -279,7 +279,7 @@ extension ListDetailResultViewController: UICollectionViewDataSource{
           let survey_id = self?.parameter["survey_id"] ?? ""
           self?.fetch(selectAsk: selectAsk, survey_id: survey_id, addr: country, reloadType: .barchart)
         }
-        cell.didNotTap = {[weak self] _ in
+        cell.didNotTap = {[weak self] in
           guard let ask = self?.selectAsk , let surveyID = self?.surveyId else {return}
           self?.fetch(selectAsk: "\(ask)", survey_id: surveyID, reloadType: .all)
         }
@@ -363,7 +363,7 @@ extension ListDetailResultViewController: DZNEmptyDataSetSource,DZNEmptyDataSetD
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "데이터가 비어있음"
     
-    let attributes = [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18),NSForegroundColorAttributeName:UIColor.white]
+    let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
     return NSAttributedString(string: text, attributes: attributes)
   }
 }

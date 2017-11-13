@@ -21,7 +21,7 @@ extension String{
     return self.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
   }
   
-  func boundingRect(with size: CGSize, attributes: [String: AnyObject]) -> CGRect {
+  func boundingRect(with size: CGSize, attributes: [NSAttributedStringKey: Any]) -> CGRect {
     let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
     let rect = self.boundingRect(with: size, options: options, attributes: attributes, context: nil)
     return snap(rect)

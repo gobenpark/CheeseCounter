@@ -158,7 +158,7 @@ class SaleGoldViewCell: UICollectionViewCell, UITextFieldDelegate{
     return true
   }
   
-  func moneyButtonAction(_ sender: UIButton){
+  @objc func moneyButtonAction(_ sender: UIButton){
     sender.isSelected = sender.isSelected ? false : true
     moneyButtons.forEach { (button) in
       if button.tag != sender.tag {

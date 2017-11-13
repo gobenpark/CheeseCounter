@@ -56,7 +56,7 @@ class SampleImageSelectVC: UIViewController{
             }
         }
     }
-    func dismissAction(){
+  @objc func dismissAction(){
         
         self.navigationController?.popViewController(animated: true)
     }

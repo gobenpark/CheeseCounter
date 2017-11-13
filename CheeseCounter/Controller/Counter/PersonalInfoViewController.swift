@@ -55,7 +55,7 @@ class personalInfoViewController: UIViewController{
         }
     }
     
-    fileprivate dynamic func extendAction(_ sender: BetterSegmentedControl){
+  @objc fileprivate dynamic func extendAction(_ sender: BetterSegmentedControl){
         self.setUpPageViewController.scrollToViewController(index: Int(sender.index))
     }
 

@@ -137,7 +137,7 @@ class NickNameViewController: BaseSetupViewController{
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
-  func keyboardWillHide(_ sender: Notification) {
+  @objc func keyboardWillHide(_ sender: Notification) {
     if let userInfo = (sender as NSNotification).userInfo {
       if let _ = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
         //key point 0,
@@ -149,7 +149,7 @@ class NickNameViewController: BaseSetupViewController{
     }
   }
   
-  func keyboardWillShow(_ sender: Notification) {
+  @objc func keyboardWillShow(_ sender: Notification) {
     if let userInfo = (sender as NSNotification).userInfo {
       if ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height) != nil {
         
@@ -161,7 +161,7 @@ class NickNameViewController: BaseSetupViewController{
   }
   
   
-  fileprivate dynamic func confirmDuplicated(_ sender: UIButton){
+  @objc fileprivate dynamic func confirmDuplicated(_ sender: UIButton){
     self.nickNameTextField.endEditing(true)
     let textCount = nickNameTextField.text?.characters.count
     if textCount! > 1 && textCount! < 12{
@@ -219,7 +219,7 @@ class NickNameViewController: BaseSetupViewController{
     }
   }
   
-  fileprivate dynamic func deleteAction(){
+  @objc fileprivate dynamic func deleteAction(){
     nickNameTextField.text = ""
   }
   

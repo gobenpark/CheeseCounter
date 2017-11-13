@@ -40,9 +40,7 @@ class ImagePickerViewController: UIViewController {
     sampleImageSelectVC.didTap = self.urlCallBack
     
     
-    let cameraViewController = CameraViewController(croppingEnabled: true
-    , allowsLibraryAccess: true) { [weak self] image, asset in
-      
+    let cameraViewController = CameraViewController(croppingParameters: CroppingParameters(isEnabled: true, allowResizing: true, allowMoving: true, minimumSize: .zero), allowsLibraryAccess: true, allowsSwapCameraOrientation: true, allowVolumeButtonCapture: true) { [weak self] image, asset in
       if let image = UIImage.resizeImage(image: image ?? UIImage(), newWidth: 500), let tap = self?.didTap {
         guard let data = UIImageJPEGRepresentation(image, 1) else {return}
         tap(data)
@@ -50,6 +48,7 @@ class ImagePickerViewController: UIViewController {
       }
       self?.navigationController?.popToRootViewController(animated: true)
     }
+
     
     let libraryViewController = CameraViewController
       .imagePickerViewController(croppingEnabled: true) { [weak self] image, asset in
@@ -99,9 +98,7 @@ class ImagePickerViewController: UIViewController {
     self.navigationController?.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
   }
   
-  
-  
-  fileprivate dynamic func segmentControlEvent(_ sender: BetterSegmentedControl){
+  @objc fileprivate dynamic func segmentControlEvent(_ sender: BetterSegmentedControl){
     setUpPageViewController.scrollToViewController(index: Int(sender.index))
   }
 }
@@ -115,9 +112,10 @@ extension CameraViewController {
     navigationController.navigationBar.barStyle = UIBarStyle.black
     navigationController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
     
+    
     imagePicker.onSelectionComplete = { [weak imagePicker] asset in
       if let asset = asset {
-        let confirmController = ConfirmViewController(asset: asset, allowsCropping: croppingEnabled)
+        let confirmController = ConfirmViewController(asset: asset, croppingParameters: CroppingParameters(isEnabled: true, allowResizing: true, allowMoving: true, minimumSize: .zero))
         confirmController.onComplete = { [weak imagePicker] image, asset in
           if let image = image, let asset = asset {
             completion(image, asset)

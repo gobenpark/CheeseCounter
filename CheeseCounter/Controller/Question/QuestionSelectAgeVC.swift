@@ -52,10 +52,10 @@ class QuestionSelectAgeVC: UIViewController{
       button.tag = i
       button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_5_select@1x"), for: .selected)
       button.addTarget(self, action: #selector(checkButtonAction(_:)), for: .touchUpInside)
-      button.setAttributedTitle(NSAttributedString(string: "\((i+1)*10) 대", attributes: [NSFontAttributeName:UIFont.CheeseFontRegular(size: 16),
-                                                                                           NSForegroundColorAttributeName:UIColor.black]), for: .normal)
-      button.setAttributedTitle(NSAttributedString(string: "\((i+1)*10) 대", attributes: [NSFontAttributeName:UIFont.CheeseFontBold(size: 16),
-                                                                                           NSForegroundColorAttributeName:UIColor.white]), for: .selected)
+      button.setAttributedTitle(NSAttributedString(string: "\((i+1)*10) 대", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontRegular(size: 16),
+                                                                                           NSAttributedStringKey.foregroundColor:UIColor.black]), for: .normal)
+      button.setAttributedTitle(NSAttributedString(string: "\((i+1)*10) 대", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 16),
+                                                                                           NSAttributedStringKey.foregroundColor:UIColor.white]), for: .selected)
       button.titleLabel?.font = UIFont.CheeseFontBold(size: 16)
       buttons.append(button)
       if i == 5{
@@ -138,11 +138,11 @@ class QuestionSelectAgeVC: UIViewController{
     }
   }
   
-  fileprivate dynamic func checkButtonAction(_ sender: UIButton){
+  @objc fileprivate dynamic func checkButtonAction(_ sender: UIButton){
     sender.isSelected = sender.isSelected ? false : true
   }
   
-  fileprivate dynamic func buttonAction(_ sender: UIButton){
+  @objc fileprivate dynamic func buttonAction(_ sender: UIButton){
     var ageString: String = ""
     var isButtonAnyOneSelect:Bool = false
     for button in ageSelectButtons {

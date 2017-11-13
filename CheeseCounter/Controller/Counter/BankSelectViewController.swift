@@ -39,7 +39,7 @@ final class BankSelectViewController: UIViewController{
     self.navigationItem.title = "은행선택"
   }
   
-  func dismissAction(){
+  @objc func dismissAction(){
     self.presentingViewController?.dismiss(animated: true, completion: nil)
   }
 }

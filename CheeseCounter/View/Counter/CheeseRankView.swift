@@ -94,7 +94,7 @@ extension CheeseRankView: DZNEmptyDataSetDelegate{
 extension CheeseRankView: DZNEmptyDataSetSource{
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     return NSAttributedString(string: "아직 순위가 없어요"
-      , attributes: [NSForegroundColorAttributeName:UIColor.lightGray,NSFontAttributeName:UIFont.CheeseFontMedium(size: 18)])
+      , attributes: [NSAttributedStringKey.foregroundColor:UIColor.lightGray,NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 18)])
   }
 }
 
@@ -168,8 +168,11 @@ fileprivate class CheeseRankViewCell: UICollectionViewCell{
     self.rankLabel.text = data?.rank ?? "0"
     profileImg.kf.setImage(with: URL(string: data?.img_url ?? ""))
     
-    let attribute = NSMutableAttributedString(string: data?.nickname ?? "", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 14)])
-    attribute.append(NSAttributedString(string: "\n\(data?.title ?? "")", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 11),NSForegroundColorAttributeName:#colorLiteral(red: 0.9960784314, green: 0.4705882353, blue: 0.2862745098, alpha: 1)]))
+
+    let attribute = NSMutableAttributedString(string: data?.nickname ?? "",
+                                              attributes: [NSAttributedStringKey.font: UIFont.CheeseFontMedium(size: 14)])
+    attribute.append(NSAttributedString(string: "\n\(data?.title ?? "")",
+      attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11),NSAttributedStringKey.foregroundColor:#colorLiteral(red: 0.9960784314, green: 0.4705882353, blue: 0.2862745098, alpha: 1)]))
     
     idLabel.attributedText = attribute
     

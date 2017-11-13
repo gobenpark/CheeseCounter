@@ -75,11 +75,11 @@ class ListDetailResultViewCell: UICollectionViewCell
         }
         
         let attribute = NSMutableAttributedString(string: "남자")
-        attribute.append(NSAttributedString(string: "\(male)", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 20)]))
+      attribute.append(NSAttributedString(string: "\(male)", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)]))
         attribute.append(NSAttributedString(string: "명"))
         
         let attribute2 = NSMutableAttributedString(string: "여자")
-        attribute2.append(NSAttributedString(string: "\(female)", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 20)]))
+      attribute2.append(NSAttributedString(string: "\(female)", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)]))
         attribute2.append(NSAttributedString(string: "명"))
         
         self.maleLabel.attributedText = attribute

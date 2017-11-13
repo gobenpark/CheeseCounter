@@ -66,15 +66,15 @@ final class SelectGenderViewController: BaseSetupViewController {
     maleImageButton.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
       make.centerY.equalToSuperview().inset(-height/7)
-      make.height.equalTo(width/3)
-      make.width.equalTo(width/3)
+      make.width.equalToSuperview().dividedBy(3)
+      make.height.equalTo(self.maleImageButton.snp.width)
     }
     
     femaleImageButton.snp.makeConstraints { (make) in
       make.centerY.equalToSuperview().inset(height/7)
       make.centerX.equalToSuperview()
-      make.height.equalTo(width/3)
-      make.width.equalTo(width/3)
+      make.width.equalToSuperview().dividedBy(3)
+      make.height.equalTo(self.femaleImageButton.snp.width)
     }
   }
   
@@ -89,7 +89,7 @@ final class SelectGenderViewController: BaseSetupViewController {
     }
   }
   
-  fileprivate dynamic func maleButtonClickAction(_ sender: UIButton)
+  @objc fileprivate dynamic func maleButtonClickAction(_ sender: UIButton)
   {
     sender.isSelected = sender.isSelected ? false : true
     if sender.isSelected{
@@ -105,7 +105,7 @@ final class SelectGenderViewController: BaseSetupViewController {
     
   }
   
-  fileprivate dynamic func femaleButtonClickAction(_ sender: UIButton)
+  @objc fileprivate dynamic func femaleButtonClickAction(_ sender: UIButton)
   {
     sender.isSelected = sender.isSelected ? false : true
     if sender.isSelected{

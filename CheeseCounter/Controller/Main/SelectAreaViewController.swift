@@ -121,7 +121,7 @@ class SelectAreaViewController: BaseSetupViewController{
 
   }
   
-  func empty(){}
+  @objc func empty(){}
   
   func fetch(){
     CheeseService.getRegion { (response) in
@@ -135,7 +135,7 @@ class SelectAreaViewController: BaseSetupViewController{
       }
     }
   }
-  fileprivate dynamic func commitAction(){
+  @objc fileprivate dynamic func commitAction(){
     var regionString = ""
     
     for (key,value) in regionsiData.enumerated(){
@@ -190,7 +190,7 @@ extension SelectAreaViewController: UITableViewDataSource{
     }
   }
   
-  func tableView(cityButton: UIButton){
+  @objc func tableView(cityButton: UIButton){
     //이전 시의 구 버튼 모두 false 만들기
     guard let count = self.regionAllData[siIndex]?.count else {return}
     for i in 0 ..< count{
@@ -223,7 +223,7 @@ extension SelectAreaViewController: UITableViewDataSource{
     self.citySelectView.reloadData()
   }
   
-  func tableView(guButton: UIButton){
+  @objc func tableView(guButton: UIButton){
     guButton.isSelected = guButton.isSelected ? false : true
     if guButton.isSelected{
       
@@ -246,7 +246,7 @@ extension SelectAreaViewController: UITableViewDataSource{
     self.guSelectView.reloadData()
   }
   
-  override dynamic func swipeAction(){
+  @objc override dynamic func swipeAction(){
     AlertView(title: "알림", message: "지역을 하나이상 선택해 주세요.", preferredStyle: .alert)
       .addChildAction(title: "확인", style: .default, handeler: nil)
       .show()

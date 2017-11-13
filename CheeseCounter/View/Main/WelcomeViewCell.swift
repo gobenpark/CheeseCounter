@@ -20,18 +20,18 @@ class WelcomeViewCell: UICollectionViewCell {
       //하단 텍스트 필드의 설정
       imageView.image = UIImage(named: page.imageName)
       let attributedText = NSMutableAttributedString(string: page.title
-        , attributes: [NSFontAttributeName: UIFont(name: "NotoSansKR-Bold", size: 25)!
-          , NSForegroundColorAttributeName: UIColor.black])
+        , attributes: [NSAttributedStringKey.font: UIFont(name: "NotoSansKR-Bold", size: 25)!
+          , NSAttributedStringKey.foregroundColor: UIColor.black])
       
       attributedText.append(NSAttributedString(string: "\n\n\(page.message)"
-        , attributes: [NSFontAttributeName: UIFont(name: "NotoSansKR-Light", size: 15)!
-          , NSForegroundColorAttributeName: UIColor.lightGray]))
+        , attributes: [NSAttributedStringKey.font: UIFont(name: "NotoSansKR-Light", size: 15)!
+          , NSAttributedStringKey.foregroundColor: UIColor.lightGray]))
       
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = .center
       
       let length = attributedText.string.characters.count
-      attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: length))
+      attributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: length))
       
       textView.attributedText = attributedText
     }

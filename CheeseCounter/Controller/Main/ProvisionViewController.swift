@@ -27,12 +27,12 @@ class ProvisionViewController: BaseSetupViewController {
   let detailProvisionTextView: UITextView = {
     
     let attributeText = NSMutableAttributedString(string: "치즈카운터 서비스 이용약관에 대한 동의\n\n"
-      ,attributes: [NSForegroundColorAttributeName:UIColor.black
-        ,NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18)])
+      ,attributes: [NSAttributedStringKey.foregroundColor:UIColor.black
+        ,NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
     let provisionData = Bundle.provisionFromFile(name: "provision")
     let provisionString = String.init(data: provisionData, encoding: .utf8)
     attributeText.append(NSAttributedString(string: provisionString ?? ""
-      ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 13)]))
+      ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 13)]))
     let dpt = UITextView()
     dpt.backgroundColor = .clear
     dpt.attributedText = attributeText
@@ -70,11 +70,11 @@ class ProvisionViewController: BaseSetupViewController {
   
   let privateProvisionTextView: UITextView = {
     let attributeText = NSMutableAttributedString(string: "치즈카운터 서비스 개인정보 취급방침에 대한 동의\n\n"
-      ,attributes: [NSForegroundColorAttributeName:UIColor.black
-        ,NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18)])
+      ,attributes: [NSAttributedStringKey.foregroundColor:UIColor.black
+        ,NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
     let provisionData = Bundle.provisionFromFile(name: "privacy")
     let provisionString = String.init(data: provisionData, encoding: .utf8)
-    attributeText.append(NSAttributedString(string: provisionString ?? "",attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 13)]))
+    attributeText.append(NSAttributedString(string: provisionString ?? "",attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 13)]))
     let textView = UITextView()
     textView.backgroundColor = .clear
     textView.attributedText = attributeText
@@ -112,7 +112,7 @@ class ProvisionViewController: BaseSetupViewController {
     addConstraint()
   }
   
-  func empty(){}
+  @objc func empty(){}
   
   func addConstraint(){
     
@@ -157,7 +157,7 @@ class ProvisionViewController: BaseSetupViewController {
     }
   }
   
-  func provisionButtonClick(_ button: UIButton){
+  @objc func provisionButtonClick(_ button: UIButton){
     button.isSelected = button.isSelected ? false : true
     switch button.tag {
     case 0:
@@ -185,7 +185,7 @@ class ProvisionViewController: BaseSetupViewController {
     }
   }
   
-  fileprivate dynamic func startAction(){
+  @objc fileprivate dynamic func startAction(){
     
     if !isdisableScroll {
       self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 1)

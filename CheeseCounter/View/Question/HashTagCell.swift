@@ -46,7 +46,6 @@ class HashTagCell: UITableViewCell {
     field.delimiter = " "
     field.placeholder = "태그 후 Enter입력(필수)"
     field.layer.borderWidth = 0.5
-    field.acceptTagOption = .return
     field.layer.borderColor = UIColor.lightGray.cgColor
     return field
   }()
@@ -101,7 +100,7 @@ class HashTagCell: UITableViewCell {
       make.height.equalTo(0.5)
     }
     
-    tagsField.onDidAddTag = {[weak self](_) in
+    tagsField.onDidAddTag = {[weak self] (_,_) in
       guard let `self` = self else {return}
       
       var tags = String()
@@ -114,7 +113,7 @@ class HashTagCell: UITableViewCell {
       
     }
     
-    tagsField.onDidRemoveTag = {[weak self](_) in
+    tagsField.onDidRemoveTag = {[weak self] (_,_) in
       guard let `self` = self else {return}
       var tags = String()
       for tag in self.tagsField.tags{

@@ -87,7 +87,7 @@ class CheeseSaleCompleteVC: UIViewController{
     }
     
     //MARK: - ACTION
-    func dismissAction(){
+  @objc func dismissAction(){
         self.presentingViewController?.dismiss(animated: true, completion: {
             guard let callBack = self.callBack else {return}
             callBack()

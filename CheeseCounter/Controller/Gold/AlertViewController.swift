@@ -20,7 +20,11 @@ import Moya
 class AlertViewController: UIViewController{
   
   let disposeBag = DisposeBag()
-  let dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfAlertData>()
+  let dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfAlertData>(configureCell: { ds, cv, ip, item in
+    let cell = cv.dequeueReusableCell(withReuseIdentifier: AlertViewCell.ID, for: ip) as! AlertViewCell
+    cell.model = item
+    return cell
+  })
   let cellViewModels = Variable<[SectionOfAlertData]>([])
   var currentPage = 0
 
@@ -133,7 +137,7 @@ class AlertViewController: UIViewController{
     self.navigationItem.titleView = titleButton
   }
   
-  func presentCoachView(){
+  @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[4]
     self.present(coachView, animated: true, completion: nil)
@@ -193,8 +197,8 @@ extension AlertViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
     let label = UILabel()
     label.textAlignment = .center 
     label.attributedText = NSAttributedString(string: "등록된 알림이 아직 없어요."
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName:UIColor.gray])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor:UIColor.gray])
     self.activityView.startAnimating()
     
     if isLoading{

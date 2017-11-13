@@ -31,11 +31,15 @@ struct CheeseService {
       .responseJSON(completionHandler: { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           Crashlytics.sharedInstance().recordError(error)
@@ -66,11 +70,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           Crashlytics.sharedInstance().recordError(error)
@@ -120,14 +128,18 @@ struct CheeseService {
                       case .success(let result, _, _):
                         result.validate(statusCode: 200..<400)
                           .responseJSON(completionHandler: { (response) in
-                            let json = JSON(data: response.data!)
-                            if let result = json["result"]["code"].string
-                              ,let data = json["result"]["data"].string{
-                              if result == "2001"{
-                                sessionExpireAction()
+                            do{
+                              let json = try JSON(data: response.data!)
+                              if let result = json["result"]["code"].string
+                                ,let data = json["result"]["data"].string{
+                                if result == "2001"{
+                                  sessionExpireAction()
+                                }
+                                
+                                completion(result,data)
                               }
-                              
-                              completion(result,data)
+                            }catch let error{
+                              log.error(error)
                             }
                           })
                         
@@ -153,11 +165,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           Crashlytics.sharedInstance().recordError(error)
@@ -190,11 +206,15 @@ struct CheeseService {
       .responseJSON{ (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           Crashlytics.sharedInstance().recordError(error)
@@ -202,12 +222,16 @@ struct CheeseService {
         
         switch response.result {
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
+              completion(result)
             }
-            completion(result)
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -231,11 +255,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           print(error)
@@ -268,11 +296,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -280,15 +312,19 @@ struct CheeseService {
         
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if let data = json["result"]["data"].string{
-              if result == "2001"{
-                sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if let data = json["result"]["data"].string{
+                if result == "2001"{
+                  sessionExpireAction()
+                }
+                completion(result,data)
               }
-              completion(result,data)
+              completion(result,"success")
             }
-            completion(result,"success")
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           completion(error.localizedDescription,"error")
@@ -307,11 +343,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -319,13 +359,17 @@ struct CheeseService {
         
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string
-            ,let data = json["result"]["data"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string
+              ,let data = json["result"]["data"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
+              completion(result,data)
             }
-            completion(result,data)
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           completion(error.localizedDescription,"error")
@@ -347,11 +391,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -384,11 +432,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -421,14 +473,18 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
-         log.error(error.localizedDescription)
+          log.error(error.localizedDescription)
         }
         let response: DataResponse<CheeseResultByDate> = response.flatMap{ json in
           if let user = Mapper<CheeseResultByDate>().map(JSONObject: json){
@@ -458,11 +514,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -504,11 +564,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -550,11 +614,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do {
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -587,11 +655,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["code"].string{
             if result == "2001"{
               sessionExpireAction()
             }
+          }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -622,7 +694,8 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["code"].string{
             if result == "2001"{
               sessionExpireAction()
@@ -637,6 +710,9 @@ struct CheeseService {
               }
               completion(response)
             }
+          }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -666,11 +742,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["code"].string{
             if result == "2001"{
               sessionExpireAction()
             }
+          }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -712,11 +792,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -750,13 +834,17 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["code"].string
             ,let data = json["result"]["data"].string{
             if result == "2001"{
               sessionExpireAction()
             }
             completion(result,data)
+          }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           completion(error.localizedDescription,"error")
@@ -777,11 +865,15 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -815,15 +907,18 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            
-            if (json["code"].string ?? "") == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              
+              if (json["code"].string ?? "") == "2001"{
+                sessionExpireAction()
+              }
+              completion(result)
             }
-            completion(result)
+          }catch let error{
+            log.error(error)
           }
-          
         case .failure(let error):
           completion(error.localizedDescription)
         }
@@ -846,15 +941,18 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string
-            ,let data = json["result"]["data"].string{
-            if (json["code"].string ?? "") == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string
+              ,let data = json["result"]["data"].string{
+              if (json["code"].string ?? "") == "2001"{
+                sessionExpireAction()
+              }
+              completion(result,data)
             }
-            completion(result,data)
+          }catch let error{
+            log.error(error)
           }
-          
         case .failure(let error):
           completion(error.localizedDescription,"error")
         }
@@ -877,14 +975,17 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if (json["code"].string ?? "") == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if (json["code"].string ?? "") == "2001"{
+                sessionExpireAction()
+              }
+              completion(result)
             }
-            completion(result)
+          }catch let error{
+            log.error(error)
           }
-          
         case .failure(let error):
           completion(error.localizedDescription)
         }
@@ -905,14 +1006,18 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["code"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["code"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
             }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
-         log.error(error.localizedDescription)
+          log.error(error.localizedDescription)
         }}.responseJSON { (response) in
           let response: DataResponse<QnaListData> = response.flatMap{ json in
             if let user = Mapper<QnaListData>().map(JSONObject: json){
@@ -926,8 +1031,8 @@ struct CheeseService {
     }
   }
   
-
-
+  
+  
   /// dropOut
   ///
   /// - Parameter completion: callBack
@@ -941,14 +1046,17 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string{
-            if json["code"] == "2001"{
-              sessionExpireAction()
+          do{
+            let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string{
+              if json["code"] == "2001"{
+                sessionExpireAction()
+              }
+              completion(result)
             }
-            completion(result)
+          }catch let error{
+            log.error(error)
           }
-          
         case .failure(let error):
           completion(error.localizedDescription)
         }
@@ -965,14 +1073,17 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["data"]["is_secession"].string{
             if result == "2001"{
               sessionExpireAction()
             }
             completion(result)
           }
-          
+          }catch let error{
+            log.error(error)
+          }
         case .failure(let error):
           completion(error.localizedDescription)
         }
@@ -989,14 +1100,17 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["code"].string{
             if (json["code"].string ?? "") == "2001"{
               sessionExpireAction()
             }
             completion(result)
           }
-          
+          }catch let error{
+            log.error(error)
+          }
         case .failure(let error):
           completion(error.localizedDescription)
         }
@@ -1013,9 +1127,13 @@ struct CheeseService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
+          do{
+          let json = try JSON(data: response.data!)
           if let result = json["result"]["data"]["count"].number{
             completion(result)
+          }
+          }catch let error{
+            log.error(error)
           }
         case .failure(let error):
           log.error(error.localizedDescription)
@@ -1084,7 +1202,7 @@ struct CheeseService {
     case .next(let pageNum):
       pageNumber = pageNum
     }
-
+    
     let url = "\(UserService.url)/survey/getSearchSurveyList.json"
     let manager = Alamofire.SessionManager.default
     manager.session.configuration.timeoutIntervalForRequest = 120
@@ -1130,7 +1248,7 @@ struct CheeseService {
         completion(response)
     }
   }
-
+  
   
   static func sessionExpireAction(){
     let alertController = UIAlertController(title: "세션이 만료되어 재로그인 합니다.", message: "", preferredStyle: .alert)

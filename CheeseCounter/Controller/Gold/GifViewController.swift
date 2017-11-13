@@ -56,7 +56,7 @@ class GifViewController: UIViewController{
   }
   
   func dismissAction(){
-    self.presentingViewController?.dismiss(animated: true){[weak self] (_) in
+    self.presentingViewController?.dismiss(animated: true){[weak self] in
       guard let tap = self?.dismissCompleteAction else {return}
       tap()
     }

@@ -77,11 +77,11 @@ class CalendarSelectView: UIView, UITextViewDelegate{
     monthPicker.setToday()
   }
   
-  func fetching(){
+  @objc func fetching(){
     self.fetchData?(["year":"\(year ?? 0)","month":"\(month ?? 0)"])
   }
   
-  func picker(_ sender: UIButton){
+  @objc func picker(_ sender: UIButton){
     self.addSubview(emptyTextView)
     emptyTextView.tag = sender.tag
     self.pickUpDate(textField: emptyTextView)
@@ -112,7 +112,7 @@ class CalendarSelectView: UIView, UITextViewDelegate{
     textField.inputAccessoryView = toolBar
   }
   
-  func doneClick(_ sender: UIBarButtonItem) {
+  @objc func doneClick(_ sender: UIBarButtonItem) {
     if sender.tag == 0{
       self.yearButton.setTitle("\(year ?? 0)년", for: .normal)
     }else if sender.tag == 1{
@@ -130,7 +130,7 @@ class CalendarSelectView: UIView, UITextViewDelegate{
     fetch(["year":"\(year ?? 0)","month":"\(month ?? 0)"])
   }
   
-  func cancelClick() {
+  @objc func cancelClick() {
     emptyTextView.resignFirstResponder()
   }
   

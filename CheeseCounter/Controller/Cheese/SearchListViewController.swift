@@ -27,7 +27,12 @@ class SearchListViewController: UIViewController{
   
   var searchType: SearchType
   let disposeBag = DisposeBag()
-  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>()
+  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>(configureCell: { ds, cv, ip, item in
+    let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: BaseListCell.self), for: ip) as! BaseListCell
+    cell.data = item
+    return cell
+  }
+)
   let cellViewModels = Variable<[SearchViewModel]>([])
   
   lazy var searchController: UISearchController = {
@@ -121,7 +126,7 @@ class SearchListViewController: UIViewController{
     self.navigationItem.titleView = searchController.searchBar
   }
 
-  func dismissAction(){
+  @objc func dismissAction(){
     self.dismiss(animated: false, completion: nil)
   }
   
@@ -152,7 +157,7 @@ extension SearchListViewController: UICollectionViewDelegate{
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
-    let contentOffsetBottom = scrollView.contentOffset.y + scrollView.height
+    let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 100
     if didReachBottom {
@@ -164,14 +169,14 @@ extension SearchListViewController: UICollectionViewDelegate{
     , referenceSizeForFooterInSection section: Int) -> CGSize {
 
     let height: CGFloat = (self.isLoading) ? 44 : 0
-    return CGSize(width: collectionView.width, height: height)
+    return CGSize(width: collectionView.frame.width, height: height)
   }
 }
 
 
 extension SearchListViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-    return NSAttributedString(string: "검색해 주세요~", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)])
+    return NSAttributedString(string: "검색해 주세요~", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
   }
 }
 

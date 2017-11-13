@@ -56,7 +56,7 @@ class SelectTagViewCell: UITableViewCell {
         }
         
     }
-    func changeAction(_ sender: UISwitch){
+  @objc func changeAction(_ sender: UISwitch){
         guard let tap = tapSwitch else {return}
         tap(sender.isOn)
     }

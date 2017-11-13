@@ -68,14 +68,19 @@ struct PointService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string
-            ,let data = json["result"]["data"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+          let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string
+              ,let data = json["result"]["data"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
+              completion(result,data)
             }
-            completion(result,data)
+          }catch let error{
+            print(error)
           }
+        
           
         case .failure(let error):
           completion(error.localizedDescription,"error")

@@ -24,8 +24,10 @@ struct URLNavigationMap{
   
   static private let dispatchGroup = DispatchGroup()
   static private(set) var cheeseData: CheeseResultByDate.Data?
+  static let navigator = Navigator()
   
   static func initialize(){
+    
     Navigator.map("kakaocd6c8f274a818233a16291049ab56fd8://kakaolink") { (url, values) -> Bool in
       guard let surveyID = url.queryParameters["kWGPa9nW"] else {return false}
       self.checkProcess(surveyID: surveyID)

@@ -45,12 +45,12 @@ final class CheeseResultOtherViewController: CheeseBaseViewController {
     self.navigationController?.navigationBar.setBottomBorderColor(color: .white, height: 2)
   }
   
-  func refreshControlDidChangeValue(){
+  @objc func refreshControlDidChangeValue(){
     fetchReply()
     self.refreshControl.endRefreshing()
   }
   
-  func pushViewControllerAction(_ sender: UIGestureRecognizer){
+  @objc func pushViewControllerAction(_ sender: UIGestureRecognizer){
     
     let resultVC = ListDetailResultViewController()
     var isZero: Bool = true
@@ -71,7 +71,7 @@ final class CheeseResultOtherViewController: CheeseBaseViewController {
     self.navigationController?.pushViewController(resultVC, animated: true)
   }
   
-  fileprivate dynamic func cellTapAction(){
+  @objc fileprivate dynamic func cellTapAction(){
     self.replyTextView.endEditing(true)
   }
 }
@@ -88,7 +88,7 @@ extension CheeseResultOtherViewController: UICollectionViewDelegateFlowLayout{
     let height = self.replyData[indexPath.row]
       .contents?
       .boundingRect(with: CGSize(width: 287.0, height: UIScreen.main.bounds.height)
-        ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16)]).height
+        ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)]).height
     return CGSize(width: collectionView.frame.width, height: (height ?? 0) + 60)
   }
 }

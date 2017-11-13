@@ -78,13 +78,13 @@ class CounterViewController: UIViewController
     self.navigationItem.titleView = titleButton
   }
   
-  func presentCoachView(){
+  @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[5]
     self.present(coachView, animated: true, completion: nil)
   }
 
-  func keyboardWillHide(_ sender: Notification) {
+  @objc func keyboardWillHide(_ sender: Notification) {
     if let userInfo = (sender as NSNotification).userInfo {
       if let _ = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
         //key point 0,
@@ -96,7 +96,7 @@ class CounterViewController: UIViewController
     }
   }
   
-  func keyboardWillShow(_ sender: Notification) {
+  @objc func keyboardWillShow(_ sender: Notification) {
     if let userInfo = (sender as NSNotification).userInfo {
       if ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height) != nil {
         UIView.animate(withDuration: 0.25, animations: { () -> Void in
@@ -106,11 +106,11 @@ class CounterViewController: UIViewController
     }
   }
   
-  func movePayView(){
+  @objc func movePayView(){
     self.childView.replaceFragment(withIndex: 0)
     guard let goldView = self.childView.getFragment(0) as? CurrentGoldViewController else {return}
     DispatchQueue.main.async {
-      goldView.collectionView.contentOffset = CGPoint(x: goldView.collectionView.size.width, y: 0)
+      goldView.collectionView.contentOffset = CGPoint(x: goldView.collectionView.frame.width, y: 0)
       goldView.counterMenuBar.collectionView.selectItem(at: IndexPath(row: 1, section: 0), animated: true, scrollPosition: .centeredVertically)
     }
   }
@@ -148,12 +148,12 @@ class CounterViewController: UIViewController
       case .success(let value):
         self.rankData = value.data
         let attributeText = NSMutableAttributedString(string: "\(data.nickname ?? "") (\(value.data?.title ?? ""), \(value.data?.rank ?? "")위)"
-          , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)])
+          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
         
-        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)]))
+        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)]))
         
         attributeText.append(NSAttributedString(string: "\n\(self.getKoreanGenderName(gender: data.gender ?? ""))/\(data.age ?? "")세/\(data.addr2 ?? "")"
-          , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 14),NSForegroundColorAttributeName:UIColor.lightGray]))
+          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 14),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
         self.extendView.nickNameLabel.attributedText = attributeText
         let urlString = data.img_url ?? ""
         let url = URL(string: urlString)
@@ -209,7 +209,7 @@ class CounterViewController: UIViewController
   
   //MARK: - Move ViewController
   
-  func pushsetupCounterViewController(){
+  @objc func pushsetupCounterViewController(){
     self.navigationController?.pushViewController(setupCounterViewController, animated: true)
   }
 }

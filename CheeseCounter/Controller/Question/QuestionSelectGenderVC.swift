@@ -107,15 +107,15 @@ class QuestionSelectGenderVC: UIViewController {
         }
     }
     
-    fileprivate dynamic func maleGenderSelect(_ sender: UIButton){
+  @objc fileprivate dynamic func maleGenderSelect(_ sender: UIButton){
         sender.isSelected = sender.isSelected ? false : true
     }
     
-    fileprivate dynamic func femaleGenderSelect(_ sender: UIButton){
+  @objc fileprivate dynamic func femaleGenderSelect(_ sender: UIButton){
         sender.isSelected = sender.isSelected ? false : true
     }
     
-    fileprivate dynamic func buttonAction(_ sender: UIButton){
+  @objc fileprivate dynamic func buttonAction(_ sender: UIButton){
         var genderString: String = ""
         
         guard let tap = didTap else {return}

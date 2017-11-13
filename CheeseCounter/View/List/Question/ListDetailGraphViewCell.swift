@@ -172,9 +172,9 @@ class ListDetailGraphViewCell: UICollectionViewCell {
   
   func attributeUpdate(gender:String, count: Double) -> NSMutableAttributedString{
     
-    let attribute = NSMutableAttributedString(string: gender, attributes: [NSForegroundColorAttributeName:UIColor.black,NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)])
-    attribute.append(NSAttributedString(string: "\(Int(count))", attributes: [NSForegroundColorAttributeName:#colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1),NSFontAttributeName:UIFont.CheeseFontBold(size: 19)]))
-    attribute.append(NSAttributedString(string: "명", attributes: [NSForegroundColorAttributeName:UIColor.black,NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)]))
+    let attribute = NSMutableAttributedString(string: gender, attributes: [NSAttributedStringKey.foregroundColor:UIColor.black,NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
+    attribute.append(NSAttributedString(string: "\(Int(count))", attributes: [NSAttributedStringKey.foregroundColor:#colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1),NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 19)]))
+    attribute.append(NSAttributedString(string: "명", attributes: [NSAttributedStringKey.foregroundColor:UIColor.black,NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)]))
     return attribute
   }
   

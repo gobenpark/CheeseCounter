@@ -84,27 +84,27 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     self.navigationItem.titleView = titleButton
   }
   
-  func presentCoachView(){
+  @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[2]
     self.present(coachView, animated: true, completion: nil)
   }
   
-  fileprivate dynamic func hideKeyBoard(){
+  @objc fileprivate dynamic func hideKeyBoard(){
     tableView.endEditing(true)
   }
   
-  fileprivate dynamic func selectGenderAction(){
+  @objc fileprivate dynamic func selectGenderAction(){
     questionSelectGenderVC.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(questionSelectGenderVC, animated: true, completion: nil)
   }
   
-  fileprivate dynamic func selectAgeAction(){
+  @objc fileprivate dynamic func selectAgeAction(){
     questionSelectAgeVC.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(questionSelectAgeVC, animated: true, completion: nil)
   }
   
-  fileprivate dynamic func selectRegionAction(){
+  @objc fileprivate dynamic func selectRegionAction(){
     regionSelectVC.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(regionSelectVC, animated: true, completion: nil)
   }
@@ -148,7 +148,7 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     }
   }
   
-  func limitDateSelectAction(_ sender: UIButton){
+  @objc func limitDateSelectAction(_ sender: UIButton){
     self.view.addSubview(emptyTextField)
     emptyTextField.delegate = self
     self.emptyTextField.becomeFirstResponder()
@@ -191,7 +191,7 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     textField.inputAccessoryView = toolBar
   }
   
-  func doneClick(){
+  @objc func doneClick(){
     self.emptyTextField.endEditing(true)
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "YYYY-MM-dd"
@@ -201,7 +201,7 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     }
     emptyTextField.resignFirstResponder()
   }
-  func cancelClick(){
+  @objc func cancelClick(){
     self.emptyTextField.resignFirstResponder()
   }
   
@@ -364,9 +364,9 @@ extension QuestionTableViewController {
           AlertView(title: complete.1).addChildAction(title: "확인", style: .default, handeler: nil).show()
         }
         CheeseService.dataUpload(parameter: parameter, dataParameter: self.dataParameters){
-          [weak self](result) in
+          [weak self](status,data) in
           guard let `self` = self else {return}
-          if result.0 == "200"{
+          if status == "200"{
             self.questionData = QuestionData()
             self.questionData.limit_date = self.defaultEndDate()
             self.dataParameters = DataParameter()
@@ -379,14 +379,14 @@ extension QuestionTableViewController {
             gifVC.imageType = .cheese
             gifVC.modalPresentationStyle = .overCurrentContext
             gifVC.modalTransitionStyle = .flipHorizontal
-            gifVC.dismissCompleteAction = { [weak self] (_) in
+            gifVC.dismissCompleteAction = { [weak self] in
               self?.tabBarController?.selectedIndex = 0
               NotificationCenter.default.post(name: NSNotification.Name("mainfetch"), object: nil)
             }
             AppDelegate.instance?.window?.rootViewController?.present(gifVC, animated: true, completion: nil)
           }
           else {
-            AlertView(title: result.1)
+            AlertView(title: data)
               .addChildAction(title: "확인", style: .default, handeler: { (_) in
               })
               .show()

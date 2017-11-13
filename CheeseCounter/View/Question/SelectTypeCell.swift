@@ -72,7 +72,7 @@ class SelectTypeCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func selectAction(_ sender: UIButton){
+  @objc func selectAction(_ sender: UIButton){
     
     switch sender.tag {
     case 0:

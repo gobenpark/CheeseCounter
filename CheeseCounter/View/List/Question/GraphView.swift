@@ -147,7 +147,7 @@ class GraphView: UIView {
         }
     }
     
-    func pushViewControllerAction(_ sender: UIGestureRecognizer){
+  @objc func pushViewControllerAction(_ sender: UIGestureRecognizer){
         guard let tap = self.didTap, let tag = sender.view?.tag else { return }
         tap(tag)
     }

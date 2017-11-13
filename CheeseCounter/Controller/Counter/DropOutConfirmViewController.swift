@@ -44,7 +44,7 @@ class DropOutConfirmViewController: UIViewController {
         }
     }
     
-    fileprivate dynamic func buttonAction(_ sender: UIButton){
+  @objc fileprivate dynamic func buttonAction(_ sender: UIButton){
         CheeseService.deleteSecession { (code) in
             if code == "200"{
                 self.navigationController?.popViewController(animated: true)

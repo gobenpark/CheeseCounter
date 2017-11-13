@@ -32,8 +32,8 @@ class CheeseBaseViewController: UIViewController {
     let textView = NextGrowingTextView()
     textView.backgroundColor = .white
     textView.placeholderAttributedText = NSAttributedString(string: "댓글을 입력하세요..."
-      ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName: UIColor.gray])
+      ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor: UIColor.gray])
     textView.sizeToFit()
     return textView
   }()
@@ -160,7 +160,7 @@ class CheeseBaseViewController: UIViewController {
   }
 
   
-  func replayRegisterAction(_ sender: UIButton){
+  @objc func replayRegisterAction(_ sender: UIButton){
     
     //replyTextView.tag는 부모아이디가 담김
     var parent_id: String = ""
@@ -181,16 +181,16 @@ class CheeseBaseViewController: UIViewController {
     
     let parameter:[String:String] = ["survey_id":id,"parent_id":parent_id,"contents":replyTextView.textView.text]
     
-    CheeseService.insertReply(parameter: parameter) {[weak self] (result) in
+    CheeseService.insertReply(parameter: parameter) {[weak self] (status,data) in
       guard let `self` = self else {
         log.error("error!")
         return
       }
-      if result.0 == "200"{
+      if status == "200"{
         self.alertSuccess(success: true, {
           self.replyTextView.textView.text = ""
           self.replyTextView.tag = 0
-          DispatchQueue.main.async { [weak self] (_) in
+          DispatchQueue.main.async { [weak self] in
             self?.fetchReply()
             if self?.collectionView.numberOfItems(inSection: 0) != 0{
               self?.collectionView.scrollToItem(at: IndexPath(item: sender.tag, section: 0), at: .top, animated: true)
@@ -198,18 +198,18 @@ class CheeseBaseViewController: UIViewController {
             sender.tag = 0
           }
           self.replyTextView.placeholderAttributedText = NSAttributedString(string: "댓글을 입력하세요..."
-            ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-              ,NSForegroundColorAttributeName: UIColor.gray])
+            ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+              ,NSAttributedStringKey.foregroundColor: UIColor.gray])
         })
       } else {
-        AlertView(title: result.1)
+        AlertView(title: data)
           .addChildAction(title: "확인", style: .default, handeler: nil)
           .show()
       }
     }
   }
   
-  dynamic func replyDeleteAction(_ sender: UIGestureRecognizer){
+  @objc dynamic func replyDeleteAction(_ sender: UIGestureRecognizer){
     
     guard let cell = self.collectionView.cellForItem(at:  IndexPath(item: sender.view?.tag ?? 0, section: 1)) as? RereplyViewCell else {return}
     //1 - 부모인지 검사
@@ -223,20 +223,20 @@ class CheeseBaseViewController: UIViewController {
     //3 - 수행
     AlertView(title: "삭제", message: "댓글을 삭제하시겠습니까?", preferredStyle: .actionSheet)
       .addChildAction(title: "예", style: .default) { [weak self] (_) in
-        CheeseService.deleteReply(id: "\(cell.tag)",{ (result) in
-          if result.0 == "200"{
+        CheeseService.deleteReply(id: "\(cell.tag)",{ (result,_) in
+          if result == "200"{
             self?.fetchReply()
           }
         })
       }.show()
   }
   
-  dynamic func writeReReply(_ sender: UIButton){
+  @objc dynamic func writeReReply(_ sender: UIButton){
     
     _ = self.replyTextView.becomeFirstResponder()
     self.replyTextView.placeholderAttributedText = NSAttributedString(string: "대댓글을 입력하세요..."
-      ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName: UIColor.gray])
+      ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor: UIColor.gray])
     
     if let id = Int(replyData[sender.tag].id){
       self.replyTextView.tag = id
@@ -244,7 +244,7 @@ class CheeseBaseViewController: UIViewController {
     }
   }
   
-  dynamic func likeButtonAction(_ sender: UIButton){
+  @objc dynamic func likeButtonAction(_ sender: UIButton){
     
     let replyId = self.replyData[sender.tag].id ?? ""
     let surveyId = self.replyData[sender.tag].survey_id ?? ""
@@ -275,7 +275,7 @@ class CheeseBaseViewController: UIViewController {
     }
   }
   
-  func keyboardWillHide(_ sender: Notification) {
+  @objc func keyboardWillHide(_ sender: Notification) {
     if let userInfo = (sender as NSNotification).userInfo {
       if let _ = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
         self.bottomConstraint?.update(inset: 0)
@@ -285,7 +285,7 @@ class CheeseBaseViewController: UIViewController {
     }
   }
   
-  func keyboardWillShow(_ sender: Notification) {
+  @objc func keyboardWillShow(_ sender: Notification) {
     
     if let userInfo = (sender as NSNotification).userInfo {
       if let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
@@ -298,7 +298,7 @@ class CheeseBaseViewController: UIViewController {
     }
   }
   
-  func keyBoardDown(){
+  @objc func keyBoardDown(){
     replyTextView.textView.endEditing(true)
   }
 }

@@ -100,14 +100,14 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     let cheeseSelectedViewController = CheeseSelectedViewController()
     cheeseSelectedViewController.cheeseData = data
-    cheeseSelectedViewController.didTap = {[weak self] (_) in
+    cheeseSelectedViewController.didTap = {[weak self] () in
       self?.lastSelectFixOffset(tag: tag, row: row)
     }
 
     self.navigationController?.pushViewController(cheeseSelectedViewController, animated: true)
   }
  
-  fileprivate dynamic func refreshControlDidChangeValue(){
+  @objc fileprivate dynamic func refreshControlDidChangeValue(){
     self.isPageLoading = false
     downLoadAllData()
   }
@@ -125,13 +125,13 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
     self.navigationItem.titleView = titleButton
   }
   
-  func presentCoachView(){
+  @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[0]
     self.present(coachView, animated: true, completion: nil)
   }
   
-  private dynamic func searchViewPresent(){
+  @objc private dynamic func searchViewPresent(){
     let searchView = UINavigationController(rootViewController: SearchListViewController(type: .main))
     searchView.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
@@ -150,7 +150,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   
   //MARK: Networking Services
   
-  fileprivate dynamic func downLoadAllData(){
+  @objc fileprivate dynamic func downLoadAllData(){
     isLoading = true
     CheeseService.mainList { [weak self] (response) in
       guard let `self` = self else {return}
@@ -290,7 +290,7 @@ extension CheeseViewController: UICollectionViewDataSource{
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
     if scrollView != self.tableView {
-      let contentOffsetRight = scrollView.contentOffset.x + scrollView.width
+      let contentOffsetRight = scrollView.contentOffset.x + scrollView.frame.width
       let didReachRight = scrollView.contentSize.width > 0
         && contentOffsetRight >= scrollView.contentSize.width
       
@@ -319,8 +319,8 @@ extension CheeseViewController: DZNEmptyDataSetSource{
     label.textAlignment = .center
     label.numberOfLines = 0
     label.attributedText = NSAttributedString(string: "모든 질문에 응답하셨거나\n\n아직 등록된 질문이 없어요.\n\n직접 질문을 등록해보세요."
-      , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 15)
-        ,NSForegroundColorAttributeName:UIColor.gray])
+      , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)
+        ,NSAttributedStringKey.foregroundColor:UIColor.gray])
     
     activityView.startAnimating()
     

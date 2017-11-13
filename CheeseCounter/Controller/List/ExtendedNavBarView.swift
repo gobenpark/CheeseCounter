@@ -22,15 +22,9 @@ class ExtendedNavBarView: UIView {
   
   lazy var segmentedControl: BetterSegmentedControl = {
     
-    let sc = BetterSegmentedControl(frame: .zero
-      , titles: ["질문","응답","공감"]
-      , index: 0
-      , backgroundColor: .white
-      , titleColor: .lightGray
-      , indicatorViewBackgroundColor: #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-      , selectedTitleColor: .white)
-
-    sc.cornerRadius = 20
+    let sc = BetterSegmentedControl(frame: .zero, titles: ["질문","응답","공감"], index: 1, options: [.backgroundColor(.white),.titleColor(.lightGray),.indicatorViewBackgroundColor(#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)),.selectedTitleColor(.white)])
+ 
+    sc.layer.cornerRadius = 20
     sc.layer.borderWidth = 0.5
     sc.layer.borderColor = UIColor.lightGray.cgColor
     sc.titleFont = UIFont.CheeseFontMedium(size: 14)

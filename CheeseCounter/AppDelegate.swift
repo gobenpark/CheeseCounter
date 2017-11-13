@@ -15,7 +15,6 @@ import Firebase
 import FirebaseMessaging
 import SwiftyJSON
 import Kingfisher
-import ManualLayout
 import SwiftyImage
 import Fabric
 import Crashlytics
@@ -195,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     log.debug("디바이스토큰:\(token)")
   }
   
-  func kakaoSessionDidChangeWithNotification() {
+  @objc func kakaoSessionDidChangeWithNotification() {
     reloadRootViewController()
   }
   

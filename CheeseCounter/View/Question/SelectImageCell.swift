@@ -127,7 +127,7 @@ class SelectImageCell: UITableViewCell {
     }
   }
   
-  fileprivate dynamic func imagePickerAction(_ sender: UIImageView){
+  @objc fileprivate dynamic func imagePickerAction(_ sender: UIImageView){
     
     let imagePicker = ImagePickerViewController()
     imagePicker.urlCallBack = { [weak self](urlString) in
@@ -145,7 +145,7 @@ class SelectImageCell: UITableViewCell {
     self.questionViewController?.navigationController?.pushViewController(imagePicker, animated: true)
   }
   
-  fileprivate dynamic func imagePickerAction1(_ sender: UIImageView){
+  @objc fileprivate dynamic func imagePickerAction1(_ sender: UIImageView){
     
     let imagePicker = ImagePickerViewController()
     imagePicker.urlCallBack = { [weak self](urlString) in

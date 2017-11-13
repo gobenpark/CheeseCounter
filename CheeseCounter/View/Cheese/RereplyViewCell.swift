@@ -86,7 +86,7 @@ class RereplyViewCell: UICollectionViewCell{
   fileprivate(set) lazy var writeReplyButton: UIButton = {
     let button = UIButton()
     button.setAttributedTitle(NSAttributedString(string: "댓글 달기"
-      ,attributes: [NSFontAttributeName:UIFont.CheeseFontLight(size: 12),NSForegroundColorAttributeName:UIColor.lightGray])
+      ,attributes: [NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 12),NSAttributedStringKey.foregroundColor:UIColor.lightGray])
       ,for: .normal)
     return button
   }()

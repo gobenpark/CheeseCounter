@@ -151,7 +151,7 @@ class QuestionSelectRegionVC: UIViewController{
     }
   }
   
-  fileprivate dynamic func selectAllCityRegion(_ sender: UIButton){
+  @objc fileprivate dynamic func selectAllCityRegion(_ sender: UIButton){
     
     if sender.isSelected{
       for i in 0..<regionsiData.count{
@@ -175,7 +175,7 @@ class QuestionSelectRegionVC: UIViewController{
     self.guSelectView.reloadData()
   }
   
-  fileprivate dynamic func selectGuAllRegion(_ sender: UIButton){
+  @objc fileprivate dynamic func selectGuAllRegion(_ sender: UIButton){
     
     guard let count = regionguData[siIndex]?.count else {return}
     
@@ -195,7 +195,7 @@ class QuestionSelectRegionVC: UIViewController{
     self.guSelectView.reloadData()
   }
   
-  fileprivate dynamic func commitButtonAction(_ sender: UIButton){
+  @objc fileprivate dynamic func commitButtonAction(_ sender: UIButton){
     
     var regionIndexString = ""
     var regionNameString = ""
@@ -293,7 +293,7 @@ extension QuestionSelectRegionVC: UITableViewDataSource{
   }
   
   //MARK: - CITY BUTTON
-  func tableView(cityButton: UIButton){
+  @objc func tableView(cityButton: UIButton){
     
     self.siIndex = cityButton.tag
     
@@ -305,7 +305,7 @@ extension QuestionSelectRegionVC: UITableViewDataSource{
   }
   
   //MARK: - GU BUTTON
-  func tableView(guButton: UIButton){
+  @objc func tableView(guButton: UIButton){
     
     guButton.isSelected = guButton.isSelected ? false : true
     if guButton.isSelected{

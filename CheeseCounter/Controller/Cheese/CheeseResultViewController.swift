@@ -27,12 +27,7 @@ class CheeseResultViewController: CheeseBaseViewController {
     }
   }
   
-  
-  
   let cheeseData2 = Variable([])
-  
-  
-  
   var topRankSurveyData: SurveyResult.Data?
   var totalCount = 0
   var openData: OpenData
@@ -105,11 +100,11 @@ class CheeseResultViewController: CheeseBaseViewController {
     collectionView.addGestureRecognizer(gesture)
   }
   
-  func backButtonAction(){
+  @objc func backButtonAction(){
     self.navigationController?.popToRootViewController(animated: true)
   }
   
-  fileprivate dynamic func shareAction(){
+  @objc fileprivate dynamic func shareAction(){
     let actionSheet = TwitterActionController()
     actionSheet.headerData = "공유하기"
     
@@ -286,7 +281,7 @@ class CheeseResultViewController: CheeseBaseViewController {
     
   }
   
-  func fetchData(){
+  @objc func fetchData(){
     
     survey_id = cheeseData?.id ?? ""
     guard let id = survey_id else { return }
@@ -329,13 +324,13 @@ class CheeseResultViewController: CheeseBaseViewController {
     }
   }
   
-  func hartButtonAction(_ sender: UIButton){
+  @objc func hartButtonAction(_ sender: UIButton){
     if !sender.isSelected{
-      CheeseService.insertEmpathy(id: self.cheeseData?.id ?? "") { (result) in
-        if result.0 == "200"{
+      CheeseService.insertEmpathy(id: self.cheeseData?.id ?? "") { (status,data) in
+        if status == "200"{
           sender.isSelected = true
         }else {
-          AlertView(title: result.1)
+          AlertView(title: data)
             .addChildAction(title: "확인", style: .default, handeler: nil)
             .show()
         }
@@ -343,7 +338,7 @@ class CheeseResultViewController: CheeseBaseViewController {
     }
   }
   
-  func refreshControlDidChangeValue(){
+  @objc func refreshControlDidChangeValue(){
     fetchData()
     self.refreshControl.endRefreshing()
   }
@@ -396,8 +391,8 @@ extension CheeseResultViewController: UICollectionViewDelegate{
     self.replyTextView.tag = 0
     self.replyTextView.textView.text = ""
     self.replyTextView.placeholderAttributedText = NSAttributedString(string: "댓글을 입력하세요..."
-      ,attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName: UIColor.gray])
+      ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor: UIColor.gray])
     self.replyTextView.endEditing(true)
   }
 }
@@ -410,7 +405,7 @@ extension CheeseResultViewController: UICollectionViewDelegateFlowLayout{
     let height = self.replyData[indexPath.item]
       .contents?
       .boundingRect(with: CGSize(width: collectionView.frame.width - 91, height: UIScreen.main.bounds.height)
-        , attributes:  [NSFontAttributeName:UIFont.CheeseFontRegular(size: 12)]).height
+        , attributes:  [NSAttributedStringKey.font:UIFont.CheeseFontRegular(size: 12)]).height
     return CGSize(width: collectionView.frame.width, height: (height ?? 0) + 60)
   }
 }

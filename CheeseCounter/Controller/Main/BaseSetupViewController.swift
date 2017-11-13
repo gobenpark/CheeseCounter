@@ -44,8 +44,8 @@ class BaseSetupViewController: UIViewController{
     }
 
     func setup(){}
-    func swipeAction(){}
-    private dynamic func emptyAction(){}
+  @objc dynamic func swipeAction(){}
+  @objc private dynamic func emptyAction(){}
 }
 
 extension BaseSetupViewController: UIGestureRecognizerDelegate{

@@ -40,7 +40,7 @@ class CurrentBaseViewController: UIViewController{
     setUp()
   }
   
-  fileprivate dynamic func hideKeyBoard(_ sedner: UIGestureRecognizer){
+  @objc fileprivate dynamic func hideKeyBoard(_ sedner: UIGestureRecognizer){
     collectionView.endEditing(true)
   }
   
@@ -61,7 +61,7 @@ class CurrentBaseViewController: UIViewController{
     datePicker.addTarget(self, action: #selector(datePickerValueChanded(_:)), for: .valueChanged)
   }
   
-  func datePickerValueChanded(_ sender: UIDatePicker){
+  @objc func datePickerValueChanded(_ sender: UIDatePicker){
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .medium
     dateFormatter.timeStyle = .none

@@ -62,9 +62,9 @@ class SetupNotificationViewController: BaseCounterViewController{
       parameter[tuple.0] = tuple.1
     }
     
-    CheeseService.upDateMyPush(parameter: parameter) { (result) in
-      if result.0 != "200"{
-        AlertView(title: result.1)
+    CheeseService.upDateMyPush(parameter: parameter) { (status,data) in
+      if status != "200"{
+        AlertView(title: data)
           .addChildAction(title: "확인", style: .default, handeler: nil)
           .show()
       }
@@ -93,7 +93,7 @@ class SetupNotificationViewController: BaseCounterViewController{
   
   //MARK: - PushSet
   
-  func changePushSetting(_ sender: UISwitch){
+  @objc func changePushSetting(_ sender: UISwitch){
     sampleAlert[sender.tag].1 = sender.isOn ? "1" : "0"
     if !sender.isOn{
       self.isSelectAll = false
@@ -106,7 +106,7 @@ class SetupNotificationViewController: BaseCounterViewController{
     pushUpdate()
   }
   
-  func allChangeAction(_ sender: UISwitch){
+  @objc func allChangeAction(_ sender: UISwitch){
     
     if sender.isOn{
       for i in 0..<sampleAlert.count {

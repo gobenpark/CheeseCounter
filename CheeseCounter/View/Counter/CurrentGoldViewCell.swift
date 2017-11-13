@@ -113,8 +113,8 @@ extension CurrentGoldViewCell: DZNEmptyDataSetSource{
     let label = UILabel()
     label.textAlignment = .center
     label.attributedText = NSAttributedString(string: "골드를 구입하시면 질문의 응답률이 높아져요."
-      , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15)
-        ,NSForegroundColorAttributeName:UIColor.gray])
+      , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
+        ,NSAttributedStringKey.foregroundColor:UIColor.gray])
     
     self.activityView.startAnimating()
     

@@ -22,7 +22,6 @@ class CycleViewController: UIViewController{
     
     node.fillColor = SKColor.red
     node.physicsBody = SKPhysicsBody(circleOfRadius: 4)
-//    node.physicsBody?.isDynamic = true
     node.physicsBody?.affectedByGravity = false //중력
     node.physicsBody?.allowsRotation = true // 충돌에 의해 물체가 회전
     node.physicsBody?.angularDamping = 0.5

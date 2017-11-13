@@ -56,7 +56,7 @@ class MyInquireViewController: UIViewController{
             }
         }
     }
-    fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){
+  @objc fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){
         
         guard let expand = qnaList?[sender.view?.tag ?? 0].isExpand else {return}
         if expand{
@@ -120,25 +120,25 @@ extension MyInquireViewController: UICollectionViewDelegateFlowLayout{
         
         if let content = qnaList?[indexPath.section].q_contents{
             let height = content.boundingRect(with: CGSize(width: 372-52, height: 1000)
-                , attributes:[NSFontAttributeName:UIFont.systemFont(ofSize: 14)]).height
+              , attributes:[NSAttributedStringKey.font:UIFont.systemFont(ofSize: 14)]).height
             if let answer = qnaList?[indexPath.section].a_contents{
                 let answerheight = answer.boundingRect(with: CGSize(width: 372-52, height: 1000)
-                    , attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14)]).height
+                  , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 14)]).height
                 
-                return CGSize(width: collectionView.width, height: height+answerheight+150)
+                return CGSize(width: collectionView.frame.width, height: height+answerheight+150)
             } else {
-                return CGSize(width: collectionView.width, height: height + 100)
+                return CGSize(width: collectionView.frame.width, height: height + 100)
             }
         }
         
-        return CGSize(width: collectionView.width, height: 100)
+        return CGSize(width: collectionView.frame.width, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView
         , layout collectionViewLayout: UICollectionViewLayout
         , referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: collectionView.width, height: 50)
+        return CGSize(width: collectionView.frame.width, height: 50)
     }
 }
 

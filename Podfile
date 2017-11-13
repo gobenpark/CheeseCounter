@@ -10,16 +10,16 @@ pod 'Moya/RxSwift'
 # UI
 pod 'XLActionController'
 pod 'XLActionController/Twitter'
-pod 'SnapKit', '~> 3.2.0'
+pod 'SnapKit'
 pod "UPCarouselFlowLayout"  
-pod 'AAFragmentManager', '~> 0.1.1'
+pod 'AAFragmentManager'
 pod 'CircleProgressView'
 pod 'NVActivityIndicatorView'
 pod 'NextGrowingTextView'
 pod 'DZNEmptyDataSet'
 pod 'BetterSegmentedControl'
 pod 'ALCameraViewController'
-pod 'Toaster', '~> 2.0'
+pod 'Toaster'
 pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
@@ -29,9 +29,8 @@ pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
 pod 'SwiftyJSON'
 pod 'KakaoOpenSDK'
-pod 'ObjectMapper', '~> 2.2'
+pod 'ObjectMapper'
 pod 'Kingfisher'
-pod 'ManualLayout', '~> 1.3'
 pod 'Firebase/Core' 
 pod 'Firebase/Messaging'
 pod 'Firebase/DynamicLinks'
@@ -48,8 +47,8 @@ pod 'RxCocoa'
 pod 'RxDataSources'
 pod 'RxGesture'
 #Animation
-pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 pod 'YLGIFImage'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 # Pods for CheeseCounter
 
  target "CheeseCounterTests" do
@@ -62,5 +61,4 @@ pod 'YLGIFImage'
     pod 'Nimble'
     # Pods for testing
   end
-
 end

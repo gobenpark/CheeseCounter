@@ -140,11 +140,11 @@ class InquireViewController: UIViewController {
   }
   
   
-  func tapGestureAction(){
+  @objc func tapGestureAction(){
     self.commentTextView.endEditing(true)
   }
   
-  fileprivate dynamic func submitAction(){
+  @objc fileprivate dynamic func submitAction(){
     if (titleTextField.text?.characters.count ?? 0) > 1 &&
       (commentTextView.text?.characters.count ?? 0) > 1{
       upLoadQna()
@@ -194,8 +194,6 @@ extension InquireViewController: UITextViewDelegate {
     }
   }
 }
-
-
 
 extension InquireViewController: UITextFieldDelegate{
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

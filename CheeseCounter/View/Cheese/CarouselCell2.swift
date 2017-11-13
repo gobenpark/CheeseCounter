@@ -30,7 +30,7 @@ final class CarouselCell2: CarouselBaseCell
                                progressBlock: nil) {[weak self] (image, error, type, url) in
                                 
         guard let `self` = self else {return}
-        UIGraphicsBeginImageContext(CGSize(width: self.imageView[0].width, height: self.imageView[1].height))
+        UIGraphicsBeginImageContext(CGSize(width: self.imageView[0].frame.width, height: self.imageView[1].frame.height))
         image?.draw(in: CGRect(x: -70, y: 0, width: self.imageView[0].frame.width, height: self.imageView[0].frame.height))
         self.imageView[0].image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -42,7 +42,7 @@ final class CarouselCell2: CarouselBaseCell
                                progressBlock: nil) {[weak self] (image, error, type, url) in
                                 
         guard let `self` = self else {return}
-        UIGraphicsBeginImageContext(CGSize(width: self.imageView[1].width, height: self.imageView[1].height))
+        UIGraphicsBeginImageContext(CGSize(width: self.imageView[1].frame.width, height: self.imageView[1].frame.height))
         image?.draw(in: CGRect(x: 70, y: 0, width: self.imageView[1].frame.width, height: self.imageView[1].frame.height))
         self.imageView[1].image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -99,7 +99,7 @@ final class CarouselCell2: CarouselBaseCell
   
  fileprivate func moveImageContext(imageView: UIImageView,x: CGFloat){
     
-    UIGraphicsBeginImageContext(CGSize(width: imageView.width, height: imageView.height))
+    UIGraphicsBeginImageContext(CGSize(width: imageView.frame.width, height: imageView.frame.height))
     imageView.image?.draw(in: CGRect(x: x, y: 0, width: imageView.frame.width, height: imageView.frame.height))
     imageView.image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()

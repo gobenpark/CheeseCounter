@@ -146,7 +146,7 @@ final class CheeseResultViewCell: UICollectionReusableView {
     }
   }
   
-  fileprivate dynamic func searchOtherRank(_ sender: UIButton){
+  @objc fileprivate dynamic func searchOtherRank(_ sender: UIButton){
     guard let tap = self.didTap else { return }
     tap()
   }

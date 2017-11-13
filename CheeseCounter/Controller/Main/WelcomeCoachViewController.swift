@@ -61,10 +61,10 @@ extension WelcomeCoachViewController: UICollectionViewDataSource{
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CoachImageCell.self), for: indexPath) as! CoachImageCell
       cell.imgView.image = images[indexPath.item - 1]
       cell.didTap = {
-        self.dismiss(animated: true, completion: {[weak self](_) in
+        self.dismiss(animated: true){[weak self] () in
           guard let tap = self?.didTap else {return}
           tap()
-        })
+        }
       }
       return cell
     }
@@ -89,17 +89,17 @@ fileprivate class SendCheeseCell: UICollectionViewCell{
   
   let goldImg: LOTAnimationView = {
     let view = LOTAnimationView(name: "gold_reward")
-    view?.animationSpeed = 0.5
-    return view!
+    view.animationSpeed = 0.5
+    return view
   }()
   
   let titleLabel: UILabel = {
     let label = UILabel()
-    let attribute = NSMutableAttributedString(string: "+ 500치즈", attributes: [NSFontAttributeName:UIFont.CheeseFontBold(size: 30),NSForegroundColorAttributeName:#colorLiteral(red: 0.9979653955, green: 0.4697954655, blue: 0.2858062387, alpha: 1)])
+    let attribute = NSMutableAttributedString(string: "+ 500치즈", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 30),NSAttributedStringKey.foregroundColor:#colorLiteral(red: 0.9979653955, green: 0.4697954655, blue: 0.2858062387, alpha: 1)])
     attribute.append(NSAttributedString(string: "\n\n카운터에서 치즈내역을 확인하세요!",
                                         attributes: [
-                                          NSFontAttributeName:UIFont.CheeseFontBold(size: 18),
-                                          NSForegroundColorAttributeName:UIColor.lightGray]))
+                                          NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 18),
+                                          NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
     label.adjustsFontSizeToFitWidth = true
     label.attributedText = attribute
     label.numberOfLines = 3
@@ -155,7 +155,7 @@ fileprivate class SendCheeseCell: UICollectionViewCell{
     self.goldImg.play()
   }
   
-  func dismissAction(){
+  @objc func dismissAction(){
     guard let tap = didTap else {return}
     tap()
   }
@@ -200,7 +200,7 @@ fileprivate class CoachImageCell: UICollectionViewCell{
     }
   }
   
-  fileprivate dynamic func dismissAction(_ sender: UIButton){
+  @objc fileprivate dynamic func dismissAction(_ sender: UIButton){
     guard let tap = didTap else {return}
     tap()
   }

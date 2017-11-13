@@ -12,27 +12,24 @@ import NVActivityIndicatorView
 
 
 final class CollectionActivityIndicatorView: UICollectionReusableView {
+  
+  fileprivate var activityIndicatorView: NVActivityIndicatorView
+  
+  override init(frame: CGRect) {
+    activityIndicatorView = NVActivityIndicatorView(frame: frame,
+                            type: NVActivityIndicatorType.ballRotate,
+                            color: .black,
+                            padding: NVActivityIndicatorView.DEFAULT_PADDING)
+   super.init(frame: frame)
+    self.activityIndicatorView.startAnimating()
+    self.addSubview(self.activityIndicatorView)
     
-    fileprivate var activityIndicatorView:NVActivityIndicatorView?
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        activityIndicatorView = NVActivityIndicatorView(frame: frame,
-                                                        type: NVActivityIndicatorType.ballRotate,
-                                                        color: .black,
-                                                        padding: NVActivityIndicatorView.DEFAULT_PADDING)
-        self.activityIndicatorView?.startAnimating()
-        self.addSubview(self.activityIndicatorView!)
+    activityIndicatorView.snp.makeConstraints {
+      $0.center.equalToSuperview()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-      self.activityIndicatorView?.centerX = self.width/2
-      self.activityIndicatorView?.centerY = self.height/2
-        
-    }
-    
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }

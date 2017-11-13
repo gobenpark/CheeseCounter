@@ -89,7 +89,7 @@ class ListViewController: UIViewController , listViewControllerDelegate
   }
   
   
-  private dynamic func searchViewPresent(){
+  @objc private dynamic func searchViewPresent(){
     let searchView = UINavigationController(rootViewController: SearchListViewController(type: .list))
     searchView.modalPresentationStyle = .overCurrentContext
     AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
@@ -114,7 +114,7 @@ class ListViewController: UIViewController , listViewControllerDelegate
   }
   
   
-  func presentCoachView(){
+  @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[1]
     self.present(coachView, animated: true, completion: nil)
@@ -127,7 +127,7 @@ class ListViewController: UIViewController , listViewControllerDelegate
   }
   
   
-  func segmentControlEvent(_ segmentControl: BetterSegmentedControl){
+  @objc func segmentControlEvent(_ segmentControl: BetterSegmentedControl){
     let index = Int(segmentControl.index)
     childView.replaceFragment(withIndex: index)
   }

@@ -37,7 +37,7 @@ class QuestionKnowHowViewController: UIViewController {
     }
   }
   
-  func dismissAction(){
+  @objc func dismissAction(){
     self.presentingViewController?.dismiss(animated: true, completion: nil)
   }
 }

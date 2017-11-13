@@ -85,7 +85,7 @@ class AssetViewController: UIViewController{
                       height: staticImageView.bounds.height * scale)
     }
     
-    fileprivate dynamic func selectAction(){
+  @objc fileprivate dynamic func selectAction(){
         guard let data = self.data else {return}
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "imageSelected"), object: nil, userInfo: ["image" : data])
         self.navigationController?.popToRootViewController(animated: true)

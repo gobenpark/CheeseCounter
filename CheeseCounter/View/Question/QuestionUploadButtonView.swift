@@ -42,7 +42,7 @@ class QuestionUploadButtonView: UIView {
         }
     }
     
-    func uploadAction(){
+  @objc func uploadAction(){
         let alertController = UIAlertController(title: "", message: "등록하시겠습니까?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "취소", style: .destructive, handler: nil))
         alertController.addAction(UIAlertAction(title: "예", style: .cancel, handler: { [weak self] (_) in

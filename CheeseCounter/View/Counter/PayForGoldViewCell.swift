@@ -215,7 +215,7 @@ class PayForGoldViewCell: UICollectionViewCell
     setButtonText()
   }
   
-  func deleteTextViewAction(_ sender: UIButton){
+  @objc func deleteTextViewAction(_ sender: UIButton){
     goldLabel.text = ""
     totalCount = 0
     sumPaymentLabel.text = ""
@@ -244,7 +244,7 @@ class PayForGoldViewCell: UICollectionViewCell
     goldButtons[3].setTitle("10만골드", for: .normal)
   }
   
-  fileprivate dynamic func touchGoldButton(_ sender: UIButton){
+  @objc fileprivate dynamic func touchGoldButton(_ sender: UIButton){
     goldButtons.forEach { (button) in
       button.isSelected = false
     }
@@ -277,7 +277,7 @@ class PayForGoldViewCell: UICollectionViewCell
     
   }
   
-  func payButtonAction(_ sender: UIButton){
+  @objc func payButtonAction(_ sender: UIButton){
     if totalCount == 0 {
       let alertVC = UIAlertController(title: "알림", message: "금액을 입력해주세요", preferredStyle: .alert)
       alertVC.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
