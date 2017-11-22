@@ -21,6 +21,7 @@ PODS:
     - Fabric (~> 1.7.2)
   - Differentiator (3.0.2)
   - DZNEmptyDataSet (1.8.1)
+  - Eureka (4.0.1)
   - Fabric (1.7.2)
   - FBSDKCoreKit (4.28.0):
     - Bolts (~> 1.7)
@@ -137,6 +138,7 @@ DEPENDENCIES:
   - CircleProgressView
   - Crashlytics
   - DZNEmptyDataSet
+  - Eureka
   - Fabric
   - FBSDKCoreKit
   - FBSDKShareKit
@@ -200,6 +202,7 @@ SPEC CHECKSUMS:
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
   FBSDKShareKit: 4f525556e0df4cf0f574cb3f01c675434f29d477
@@ -239,6 +242,6 @@ SPEC CHECKSUMS:
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: a3d50edb6eea8996f0c46b76bfc9b1d38bec0ef3
+PODFILE CHECKSUM: a7d4f744588d054327f4c2e930a1ac8110f71fad
 
 COCOAPODS: 1.3.1

@@ -22,6 +22,7 @@ pod 'ALCameraViewController'
 pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
+pod 'Eureka'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'

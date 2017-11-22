@@ -37,7 +37,7 @@ public enum CheeseCounter{
   case getMyInfo
   
   case getSurveyResult(surveyId: String)
-  case getDetailResult(parameter: [String:String])
+  case getDetailResult(survey_id: String, selectAsk: String, address: String)
   
   case getQnaList
   case insertQna(parameter: [String:String])
@@ -197,8 +197,8 @@ extension CheeseCounter: TargetType{
       //      return ["survey_id":id,"select_ask":select]
       //      case .getSurveyListByOption(let pageNum):
       //      return ["page_num":pageNum]
-    case .getDetailResult(let parameter):
-      return .requestParameters(parameters: parameter, encoding: URLEncoding.queryString)
+    case .getDetailResult(let surveyId, let selectAsk, let address):
+      return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.queryString)
       //      case .getMyRegSurveyList(let pageNum):
       //      return ["page_num":pageNum]
       //      case .getMyAnswerSurveyList(let pageNum):

@@ -163,6 +163,8 @@
 		B1C6AAAB1EC0322400B29E19 /* CheeseSaleCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAA1EC0322400B29E19 /* CheeseSaleCompleteVC.swift */; };
 		B1C6AAAD1EC0475000B29E19 /* CheeseReturnData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAC1EC0475000B29E19 /* CheeseReturnData.swift */; };
 		B1C6AAAF1EC2A97E00B29E19 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */; };
+		B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */; };
+		B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */; };
 		B1CF79EC1F7114ED0030827A /* OneTimeCheeseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */; };
 		B1D309701EA48B0E00150107 /* PushListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3096F1EA48B0E00150107 /* PushListData.swift */; };
 		B1D309721EA6437A00150107 /* CalenderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D309711EA6437A00150107 /* CalenderSelectView.swift */; };
@@ -373,6 +375,8 @@
 		B1C6AAAA1EC0322400B29E19 /* CheeseSaleCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseSaleCompleteVC.swift; sourceTree = "<group>"; };
 		B1C6AAAC1EC0475000B29E19 /* CheeseReturnData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseReturnData.swift; sourceTree = "<group>"; };
 		B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSurveyModel.swift; sourceTree = "<group>"; };
+		B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailViewModel.swift; sourceTree = "<group>"; };
 		B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeCheeseData.swift; sourceTree = "<group>"; };
 		B1D3096F1EA48B0E00150107 /* PushListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushListData.swift; sourceTree = "<group>"; };
 		B1D309711EA6437A00150107 /* CalenderSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderSelectView.swift; sourceTree = "<group>"; };
@@ -789,6 +793,7 @@
 				B1C6AAAC1EC0475000B29E19 /* CheeseReturnData.swift */,
 				B1A894DD1EDE502E003FAF9E /* RankData.swift */,
 				B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */,
+				B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -844,6 +849,7 @@
 				B18130451F79F644006F4FCB /* ResultOtherViewModel.swift */,
 				B18130471F7A093E006F4FCB /* ReplyViewModel.swift */,
 				B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */,
+				B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1117,6 +1123,7 @@
 				"${BUILT_PRODUCTS_DIR}/CircleProgressView/CircleProgressView.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-Defines-Logger-NSData+zlib/GoogleToolboxForMac.framework",
@@ -1159,6 +1166,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleProgressView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -1367,7 +1375,9 @@
 				B1B2DBB81F00917300C91CEA /* LoginConfirmController.swift in Sources */,
 				B123381B1E977F9C00DE9640 /* Paging.swift in Sources */,
 				446C51C61EB5E895007B5FA2 /* SelectOptionCells.swift in Sources */,
+				B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */,
 				B1730FD11E9225550023FE7B /* RereplyViewCell.swift in Sources */,
+				B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

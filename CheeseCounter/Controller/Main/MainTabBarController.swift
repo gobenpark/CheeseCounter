@@ -110,7 +110,6 @@ class MainTabBarController: UITabBarController
     
     self.selectedIndex = 0
     self.tabBar.backgroundImage = #imageLiteral(resourceName: "toolbar_bg@1x")
-    self.tabBar.select
     
     if #available(iOS 10.0, *) {
       self.tabBar.unselectedItemTintColor = .black
