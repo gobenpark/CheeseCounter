@@ -10,6 +10,9 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
   - Charts (3.0.4):
     - Charts/Core (= 3.0.4)
   - Charts/Core (3.0.4)
@@ -17,7 +20,6 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Differentiator (3.0.2)
-  - DynamicColor (3.3)
   - DZNEmptyDataSet (1.8.1)
   - Fabric (1.7.2)
   - FBSDKCoreKit (4.28.0):
@@ -105,13 +107,15 @@ PODS:
   - RxGesture (1.2.1):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxOptional (3.3.0):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.0.0)
   - SnapKit (4.0.0)
   - Spring (1.0.3)
   - SwiftyBeaver (1.4.3)
   - SwiftyImage (1.2.0)
   - SwiftyJSON (4.0.0)
-  - Toaster (2.1.1)
   - UPCarouselFlowLayout (1.1.1)
   - URLNavigator (2.0.2)
   - WSTagsField (2.1.2)
@@ -128,10 +132,10 @@ DEPENDENCIES:
   - ALCameraViewController
   - AnyDate
   - BetterSegmentedControl
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`, branch `wip/swift4`)
   - Charts
   - CircleProgressView
   - Crashlytics
-  - DynamicColor (~> 3.3)
   - DZNEmptyDataSet
   - Fabric
   - FBSDKCoreKit
@@ -154,13 +158,13 @@ DEPENDENCIES:
   - RxCocoa
   - RxDataSources
   - RxGesture
+  - RxOptional
   - RxSwift
   - SnapKit
   - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftyBeaver
   - SwiftyImage
   - SwiftyJSON
-  - Toaster
   - UPCarouselFlowLayout
   - URLNavigator
   - WSTagsField
@@ -169,10 +173,16 @@ DEPENDENCIES:
   - YLGIFImage
 
 EXTERNAL SOURCES:
+  ChameleonFramework:
+    :branch: wip/swift4
+    :git: https://github.com/ViccAlexander/Chameleon.git
   Spring:
     :git: https://github.com/MengTo/Spring.git
 
 CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: db432ca1b1a3d8f83ee1f881208c0c960a325e73
+    :git: https://github.com/ViccAlexander/Chameleon.git
   Spring:
     :commit: 01cb67ad4bf6db933965d827ebff08898bb5ec27
     :git: https://github.com/MengTo/Spring.git
@@ -184,11 +194,11 @@ SPEC CHECKSUMS:
   AnyDate: 71846ac55f25c3e78ff5aa87ad173deb196f6b40
   BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Charts: 0705898046257443f0afbbc3179f4b67507b6e48
   CircleProgressView: 66e4d663a2bc7a9086e37b518868be923cd0a23a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
-  DynamicColor: 3cdaa1e01c16e93ba744e0630f768373e0fc7a7d
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
@@ -216,19 +226,19 @@ SPEC CHECKSUMS:
   RxCocoa: d62846ca96495d862fa4c59ea7d87e5031d7340e
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
+  RxOptional: e5448d3e21024489e07c31f6a262f2b50c975367
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyBeaver: e10b1668e0512229c36c34769b97eed3dfae2ca3
   SwiftyImage: ebaa7c7b6163cd4ad102f3bb05a8fb276d35b4f3
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
   URLNavigator: 91f4f1b52f5e8117baca758ba642b26069d72056
   WSTagsField: 3abc2553b94cd5caeb7fe5ba5e4668772714bbe8
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: ba8cb4782860d34062643654cab06025d59c2df7
+PODFILE CHECKSUM: a3d50edb6eea8996f0c46b76bfc9b1d38bec0ef3
 
 COCOAPODS: 1.3.1

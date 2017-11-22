@@ -45,7 +45,6 @@ class CurrentCheeseViewController: CurrentBaseViewController{
     }
   }
 
-
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     if let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CurrentCheeseViewCell{
       cell.calendarView.emptyTextView.endEditing(true)

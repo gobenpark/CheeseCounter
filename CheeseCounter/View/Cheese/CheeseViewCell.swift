@@ -72,7 +72,7 @@ final class CheeseViewCell: UITableViewCell
       self.dateLabel.text = dateString
       self.isPremium = false
     case .premium:
-      self.dateLabel.text = "유료질문"
+      self.dateLabel.text = "이벤트 질문"
       self.isPremium = true
     }
   }

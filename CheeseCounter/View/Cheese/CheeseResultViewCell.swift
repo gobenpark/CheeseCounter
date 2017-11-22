@@ -118,7 +118,7 @@ final class CheeseResultViewCell: UICollectionReusableView {
         self.mainView.answerPercentLabel.text = "응답율:\(((topRankCount/totalCount)*100).roundToPlaces(places: 2))%"
       }
     } else {
-      self.mainView.answerPercentLabel.text = "응답율:\(((topRankCount/totalDoubleCount)*100).roundToPlaces(places: 2))"
+      self.mainView.answerPercentLabel.text = "응답율:\(((topRankCount/totalDoubleCount)*100).roundToPlaces(places: 2))%"
     }
     switch askNumber {
     case "1":

@@ -32,8 +32,6 @@ class ListViewController: UIViewController , listViewControllerDelegate
   }()
   
   
-  
-  
   let searchButton = UIBarButtonItem()
   let extendedNavBarView = ExtendedNavBarView()
   

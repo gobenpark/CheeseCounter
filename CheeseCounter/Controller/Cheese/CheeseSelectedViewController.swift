@@ -269,8 +269,6 @@ final class CheeseSelectedViewController: UIViewController
         cheeseResultVC.cheeseData = self.cheeseData
         
         
-        
-        
         if (self.cheeseData?.is_option ?? "0") == "0"{
           gifVC.imageType = .cheese
         }else {

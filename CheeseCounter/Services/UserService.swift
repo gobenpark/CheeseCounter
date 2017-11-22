@@ -23,7 +23,7 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/"
     case .test:
-      return "http://192.168.1.39:8088"
+      return "http://192.168.1.19:8088"
     }
   }
   
@@ -32,7 +32,7 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/uploadFile"
     case .test:
-      return "http://192.168.1.39:8088/uploadFile"
+      return "http://192.168.1.19:8088/uploadFile"
     }
   }
 }

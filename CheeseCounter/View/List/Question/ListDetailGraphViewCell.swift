@@ -218,7 +218,6 @@ class ListDetailGraphViewCell: UICollectionViewCell {
     var female: [Int:Double] = [:]
     
     for data in data.gender_age{
-      log.info(data)
       let dataCount = Double(data.count) ?? 0
       maxCount = (maxCount > dataCount) ? maxCount : dataCount
       
@@ -264,7 +263,7 @@ class ListDetailGraphViewCell: UICollectionViewCell {
         break
       }
     }
-    maxCount += 1
+    maxCount += 30
     self.barChart.leftAxis.axisMaximum = maxCount
     self.barChart.leftAxis.axisMinimum = -maxCount
     self.barChart.rightAxis.axisMinimum = -maxCount

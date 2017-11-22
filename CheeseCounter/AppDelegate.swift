@@ -23,6 +23,7 @@ import FBSDKCoreKit
 import URLNavigator
 import RxSwift
 import RxCocoa
+import ChameleonFramework
 
 
 let log = SwiftyBeaver.self
@@ -42,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let parameter: [String:String] = [:]
   let customURLScheme = "cheesecounter"
+  let urlMapper = URLNavigationMap(key: "kWGPa9nW")
 
   
   func application(
@@ -63,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     Messaging.messaging().delegate = self
     
-    URLNavigationMap.initialize()
+    
     
     if #available(iOS 10.0, *)
     {
@@ -232,20 +234,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       let message = generateDynamicLinkMessage(dynamicLink)
       log.info(message)
-      
-      if Navigator.open(url) {
-        return true
-      }
-      
-      if Navigator.present(url, wrap: true) != nil {
-        return true
-      }
-      return true
+    }else{
+      log.debug(url.queryParameters["kWGPa9nW",default:""])
     }
     
-    if Navigator.open(url) {
-      return true
-    }
+    
+    urlMapper.open(url: url)
+    
+    
+    
+
+//      if Navigator.open(url) {
+//        return true
+//      }
+      
+//      if Navigator.present(url, wrap: true) != nil {
+//        return true
+//      }
+//      return true
+//    }
+//
+//    if Navigator.open(url) {
+//      return true
+//    }
     
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)

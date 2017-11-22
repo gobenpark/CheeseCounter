@@ -23,7 +23,7 @@ class GifViewController: UIViewController{
   var imageType: gifType = .gold{
     didSet{
       if imageType == .gold{
-        imgView = LOTAnimationView(name: "gold_reward")
+        imgView = LOTAnimationView(name: "cheese_reward")
         imgView.animationSpeed = 0.9
       }else if imageType == .cheese {
         imgView = LOTAnimationView(name: "cheese_reward")

@@ -9,13 +9,15 @@
 import UIKit
 
 import DZNEmptyDataSet
-import Toaster
 import Moya
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
   import RxDataSources
 #endif
+
+
+
 
 class AlertViewController: UIViewController{
   
@@ -33,6 +35,7 @@ class AlertViewController: UIViewController{
       self.collectionView.reloadEmptyDataSet()
     }
   }
+  
 
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()

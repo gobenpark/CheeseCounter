@@ -19,11 +19,9 @@ pod 'NextGrowingTextView'
 pod 'DZNEmptyDataSet'
 pod 'BetterSegmentedControl'
 pod 'ALCameraViewController'
-pod 'Toaster'
 pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
-pod 'DynamicColor', '~> 3.3'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -46,10 +44,14 @@ pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxDataSources'
 pod 'RxGesture'
+pod 'RxOptional'
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+#Color
+pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter
+
 
  target "CheeseCounterTests" do
     inherit! :search_paths

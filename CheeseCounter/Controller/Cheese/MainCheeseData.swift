@@ -14,7 +14,7 @@ enum DateType{
   var date: String{
     switch self {
     case .premium:
-      return "유료질문"
+      return "이벤트 질문"
     case .ordinary(let date):
       return date
     }
