@@ -29,7 +29,6 @@ class ShareController{
     let content2 = FBSDKSharePhotoContent()
     content2.photos = [photo]
     
-    
     let dialog = FBSDKShareDialog()
     dialog.fromViewController = fromViewController
     dialog.shareContent = content

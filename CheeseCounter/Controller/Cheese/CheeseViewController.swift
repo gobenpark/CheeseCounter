@@ -23,7 +23,6 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   var storedOffsets = [Int: CGFloat]()
   var isLoading:Bool = false{
     didSet{
-      log.info(isLoading)
       self.tableView.reloadEmptyDataSet()
     }
   }
@@ -47,7 +46,6 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
     view.frame = UIScreen.main.bounds
     return view
   }()
-  
   
   //MARK: - View Life Cycle
   
@@ -75,9 +73,7 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
                                     action: #selector(searchViewPresent))
     barbutton.tintColor = .black
     self.navigationItem.setRightBarButton(barbutton, animated: true)
-    
-    self.refreshView.addTarget(self,
-                                  action: #selector(self.refreshControlDidChangeValue),
+    self.refreshView.addTarget(self,action: #selector(self.refreshControlDidChangeValue),
                                   for: .valueChanged)
     downLoadAllData()
     navigationBarSetup()
@@ -114,15 +110,11 @@ class CheeseViewController: UITableViewController, DZNEmptyDataSetDelegate
   
   private func navigationBarSetup(){
     
-    let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
-    titleButton.setTitle("응답", for: .normal)
-    titleButton.setImage(#imageLiteral(resourceName: "icon_gold@1x"), for: .normal)
-    titleButton.addTarget(self, action: #selector(presentCoachView), for: .touchUpInside)
-    titleButton.titleLabel?.font = UIFont.CheeseFontBold(size: 17)
-    titleButton.semanticContentAttribute = .forceRightToLeft
-    titleButton.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 10, bottom: 0, right: 0)
-    titleButton.setTitleColor(.black, for: .normal)
-    self.navigationItem.titleView = titleButton
+    let titleLabel = UILabel()
+    titleLabel.text = "응답"
+    titleLabel.font = UIFont.CheeseFontBold(size: 17)
+    titleLabel.sizeToFit()
+    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){
@@ -308,7 +300,6 @@ extension CheeseViewController: UICollectionViewDataSource{
     }
   }
 }
-
 
 //MARK: - CollectionViewFlowLayoutDelegate
 

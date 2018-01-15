@@ -27,11 +27,8 @@ class MainTabBarController: UITabBarController
     let tabBar = UITabBarItem(title: "응답", image: #imageLiteral(resourceName: "toolbar_answer@1x").withRenderingMode(.alwaysTemplate), tag: 0)
     let cheeseColor: UIColor = UIColor(gradientStyle: .leftToRight
       , withFrame: CGRect(x: 0, y: 0, width: 50, height: 50), andColors: [#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1),#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)])
-    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11),NSAttributedStringKey.foregroundColor:UIColor.black], for: .normal)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
-      ,NSAttributedStringKey.foregroundColor:UIColor.white]
-      , for: .selected)
+//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
+    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11),NSAttributedStringKey.foregroundColor:UIColor.black], for: .normal)
     cv.tabBarItem = tabBar
     return nvc
   }()
@@ -40,13 +37,10 @@ class MainTabBarController: UITabBarController
     let vc = UINavigationController(rootViewController: ListViewController())
     vc.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), height: 1)
     let tabBar = UITabBarItem(title: "리스트", image: #imageLiteral(resourceName: "toolbar_list@1x"), tag: 1)
-    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
+//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
+    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11)
       ,NSAttributedStringKey.foregroundColor:UIColor.black]
       , for: .normal)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
-      ,NSAttributedStringKey.foregroundColor:UIColor.white]
-      , for: .selected)
     vc.tabBarItem = tabBar
     return vc
   }()
@@ -55,13 +49,9 @@ class MainTabBarController: UITabBarController
     let vc = UINavigationController(rootViewController: QuestionTableViewController())
     vc.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
     let tabBar = UITabBarItem(title: "질문", image: #imageLiteral(resourceName: "toolbar_question@1x"), tag: 2)
-    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
+//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
+    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11)
       ,NSAttributedStringKey.foregroundColor:UIColor.black], for: .normal)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
-      ,NSAttributedStringKey.foregroundColor:UIColor.white]
-      , for: .selected)
-    
     vc.tabBarItem = tabBar
     return vc
   }()
@@ -70,13 +60,10 @@ class MainTabBarController: UITabBarController
     let vc = UINavigationController(rootViewController: AlertViewController())
     let tabBar = UITabBarItem(title: "알림", image: #imageLiteral(resourceName: "toolbar_alarm@1x"), tag: 3)
     vc.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
-    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
+//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
+    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11)
       ,NSAttributedStringKey.foregroundColor:UIColor.black]
       , for: .normal)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
-      ,NSAttributedStringKey.foregroundColor:UIColor.white]
-      , for: .selected)
     vc.tabBarItem = tabBar
     return vc
   }()
@@ -85,20 +72,15 @@ class MainTabBarController: UITabBarController
     let vc = UINavigationController(rootViewController: CounterViewController())
     _ = vc.topViewController?.view
     let tabBar = UITabBarItem(title: "카운터", image: #imageLiteral(resourceName: "toolbar_counter@1x"), tag: 4)
-    
     tabBar.selectedImage = #imageLiteral(resourceName: "toolbar_counter_select@1x")
-    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
+//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
+    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11)
       ,NSAttributedStringKey.foregroundColor:UIColor.black]
       , for: .normal)
-    tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontLight(size: 11)
-      ,NSAttributedStringKey.foregroundColor:UIColor.white]
-      , for: .selected)
     vc.tabBarItem = tabBar
-    
-    
     return vc
   }()
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -109,8 +91,7 @@ class MainTabBarController: UITabBarController
                        counterViewController]
     
     self.selectedIndex = 0
-    self.tabBar.backgroundImage = #imageLiteral(resourceName: "toolbar_bg@1x")
-    
+    self.tabBar.backgroundColor = .white
     if #available(iOS 10.0, *) {
       self.tabBar.unselectedItemTintColor = .black
     } else {

@@ -81,7 +81,12 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     titleButton.semanticContentAttribute = .forceRightToLeft
     titleButton.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 10, bottom: 0, right: 0)
     titleButton.setTitleColor(.black, for: .normal)
-    self.navigationItem.titleView = titleButton
+    
+    let titleLabel = UILabel()
+    titleLabel.text = "질문"
+    titleLabel.font = UIFont.CheeseFontBold(size: 17)
+    titleLabel.sizeToFit()
+    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){

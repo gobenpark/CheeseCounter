@@ -15,7 +15,6 @@ import BetterSegmentedControl
 
 class CounterViewController: UIViewController
 {
-  
   //MARK: - property
   
   let extendView = ExtendedCounterNavBarView(frame: .zero)
@@ -36,7 +35,11 @@ class CounterViewController: UIViewController
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    NotificationCenter.default.addObserver(self, selector: #selector(movePayView), name: NSNotification.Name(rawValue: "goldView"), object: nil)
+    NotificationCenter.default.addObserver(
+      self
+      , selector: #selector(movePayView)
+      , name: NSNotification.Name(rawValue: "goldView")
+      , object: nil)
     
     navigationBarSetup()
     self.view.addSubview(extendView)
@@ -67,15 +70,12 @@ class CounterViewController: UIViewController
   
   func navigationBarSetup(){
     
-    let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
-    titleButton.setTitle("카운터", for: .normal)
-    titleButton.setImage(#imageLiteral(resourceName: "icon_gold@1x"), for: .normal)
-    titleButton.addTarget(self, action: #selector(presentCoachView), for: .touchUpInside)
-    titleButton.titleLabel?.font = UIFont.CheeseFontBold(size: 17)
-    titleButton.semanticContentAttribute = .forceRightToLeft
-    titleButton.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 10, bottom: 0, right: 0)
-    titleButton.setTitleColor(.black, for: .normal)
-    self.navigationItem.titleView = titleButton
+    let titleLabel = UILabel()
+    titleLabel.text = "카운터"
+    titleLabel.font = UIFont.CheeseFontBold(size: 17)
+    titleLabel.sizeToFit()
+    
+    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){

@@ -23,6 +23,7 @@ pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
 pod 'Eureka'
+
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -40,15 +41,18 @@ pod 'SwiftyBeaver'
 pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
+
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxDataSources'
 pod 'RxGesture'
 pod 'RxOptional'
+
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+
 #Color
 pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter
@@ -56,11 +60,8 @@ pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chamel
 
  target "CheeseCounterTests" do
     inherit! :search_paths
-    pod 'Firebase'
-    pod 'Moya'
-    pod 'Alamofire'
-    
     pod 'Quick'
+    pod 'Stubber'
     pod 'Nimble'
     # Pods for testing
   end

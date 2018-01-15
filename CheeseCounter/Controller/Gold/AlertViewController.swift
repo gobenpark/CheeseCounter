@@ -16,9 +16,6 @@ import Moya
   import RxDataSources
 #endif
 
-
-
-
 class AlertViewController: UIViewController{
   
   let disposeBag = DisposeBag()
@@ -35,7 +32,6 @@ class AlertViewController: UIViewController{
       self.collectionView.reloadEmptyDataSet()
     }
   }
-  
 
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -128,16 +124,12 @@ class AlertViewController: UIViewController{
   }
   
   func navigationBarSetup(){
-    
-    let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
-    titleButton.setTitle("알림", for: .normal)
-    titleButton.setImage(#imageLiteral(resourceName: "icon_gold@1x"), for: .normal)
-    titleButton.addTarget(self, action: #selector(presentCoachView), for: .touchUpInside)
-    titleButton.titleLabel?.font = UIFont.CheeseFontBold(size: 17)
-    titleButton.semanticContentAttribute = .forceRightToLeft
-    titleButton.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 10, bottom: 0, right: 0)
-    titleButton.setTitleColor(.black, for: .normal)
-    self.navigationItem.titleView = titleButton
+  
+    let titleLabel = UILabel()
+    titleLabel.text = "알림"
+    titleLabel.font = UIFont.CheeseFontBold(size: 17)
+    titleLabel.sizeToFit()
+    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){

@@ -49,9 +49,12 @@ class ListDetailResultViewController: FormViewController{
     guard let ask = selectAsk , let surveyID = surveyId else {return}
     CheeseService.provider.rx
       .request(.getDetailResult(survey_id: surveyID, selectAsk: "\(ask)", address: ""))
+      .asObservable()
       .map(ResultSurveyModel.self)
-
-
+      .subscribe { (event) in
+        print(event.element)}
+      .disposed(by: disposeBag)
+    
     form +++ Section("Header Label"){
       var header = HeaderFooterView<UILabel>(.class)
       header.height = {40}
@@ -62,26 +65,29 @@ class ListDetailResultViewController: FormViewController{
         label.font = UIFont.CheeseFontBold(size: 17)
         label.textAlignment = .center
       }
-
       $0.header = header
-
     }
-      <<< RankRow(tag: "1")
+      <<< RankRow{ row in
+        row.cellUpdate({ (cell, row) in
+        })
+      }
       <<< RankRow(tag: "2")
       <<< RankRow(tag: "3")
       <<< RankRow(tag: "4")
-      <<< ButtonRow(){ button in
-        button.title = "더보기"
-        }.onChange({ (row) in
-          row.title = (row.value)
-          row.updateCell()
-        }).cellUpdate({ (cell, row) in
-          cell.textLabel?.font = UIFont.CheeseFontBold(size: 10)
-        }).cellSetup({ (cell, row) in
+      <<< ButtonRow(){ row in
+        row.title = "더보기"
+        row.cellSetup({ (cell, row) in
           cell.tintColor = .black
+          cell.textLabel?.font = UIFont.CheeseFontBold(size: 10)
         })
+        row.onCellSelection({ (cell, row) in
+          guard let title = cell.textLabel?.text else {return}
+          row.title = (title == "더보기") ? "접기" : "더보기"
+          cell.update()
+        })
+    }
 
-    form +++ DetailRankRow()
+    form +++ CircleChartRow()
     form +++ DetailGraphRow()
   }
 }
