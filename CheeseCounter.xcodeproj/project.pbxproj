@@ -10,7 +10,6 @@
 		44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44017B441EA30E8B00BA1D23 /* PushData.swift */; };
 		440A5B901E6ACFEC00D8C74C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B8F1E6ACFEC00D8C74C /* MainTabBarController.swift */; };
 		440A5B921E6AD41B00D8C74C /* CheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */; };
-		440A5B941E6AD49C00D8C74C /* CheeseViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B931E6AD49C00D8C74C /* CheeseViewCell.swift */; };
 		440A5B961E6AD87400D8C74C /* CarouselCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B951E6AD87400D8C74C /* CarouselCell2.swift */; };
 		440DB7F21EE840D5002E32D4 /* CheeseRankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DB7F11EE840D5002E32D4 /* CheeseRankView.swift */; };
 		442236E71EC6200C00872522 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442236E61EC6200C00872522 /* UserNotifications.framework */; };
@@ -44,6 +43,9 @@
 		B13E27931EA76E2500756799 /* CurrentCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13E27921EA76E2500756799 /* CurrentCheeseViewController.swift */; };
 		B13E27951EA770CB00756799 /* CurrentCheeseViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13E27941EA770CB00756799 /* CurrentCheeseViewCell.swift */; };
 		B13E27991EA7872000756799 /* SaleGoldViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13E27981EA7872000756799 /* SaleGoldViewCell.swift */; };
+		B141FC22200C3F9400114BA7 /* MainSurveyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141FC21200C3F9400114BA7 /* MainSurveyList.swift */; };
+		B141FC24200C786F00114BA7 /* MainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141FC23200C786F00114BA7 /* MainViewCell.swift */; };
+		B141FC26200D9DFC00114BA7 /* CheeseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141FC25200D9DFC00114BA7 /* CheeseImageView.swift */; };
 		B14530CF1F45636300339D47 /* URLNavigationMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14530CE1F45636300339D47 /* URLNavigationMap.swift */; };
 		B14530D31F46953700339D47 /* Pods_CheeseCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B14530D21F46953700339D47 /* Pods_CheeseCounterTests.framework */; };
 		B14A83E21E7FC3C5009B440E /* UserRegisterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A83E11E7FC3C5009B440E /* UserRegisterResult.swift */; };
@@ -163,6 +165,7 @@
 		B1C6AAAB1EC0322400B29E19 /* CheeseSaleCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAA1EC0322400B29E19 /* CheeseSaleCompleteVC.swift */; };
 		B1C6AAAD1EC0475000B29E19 /* CheeseReturnData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAC1EC0475000B29E19 /* CheeseReturnData.swift */; };
 		B1C6AAAF1EC2A97E00B29E19 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */; };
+		B1C74805200C37AF007D14D6 /* CheeseViewMocel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */; };
 		B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */; };
 		B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */; };
 		B1CF79EC1F7114ED0030827A /* OneTimeCheeseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */; };
@@ -171,6 +174,7 @@
 		B1D309781EA735C500150107 /* PayForGoldViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D309771EA735C500150107 /* PayForGoldViewCell.swift */; };
 		B1D33A091F7DEB1600CFF19A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */; };
 		B1D33A0B1F7DED3100CFF19A /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */; };
+		B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5104720105B1100ADE68C /* UILabel+Extension.swift */; };
 		B1DB28B11EDEB48C00294AB7 /* CurrentBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB28B01EDEB48C00294AB7 /* CurrentBaseViewController.swift */; };
 		B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */; };
 		B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5843A1E6FA18500D27F91 /* CircleView.swift */; };
@@ -207,7 +211,6 @@
 		44017B441EA30E8B00BA1D23 /* PushData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushData.swift; sourceTree = "<group>"; };
 		440A5B8F1E6ACFEC00D8C74C /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseViewController.swift; sourceTree = "<group>"; };
-		440A5B931E6AD49C00D8C74C /* CheeseViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseViewCell.swift; sourceTree = "<group>"; };
 		440A5B951E6AD87400D8C74C /* CarouselCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell2.swift; sourceTree = "<group>"; };
 		440DB7F11EE840D5002E32D4 /* CheeseRankView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseRankView.swift; sourceTree = "<group>"; };
 		442236E61EC6200C00872522 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -246,6 +249,9 @@
 		B13E27921EA76E2500756799 /* CurrentCheeseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentCheeseViewController.swift; sourceTree = "<group>"; };
 		B13E27941EA770CB00756799 /* CurrentCheeseViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentCheeseViewCell.swift; sourceTree = "<group>"; };
 		B13E27981EA7872000756799 /* SaleGoldViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleGoldViewCell.swift; sourceTree = "<group>"; };
+		B141FC21200C3F9400114BA7 /* MainSurveyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSurveyList.swift; sourceTree = "<group>"; };
+		B141FC23200C786F00114BA7 /* MainViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCell.swift; sourceTree = "<group>"; };
+		B141FC25200D9DFC00114BA7 /* CheeseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseImageView.swift; sourceTree = "<group>"; };
 		B14530CE1F45636300339D47 /* URLNavigationMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLNavigationMap.swift; sourceTree = "<group>"; };
 		B14530D01F4694DB00339D47 /* Pods_CheeseCounter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_CheeseCounter.framework; path = "../../Library/Developer/Xcode/DerivedData/CheeseCounter-calbnxvccavqdqdbdgxbajklyiff/Build/Products/Debug-iphonesimulator/Pods_CheeseCounter.framework"; sourceTree = "<group>"; };
 		B14530D21F46953700339D47 /* Pods_CheeseCounterTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_CheeseCounterTests.framework; path = "../../Library/Developer/Xcode/DerivedData/CheeseCounter-calbnxvccavqdqdbdgxbajklyiff/Build/Products/Debug-iphonesimulator/Pods_CheeseCounterTests.framework"; sourceTree = "<group>"; };
@@ -375,6 +381,7 @@
 		B1C6AAAA1EC0322400B29E19 /* CheeseSaleCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseSaleCompleteVC.swift; sourceTree = "<group>"; };
 		B1C6AAAC1EC0475000B29E19 /* CheeseReturnData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseReturnData.swift; sourceTree = "<group>"; };
 		B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseViewMocel.swift; sourceTree = "<group>"; };
 		B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSurveyModel.swift; sourceTree = "<group>"; };
 		B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailViewModel.swift; sourceTree = "<group>"; };
 		B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeCheeseData.swift; sourceTree = "<group>"; };
@@ -383,6 +390,7 @@
 		B1D309771EA735C500150107 /* PayForGoldViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayForGoldViewCell.swift; sourceTree = "<group>"; };
 		B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
+		B1D5104720105B1100ADE68C /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		B1DB28B01EDEB48C00294AB7 /* CurrentBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentBaseViewController.swift; sourceTree = "<group>"; };
 		B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx_AlertAction+Extensions.swift"; sourceTree = "<group>"; };
 		B1E5843A1E6FA18500D27F91 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleView.swift; path = Question/CircleView.swift; sourceTree = "<group>"; };
@@ -581,7 +589,8 @@
 		B15CBC4E1E6E9BFB00FC42D5 /* Cheese */ = {
 			isa = PBXGroup;
 			children = (
-				440A5B931E6AD49C00D8C74C /* CheeseViewCell.swift */,
+				B141FC23200C786F00114BA7 /* MainViewCell.swift */,
+				B141FC25200D9DFC00114BA7 /* CheeseImageView.swift */,
 				B16C2B331E8B9F630076EAE9 /* CarouselBaseCell.swift */,
 				440A5B951E6AD87400D8C74C /* CarouselCell2.swift */,
 				B16C2B351E8BA0E00076EAE9 /* CarouselCell4.swift */,
@@ -794,6 +803,7 @@
 				B1A894DD1EDE502E003FAF9E /* RankData.swift */,
 				B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */,
 				B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */,
+				B141FC21200C3F9400114BA7 /* MainSurveyList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -838,6 +848,7 @@
 				B183FD281F90953500AF5CBA /* Bundle+Extension.swift */,
 				B183FD2D1F90A57000AF5CBA /* String+Extension.swift */,
 				B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */,
+				B1D5104720105B1100ADE68C /* UILabel+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -850,6 +861,7 @@
 				B18130471F7A093E006F4FCB /* ReplyViewModel.swift */,
 				B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */,
 				B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */,
+				B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1137,6 +1149,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyImage/SwiftyImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/UPCarouselFlowLayout/UPCarouselFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/URLNavigator/URLNavigator.framework",
 				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
@@ -1180,6 +1193,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UPCarouselFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
@@ -1217,6 +1231,7 @@
 			files = (
 				B159368B1F300A6C009C29A6 /* WelcomeCoachViewController.swift in Sources */,
 				B183FD291F90953500AF5CBA /* Bundle+Extension.swift in Sources */,
+				B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */,
 				B17174031E765FFE0015F7EB /* CurrentGoldViewController.swift in Sources */,
 				B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */,
 				B1F5BFFE1EB851A6004A43D4 /* ListDetailTitleCell.swift in Sources */,
@@ -1230,6 +1245,7 @@
 				B15EB0F51ECA84D5004726C5 /* CheeseCounter.swift in Sources */,
 				B15CBC431E6E44A400FC42D5 /* SympathyTableViewController.swift in Sources */,
 				440DB7F21EE840D5002E32D4 /* CheeseRankView.swift in Sources */,
+				B141FC26200D9DFC00114BA7 /* CheeseImageView.swift in Sources */,
 				B1A9059D1EAD804600F0F090 /* ImagePickerViewController.swift in Sources */,
 				B154FE811E7799EF00F4A2F5 /* SetupCounterViewController.swift in Sources */,
 				44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */,
@@ -1242,7 +1258,6 @@
 				B1C6AAAD1EC0475000B29E19 /* CheeseReturnData.swift in Sources */,
 				B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */,
 				B17720681EA9AFAB00BE1B08 /* CounterProfileCell.swift in Sources */,
-				440A5B941E6AD49C00D8C74C /* CheeseViewCell.swift in Sources */,
 				B17083B41EF75D3900E1641F /* ShareController.swift in Sources */,
 				B1A9059F1EAD81CF00F0F090 /* ExtendedNavBarView.swift in Sources */,
 				B13E27951EA770CB00756799 /* CurrentCheeseViewCell.swift in Sources */,
@@ -1268,6 +1283,7 @@
 				4457CADB1EB5DC55007F372E /* SelectImageCell2.swift in Sources */,
 				B1A894DE1EDE502E003FAF9E /* RankData.swift in Sources */,
 				B1D309721EA6437A00150107 /* CalenderSelectView.swift in Sources */,
+				B141FC24200C786F00114BA7 /* MainViewCell.swift in Sources */,
 				B15EB89B1E839CBF000AC198 /* QuestionKnowHowViewController.swift in Sources */,
 				B15EC4671E8205B500CE52D6 /* QuestionTargetView.swift in Sources */,
 				B15EC46F1E8257D900CE52D6 /* DataParameter.swift in Sources */,
@@ -1333,6 +1349,7 @@
 				B15A4CF81EB0599A006F8022 /* InquireViewController.swift in Sources */,
 				B15A4CE11EADB8C8006F8022 /* AssetViewController.swift in Sources */,
 				B15A4CE71EAE11B4006F8022 /* QuestionTableViewController.swift in Sources */,
+				B141FC22200C3F9400114BA7 /* MainSurveyList.swift in Sources */,
 				B1730FCD1E91E2DC0023FE7B /* ReplyList.swift in Sources */,
 				B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */,
 				B183FD2E1F90A57000AF5CBA /* String+Extension.swift in Sources */,
@@ -1363,6 +1380,7 @@
 				B1D33A0B1F7DED3100CFF19A /* SearchListViewController.swift in Sources */,
 				B104EF2C1ECC66F60075D80C /* CoachViewController.swift in Sources */,
 				B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */,
+				B1C74805200C37AF007D14D6 /* CheeseViewMocel.swift in Sources */,
 				449049FE1E93E3D300DC9ACD /* NoticeViewController.swift in Sources */,
 				B1B2DBB81F00917300C91CEA /* LoginConfirmController.swift in Sources */,
 				B123381B1E977F9C00DE9640 /* Paging.swift in Sources */,

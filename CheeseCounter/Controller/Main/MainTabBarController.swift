@@ -27,7 +27,6 @@ class MainTabBarController: UITabBarController
     let tabBar = UITabBarItem(title: "응답", image: #imageLiteral(resourceName: "toolbar_answer@1x").withRenderingMode(.alwaysTemplate), tag: 0)
     let cheeseColor: UIColor = UIColor(gradientStyle: .leftToRight
       , withFrame: CGRect(x: 0, y: 0, width: 50, height: 50), andColors: [#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1),#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)])
-//    tabBar.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5, right: 0)
     tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11),NSAttributedStringKey.foregroundColor:UIColor.black], for: .normal)
     cv.tabBarItem = tabBar
     return nvc

@@ -23,7 +23,7 @@ pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
 pod 'Eureka'
-
+pod 'TTTAttributedLabel'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'

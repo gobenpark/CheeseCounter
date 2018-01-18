@@ -170,6 +170,8 @@ extension CheeseCounter: TargetType{
   
   public var task: Task {
     switch self{
+    case .getSurveyList:
+      return .requestPlain
     case .getMyNotification(let pageNum):
       return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.queryString)
       //      return ["page_num":pageNum]
