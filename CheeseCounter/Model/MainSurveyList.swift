@@ -43,6 +43,7 @@ struct MainSurveyList: Codable{
     var option_set_count: String?
     let empathy_count: String
     let is_empathy: String
+    var isMore: Bool = false
     
     init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CodingKeys.self)

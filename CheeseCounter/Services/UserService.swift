@@ -23,7 +23,8 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/"
     case .test:
-      return "http://192.168.1.19:8088"
+      return "http://192.168.1.103:8088"
+//      return "http://192.168.1.22:8081/CheeseCounter"
     }
   }
   
@@ -32,7 +33,7 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/uploadFile"
     case .test:
-      return "http://192.168.1.19:8088/uploadFile"
+      return "http://192.168.1.103:8088/uploadFile"
     }
   }
 }
@@ -41,8 +42,8 @@ struct UserService {
   
   static let provider = MoyaProvider<CheeseCounter>()
   
-  static let url = serverType.release.url
-  static let imgString = serverType.release.imgString
+  static let url = serverType.test.url
+  static let imgString = serverType.test.imgString
   
   static var kakao_ID: NSNumber?
   static var isLogin: Bool = false
@@ -59,10 +60,7 @@ struct UserService {
     
     kakaoTask()
     
-    let time = CFAbsoluteTimeGetCurrent()
-    log.debug("notifyStart")
     dispatchGroup.notify(queue: DispatchQueue.main) {
-      log.debug("notify:\(CFAbsoluteTimeGetCurrent()-time)")
       manager.request(urlString,method: .post, parameters: mainParameter)
         .validate(statusCode: 200..<400)
         .responseJSON { (response) in
@@ -84,7 +82,6 @@ struct UserService {
   }
   
   static func sendFcmToken(){
-    log.debug("fcm토큰:\(String(describing: Messaging.messaging().fcmToken))")
     guard let fcmtoken = Messaging.messaging().fcmToken else {return}
     
     Alamofire.request("\(url)/auth/updateFcmToken.json", method: .post, parameters: ["fcm_token":fcmtoken])
@@ -102,10 +99,7 @@ struct UserService {
   static func kakaoTask(){
     
     dispatchGroup.enter()
-    let time = CFAbsoluteTimeGetCurrent()
-    log.debug("kakaoTaskStart")
     KOSessionTask.meTask { (result, error) in
-      log.debug("kakaoTaskEnd\(CFAbsoluteTimeGetCurrent()-time)")
       guard let result = result else {return}
       if let user = result as? KOUser {
         

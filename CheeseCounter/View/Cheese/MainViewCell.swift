@@ -10,10 +10,14 @@ import UIKit
 import Kingfisher
 import RxCocoa
 import RxSwift
+import TTTAttributedLabel
+import AnyDate
 
 final class MainViewCell: UICollectionViewCell{
   
   let disposeBag = DisposeBag()
+  var indexPath: IndexPath?
+  var moreEvent: PublishSubject<IndexPath?>?
   var clickEvent: PublishSubject<(Int,MainSurveyList.CheeseData)>?{
     didSet{
       subjectBind()
@@ -26,22 +30,38 @@ final class MainViewCell: UICollectionViewCell{
       title.text = model?.title
       cheeseCount.text = model?.option_cut_cheese
       peopleCount.text = model?.total_count
-      calendarLabel.text = model?.limit_date
+      calendarLabel.text = dateConvert(model: model)
       heartLabel.text = model?.empathy_count
       
-      moreButton.isHidden = title.textCount(amount: 20)
+      if let type = model?.type{
+        if type == "2"{
+          selectView.snp.remakeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.height.equalTo(selectView.snp.width).dividedBy(2)
+            make.right.equalToSuperview()
+            make.bottom.equalTo(dividLine.snp.top).offset(-33.5)
+          }
+        }else {
+          selectView.snp.remakeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.height.equalTo(selectView.snp.width)
+            make.right.equalToSuperview()
+            make.bottom.equalTo(dividLine.snp.top).offset(-33.5)
+          }
+        }
+      }
       
       cheeseCount.sizeToFit()
-      peopleLabel.sizeToFit()
+      peopleIcon.sizeToFit()
       peopleCount.sizeToFit()
       calendarLabel.sizeToFit()
     }
   }
   
-  let title: UILabel = {
-    let label = UILabel()
+  let title: TTTAttributedLabel = {
+    let label = TTTAttributedLabel(frame: .zero)
     label.font = UIFont.CheeseFontMedium(size: 16.6)
-    label.numberOfLines = 2
+    label.numberOfLines = 0
     label.lineBreakMode = .byTruncatingTail
     return label
   }()
@@ -63,12 +83,9 @@ final class MainViewCell: UICollectionViewCell{
     return image
   }()
   
-  let peopleLabel: UILabel = {
-    let label = UILabel()
-    label.text = "응답자 :"
-    label.font = UIFont.CheeseFontMedium(size: 10.2)
-    label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
-    return label
+  let peopleIcon: UIImageView = {
+    let image = UIImageView(image: #imageLiteral(resourceName: "user"))
+    return image
   }()
   
   let peopleCount: UILabel = {
@@ -149,7 +166,7 @@ final class MainViewCell: UICollectionViewCell{
     contentView.addSubview(cheeseCount)
     contentView.addSubview(selectView)
     contentView.addSubview(peopleCount)
-    contentView.addSubview(peopleLabel)
+    contentView.addSubview(peopleIcon)
     contentView.addSubview(calendarIcon)
     contentView.addSubview(calendarLabel)
     contentView.addSubview(heartIcon)
@@ -210,11 +227,27 @@ final class MainViewCell: UICollectionViewCell{
       .bind(to: clickEvent!)
       .disposed(by: disposeBag)
     
-//    title.rx.observe(String.self, "text")
-//      .subscribe {[weak self] (event) in
-//        self?.moreButton.isHidden = self?.title.isTruncated() ?? false
-//        self?.reloadInputViews()
-//    }.disposed(by: disposeBag)
+//    moreButton.rx.tap
+//      .map { [weak self](_) in
+//        return self?.indexPath}
+//      .bind(to: moreEvent!)
+//    .disposed(by: disposeBag)
+    
+  }
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    moreButton.isHidden = title.isTruncated()
+  }
+  
+  private func dateConvert(model: MainSurveyList.CheeseData?) -> String?{
+    guard let mainModel = model else {return nil}
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.S"
+    guard let limitTime = ZonedDateTime.parse(mainModel.limit_date, formatter: dateFormatter),
+    let startTime = ZonedDateTime.parse(mainModel.created_date, formatter: dateFormatter) else {return nil}
+    
+    return "\(startTime.year-2000)/\(startTime.month)/\(startTime.day) ~ \(limitTime.year-2000)/\(limitTime.month)/\(limitTime.day)"
   }
   
   private func addConstraint(){
@@ -223,7 +256,7 @@ final class MainViewCell: UICollectionViewCell{
       make.left.equalToSuperview().inset(12)
       make.top.equalToSuperview().inset(14)
       make.right.equalToSuperview().inset(61)
-      make.height.equalTo(50)
+      make.bottom.equalTo(selectView.snp.top).offset(-14.5)
     }
     
     cheeseIcon.snp.makeConstraints { (make) in
@@ -240,24 +273,23 @@ final class MainViewCell: UICollectionViewCell{
     
     selectView.snp.makeConstraints { (make) in
       make.left.equalToSuperview()
-      make.top.equalTo(title.snp.bottom).offset(10)
+      make.height.equalTo(selectView.snp.width).dividedBy(2)
       make.right.equalToSuperview()
       make.bottom.equalTo(dividLine.snp.top).offset(-33.5)
     }
     
-    peopleLabel.snp.makeConstraints { (make) in
+    peopleIcon.snp.makeConstraints { (make) in
       make.left.equalToSuperview().inset(12)
       make.top.equalTo(selectView.snp.bottom).offset(11)
-      peopleLabel.sizeToFit()
     }
     
     peopleCount.snp.makeConstraints { (make) in
-      make.left.equalTo(peopleLabel.snp.right).offset(4.5)
-      make.top.equalTo(peopleLabel)
+      make.left.equalTo(peopleIcon.snp.right).offset(4.5)
+      make.centerY.equalTo(peopleIcon)
     }
     
     calendarIcon.snp.makeConstraints { (make) in
-      make.left.equalTo(peopleCount.snp.right).offset(67.5)
+      make.centerX.equalToSuperview()
       make.top.equalTo(selectView.snp.bottom).offset(11)
       make.height.equalTo(13)
       make.width.equalTo(14)
@@ -265,7 +297,7 @@ final class MainViewCell: UICollectionViewCell{
     
     calendarLabel.snp.makeConstraints { (make) in
       make.left.equalTo(calendarIcon.snp.right).offset(4.5)
-      make.top.equalTo(selectView.snp.bottom).offset(11)
+      make.centerY.equalTo(calendarIcon)
     }
     
     dividLine.snp.makeConstraints { (make) in
@@ -314,7 +346,7 @@ final class MainViewCell: UICollectionViewCell{
     moreButton.snp.makeConstraints { (make) in
       make.top.equalTo(cheeseIcon.snp.bottom).offset(11.5)
       make.right.equalToSuperview().inset(12)
-      make.height.equalTo(11)
+      make.height.equalTo(30)
     }
   }
 }

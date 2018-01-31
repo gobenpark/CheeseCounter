@@ -13,11 +13,14 @@ import Foundation
 extension UILabel{
   func isTruncated() -> Bool {
     if let string = self.text{
-      let size: CGRect = string.boundingRect(
-        with: CGSize(width: self.frame.width, height: 100)
-        , attributes: [NSAttributedStringKey.font: self.font])
       
-      if size.height > self.bounds.size.height {
+      let size = (string as NSString)
+        .boundingRect(with: CGSize(width: self.frame.width
+          , height: .greatestFiniteMagnitude)
+          , options: .usesLineFragmentOrigin
+          , attributes: [NSAttributedStringKey.font: self.font]
+          , context: nil).size
+      if size.height < self.frame.size.height {
         return true
       }
     }

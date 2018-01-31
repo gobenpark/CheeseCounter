@@ -26,7 +26,16 @@
 		44FD2A921E96785C00D2AE92 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FD2A911E96785C00D2AE92 /* PaymentViewController.swift */; };
 		55F22436C4D2727A69DCC465 /* Pods_CheeseCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */; };
 		7289EAB599C99EECC0600FE6 /* Pods_CheeseCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4884F79C2A713B719F462E79 /* Pods_CheeseCounterTests.framework */; };
+		B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */; };
+		B101A4CE20117B2400313748 /* Degrees+MathMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C920117B2300313748 /* Degrees+MathMethods.swift */; };
+		B101A4CF20117B2400313748 /* SpinWheelWedge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4CA20117B2300313748 /* SpinWheelWedge.swift */; };
+		B101A4D020117B2400313748 /* SpinWheelControlDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4CB20117B2300313748 /* SpinWheelControlDataSource.swift */; };
+		B101A4D120117B2400313748 /* SpinWheelControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4CC20117B2400313748 /* SpinWheelControl.swift */; };
+		B101A4D320117B4300313748 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4D220117B4300313748 /* GameViewController.swift */; };
+		B101A4D520117D2100313748 /* NewCounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4D420117D2100313748 /* NewCounterViewController.swift */; };
+		B101A4D720118A9500313748 /* GiftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4D620118A9500313748 /* GiftModel.swift */; };
 		B104EF2C1ECC66F60075D80C /* CoachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104EF2B1ECC66F60075D80C /* CoachViewController.swift */; };
+		B105B9E3201F161C00C4AB77 /* GetIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B105B9E2201F161C00C4AB77 /* GetIconViewController.swift */; };
 		B123381B1E977F9C00DE9640 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381A1E977F9C00DE9640 /* Paging.swift */; };
 		B123381D1E97936F00DE9640 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381C1E97936F00DE9640 /* HistoryData.swift */; };
 		B126699E1E9F90CE00D9C1C9 /* CheeseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126699D1E9F90CE00D9C1C9 /* CheeseResult.swift */; };
@@ -124,6 +133,7 @@
 		B17173F91E762ED70015F7EB /* CounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17173F81E762ED70015F7EB /* CounterViewController.swift */; };
 		B17174031E765FFE0015F7EB /* CurrentGoldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17174021E765FFE0015F7EB /* CurrentGoldViewController.swift */; };
 		B17174061E766AF80015F7EB /* CurrentGoldViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17174051E766AF80015F7EB /* CurrentGoldViewCell.swift */; };
+		B172D69E2021657900CFD97B /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B172D69D2021657900CFD97B /* PointModel.swift */; };
 		B1730FBF1E91DBA10023FE7B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1730FBE1E91DBA10023FE7B /* SystemConfiguration.framework */; };
 		B1730FCD1E91E2DC0023FE7B /* ReplyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1730FCC1E91E2DC0023FE7B /* ReplyList.swift */; };
 		B1730FD11E9225550023FE7B /* RereplyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1730FD01E9225550023FE7B /* RereplyViewCell.swift */; };
@@ -148,6 +158,9 @@
 		B18A127C1E94B18C00D3A578 /* CheeseResultOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127B1E94B18C00D3A578 /* CheeseResultOtherViewController.swift */; };
 		B18A127E1E94B45100D3A578 /* CheeseBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127D1E94B45100D3A578 /* CheeseBaseViewController.swift */; };
 		B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */; };
+		B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */; };
+		B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC862011DC090004CC41 /* GiftItemViewCell.swift */; };
+		B18ECC892011E1D80004CC41 /* GiftViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC882011E1D80004CC41 /* GiftViewModel.swift */; };
 		B1A16B2D1E7F6BB7007A1946 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */; };
 		B1A16B2F1E7F6BD4007A1946 /* Response+ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */; };
 		B1A16B331E7F84DA007A1946 /* NickResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B321E7F84DA007A1946 /* NickResult.swift */; };
@@ -168,6 +181,10 @@
 		B1C74805200C37AF007D14D6 /* CheeseViewMocel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */; };
 		B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */; };
 		B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */; };
+		B1CA65B82019DB1100EB7E89 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65B72019DB1100EB7E89 /* UIButton+Extension.swift */; };
+		B1CA65BA201AB29400EB7E89 /* ShopDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */; };
+		B1CA65BC201AD56F00EB7E89 /* DataType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65BB201AD56F00EB7E89 /* DataType+Extension.swift */; };
+		B1CA65BE201AF13600EB7E89 /* RouletteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65BD201AF13600EB7E89 /* RouletteModel.swift */; };
 		B1CF79EC1F7114ED0030827A /* OneTimeCheeseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */; };
 		B1D309701EA48B0E00150107 /* PushListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3096F1EA48B0E00150107 /* PushListData.swift */; };
 		B1D309721EA6437A00150107 /* CalenderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D309711EA6437A00150107 /* CalenderSelectView.swift */; };
@@ -179,6 +196,8 @@
 		B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */; };
 		B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5843A1E6FA18500D27F91 /* CircleView.swift */; };
 		B1E584421E6FC60E00D27F91 /* ReAnswerPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E584411E6FC60E00D27F91 /* ReAnswerPageCell.swift */; };
+		B1EF7EB92015734F00F3AFA5 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF7EB82015734F00F3AFA5 /* ShopViewController.swift */; };
+		B1EF7EBD2019834400F3AFA5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF7EBC2019834400F3AFA5 /* UIImage+Extension.swift */; };
 		B1F5BFF41EB1CDEE004A43D4 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */; };
 		B1F5BFF61EB1CE82004A43D4 /* UsingServiceClauseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF51EB1CE82004A43D4 /* UsingServiceClauseVC.swift */; };
 		B1F5BFFA1EB303F1004A43D4 /* QuestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF91EB303F1004A43D4 /* QuestionData.swift */; };
@@ -231,7 +250,16 @@
 		735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheeseCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA19A0115BF6039BCCB9393 /* Pods-CheeseCounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounterTests/Pods-CheeseCounterTests.release.xcconfig"; sourceTree = "<group>"; };
 		AB38F771B36AD214FE790B61 /* Pods-CheeseCounter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounter.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter.release.xcconfig"; sourceTree = "<group>"; };
+		B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelControlDelegate.swift; sourceTree = "<group>"; };
+		B101A4C920117B2300313748 /* Degrees+MathMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Degrees+MathMethods.swift"; sourceTree = "<group>"; };
+		B101A4CA20117B2300313748 /* SpinWheelWedge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelWedge.swift; sourceTree = "<group>"; };
+		B101A4CB20117B2300313748 /* SpinWheelControlDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelControlDataSource.swift; sourceTree = "<group>"; };
+		B101A4CC20117B2400313748 /* SpinWheelControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelControl.swift; sourceTree = "<group>"; };
+		B101A4D220117B4300313748 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		B101A4D420117D2100313748 /* NewCounterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCounterViewController.swift; sourceTree = "<group>"; };
+		B101A4D620118A9500313748 /* GiftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftModel.swift; sourceTree = "<group>"; };
 		B104EF2B1ECC66F60075D80C /* CoachViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachViewController.swift; sourceTree = "<group>"; };
+		B105B9E2201F161C00C4AB77 /* GetIconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIconViewController.swift; sourceTree = "<group>"; };
 		B1135DE91ECD91520018AC27 /* production.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = production.entitlements; sourceTree = "<group>"; };
 		B123381A1E977F9C00DE9640 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		B123381C1E97936F00DE9640 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
@@ -333,6 +361,7 @@
 		B17173F81E762ED70015F7EB /* CounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterViewController.swift; sourceTree = "<group>"; };
 		B17174021E765FFE0015F7EB /* CurrentGoldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentGoldViewController.swift; sourceTree = "<group>"; };
 		B17174051E766AF80015F7EB /* CurrentGoldViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentGoldViewCell.swift; sourceTree = "<group>"; };
+		B172D69D2021657900CFD97B /* PointModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
 		B1730FBE1E91DBA10023FE7B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B1730FC01E91DBA80023FE7B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		B1730FC21E91DBAE0023FE7B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -363,6 +392,9 @@
 		B18A127B1E94B18C00D3A578 /* CheeseResultOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseResultOtherViewController.swift; sourceTree = "<group>"; };
 		B18A127D1E94B45100D3A578 /* CheeseBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseBaseViewController.swift; sourceTree = "<group>"; };
 		B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultOtherViewCell.swift; sourceTree = "<group>"; };
+		B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectViewController.swift; sourceTree = "<group>"; };
+		B18ECC862011DC090004CC41 /* GiftItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftItemViewCell.swift; sourceTree = "<group>"; };
+		B18ECC882011E1D80004CC41 /* GiftViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftViewModel.swift; sourceTree = "<group>"; };
 		B19991611E7BBEE20037E767 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
 		B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ErrorInfo.swift"; sourceTree = "<group>"; };
@@ -384,6 +416,10 @@
 		B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseViewMocel.swift; sourceTree = "<group>"; };
 		B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSurveyModel.swift; sourceTree = "<group>"; };
 		B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailViewModel.swift; sourceTree = "<group>"; };
+		B1CA65B72019DB1100EB7E89 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
+		B1CA65BB201AD56F00EB7E89 /* DataType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+Extension.swift"; sourceTree = "<group>"; };
+		B1CA65BD201AF13600EB7E89 /* RouletteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouletteModel.swift; sourceTree = "<group>"; };
 		B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeCheeseData.swift; sourceTree = "<group>"; };
 		B1D3096F1EA48B0E00150107 /* PushListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushListData.swift; sourceTree = "<group>"; };
 		B1D309711EA6437A00150107 /* CalenderSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderSelectView.swift; sourceTree = "<group>"; };
@@ -395,6 +431,8 @@
 		B1E55C6E1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx_AlertAction+Extensions.swift"; sourceTree = "<group>"; };
 		B1E5843A1E6FA18500D27F91 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleView.swift; path = Question/CircleView.swift; sourceTree = "<group>"; };
 		B1E584411E6FC60E00D27F91 /* ReAnswerPageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReAnswerPageCell.swift; path = Question/ReAnswerPageCell.swift; sourceTree = "<group>"; };
+		B1EF7EB82015734F00F3AFA5 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		B1EF7EBC2019834400F3AFA5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		B1F5BFF51EB1CE82004A43D4 /* UsingServiceClauseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsingServiceClauseVC.swift; sourceTree = "<group>"; };
 		B1F5BFF91EB303F1004A43D4 /* QuestionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionData.swift; sourceTree = "<group>"; };
@@ -454,6 +492,20 @@
 				4884F79C2A713B719F462E79 /* Pods_CheeseCounterTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B101A4C720117B0300313748 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B101A4D220117B4300313748 /* GameViewController.swift */,
+				B101A4C920117B2300313748 /* Degrees+MathMethods.swift */,
+				B101A4CC20117B2400313748 /* SpinWheelControl.swift */,
+				B101A4CB20117B2300313748 /* SpinWheelControlDataSource.swift */,
+				B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */,
+				B101A4CA20117B2300313748 /* SpinWheelWedge.swift */,
+				B105B9E2201F161C00C4AB77 /* GetIconViewController.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		B11F69B91E67DDCC0058842A /* Services */ = {
@@ -642,6 +694,10 @@
 				B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */,
 				B1F5BFF51EB1CE82004A43D4 /* UsingServiceClauseVC.swift */,
 				B1F5BFFB1EB80DA5004A43D4 /* UsingPrivacyVC.swift */,
+				B101A4D420117D2100313748 /* NewCounterViewController.swift */,
+				B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */,
+				B1EF7EB82015734F00F3AFA5 /* ShopViewController.swift */,
+				B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */,
 			);
 			path = Counter;
 			sourceTree = "<group>";
@@ -686,6 +742,7 @@
 				B17720671EA9AFAB00BE1B08 /* CounterProfileCell.swift */,
 				B177206B1EA9E1A700BE1B08 /* SubProfileCell.swift */,
 				B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */,
+				B18ECC862011DC090004CC41 /* GiftItemViewCell.swift */,
 			);
 			path = Counter;
 			sourceTree = "<group>";
@@ -744,6 +801,7 @@
 		B1F960F81E63E90D00E87B02 /* CheeseCounter */ = {
 			isa = PBXGroup;
 			children = (
+				B101A4C720117B0300313748 /* Game */,
 				B1135DE91ECD91520018AC27 /* production.entitlements */,
 				B168B74B1E70D921005CC981 /* CheeseCounter.entitlements */,
 				B1548E5E1E7F65FB00D46149 /* Networking */,
@@ -804,6 +862,9 @@
 				B1CF79EB1F7114ED0030827A /* OneTimeCheeseData.swift */,
 				B1C81CCB1FC545960099ADF7 /* ResultSurveyModel.swift */,
 				B141FC21200C3F9400114BA7 /* MainSurveyList.swift */,
+				B101A4D620118A9500313748 /* GiftModel.swift */,
+				B1CA65BD201AF13600EB7E89 /* RouletteModel.swift */,
+				B172D69D2021657900CFD97B /* PointModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -849,6 +910,9 @@
 				B183FD2D1F90A57000AF5CBA /* String+Extension.swift */,
 				B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */,
 				B1D5104720105B1100ADE68C /* UILabel+Extension.swift */,
+				B1EF7EBC2019834400F3AFA5 /* UIImage+Extension.swift */,
+				B1CA65B72019DB1100EB7E89 /* UIButton+Extension.swift */,
+				B1CA65BB201AD56F00EB7E89 /* DataType+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -862,6 +926,7 @@
 				B1D33A081F7DEB1600CFF19A /* SearchViewModel.swift */,
 				B1C81CCD1FC5544D0099ADF7 /* SurveyDetailViewModel.swift */,
 				B1C74804200C37AF007D14D6 /* CheeseViewMocel.swift */,
+				B18ECC882011E1D80004CC41 /* GiftViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1130,6 +1195,7 @@
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FlexibleImage/FlexibleImage.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -1137,6 +1203,7 @@
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/NextGrowingTextView/NextGrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -1150,10 +1217,12 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyImage/SwiftyImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework",
 				"${BUILT_PRODUCTS_DIR}/UPCarouselFlowLayout/UPCarouselFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/URLNavigator/URLNavigator.framework",
 				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
 				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/YLGIFImage/YLGIFImage.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -1174,6 +1243,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -1181,6 +1251,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NextGrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMAlertController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -1194,10 +1265,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toaster.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UPCarouselFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLGIFImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -1239,13 +1312,16 @@
 				B15EC4691E8209CF00CE52D6 /* QuestionCheeseSetCell.swift in Sources */,
 				B177206A1EA9C70500BE1B08 /* BankSelectViewController.swift in Sources */,
 				B1FFDFC61F70B3CC004591B3 /* AlertViewCell.swift in Sources */,
+				B18ECC892011E1D80004CC41 /* GiftViewModel.swift in Sources */,
 				B1F5BFF41EB1CDEE004A43D4 /* PersonalInfoViewController.swift in Sources */,
 				B1BB43911EBAF8F8004D2462 /* DropOutConfirmViewController.swift in Sources */,
 				B175066B1E93985A00D6FA94 /* CollectionActivityIndicatorView.swift in Sources */,
 				B15EB0F51ECA84D5004726C5 /* CheeseCounter.swift in Sources */,
 				B15CBC431E6E44A400FC42D5 /* SympathyTableViewController.swift in Sources */,
+				B101A4D320117B4300313748 /* GameViewController.swift in Sources */,
 				440DB7F21EE840D5002E32D4 /* CheeseRankView.swift in Sources */,
 				B141FC26200D9DFC00114BA7 /* CheeseImageView.swift in Sources */,
+				B1CA65BE201AF13600EB7E89 /* RouletteModel.swift in Sources */,
 				B1A9059D1EAD804600F0F090 /* ImagePickerViewController.swift in Sources */,
 				B154FE811E7799EF00F4A2F5 /* SetupCounterViewController.swift in Sources */,
 				44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */,
@@ -1256,6 +1332,7 @@
 				B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */,
 				B179479F1E8A384C0053BAC7 /* CalculateView.swift in Sources */,
 				B1C6AAAD1EC0475000B29E19 /* CheeseReturnData.swift in Sources */,
+				B1EF7EB92015734F00F3AFA5 /* ShopViewController.swift in Sources */,
 				B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */,
 				B17720681EA9AFAB00BE1B08 /* CounterProfileCell.swift in Sources */,
 				B17083B41EF75D3900E1641F /* ShareController.swift in Sources */,
@@ -1276,6 +1353,8 @@
 				4489B8211E6C1F6F0035D3C6 /* CheeseSelectedViewController.swift in Sources */,
 				B16A10791E9B5E10007D83CF /* SetupNotificationViewController.swift in Sources */,
 				B15CBC511E6EA39500FC42D5 /* GraphView.swift in Sources */,
+				B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */,
+				B172D69E2021657900CFD97B /* PointModel.swift in Sources */,
 				B16A10731E9B5109007D83CF /* AlertViewController.swift in Sources */,
 				B12B9FAA1E6552B200404602 /* item.swift in Sources */,
 				B17947A11E8A55DC0053BAC7 /* SurveyResult.swift in Sources */,
@@ -1284,23 +1363,27 @@
 				B1A894DE1EDE502E003FAF9E /* RankData.swift in Sources */,
 				B1D309721EA6437A00150107 /* CalenderSelectView.swift in Sources */,
 				B141FC24200C786F00114BA7 /* MainViewCell.swift in Sources */,
+				B1EF7EBD2019834400F3AFA5 /* UIImage+Extension.swift in Sources */,
 				B15EB89B1E839CBF000AC198 /* QuestionKnowHowViewController.swift in Sources */,
 				B15EC4671E8205B500CE52D6 /* QuestionTargetView.swift in Sources */,
 				B15EC46F1E8257D900CE52D6 /* DataParameter.swift in Sources */,
 				440A5B961E6AD87400D8C74C /* CarouselCell2.swift in Sources */,
 				B15E4C761E8CE8D300C059D0 /* BaseSetupViewController.swift in Sources */,
 				B15A4CFC1EB096C7006F8022 /* QnaListData.swift in Sources */,
+				B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */,
 				B1A6FE301ECBD348001E1ACD /* RefreshView.swift in Sources */,
 				B15E4C6E1E8CCACC00C059D0 /* SelectGenderViewController.swift in Sources */,
 				B18A127C1E94B18C00D3A578 /* CheeseResultOtherViewController.swift in Sources */,
 				B17173F91E762ED70015F7EB /* CounterViewController.swift in Sources */,
 				B1A16B2F1E7F6BD4007A1946 /* Response+ErrorInfo.swift in Sources */,
 				B16A10811E9B8163007D83CF /* SampleImageSelectVC.swift in Sources */,
+				B101A4D520117D2100313748 /* NewCounterViewController.swift in Sources */,
 				B15E4C6C1E8CC9E000C059D0 /* NickNameViewController.swift in Sources */,
 				B15A4CDF1EADB7A1006F8022 /* PhotoViewController.swift in Sources */,
 				B14A83E41E7FC933009B440E /* CheeseService.swift in Sources */,
 				B1A16B331E7F84DA007A1946 /* NickResult.swift in Sources */,
 				B15A4CE31EADD843006F8022 /* CropOverlay.swift in Sources */,
+				B1CA65B82019DB1100EB7E89 /* UIButton+Extension.swift in Sources */,
 				B1A16B2D1E7F6BB7007A1946 /* MappingError.swift in Sources */,
 				B1548E5D1E7F659300D46149 /* SplashViewController.swift in Sources */,
 				B15E4C741E8CCE4F00C059D0 /* AreaCell.swift in Sources */,
@@ -1310,6 +1393,7 @@
 				B18130481F7A093E006F4FCB /* ReplyViewModel.swift in Sources */,
 				B1730FD31E924C100023FE7B /* BaseImg.swift in Sources */,
 				B15CBC3D1E6E42D400FC42D5 /* ListQuestionTableViewController.swift in Sources */,
+				B101A4D720118A9500313748 /* GiftModel.swift in Sources */,
 				B1FFDFC91F70C437004591B3 /* ObjectMapper+Extension.swift in Sources */,
 				44FAED921E9A2137003680FA /* QuestionSelectRegionVC.swift in Sources */,
 				B1C6AAAF1EC2A97E00B29E19 /* EmptyView.swift in Sources */,
@@ -1321,6 +1405,7 @@
 				B15993BD1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift in Sources */,
 				B1D33A091F7DEB1600CFF19A /* SearchViewModel.swift in Sources */,
 				B168B74E1E70F8BF005CC981 /* ListDetailGraphViewCell.swift in Sources */,
+				B101A4CE20117B2400313748 /* Degrees+MathMethods.swift in Sources */,
 				B177206E1EAA009A00BE1B08 /* BaseCounterViewController.swift in Sources */,
 				B1F960FA1E63E90D00E87B02 /* AppDelegate.swift in Sources */,
 				B15E4C661E8CC07500C059D0 /* UserSetupViewController.swift in Sources */,
@@ -1329,6 +1414,7 @@
 				B15A4CEE1EAE1519006F8022 /* SelectImageCell.swift in Sources */,
 				B1548E621E7F66C100D46149 /* UserService.swift in Sources */,
 				B15E4C701E8CCBA800C059D0 /* SelectAreaViewController.swift in Sources */,
+				B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */,
 				B13E27931EA76E2500756799 /* CurrentCheeseViewController.swift in Sources */,
 				B1F9611D1E63EA7E00E87B02 /* UIView+Extension.swift in Sources */,
 				B15A4CF61EB04836006F8022 /* QnAViewController.swift in Sources */,
@@ -1343,6 +1429,7 @@
 				B16C2B2E1E8B43430076EAE9 /* CheeseResultViewCell.swift in Sources */,
 				B15CBC3F1E6E43F600FC42D5 /* ListAnswerTableViewController.swift in Sources */,
 				B1F5BFFA1EB303F1004A43D4 /* QuestionData.swift in Sources */,
+				B101A4CF20117B2400313748 /* SpinWheelWedge.swift in Sources */,
 				B15E4C6A1E8CC91600C059D0 /* ProvisionViewController.swift in Sources */,
 				449049FA1E93DB3300DC9ACD /* SetupProfileViewController.swift in Sources */,
 				B126699E1E9F90CE00D9C1C9 /* CheeseResult.swift in Sources */,
@@ -1355,6 +1442,7 @@
 				B183FD2E1F90A57000AF5CBA /* String+Extension.swift in Sources */,
 				B131584D1EC59F0000126AA6 /* AlertView.swift in Sources */,
 				B16B9CBD1EE103DD007D10DA /* GifViewController.swift in Sources */,
+				B101A4D120117B2400313748 /* SpinWheelControl.swift in Sources */,
 				B1DB28B11EDEB48C00294AB7 /* CurrentBaseViewController.swift in Sources */,
 				B1CF79EC1F7114ED0030827A /* OneTimeCheeseData.swift in Sources */,
 				B16B9CC41EE4E1E9007D10DA /* CircleChartView.swift in Sources */,
@@ -1371,8 +1459,10 @@
 				B13E27991EA7872000756799 /* SaleGoldViewCell.swift in Sources */,
 				B17947A31E8A60F70053BAC7 /* CheeseResultViewController.swift in Sources */,
 				B15993BB1E6D5E1900FCEF85 /* ListViewController.swift in Sources */,
+				B1CA65BA201AB29400EB7E89 /* ShopDetailViewController.swift in Sources */,
 				B17173F61E761F2E0015F7EB /* ListDetailResultViewController.swift in Sources */,
 				B15E4C681E8CC08900C059D0 /* SetUpPageViewController.swift in Sources */,
+				B105B9E3201F161C00C4AB77 /* GetIconViewController.swift in Sources */,
 				B1548E601E7F661300D46149 /* DataResponse+MapResult.swift in Sources */,
 				443ADA471E9D24B200C16258 /* NoticeData.swift in Sources */,
 				B16A10831E9B8BB4007D83CF /* BaseListViewController.swift in Sources */,
@@ -1380,6 +1470,7 @@
 				B1D33A0B1F7DED3100CFF19A /* SearchListViewController.swift in Sources */,
 				B104EF2C1ECC66F60075D80C /* CoachViewController.swift in Sources */,
 				B1E5843B1E6FA18500D27F91 /* CircleView.swift in Sources */,
+				B1CA65BC201AD56F00EB7E89 /* DataType+Extension.swift in Sources */,
 				B1C74805200C37AF007D14D6 /* CheeseViewMocel.swift in Sources */,
 				449049FE1E93E3D300DC9ACD /* NoticeViewController.swift in Sources */,
 				B1B2DBB81F00917300C91CEA /* LoginConfirmController.swift in Sources */,
@@ -1387,6 +1478,7 @@
 				446C51C61EB5E895007B5FA2 /* SelectOptionCells.swift in Sources */,
 				B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */,
 				B1730FD11E9225550023FE7B /* RereplyViewCell.swift in Sources */,
+				B101A4D020117B2400313748 /* SpinWheelControlDataSource.swift in Sources */,
 				B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1560,7 +1652,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CheeseCounter/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1606,7 +1698,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CheeseCounter/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

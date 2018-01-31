@@ -63,11 +63,20 @@ public enum CheeseCounter{
   case getSurveyById(id: String)
   case getSearchSurveyList(search: String, page_num: Int)
   case getMySearchSurveyList(search: String, page_num: Int)
+  case getGiftList
+  case buyDirectGift(id: String)
+  case regRoulette(gift_id: String,level: String)
+  case getRouletteBoard(id: String)
+  case updateRouletteRun(id: String, stage: String, re: String)
+  case updateRouletteDone(id: String)
 }
 
 extension CheeseCounter: TargetType{
-  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
-//  public var baseURL: URL {return URL(string: "http://192.168.1.39:8088")!}
+//  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
+  public var baseURL: URL {return URL(string: "http://192.168.1.103:8088")!}
+//  public var baseURL: URL {return URL(string:  "http://192.168.1.22:8081/CheeseCounter")!}
+
+  
   
   public var path: String {
     switch self{
@@ -153,6 +162,18 @@ extension CheeseCounter: TargetType{
       return "/survey/getSearchSurveyList.json"
     case .getMySearchSurveyList:
       return "/survey/getMySearchSurveyList.json"
+    case .getGiftList:
+      return "/gift/getGiftList.json"
+    case .buyDirectGift:
+      return "/gift/buyDirectGift.json"
+    case .regRoulette:
+      return "/game/regRoulette.json"
+    case .getRouletteBoard:
+      return "/game/getRouletteBoard.json"
+    case .updateRouletteRun:
+      return "/game/updateRouletteRun.json"
+    case .updateRouletteDone:
+      return "/game/updateRouletteDone.json"
     }
   }
   
@@ -174,49 +195,26 @@ extension CheeseCounter: TargetType{
       return .requestPlain
     case .getMyNotification(let pageNum):
       return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.queryString)
-      //      return ["page_num":pageNum]
     case .getReplyList(let surveyId):
       return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.queryString)
-      //      case .insertReply(let parameter):
-      //      return parameter
-      //      case .deleteReply(let id):
-      //      return ["id":id]
-      //      case .insertLike(let parameter):
-      //      return parameter
-      //      case .loginUser(let id,let fcm,let img,let access,let version):
-      //      return ["id":id,"fcm_token":fcm,"img_url":img,"access_token":access,"version":version]
-      //      case .checkNickname(let nickname):
-      //      return ["nickname":nickname]
-      //      case .regUser(let parameter):
-      //      return parameter
-      //      case .getSurveyListByDate(let parameter):
-      //      return parameter
-      //      case .insertSurvey(let parameters):
-      //      return parameters
-      //      case .getSurveyResult(let id):
-      //      return ["survey_id":id]
-      //      case .insertSurveyResult(let id,let select):
-      //      return ["survey_id":id,"select_ask":select]
-      //      case .getSurveyListByOption(let pageNum):
-      //      return ["page_num":pageNum]
     case .getDetailResult(let surveyId, let selectAsk, let address):
       return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.queryString)
-      //      case .getMyRegSurveyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .getMyAnswerSurveyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .getEmpathyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .insertEmpathy(let id):
-      //      return ["id":id]
-      //      case .fcmSender(let token):
-    //      return ["fcm_token":token]
     case .getSurveyById(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     case .getMySearchSurveyList(let search, let pageNum):
       return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
     case .getSearchSurveyList(let search, let pageNum):
       return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
+    case .buyDirectGift(let id):
+      return .requestParameters(parameters: ["id":id], encoding: URLEncoding.queryString)
+    case .regRoulette(let gift_id, let level):
+      return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.queryString)
+    case .getRouletteBoard(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+    case .updateRouletteRun(let id, let s, let re):
+      return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
+    case .updateRouletteDone(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

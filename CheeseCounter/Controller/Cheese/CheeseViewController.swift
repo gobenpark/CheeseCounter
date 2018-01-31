@@ -27,6 +27,8 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
   let provider = MoyaProvider<CheeseCounter>().rx
   let cheeseDatas = BehaviorSubject<[CheeseViewModel]>(value: [])
   let cellSubject = PublishSubject<(Int, MainSurveyList.CheeseData)>()
+  let moreEvent = PublishSubject<Int>()
+  var moreDict: [Int: Bool] = [:]
   
   let gifVC: GifViewController = {
     let vc = GifViewController()
@@ -39,10 +41,10 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
     cell.model = item
+    cell.indexPath = idx
     cell.clickEvent = self?.cellSubject
     return cell
   })
-  
   
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -51,7 +53,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(MainViewCell.self, forCellWithReuseIdentifier: String(describing: MainViewCell.self))
     collectionView.backgroundColor = #colorLiteral(red: 0.9097241759, green: 0.9098549485, blue: 0.9096954465, alpha: 1)
-
+    collectionView.alwaysBounceVertical = true
     return collectionView
   }()
   
@@ -117,6 +119,11 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
       UIApplication.shared.keyWindow?.rootViewController?.present(self.gifVC, animated: true, completion: nil)
     }.disposed(by: disposeBag)
     
+    
+    moreEvent.subscribe { (event) in
+      log.info(event)
+    }.disposed(by: disposeBag)
+    
     if #available(iOS 11.0, *) {
       collectionView.contentInsetAdjustmentBehavior = .never
     }
@@ -160,18 +167,38 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
 }
 
 extension CheeseViewController: UICollectionViewDelegateFlowLayout{
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  
+  func collectionView(_ collectionView: UICollectionView
+    , layout collectionViewLayout: UICollectionViewLayout
+    , sizeForItemAt indexPath: IndexPath) -> CGSize {
 
     switch self.dataSources.sectionModels.first?.items[indexPath.item].type{
     case "2"?:
-      return CGSize(width: collectionView.frame.width, height: 320)
+      if moreDict[indexPath.item,default:false]{
+        return CGSize(width: collectionView.frame.width, height: 370)
+      }
+      return CGSize(width: collectionView.frame.width, height: 340)
     case "4"?:
-      return CGSize(width: collectionView.frame.width, height: 487.5)
+      if moreDict[indexPath.item,default:false]{
+        return CGSize(width: collectionView.frame.width, height: 570)
+      }
+      return CGSize(width: collectionView.frame.width, height: 520)
     default:
-      return CGSize(width: collectionView.frame.width, height: 320)
+      return CGSize(width: collectionView.frame.width, height: 340)
     }
   }
 }
+
+//extension CheeseViewController: UICollectionViewDelegate{
+//  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//    let cell = collectionView.cellForItem(at: indexPath) as! MainViewCell
+//    cell.title.reloadInputViews()
+//    moreDict[indexPath.item] = true
+//    UIView.performWithoutAnimation { [weak self] in
+//      self?.collectionView.reloadItems(at: [indexPath])
+//    }
+//  }
+//}
 
 //extension CheeseViewController: DZNEmptyDataSetSource{
 //

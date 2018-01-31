@@ -28,16 +28,23 @@ extension String{
   }
   
   func getUrlWithEncoding() -> String{
-    if self.contains("/img/") && !self.isEmpty{
+    
+    switch self{
+    case _ where self.contains("/img/"):
       let index = self.index(self.startIndex, offsetBy: 5)
-      let encodedUrl = self.substring(from: index).encodeUrl()
+      let encodedUrl = String(self[index...]).encodeUrl()
       return UserService.imgString+"/img/"+encodedUrl
-    }else if self.contains("/baseImg/") && !self.isEmpty{
+    case _ where self.contains("/baseImg/"):
       let index = self.index(self.startIndex, offsetBy: 9)
-      let encodedUrl = self.substring(from: index).encodeUrl()
+      let encodedUrl = String(self[index...]).encodeUrl()
       return UserService.imgString+"/baseImg/"+encodedUrl
+    case _ where self.contains("/giftImg/"):
+      let index = self.index(self.startIndex, offsetBy: 9)
+      let encodedUrl = String(self[index...]).encodeUrl()
+      return UserService.imgString+"/giftImg/"+encodedUrl
+    default:
+      return ""
     }
-    return ""
   }
   
   func getDynamicLink() -> String{

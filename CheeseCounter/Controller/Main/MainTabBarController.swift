@@ -68,7 +68,9 @@ class MainTabBarController: UITabBarController
   }()
   
   let counterViewController: UINavigationController = {
-    let vc = UINavigationController(rootViewController: CounterViewController())
+    
+    let vc = UINavigationController(rootViewController: NewCounterViewController())
+//    let vc = UINavigationController(rootViewController: CounterViewController())
     _ = vc.topViewController?.view
     let tabBar = UITabBarItem(title: "카운터", image: #imageLiteral(resourceName: "toolbar_counter@1x"), tag: 4)
     tabBar.selectedImage = #imageLiteral(resourceName: "toolbar_counter_select@1x")

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AppleSDGothicNeo.ttc">
+            <string>AppleSDGothicNeo-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -17,20 +22,25 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0_intro_kor" translatesAutoresizingMaskIntoConstraints="NO" id="KrB-gj-CDd">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ccLogoKor" translatesAutoresizingMaskIntoConstraints="NO" id="KrB-gj-CDd">
+                                <rect key="frame" x="141" y="189" width="92" height="118"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ⓒXiilab 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQQ-6F-xE7">
+                                <rect key="frame" x="136" y="602" width="102" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="10.600000381469727"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.29604559075342468" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="KrB-gj-CDd" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ui1-fE-B8H"/>
-                            <constraint firstAttribute="bottom" secondItem="KrB-gj-CDd" secondAttribute="bottom" id="hRF-NV-PYX"/>
-                            <constraint firstAttribute="trailing" secondItem="KrB-gj-CDd" secondAttribute="trailing" id="iLj-Sn-Cy9"/>
-                            <constraint firstItem="KrB-gj-CDd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tdU-na-Vh3"/>
+                            <constraint firstItem="KrB-gj-CDd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Y1q-pH-3lL"/>
+                            <constraint firstItem="KrB-gj-CDd" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="169" id="n3J-E4-Qdf"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -40,6 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="0_intro_kor" width="720" height="1280"/>
+        <image name="ccLogoKor" width="92" height="118"/>
     </resources>
 </document>

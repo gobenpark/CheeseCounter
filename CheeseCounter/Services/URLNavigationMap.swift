@@ -57,12 +57,10 @@ struct URLNavigationMap{
     
     
     CheeseObservable.subscribe { (event) in
-      log.info(1)
     }.disposed(by: disposeBag)
     
     
     CheeseObservable.subscribe { (event) in
-      log.info(2)
     }.disposed(by: disposeBag)
     
   }

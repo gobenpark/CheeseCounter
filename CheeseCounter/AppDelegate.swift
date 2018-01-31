@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
+    window?.backgroundColor = .white
     
     Fabric.with([Crashlytics.self])
     Crashlytics.sharedInstance().debugMode = false
@@ -148,11 +149,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       })
     }
     self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
-//    self.window?.rootViewController = CycleViewController()
+    
   }
   
   func configureAppearance() {
     
+    let statusView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
+    statusView.backgroundColor = .white
+    self.window?.rootViewController?.view.addSubview(statusView)
+  
     let navigationBarBackGroundImage =  UIImage.resizable().color(.white).image
     UINavigationBar.appearance().setBackgroundImage(navigationBarBackGroundImage, for: .default)
     UIBarButtonItem.appearance().tintColor = .black

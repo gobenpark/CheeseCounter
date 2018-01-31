@@ -24,6 +24,9 @@ pod 'lottie-ios'
 pod "WSTagsField"
 pod 'Eureka'
 pod 'TTTAttributedLabel'
+pod 'XLPagerTabStrip'
+pod 'FlexibleImage', '~> 1.8'
+pod 'Toaster'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -41,7 +44,7 @@ pod 'SwiftyBeaver'
 pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
-
+pod 'PMAlertController'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
