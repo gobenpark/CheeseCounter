@@ -14,6 +14,8 @@ import XLPagerTabStrip
 
 class NewCounterViewController: ButtonBarPagerTabStripViewController{
   
+  let disposeBag = DisposeBag()
+  
   let myPageButton: UIBarButtonItem = {
     let button = UIBarButtonItem()
     button.image = #imageLiteral(resourceName: "btnMypage").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
@@ -48,6 +50,14 @@ class NewCounterViewController: ButtonBarPagerTabStripViewController{
     self.view.backgroundColor = .white
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white
+    
+    myPageButton.rx.tap
+      .map {return MyPageViewController()}
+      .subscribe(onNext: { [weak self](vc) in
+        vc.modalPresentationStyle = .overCurrentContext
+        self?.present(vc, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
     
     changeCurrentIndexProgressive = {
       (oldCell: ButtonBarViewCell?

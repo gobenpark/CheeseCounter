@@ -21,7 +21,7 @@ class ShopDetailViewController: UIViewController{
     webView.scrollView.pinchGestureRecognizer?.isEnabled = false
     return webView
   }()
-  
+
   let model: GiftViewModel.Item?
   
   let imageView: UIImageView = {

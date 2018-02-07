@@ -28,6 +28,12 @@ final class GetIconViewController: UIViewController{
     return view
   }()
   
+  var currentStage: StageStatus
+  
+  var iconImage: UIImage = UIImage()
+  
+  let outsideLabel: UILabel = UILabel()
+  
   let backButton: UIButton = {
     let button = UIButton()
     button.setBackgroundImage(#imageLiteral(resourceName: "btnGameBackRoulette"), for: .normal)
@@ -36,13 +42,30 @@ final class GetIconViewController: UIViewController{
   
   let icon: UIImageView = UIImageView()
   
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  init(icon: UIImage, stage: StageStatus) {
+    self.icon.image = icon
+    self.iconImage = icon
+    self.currentStage = stage
     super.init(nibName: nil, bundle: nil)
   }
-
-  init(icon: UIImage) {
-    self.icon.image = icon
-    super.init(nibName: nil, bundle: nil)
+  
+  private func matcher(icon: UIImage) -> String{
+    if icon == #imageLiteral(resourceName: "cheeseEmental"){
+      return "에멘탈"
+    }else if icon == #imageLiteral(resourceName: "cheeseGorgonzola"){
+      return "고르곤졸라"
+    }else if icon == #imageLiteral(resourceName: "cheeseBrie"){
+      return "브리"
+    }else if icon == #imageLiteral(resourceName: "cheeseColbyjack"){
+      return "콜비잭"
+    }else if icon == #imageLiteral(resourceName: "cheeseGauda"){
+      return "고다"
+    }else if icon == #imageLiteral(resourceName: "cheeseHavati"){
+      return "하바티"
+    }else if icon == #imageLiteral(resourceName: "cheeseBrick"){
+      return "브릭"
+    }
+    return String()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -56,6 +79,7 @@ final class GetIconViewController: UIViewController{
     view.backgroundColor = .white
     view.addSubview(backButton)
     view.addSubview(centerCircle)
+    view.addSubview(outsideLabel)
     centerCircle.addSubview(icon)
     
     imageView.snp.makeConstraints { (make) in
@@ -82,6 +106,22 @@ final class GetIconViewController: UIViewController{
       make.width.equalTo(70)
       make.height.equalTo(100)
     }
+    
+    outsideLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(centerCircle.snp.bottom).offset(27)
+      make.centerX.equalToSuperview()
+    }
+    outsideLabel.numberOfLines = 2
+    
+    let attribute = NSAttributedString(
+      string: "+ \(self.matcher(icon: iconImage)) 획득!\n+ 남은 횟수 \(3-self.currentStage.rawValue)회",
+      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontMedium(size: 20),
+                   NSAttributedStringKey.foregroundColor: UIColor.white,
+                   NSAttributedStringKey.strokeColor: UIColor(red: 1.0, green: 0.564, blue: 0.342, alpha: 1.0),
+                   NSAttributedStringKey.strokeWidth: 4.5])
+    
+    outsideLabel.attributedText = attribute
+    outsideLabel.sizeToFit()
     
     backButton.rx.tap
       .subscribe {[weak self] (event) in

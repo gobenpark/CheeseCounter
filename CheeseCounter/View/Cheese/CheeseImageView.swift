@@ -15,6 +15,7 @@ final class CheeseImageView: UIView{
     didSet{
       guard let cheeseModel = model else {return}
       addConstraintWithImage(model: cheeseModel)
+      calculateRank(index: 1, model: cheeseModel)
     }
   }
   
@@ -22,10 +23,17 @@ final class CheeseImageView: UIView{
   let imageButton2 = ImageButton()
   let imageButton3 = ImageButton()
   let imageButton4 = ImageButton()
+  let circleView = CircleView2()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
+  
+  private func calculateRank(index: Int, model: MainSurveyList.CheeseData){
+    log.info(model.total_count)
+    log.info(model)
+  }
+  
   
   private func addConstraintWithImage(model: MainSurveyList.CheeseData){
     

@@ -40,10 +40,17 @@ struct MainSurveyList: Codable{
     let nickname: String
     let is_option: String
     let option_cut_cheese: String
-    var option_set_count: String?
+    let option_remain_count: String?
+    let option_set_count: String?
     let empathy_count: String
     let is_empathy: String
-    var isMore: Bool = false
+    let is_enable: String?
+    let reply_count: String?
+    let result_count: String?
+    let select_ask: String?
+    let survey_result: String?
+    
+    
     
     init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -71,6 +78,12 @@ struct MainSurveyList: Codable{
       option_set_count = try values.decodeIfPresent(String.self, forKey: .option_set_count)
       empathy_count = try values.decode(String.self, forKey: .empathy_count)
       is_empathy = try values.decode(String.self, forKey: .is_empathy)
+      option_remain_count = try? values.decode(String.self, forKey: .option_remain_count)
+      survey_result = try? values.decode(String.self, forKey: .survey_result)
+      reply_count = try? values.decode(String.self, forKey: .reply_count)
+      select_ask = try? values.decode(String.self, forKey: .select_ask)
+      result_count = try? values.decode(String.self, forKey: .result_count)
+      is_enable = try? values.decode(String.self, forKey: .is_enable)
     }
   }
 }

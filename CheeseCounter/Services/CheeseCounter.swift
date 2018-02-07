@@ -11,7 +11,7 @@ import Moya
 public enum CheeseCounter{
   
   case getMyPoint
-  case getMyPointHistory(parameter: [String:String])
+  case getMyPointHistory(type: String, year: String, month: String)
   
   case getMyPush
   case updateMyPush(parameter: [String:String])
@@ -69,6 +69,7 @@ public enum CheeseCounter{
   case getRouletteBoard(id: String)
   case updateRouletteRun(id: String, stage: String, re: String)
   case updateRouletteDone(id: String)
+  case getSurveyListV2(id: String)
 }
 
 extension CheeseCounter: TargetType{
@@ -174,6 +175,8 @@ extension CheeseCounter: TargetType{
       return "/game/updateRouletteRun.json"
     case .updateRouletteDone:
       return "/game/updateRouletteDone.json"
+    case .getSurveyListV2:
+      return "/survey/getSurveyListV2.json"
     }
   }
   
@@ -191,6 +194,8 @@ extension CheeseCounter: TargetType{
   
   public var task: Task {
     switch self{
+    case .getMyPointHistory(let type, let year, let month):
+      return .requestParameters(parameters: ["type": type, "year": year, "month": month], encoding: URLEncoding.queryString)
     case .getSurveyList:
       return .requestPlain
     case .getMyNotification(let pageNum):
@@ -215,6 +220,10 @@ extension CheeseCounter: TargetType{
       return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
     case .updateRouletteDone(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+    case .getSurveyListV2(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+    case .insertSurveyResult(let survey_id, let select_ask):
+      return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

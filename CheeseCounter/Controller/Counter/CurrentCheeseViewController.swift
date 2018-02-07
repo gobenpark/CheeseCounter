@@ -17,7 +17,7 @@ class CurrentCheeseViewController: CurrentBaseViewController{
     
     collectionView.dataSource = self
     collectionView.register(CurrentCheeseViewCell.self, forCellWithReuseIdentifier: CurrentCheeseViewCell.ID)
-    collectionView.register(CheeseRankView.self, forCellWithReuseIdentifier: CheeseRankView.ID)
+//    collectionView.register(CheeseRankView.self, forCellWithReuseIdentifier: CheeseRankView.ID)
     counterMenuBar = CounterMenuBar(menuString: ["치즈 내역","치즈 랭킹"], frame: .zero)
     counterMenuBar.currentViewController = self
     
@@ -70,9 +70,10 @@ extension CurrentCheeseViewController: UICollectionViewDataSource{
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentCheeseViewCell.ID, for: indexPath) as! CurrentCheeseViewCell
       return cell
     case 1:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheeseRankView.ID, for: indexPath) as! CheeseRankView
-      cell.fetchData()
-      return cell
+//      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheeseRankView.ID, for: indexPath) as! CheeseRankView
+//      cell.fetchData()
+//      return cell
+      break
     default:
       break
     }

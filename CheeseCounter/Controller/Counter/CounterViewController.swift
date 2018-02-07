@@ -29,7 +29,7 @@ class CounterViewController: UIViewController
   let currentCheeseViewController = CurrentCheeseViewController()
   let setupCounterViewController = SetupCounterViewController(style: .grouped)
   
-  var rankData: RankData.Data?
+  
   
   //MARK: - View Life Cycle
   
@@ -122,50 +122,39 @@ class CounterViewController: UIViewController
       switch response.result {
       case .success(let value):
         guard let cheese = Int(value.data?.cheese ?? "") else {return}
-        self.infoFetch(cheese: cheese)
+//        self.infoFetch(cheese: cheese)
       case .failure(let error):
         log.error(error.localizedDescription)
       }
     }
   }
   
-  private func infoFetch(cheese: Int){
-    UserService.getMyInfo { [weak self] (response) in
-      guard let `self` = self else {return}
-      switch response.result{
-      case .success(let value):
-        guard let data = value.data else {return}
-        self.rankFetch(data: data, cheese: cheese)
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-    }
-  }
-  
-  func rankFetch(data:UserResult.Data, cheese: Int){
-    PointService.getMyRank { (response) in
-      switch response.result{
-      case .success(let value):
-        self.rankData = value.data
-        let attributeText = NSMutableAttributedString(string: "\(data.nickname ?? "") (\(value.data?.title ?? ""), \(value.data?.rank ?? "")위)"
-          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
-        
-        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)]))
-        
-        attributeText.append(NSAttributedString(string: "\n\(self.getKoreanGenderName(gender: data.gender ?? ""))/\(data.age ?? "")세/\(data.addr2 ?? "")"
-          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 14),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
-        self.extendView.nickNameLabel.attributedText = attributeText
-        let urlString = data.img_url ?? ""
-        let url = URL(string: urlString)
-        if urlString != "nil" {
-          self.extendView.profileImg.kf.setImage(with: url)
-        }
 
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-    }
-  }
+  
+//  func rankFetch(data:UserResult.Data, cheese: Int){
+//    PointService.getMyRank { (response) in
+//      switch response.result{
+//      case .success(let value):
+//        self.rankData = value.data
+//        let attributeText = NSMutableAttributedString(string: "\(data.nickname ?? "") (\(value.data?.title ?? ""), \(value.data?.rank ?? "")위)"
+//          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
+//
+//        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)]))
+//
+//        attributeText.append(NSAttributedString(string: "\n\(self.getKoreanGenderName(gender: data.gender ?? ""))/\(data.age ?? "")세/\(data.addr2 ?? "")"
+//          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 14),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
+//        self.extendView.nickNameLabel.attributedText = attributeText
+//        let urlString = data.img_url ?? ""
+//        let url = URL(string: urlString)
+//        if urlString != "nil" {
+//          self.extendView.profileImg.kf.setImage(with: url)
+//        }
+//
+//      case .failure(let error):
+//        log.error(error.localizedDescription)
+//      }
+//    }
+//  }
   
   func getKoreanGenderName(gender:String) -> String{
     switch gender{

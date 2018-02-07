@@ -39,7 +39,7 @@ class CurrentCheeseViewCell: UICollectionViewCell{
     collectionView.dataSource = self
     collectionView.emptyDataSetSource = self
     collectionView.emptyDataSetDelegate = self
-    collectionView.register(CurrentListViewCellofCell.self, forCellWithReuseIdentifier: CurrentListViewCellofCell.ID)
+//    collectionView.register(CurrentListViewCellofCell.self, forCellWithReuseIdentifier: CurrentListViewCellofCell.ID)
     collectionView.alwaysBounceVertical = true
     return collectionView
   }()
@@ -102,8 +102,8 @@ extension CurrentCheeseViewCell: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentListViewCellofCell.ID, for: indexPath) as! CurrentListViewCellofCell
-    cell.fetchData(data: historyData?[indexPath.item])
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(), for: indexPath)
+    
     return cell
   }
 }
