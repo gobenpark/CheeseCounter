@@ -245,40 +245,40 @@ struct CheeseService {
   /// - Parameters:
   ///   - surveyId: 해당 설문 아이디
   ///   - completion: 콜백받을 메소드 등록
-  static func getReplyList(surveyId:String,_ completion: @escaping (DataResponse<ReplyList>) -> Void){
-    let url = "\(UserService.url)/reply/getReplyList.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
-    
-    manager.request(url,method: .post, parameters: ["survey_id":surveyId])
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        switch response.result{
-        case .success(_):
-          do{
-            let json = try JSON(data: response.data!)
-            if let result = json["code"].string{
-              if result == "2001"{
-                sessionExpireAction()
-              }
-            }
-          }catch let error{
-            log.error(error)
-          }
-        case .failure(let error):
-          print(error)
-        }
-        let response: DataResponse<ReplyList> = response.flatMap{ json in
-          if let user = Mapper<ReplyList>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: ReplyList.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
+//  static func getReplyList(surveyId:String,_ completion: @escaping (DataResponse<ReplyList>) -> Void){
+//    let url = "\(UserService.url)/reply/getReplyList.json"
+//    let manager = Alamofire.SessionManager.default
+//    manager.session.configuration.timeoutIntervalForRequest = 120
+//
+//    manager.request(url,method: .post, parameters: ["survey_id":surveyId])
+//      .validate(statusCode: 200..<400)
+//      .responseJSON { (response) in
+//        switch response.result{
+//        case .success(_):
+//          do{
+//            let json = try JSON(data: response.data!)
+//            if let result = json["code"].string{
+//              if result == "2001"{
+//                sessionExpireAction()
+//              }
+//            }
+//          }catch let error{
+//            log.error(error)
+//          }
+//        case .failure(let error):
+//          print(error)
+//        }
+//        let response: DataResponse<ReplyList> = response.flatMap{ json in
+//          if let user = Mapper<ReplyList>().map(JSONObject: json){
+//            return .success(user)
+//          } else {
+//            let error = MappingError(from: json, to: ReplyList.self)
+//            return .failure(error)
+//          }
+//        }
+//        completion(response)
+//    }
+//  }
   
   
   /// 댓글을 등록

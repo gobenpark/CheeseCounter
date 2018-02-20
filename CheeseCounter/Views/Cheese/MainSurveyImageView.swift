@@ -8,14 +8,18 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
+import RxCocoa
+import RxGesture
 
-final class CheeseImageView: UIView{
+final class MainSurveyImageView: UIView{
   
+  let disposeBag = DisposeBag()
   var model: MainSurveyList.CheeseData?{
     didSet{
       guard let cheeseModel = model else {return}
       addConstraintWithImage(model: cheeseModel)
-      calculateRank(index: 1, model: cheeseModel)
+      resultImageMapper(model: cheeseModel)
     }
   }
   
@@ -23,15 +27,102 @@ final class CheeseImageView: UIView{
   let imageButton2 = ImageButton()
   let imageButton3 = ImageButton()
   let imageButton4 = ImageButton()
-  let circleView = CircleView2()
+  let circleView1 = CircleView()
+  let circleView2 = CircleView()
+  let circleView3 = CircleView()
+  let circleView4 = CircleView()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
+
+  private func resultImageMapper(model: MainSurveyList.CheeseData){
+    guard let surveyResult = model.survey_result else {return}
+    if model.type == "2"{
+      result2ImageMapper(result: surveyResult)
+    }else if model.type == "4"{
+      result4ImageMapper(result: surveyResult)
+    }
+  }
   
-  private func calculateRank(index: Int, model: MainSurveyList.CheeseData){
-    log.info(model.total_count)
-    log.info(model)
+  private func result2ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
+    
+    guard var survey1 = Double(result.ask1_count ?? String()) ,
+      var survey2 = Double(result.ask2_count ?? String()) else {return}
+    let total = survey1 + survey2
+    
+    survey1 = survey1/total
+    survey2 = survey2/total
+    
+    addSubview(circleView1)
+    addSubview(circleView2)
+    
+    circleView1.circleProgressView.progress = survey1
+    circleView2.circleProgressView.progress = survey2
+    
+    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    
+    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
+    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    circleView1.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton1)
+    })
+    circleView2.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton2)
+    })
+  }
+  
+  private func result4ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
+    
+    guard var survey1 = Double(result.ask1_count ?? String()) ,
+      var survey2 = Double(result.ask2_count ?? String()),
+      var survey3 = Double(result.ask3_count ?? String()),
+      var survey4 = Double(result.ask4_count ?? String()) else {return}
+    
+    let total = survey1 + survey2 + survey3 + survey4
+    
+    survey1 = survey1/total
+    survey2 = survey2/total
+    survey3 = survey3/total
+    survey4 = survey4/total
+      
+    addSubview(circleView1)
+    addSubview(circleView2)
+    addSubview(circleView3)
+    addSubview(circleView4)
+    
+    circleView1.circleProgressView.progress = survey1
+    circleView2.circleProgressView.progress = survey2
+    circleView3.circleProgressView.progress = survey3
+    circleView4.circleProgressView.progress = survey4
+    
+    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView4.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    
+    circleView1.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton1)
+    })
+    circleView2.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton2)
+    })
+    circleView3.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton3)
+    })
+    circleView4.snp.makeConstraints({ (make) in
+      make.edges.equalTo(imageButton4)
+    })
+  }
+  
+  private func attributeFactory(count: Double) -> NSMutableAttributedString{
+    let attributedStringParagraphStyle = NSMutableParagraphStyle()
+    attributedStringParagraphStyle.alignment = NSTextAlignment.center
+    
+    let attributeString = NSMutableAttributedString(string: "\((count*100).roundToPlaces(places: 1))%\n",
+      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
+    attributeString.append(NSAttributedString(
+        string: "자세히 보기",
+        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1),NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
+    return attributeString
   }
   
   
@@ -46,20 +137,20 @@ final class CheeseImageView: UIView{
       
       imageButton1.setTitle(model.ask1, for: .normal)
       imageButton2.setTitle(model.ask2, for: .normal)
+      
       imageButton1.snp.remakeConstraints({ (make) in
         make.left.equalToSuperview()
         make.top.equalToSuperview()
         make.bottom.equalToSuperview()
         make.right.equalTo(self.snp.centerX)
       })
-      
+    
       imageButton2.snp.remakeConstraints({ (make) in
         make.top.equalToSuperview()
         make.right.equalToSuperview()
         make.bottom.equalToSuperview()
         make.left.equalTo(imageButton1.snp.right)
       })
-      
     }else if model.type == "4"{
       guard let image3URL = model.ask3_img_url
         , let image4URL = model.ask4_img_url else {return}
@@ -105,6 +196,7 @@ final class CheeseImageView: UIView{
         make.left.equalTo(imageButton3.snp.right)
       })
     }
+    self.setNeedsLayout()
     self.layoutIfNeeded()
   }
   
@@ -141,6 +233,8 @@ final class ImageButton: UIButton {
     titleEdgeInsets = UIEdgeInsetsMake(0, 10, 15, 0)
     contentHorizontalAlignment = .left
     contentVerticalAlignment = .bottom
+    setNeedsLayout()
+    layoutIfNeeded()
   }
   
   override func layoutSubviews() {
@@ -155,6 +249,3 @@ final class ImageButton: UIButton {
     fatalError("init(coder:) has not been implemented")
   }
 }
-
-
-

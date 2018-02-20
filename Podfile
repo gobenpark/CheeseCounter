@@ -51,7 +51,7 @@ pod 'RxCocoa'
 pod 'RxDataSources'
 pod 'RxGesture'
 pod 'RxOptional'
-
+pod 'RxKeyboard'
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'

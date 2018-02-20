@@ -150,9 +150,9 @@ extension SearchListViewController: UICollectionViewDelegate{
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? BaseListCell else {return}
     
-    let cheeseResultVC = CheeseResultViewController()
-    cheeseResultVC.cheeseData = cell.data
-    self.navigationController?.pushViewController(cheeseResultVC, animated: true)
+//    let cheeseResultVC = CheeseResultViewController()
+//    cheeseResultVC.cheeseData = cell.data
+//    self.navigationController?.pushViewController(cheeseResultVC, animated: true)
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -18,7 +18,7 @@ public enum CheeseCounter{
   case getMyNotification(pageNum: String)
   
   case getReplyList(surveyId: String)
-  case insertReply(parameter: [String:String])
+  case insertReply(survey_id: String, parent_id: String, contents: String)
   case deleteReply(id: String)
   case insertLike(parameter: [String:String])
   
@@ -224,6 +224,8 @@ extension CheeseCounter: TargetType{
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     case .insertSurveyResult(let survey_id, let select_ask):
       return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)
+    case .insertReply(let survey_id, let parent_id, let contents):
+      return .requestParameters(parameters: ["survey_id": survey_id,"parent_id":parent_id,"contents":contents], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

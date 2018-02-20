@@ -98,37 +98,37 @@ extension ObservableType where E == (AlertType, String){
         return Observable.just(QnAViewController())
       case .reply:
         
-        let observable = Observable.just(CheeseResultViewController())
+        let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {
             (data, VC) -> UIViewController in
-          VC.cheeseData = data.singleData
+//          VC.cheeseData = data.singleData
           return VC
         })
       case .survey_done:
-        let observable = Observable.just(CheeseResultViewController())
+        let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {
             (data, VC) -> UIViewController in
-          VC.cheeseData = data.singleData
+//          VC.cheeseData = data.singleData
           return VC
         })
       case .update:
         return Observable.just(QnAViewController())
       case .answer_survey_done:
-        let observable = Observable.just(CheeseResultViewController())
+        let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {
             (data, VC) -> UIViewController in
-          VC.cheeseData = data.singleData
+//          VC.cheeseData = data.singleData
           return VC
         })
       case .reply_empathy:
-        let observable = Observable.just(CheeseResultViewController())
+        let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {
             (data, VC) -> UIViewController in
-          VC.cheeseData = data.singleData
+//          VC.cheeseData = data.singleData
           return VC
         })
       }

@@ -18,7 +18,7 @@ struct ReplyViewModel{
 }
 
 extension ReplyViewModel: SectionModelType{
-  typealias Item = ReplyList.Data
+  typealias Item = ReplyModel.Data
   init(original: ReplyViewModel, items: [Item]) {
     self = original
     self.items = items

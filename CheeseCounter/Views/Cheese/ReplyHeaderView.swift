@@ -10,6 +10,12 @@ import UIKit
 
 final class ReplyHeaderView: UICollectionReusableView{
   
+  var model: MainSurveyList.CheeseData?{
+    didSet{
+      mainView.model = model
+    }
+  }
+  
   let mainView = MainCheeseView()
   
   override init(frame: CGRect) {

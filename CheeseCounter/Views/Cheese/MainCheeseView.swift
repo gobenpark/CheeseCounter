@@ -8,8 +8,42 @@
 
 import UIKit
 import TTTAttributedLabel
+import AnyDate
 
 class MainCheeseView: UIView {
+  
+  var model: MainSurveyList.CheeseData?{
+    didSet{
+      selectView.model = model
+      title.text = model?.title
+      cheeseCount.text = model?.option_cut_cheese
+      peopleCount.text = model?.total_count
+      calendarLabel.text = dateConvert(model: model)
+      heartLabel.text = model?.empathy_count
+      if let type = model?.type{
+        if type == "2"{
+          selectView.snp.remakeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.height.equalTo(selectView.snp.width).dividedBy(2)
+            make.right.equalToSuperview()
+            make.bottom.equalTo(dividLine.snp.top).offset(-33.5)
+          }
+        }else {
+          selectView.snp.remakeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.height.equalTo(selectView.snp.width)
+            make.right.equalToSuperview()
+            make.bottom.equalTo(dividLine.snp.top).offset(-33.5)
+          }
+        }
+      }
+      
+      cheeseCount.sizeToFit()
+      peopleIcon.sizeToFit()
+      peopleCount.sizeToFit()
+      calendarLabel.sizeToFit()
+    }
+  }
   
   let title: TTTAttributedLabel = {
     let label = TTTAttributedLabel(frame: .zero)
@@ -31,8 +65,8 @@ class MainCheeseView: UIView {
     return label
   }()
   
-  let selectView: CheeseImageView = {
-    let image = CheeseImageView()
+  let selectView: MainSurveyImageView = {
+    let image = MainSurveyImageView()
     return image
   }()
   
@@ -230,6 +264,15 @@ class MainCheeseView: UIView {
       make.right.equalToSuperview().inset(12)
       make.height.equalTo(30)
     }
+  }
+  private func dateConvert(model: MainSurveyList.CheeseData?) -> String?{
+    guard let mainModel = model else {return nil}
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.S"
+    guard let limitTime = ZonedDateTime.parse(mainModel.limit_date, formatter: dateFormatter),
+      let startTime = ZonedDateTime.parse(mainModel.created_date, formatter: dateFormatter) else {return nil}
+    
+    return "\(startTime.year-2000)/\(startTime.month)/\(startTime.day) ~ \(limitTime.year-2000)/\(limitTime.month)/\(limitTime.day)"
   }
   
   required init?(coder aDecoder: NSCoder) {

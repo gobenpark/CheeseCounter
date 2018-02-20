@@ -7,52 +7,58 @@
 //  cell.tag 는 댓글 아이디임
 
 import UIKit
-
+import RxSwift
+import RxCocoa
 import SnapKit
 
-class RereplyViewCell: UICollectionViewCell{
-  
-  var profileimgLeft: Constraint?
-  
-  var model: ReplyList.Data?{
+class ReplyViewCell: UICollectionViewCell{
+  let disposeBag = DisposeBag()
+  var model: ReplyModel.Data?{
     didSet{
-      guard let replyList = model else {return}
-      self.userID = replyList.user_id
-      self.id = replyList.id
-      
-      if let parentId = replyList.parent_id {
-        if parentId != "0"{
-          profileimgLeft?.update(inset: 30)
-          self.writeReplyButton.isHidden = true
-          self.sympathyButton.isHidden = true
-        } else {
-          profileimgLeft?.update(inset: 10)
-          self.writeReplyButton.isHidden = false
-          self.sympathyButton.isHidden = false
-        }
-        
-        self.parentID = parentId
-      }
-      
-      self.tag = Int(replyList.id) ?? 0
-      self.replyLabel.text = replyList.contents
-      
-      if let imgurl = replyList.img_url {
-        let url = URL(string: imgurl)
-        self.profileimg.kf.setImage(with: url)
-      }
-      if let isLike = replyList.is_like{
-        self.sympathyButton.isSelected = isLike == "1" ?
-          true : false
-      }
-      
       self.nickNameLabel.text = model?.nickname
-      self.hartCount.text = model?.like_count ?? "0"
-      
-      dateSet(of: createDateLabel, data: replyList)
-      setNeedsUpdateConstraints()
+      self.profileimg.kf.setImage(with: URL(string:model?.img_url ?? String()))
+      self.replyLabel.text = model?.contents
+      setNeedsLayout()
+      layoutIfNeeded()
+//      guard let replyList = model else {return}
+//      self.userID = replyList.user_id
+//      self.id = replyList.id
+//
+//      if let parentId = replyList.parent_id {
+//        if parentId != "0"{
+//          profileimgLeft?.update(inset: 30)
+//          self.writeReplyButton.isHidden = true
+//          self.sympathyButton.isHidden = true
+//        } else {
+//          profileimgLeft?.update(inset: 10)
+//          self.writeReplyButton.isHidden = false
+//          self.sympathyButton.isHidden = false
+//        }
+//
+//        self.parentID = parentId
+//      }
+//
+//      self.tag = Int(replyList.id) ?? 0
+//      self.replyLabel.text = replyList.contents
+//
+//      if let imgurl = replyList.img_url {
+//        let url = URL(string: imgurl)
+//        self.profileimg.kf.setImage(with: url)
+//      }
+//      if let isLike = replyList.is_like{
+//        self.sympathyButton.isSelected = isLike == "1" ?
+//          true : false
+//      }
+//
+//      self.nickNameLabel.text = model?.nickname
+//      self.hartCount.text = model?.like_count ?? "0"
+//
+//      dateSet(of: createDateLabel, data: replyList)
+//      setNeedsUpdateConstraints()
     }
   }
+  
+  weak var parentViewController: ReplyViewController?
   
   fileprivate(set) lazy var profileimg: UIImageView = {
     let img = UIImageView(image: UIImage(named: "profile_small"))
@@ -109,10 +115,6 @@ class RereplyViewCell: UICollectionViewCell{
     return label
   }()
   
-  var parentID: String = "0"
-  var userID: String = ""
-  var id: String = ""
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -125,9 +127,32 @@ class RereplyViewCell: UICollectionViewCell{
     self.contentView.addSubview(hartIcon)
     self.contentView.addSubview(hartCount)
     
+    writeReplyButton.rx
+      .tap
+      .subscribe(onNext:{[weak self] in
+        guard let `self` = self ,
+          let nickname = self.model?.nickname,
+          let parentID = self.model?.id else {return}
+        let data = ReplyActionData(nickname: nickname, parentID: parentID)
+        self.parentViewController?.writeReplySubject.onNext(data)
+    }).disposed(by: disposeBag)
+    
+    addConstraint()
+  }
+  
+  
+  override func updateConstraints() {
+    super.updateConstraints()
+    guard let model = model else {return}
+    if model.parent_id != "0"{
+      writeReplyButton.removeFromSuperview()
+    }
+  }
+  
+  private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
       make.top.equalTo(self.snp.topMargin)
-      profileimgLeft = make.left.equalToSuperview().inset(10).constraint
+      make.left.equalTo(self.snp.leftMargin)
       make.height.equalTo(50)
       make.width.equalTo(50)
     }
@@ -185,7 +210,7 @@ class RereplyViewCell: UICollectionViewCell{
     profileimg.layer.masksToBounds = true
   }
   
- fileprivate func dateSet(of label: UILabel, data: ReplyList.Data){
+ fileprivate func dateSet(of label: UILabel, data: ReplyModel.Data){
     let now = Date()
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

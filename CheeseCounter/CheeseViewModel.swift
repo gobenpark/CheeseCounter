@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 
 struct CheeseViewModel{
+  
   var items: [Item]
 }
 

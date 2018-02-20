@@ -19,6 +19,20 @@ struct MainSurveyList: Codable{
   
   struct CheeseData: Codable{
     
+    struct Survey_Result: Codable{
+      let ask1_count: String?
+      let ask2_count: String?
+      let ask3_count: String?
+      let ask4_count: String?
+      init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        ask1_count = try? values.decode(String.self, forKey: .ask1_count)
+        ask2_count = try? values.decode(String.self, forKey: .ask2_count)
+        ask3_count = try? values.decode(String.self, forKey: .ask3_count)
+        ask4_count = try? values.decode(String.self, forKey: .ask4_count)
+      }
+    }
+    
     let id: String
     let type: String
     let created_date: String
@@ -48,7 +62,7 @@ struct MainSurveyList: Codable{
     let reply_count: String?
     let result_count: String?
     let select_ask: String?
-    let survey_result: String?
+    let survey_result: Survey_Result?
     
     
     
@@ -79,7 +93,7 @@ struct MainSurveyList: Codable{
       empathy_count = try values.decode(String.self, forKey: .empathy_count)
       is_empathy = try values.decode(String.self, forKey: .is_empathy)
       option_remain_count = try? values.decode(String.self, forKey: .option_remain_count)
-      survey_result = try? values.decode(String.self, forKey: .survey_result)
+      survey_result = try? values.decode(Survey_Result.self, forKey: .survey_result)
       reply_count = try? values.decode(String.self, forKey: .reply_count)
       select_ask = try? values.decode(String.self, forKey: .select_ask)
       result_count = try? values.decode(String.self, forKey: .result_count)

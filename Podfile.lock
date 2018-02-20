@@ -106,6 +106,9 @@ PODS:
   - RxGesture (1.2.1):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxKeyboard (0.7.1):
+    - RxCocoa (>= 4.0.0)
+    - RxSwift (>= 4.0.0)
   - RxOptional (3.3.0):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
@@ -162,6 +165,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxDataSources
   - RxGesture
+  - RxKeyboard
   - RxOptional
   - RxSwift
   - SnapKit
@@ -237,6 +241,7 @@ SPEC CHECKSUMS:
   RxCocoa: d62846ca96495d862fa4c59ea7d87e5031d7340e
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
+  RxKeyboard: eae01da0d1750e1c4852d20798279cf7b318c304
   RxOptional: e5448d3e21024489e07c31f6a262f2b50c975367
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -254,6 +259,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: a5af3cca6c51b4e7dae8b337767d99f4f5b1141f
+PODFILE CHECKSUM: 60ca50dd39f37cbf67c3ef0f557a4abb65ed01aa
 
 COCOAPODS: 1.3.1
