@@ -47,8 +47,9 @@ final class MainSurveyImageView: UIView{
   
   private func result2ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
     
-    guard var survey1 = Double(result.ask1_count ?? String()) ,
-      var survey2 = Double(result.ask2_count ?? String()) else {return}
+    guard var survey1 = Double(result.ask1_count ?? "0") ,
+      var survey2 = Double(result.ask2_count ?? "0") else {return}
+    
     let total = survey1 + survey2
     
     survey1 = survey1/total
@@ -64,20 +65,20 @@ final class MainSurveyImageView: UIView{
     
     circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
     circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
-    circleView1.snp.makeConstraints({ (make) in
+    circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
     })
-    circleView2.snp.makeConstraints({ (make) in
+    circleView2.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton2)
     })
   }
   
   private func result4ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
     
-    guard var survey1 = Double(result.ask1_count ?? String()) ,
-      var survey2 = Double(result.ask2_count ?? String()),
-      var survey3 = Double(result.ask3_count ?? String()),
-      var survey4 = Double(result.ask4_count ?? String()) else {return}
+    guard var survey1 = Double(result.ask1_count ?? "0") ,
+      var survey2 = Double(result.ask2_count ?? "0"),
+      var survey3 = Double(result.ask3_count ?? "0"),
+      var survey4 = Double(result.ask4_count ?? "0") else {return}
     
     let total = survey1 + survey2 + survey3 + survey4
     
@@ -96,19 +97,24 @@ final class MainSurveyImageView: UIView{
     circleView3.circleProgressView.progress = survey3
     circleView4.circleProgressView.progress = survey4
     
+    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
+    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
+    circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
+    
     circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     circleView4.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
-    circleView1.snp.makeConstraints({ (make) in
+    circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
     })
-    circleView2.snp.makeConstraints({ (make) in
+    circleView2.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton2)
     })
-    circleView3.snp.makeConstraints({ (make) in
+    circleView3.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton3)
     })
-    circleView4.snp.makeConstraints({ (make) in
+    circleView4.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton4)
     })
   }

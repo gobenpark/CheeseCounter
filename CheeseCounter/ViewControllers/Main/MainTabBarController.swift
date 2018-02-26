@@ -69,7 +69,7 @@ class MainTabBarController: UITabBarController
   
   let counterViewController: UINavigationController = {
     
-    let vc = UINavigationController(rootViewController: NewCounterViewController())
+    let vc = UINavigationController(rootViewController: CounterViewController())
 //    let vc = UINavigationController(rootViewController: CounterViewController())
     _ = vc.topViewController?.view
     let tabBar = UITabBarItem(title: "카운터", image: #imageLiteral(resourceName: "toolbar_counter@1x"), tag: 4)
@@ -119,12 +119,6 @@ class MainTabBarController: UITabBarController
   
   override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     globalTabEvent.onNext(item.tag)
-    
-    if item.tag == 1{
-      if let listView = listViewController.topViewController as? ListViewController{
-        listView.fetchChildViewControllers()
-      }
-    }
   }
 }
 

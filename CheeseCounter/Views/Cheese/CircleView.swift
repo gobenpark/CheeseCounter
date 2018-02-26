@@ -14,7 +14,7 @@ class CircleView: UIView{
     let progressView = CircleProgressView()
     progressView.trackWidth = 13
     progressView.centerFillColor = .clear
-    progressView.progress = 0.5
+//    progressView.progress = 0.5
     progressView.trackFillColor = .yellow
     progressView.backgroundColor = .clear
     progressView.trackBackgroundColor = .clear

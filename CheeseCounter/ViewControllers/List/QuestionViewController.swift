@@ -8,15 +8,40 @@
 
 import UIKit
 import XLPagerTabStrip
+import RxCocoa
+import RxSwift
+import RxDataSources
+import Moya
 
-class QuestionViewController: UIViewController, IndicatorInfoProvider{
-  
+class QuestionViewController: BaseListViewController, IndicatorInfoProvider{
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
+    
+    collectionView.register(QuestionViewCell.self, forCellWithReuseIdentifier: "cell")
+    datas.asDriver()
+      .drive(collectionView.rx.items(dataSource: dataSources))
+      .disposed(by: disposeBag)
+    
+    request(pageNum: "0")
   }
+  
+  override func request(pageNum: String){
+    provider.request(.getMyRegSurveyList(pageNum: pageNum))
+      .filter(statusCode: 200)
+      .map(MainSurveyList.self)
+      .map{[CheeseViewModel(items: $0.result.data)]}
+      .asObservable()
+      .scan(datas.value){ (state, viewModel) in
+        return state + viewModel
+      }.bind(to: datas)
+      .disposed(by: disposeBag)
+  }
+  
+  
   func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "질문")
   }
 }
+
 

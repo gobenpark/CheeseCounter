@@ -140,6 +140,12 @@ public class RankCell: Cell<Bool>, CellType{
   }
   
   
+  var model: ResultRank?{
+    didSet{
+      countLabel.text = "\(model?.count ?? 0)"
+    }
+  }
+  
   let rankImageView: UIButton = {
     let imgView = UIButton()
     return imgView
@@ -213,6 +219,7 @@ public class RankCell: Cell<Bool>, CellType{
 }
 
 public final class RankRow: Row<RankCell>, RowType{
+  
   public required init(tag: String?) {
     super.init(tag: tag)
   }

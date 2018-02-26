@@ -37,6 +37,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(GiftItemViewCell.self, forCellWithReuseIdentifier: String(describing: GiftItemViewCell.self))
+    collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
     return collectionView

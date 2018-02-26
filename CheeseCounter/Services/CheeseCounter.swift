@@ -40,7 +40,7 @@ public enum CheeseCounter{
   case getDetailResult(survey_id: String, selectAsk: String, address: String)
   
   case getQnaList
-  case insertQna(parameter: [String:String])
+  case insertQna(title: String, contents: String)
   
   case getEmpathyList(pageNum: String)
   case insertEmpathy(id: String)
@@ -70,6 +70,8 @@ public enum CheeseCounter{
   case updateRouletteRun(id: String, stage: String, re: String)
   case updateRouletteDone(id: String)
   case getSurveyListV2(id: String)
+  case getSurveyListV2Search(id: String, search: String)
+  case getWinList
 }
 
 extension CheeseCounter: TargetType{
@@ -175,8 +177,10 @@ extension CheeseCounter: TargetType{
       return "/game/updateRouletteRun.json"
     case .updateRouletteDone:
       return "/game/updateRouletteDone.json"
-    case .getSurveyListV2:
+    case .getSurveyListV2,.getSurveyListV2Search:
       return "/survey/getSurveyListV2.json"
+    case .getWinList:
+      return "/game/getWinList.json"
     }
   }
   
@@ -196,36 +200,28 @@ extension CheeseCounter: TargetType{
     switch self{
     case .getMyPointHistory(let type, let year, let month):
       return .requestParameters(parameters: ["type": type, "year": year, "month": month], encoding: URLEncoding.queryString)
-    case .getSurveyList:
-      return .requestPlain
-    case .getMyNotification(let pageNum):
-      return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.queryString)
     case .getReplyList(let surveyId):
       return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.queryString)
     case .getDetailResult(let surveyId, let selectAsk, let address):
       return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.queryString)
-    case .getSurveyById(let id):
-      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
-    case .getMySearchSurveyList(let search, let pageNum):
+    case .getSearchSurveyList(let search, let pageNum),.getMySearchSurveyList(let search, let pageNum):
       return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
-    case .getSearchSurveyList(let search, let pageNum):
-      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
-    case .buyDirectGift(let id):
-      return .requestParameters(parameters: ["id":id], encoding: URLEncoding.queryString)
     case .regRoulette(let gift_id, let level):
       return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.queryString)
-    case .getRouletteBoard(let id):
-      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     case .updateRouletteRun(let id, let s, let re):
       return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
-    case .updateRouletteDone(let id):
-      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
-    case .getSurveyListV2(let id):
+    case .updateRouletteDone(let id),.buyDirectGift(let id),.getSurveyById(let id),.getRouletteBoard(let id),.getSurveyListV2(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     case .insertSurveyResult(let survey_id, let select_ask):
       return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)
     case .insertReply(let survey_id, let parent_id, let contents):
       return .requestParameters(parameters: ["survey_id": survey_id,"parent_id":parent_id,"contents":contents], encoding: URLEncoding.queryString)
+    case .getMyRegSurveyList(let page_num),.getMyAnswerSurveyList(let page_num),.getMyNotification(let page_num),.getEmpathyList(let page_num):
+      return .requestParameters(parameters:["page_num": page_num], encoding: URLEncoding.queryString)
+    case .getSurveyListV2Search(let id, let search):
+      return .requestParameters(parameters: ["id": id,"search": search], encoding: URLEncoding.queryString)
+    case .insertQna(let title, let contents):
+      return .requestParameters(parameters: ["title":title,"contents":contents], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

@@ -29,7 +29,7 @@ class CounterHeaderView: UIView {
     addSubview(icon)
     addSubview(topLabel)
     addSubview(configureButton)
-    
+    configureButton.isUserInteractionEnabled = true
     addConstraint()
   }
   

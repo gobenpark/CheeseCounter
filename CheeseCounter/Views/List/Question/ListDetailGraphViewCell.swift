@@ -454,8 +454,9 @@ public class DetailGraphCell: Cell<Bool>, CellType{
     barChart.setNeedsDisplay()
   }
   
-  func updateData(data: DetailResult.Data){
+  func dataFetch(datas: ResultSurveyModel){
     
+    guard let data = datas.result.data else {return}
     
     self.maleCount = 0
     self.femaleCount = 0

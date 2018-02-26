@@ -26,7 +26,7 @@ final class ReplyViewController: UIViewController{
   
   private var didSetupViewConstraints = false
   var model: MainSurveyList.CheeseData
-
+  
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<ReplyViewModel>(configureCell: { ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: ReplyViewCell.self), for: idx) as! ReplyViewCell
     cell.model = item

@@ -89,13 +89,13 @@ extension ObservableType where E == (AlertType, String){
       
       switch data.0{
       case .gold_return:
-        return Observable.just(QnAViewController())
+        return Observable.just(UIViewController())
       case .event:
-        return Observable.just(QnAViewController())
+        return Observable.just(UIViewController())
       case .notice:
-        return Observable.just(NoticeViewController())
+        return Observable.just(UIViewController())
       case .qna:
-        return Observable.just(QnAViewController())
+        return Observable.just(UIViewController())
       case .reply:
         
         let observable = Observable.just(UIViewController())
@@ -114,7 +114,7 @@ extension ObservableType where E == (AlertType, String){
           return VC
         })
       case .update:
-        return Observable.just(QnAViewController())
+        return Observable.just(UIViewController())
       case .answer_survey_done:
         let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
@@ -135,3 +135,4 @@ extension ObservableType where E == (AlertType, String){
     }
   }
 }
+

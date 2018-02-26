@@ -19,22 +19,25 @@ enum PagingType{
   case ordinary(id: String)
 }
 
-class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
+final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
 {
   
   //MARK: - Property
-  let disposeBag = DisposeBag()
-  let provider = MoyaProvider<CheeseCounter>().rx
+  private let disposeBag = DisposeBag()
+  private let provider = MoyaProvider<CheeseCounter>().rx
+  
   let cheeseDatas = Variable<[CheeseViewModel]>([])
   let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData)>()
-  let moreEvent = PublishSubject<Int>()
-  
-  var moreDict: [Int: Bool] = [:]
-  
+  let moreEvent = PublishSubject<IndexPath>()
+  let replyEvent = PublishSubject<IndexPath>()
+  let emptyEvent = PublishSubject<String>()
+  let shareEvent = PublishSubject<IndexPath>()
+
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
     cell.model = item
     cell.cheeseVC = self
+    cell.indexPath = idx
     return cell
   })
   
@@ -44,9 +47,9 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     layout.scrollDirection = .vertical
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(MainViewCell.self, forCellWithReuseIdentifier: String(describing: MainViewCell.self))
+    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = #colorLiteral(red: 0.9097241759, green: 0.9098549485, blue: 0.9096954465, alpha: 1)
     collectionView.alwaysBounceVertical = true
-    collectionView.isPrefetchingEnabled = false
     return collectionView
   }()
   
@@ -82,6 +85,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     super.loadView()
     view = collectionView
     collectionView.addSubview(refreshView)
+    title = "응답"
     self.navigationController?.hidesBarsOnSwipe = true
   }
   
@@ -89,7 +93,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     super.viewDidLoad()
     
     myPageButton.rx.tap
-      .map{ _ in return MyPageViewController()}
+      .map{ _ in return MypageNaviViewController()}
       .subscribe(onNext: { [weak self] (vc) in
         self?.present(vc, animated: true, completion: nil)
       })
@@ -106,6 +110,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     refreshView.rx
       .controlEvent(.valueChanged)
       .subscribe { [weak self](event) in
+        self?.cheeseDatas.value.removeAll()
         self?.networkRequest(id: String())
         self?.refreshView.endRefreshing()}
       .disposed(by: disposeBag)
@@ -118,6 +123,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
             .request(.insertSurveyResult(surveyId: data.1.id, select: "\(index)"))
             .asObservable()
             .filter(statusCode: 200)
+            .debug()
             .map{ _ in
               return data
           }
@@ -127,6 +133,43 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
       }
       .bind(onNext: showGiftView)
       .disposed(by: disposeBag)
+    
+    moreEvent.observeOn(MainScheduler.instance)
+      .subscribe(onNext: {[weak self] (idx) in
+        guard let `self` = self else {return}
+        self.cheeseDatas.value[idx.section].items[idx.item].isExpand = true
+        self.collectionView.reloadData()
+      }).disposed(by: disposeBag)
+    
+    emptyEvent.flatMap {[unowned self] (id) in
+      return self.provider.request(.insertEmpathy(id: id))
+        .filter(statusCode: 200)
+        .asObservable()
+      }.subscribe(onNext: { (response) in
+        log.info(response)
+      }, onError: { (error) in
+        log.error(error)
+      }).disposed(by: disposeBag)
+    
+    replyEvent.map { [unowned self] (idx) in
+      return self.dataSources.sectionModels[idx.section].items[idx.item]
+      }.subscribe(onNext:{[weak self] (model) in
+        guard let `self` = self else {return}
+        self.navigationController?.pushViewController(ReplyViewController(model: model), animated: true)
+      }).disposed(by: disposeBag)
+    
+    shareEvent.map {[unowned self] (idx) in
+      return self.dataSources.sectionModels[idx.section].items[idx.item]
+      }.map{[unowned self] model in return ShareController.shareActionSheet(model: model, fromViewController: self)}
+      .subscribe(onNext: {[weak self] (vc) in
+        guard let `self` = self else {return}
+        self.present(vc, animated: true, completion: nil)
+      }).disposed(by: disposeBag)
+    
+    searchButton.rx
+      .tap.subscribe {[weak self] (_) in
+        self?.navigationController?.pushViewController(SearchListViewController(type: .main), animated: false)
+      }.disposed(by: disposeBag)
     
     if #available(iOS 11.0, *) {
       collectionView.contentInsetAdjustmentBehavior = .never
@@ -141,7 +184,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
   private func showGiftView(data:(MainSurveyAction, MainSurveyList.CheeseData)){
     
     switch data.0{
-    case .Button:
+    case .Button(let num):
       let giftView = GifViewController()
       giftView.imageType = .cheese
       giftView.modalPresentationStyle = .overCurrentContext
@@ -149,11 +192,12 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
       
       giftView.dismissCompleteAction = {[weak self] in
         guard let retainSelf = self else {return}
-        retainSelf.navigationController?.pushViewController(ReplyViewController(model: data.1), animated: true)
+        
+        retainSelf.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
       }
       self.present(giftView, animated: true, completion: nil)
-    case .Image:
-      self.navigationController?.pushViewController(ReplyViewController(model: data.1), animated: true)
+    case .Image(let num):
+      self.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
     }
   }
   
@@ -183,12 +227,6 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
     self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
     self.navigationItem.titleView = titleLabel
   }
-  
-  @objc private dynamic func searchViewPresent(){
-    let searchView = UINavigationController(rootViewController: SearchListViewController(type: .main))
-    searchView.modalPresentationStyle = .overCurrentContext
-    AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
-  }
 }
 
 extension CheeseViewController: UICollectionViewDelegateFlowLayout{
@@ -196,15 +234,17 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView
     , layout collectionViewLayout: UICollectionViewLayout
     , sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-    switch self.dataSources.sectionModels.first?.items[indexPath.item].type{
-    case "2"?:
-      if moreDict[indexPath.item,default:false]{
-        return CGSize(width: collectionView.frame.width, height: 370)
+    
+    let sectionModel = self.dataSources.sectionModels
+    
+    switch sectionModel[indexPath.section].items[indexPath.item].type{
+    case "2":
+      if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+        return CGSize(width: collectionView.frame.width, height: 400)
       }
       return CGSize(width: collectionView.frame.width, height: 340)
-    case "4"?:
-      if moreDict[indexPath.item,default:false]{
+    case "4":
+      if sectionModel[indexPath.section].items[indexPath.item].isExpand{
         return CGSize(width: collectionView.frame.width, height: 570)
       }
       return CGSize(width: collectionView.frame.width, height: 520)
@@ -216,7 +256,10 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
 
 extension CheeseViewController{
     
-  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                 withVelocity velocity: CGPoint,
+                                 targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    
     let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 300
@@ -224,12 +267,6 @@ extension CheeseViewController{
       networkRequest(id: dataSources.sectionModels.last?.items.last?.id ?? "")
     }
   }
-}
-
-func + <T>(lhs: [T], rhs: T) -> [T] {
-  var copy = lhs
-  copy.append(rhs)
-  return copy
 }
 
 extension CheeseViewController: DZNEmptyDataSetSource{

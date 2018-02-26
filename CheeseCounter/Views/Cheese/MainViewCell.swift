@@ -16,12 +16,12 @@ enum MainSurveyAction{
   case Button(index: Int)
 }
 
-
 final class MainViewCell: UICollectionViewCell{
   
-  let disposeBag = DisposeBag()
   weak var cheeseVC: CheeseViewController?
+  private let disposeBag = DisposeBag()
   
+  var indexPath: IndexPath?
   var model: MainSurveyList.CheeseData?{
     didSet{
       self.mainView.model = model
@@ -34,7 +34,6 @@ final class MainViewCell: UICollectionViewCell{
     super.init(frame: frame)
     
     contentView.addSubview(mainView)
-    
     mainView.snp.makeConstraints { (make) in
       make.edges.equalToSuperview()
     }
@@ -46,14 +45,13 @@ final class MainViewCell: UICollectionViewCell{
     fatalError("init(coder:) has not been implemented")
   }
   
-  
   private func subjectBind(){
     
     let button1 = mainView.selectView.imageButton1
       .rx
       .tap
       .map{return MainSurveyAction.Button(index: 1)}
-
+    
     let button2 = mainView.selectView.imageButton2
       .rx
       .tap
@@ -89,12 +87,48 @@ final class MainViewCell: UICollectionViewCell{
       .tapGesture()
       .map{_ in return MainSurveyAction.Image(index: 4)}
     
+    mainView.heartButton.rx.tap
+      .subscribe { [weak self](_) in
+        guard let id = self?.model?.id else {return}
+        self?.cheeseVC?.emptyEvent.onNext(id)
+      }.disposed(by: disposeBag)
+    
+    mainView.moreButton.isUserInteractionEnabled = true
+    
+    mainView.moreButton
+      .rx
+      .tap
+      .subscribe {[weak self] (_) in
+        guard let vc = self?.cheeseVC ,
+          let idx = self?.indexPath else {return}
+        vc.moreEvent.onNext(idx)
+      }.disposed(by: disposeBag)
+    
+    mainView.commentButton.rx.tap
+      .subscribe { [weak self] (_) in
+        guard let vc = self?.cheeseVC ,
+          let idx = self?.indexPath else {return}
+        vc.replyEvent.onNext(idx)
+      }.disposed(by: disposeBag)
+    
+    mainView.shareButton.rx.tap
+      .subscribe(onNext: {[weak self] (_) in
+        guard let idx = self?.indexPath ,
+          let vc = self?.cheeseVC else {return}
+        vc.shareEvent.onNext(idx)
+      }).disposed(by: disposeBag)
+    
     Observable<MainSurveyAction>
       .merge([button1,button2,button3,button4,image1,image2,image3,image4])
       .subscribe(onNext: { [weak self] (action) in
         guard let retainSelf = self, let retainModel = self?.model else {return}
         retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel))
       }).disposed(by: disposeBag)
+  }
+  
+  override func updateConstraints() {
+    super.updateConstraints()
+    mainView.moreButton.isHidden = mainView.title.isTruncated()
   }
   
   override func layoutSubviews() {

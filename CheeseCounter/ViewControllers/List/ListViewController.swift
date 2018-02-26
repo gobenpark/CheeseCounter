@@ -26,6 +26,7 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   
   let disposeBag = DisposeBag()
   
+  var bottomView: UIView?
   let myPageButton: UIBarButtonItem = {
     let button = UIBarButtonItem()
     button.image = #imageLiteral(resourceName: "btnMypage").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
@@ -41,21 +42,25 @@ class ListViewController: ButtonBarPagerTabStripViewController{
     return barbutton
   }()
 
-  
-//  let searchButton = UIBarButtonItem()
-
   override func viewDidLoad() {
     super.viewDidLoad()
     
     navigationBarSetup()
+    self.view.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
     
     myPageButton.rx.tap
-      .map {return MyPageViewController()}
+      .map {return MypageNaviViewController()}
       .subscribe(onNext: { [weak self](vc) in
         vc.modalPresentationStyle = .overCurrentContext
         self?.present(vc, animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
+    
+    searchButton.rx.tap
+      .map {return ListSearchViewController()}
+      .subscribe(onNext: {[weak self] (vc) in
+        self?.navigationController?.pushViewController(vc, animated: false)
+      }).disposed(by: disposeBag)
     
     changeCurrentIndexProgressive = {
       (oldCell: ButtonBarViewCell?
@@ -68,8 +73,6 @@ class ListViewController: ButtonBarPagerTabStripViewController{
       oldCell?.label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
       newCell?.label.textColor = .black
     }
-    
-    
     self.automaticallyAdjustsScrollViewInsets = false
   }
   
@@ -85,18 +88,13 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   }
   
   override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-    return [QuestionViewController(),AnswerViewController(),SympathyViewController(),ReplyListViewController()]
+    return [QuestionViewController(),AnswerViewController(),SympathyViewController()]
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  
-  private func addConstraint(){
-    
-  }
-  
+
   @objc private dynamic func searchViewPresent(){
     let searchView = UINavigationController(rootViewController: SearchListViewController(type: .list))
     searchView.modalPresentationStyle = .overCurrentContext
@@ -105,7 +103,12 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.setBottomBorderColor(color: .white, height: 2)
+    bottomView = self.navigationController?.navigationBar.setBottomBorderColor2(color: .white, height: 2)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    bottomView?.removeFromSuperview()
   }
   
   private func navigationBarSetup(){
@@ -115,29 +118,9 @@ class ListViewController: ButtonBarPagerTabStripViewController{
     titleLabel.font = UIFont.CheeseFontBold(size: 18)
     titleLabel.sizeToFit()
     self.navigationItem.titleView = titleLabel
-    self.navigationItem.setRightBarButtonItems([searchButton,searchButton], animated: true)
+    self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white
-  }
-  
-  
-  @objc func presentCoachView(){
-    let coachView = CoachViewController()
-    coachView.imgView.image = coachView.images[1]
-    self.present(coachView, animated: true, completion: nil)
-  }
-  
-  func fetchChildViewControllers(){
-//    listQuestionViewController.fetch(paging: .refresh)
-//    listAnswerTableViewController.fetch(paging: .refresh)
-//    sympathyTableViewController.fetch(paging: .refresh)
-  }
-  
-  
-  func pushViewController(cheeseData: CheeseResult){
-//    let cheeseResultViewController = CheeseResultViewController()
-//    cheeseResultViewController.cheeseData = cheeseData.cheeseData
-//    self.navigationController?.pushViewController(cheeseResultViewController, animated: true)
   }
 }
 

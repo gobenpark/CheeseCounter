@@ -16,7 +16,6 @@ import AAFragmentManager
 
 public typealias tapCallBack = ((Data) -> ())
 
-
 class ImagePickerViewController: UIViewController {
   
   var didTap:tapCallBack?

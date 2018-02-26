@@ -117,6 +117,14 @@ extension UIView
     bottomBorderView.backgroundColor = color
     addSubview(bottomBorderView)
   }
+  
+  func setBottomBorderColor2(color: UIColor, height: CGFloat) -> UIView {
+    let bottomBorderRect = CGRect(x: 0, y: frame.height, width: frame.width, height: height)
+    let bottomBorderView = UIView(frame: bottomBorderRect)
+    bottomBorderView.backgroundColor = color
+    addSubview(bottomBorderView)
+    return bottomBorderView
+  }
 }
 
 extension UIFont{

@@ -12,6 +12,20 @@ import RxSwift
 import XLPagerTabStrip
 import Moya
 
+final class MypageNaviViewController: UINavigationController{
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  init() {
+    super.init(rootViewController: MyPageViewController())
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
+
 final class MyPageViewController: UIViewController{
   
   let containerVC = MyPageContainerViewController()
@@ -36,7 +50,7 @@ final class MyPageViewController: UIViewController{
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-   
+    title = "마이페이지"
     self.view.addSubview(headerView)
     self.addChildViewController(containerVC)
     self.view.addSubview(containerVC.view)
@@ -55,7 +69,23 @@ final class MyPageViewController: UIViewController{
         self?.dismiss(animated: true, completion: nil)}
       .disposed(by: disposeBag)
     
+    headerView.configureButton.rx.tap
+      .map{_ in return ConfigViewController()}
+      .subscribe(onNext: {[weak self] (vc) in
+        self?.navigationController?.pushViewController(vc, animated: true)
+      }).disposed(by: disposeBag)
+    
+    
     addConstraint()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.isHidden = true
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationController?.navigationBar.isHidden = false
   }
   
   private func addConstraint(){

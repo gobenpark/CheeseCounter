@@ -18,8 +18,7 @@ class MainCheeseView: UIView {
       title.text = model?.title
       cheeseCount.text = model?.option_cut_cheese
       peopleCount.text = model?.total_count
-      calendarLabel.text = dateConvert(model: model)
-      heartLabel.text = model?.empathy_count
+      
       if let type = model?.type{
         if type == "2"{
           selectView.snp.remakeConstraints { (make) in
@@ -38,10 +37,14 @@ class MainCheeseView: UIView {
         }
       }
       
+      if let empathy = model?.empathy_count,let reply = model?.reply_count{
+        emptyReplyLabel.text = "공감 \(empathy) 댓글 \(reply)개"
+        emptyReplyLabel.sizeToFit()
+      }
+      
       cheeseCount.sizeToFit()
       peopleIcon.sizeToFit()
       peopleCount.sizeToFit()
-      calendarLabel.sizeToFit()
     }
   }
   
@@ -50,6 +53,13 @@ class MainCheeseView: UIView {
     label.font = UIFont.CheeseFontMedium(size: 16.6)
     label.numberOfLines = 0
     label.lineBreakMode = .byTruncatingTail
+    return label
+  }()
+  
+  let emptyReplyLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.CheeseFontMedium(size: 10.2)
+    label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
     return label
   }()
   
@@ -82,45 +92,37 @@ class MainCheeseView: UIView {
     return label
   }()
   
-  let calendarIcon: UIImageView = {
-    let icon = UIImageView(image: #imageLiteral(resourceName: "calendar"))
-    return icon
+  
+  let heartButton: UIButton = {
+    let button = UIButton()
+    button.setTitle(" 공감하기", for: .normal)
+    button.setTitleColor(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1), for: .normal)
+    button.titleLabel?.font = UIFont.CheeseFontMedium(size: 12.6)
+    button.setImage(#imageLiteral(resourceName: "icHeart"), for: .normal)
+    button.semanticContentAttribute = .forceLeftToRight
+    return button
   }()
   
-  let calendarLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.CheeseFontMedium(size: 10.2)
-    label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
-    return label
+  let commentButton: UIButton = {
+    let button = UIButton()
+    button.setTitleColor(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1), for: .normal)
+    button.setTitle(" 댓글달기", for: .normal)
+    button.setImage(#imageLiteral(resourceName: "icComments"), for: .normal)
+    button.titleLabel?.font = UIFont.CheeseFontMedium(size: 12.6)
+    button.semanticContentAttribute = .forceLeftToRight
+    return button
   }()
   
-  let heartIcon: UIImageView = {
-    let icon = UIImageView(image: #imageLiteral(resourceName: "icHeart"))
-    return icon
-  }()
   
-  let heartLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.CheeseFontMedium(size: 12.6)
-    label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
-    return label
-  }()
   
-  let commentIcon: UIImageView = {
-    let icon = UIImageView(image: #imageLiteral(resourceName: "icComments"))
-    return icon
-  }()
-  
-  let commentLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.CheeseFontMedium(size: 12.6)
-    label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
-    return label
-  }()
-  
-  let shareIcon: UIImageView = {
-    let icon = UIImageView(image: #imageLiteral(resourceName: "icShare"))
-    return icon
+  let shareButton: UIButton = {
+    let button = UIButton()
+    button.setTitleColor(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1), for: .normal)
+    button.setTitle(" 공유하기", for: .normal)
+    button.setImage(#imageLiteral(resourceName: "icShare"), for: .normal)
+    button.titleLabel?.font = UIFont.CheeseFontMedium(size: 12.6)
+    button.semanticContentAttribute = .forceLeftToRight
+    return button
   }()
   
   let shareLabel: UILabel = {
@@ -149,17 +151,14 @@ class MainCheeseView: UIView {
     backgroundColor = .white
     addSubview(title)
     addSubview(cheeseIcon)
+    addSubview(emptyReplyLabel)
     addSubview(cheeseCount)
     addSubview(selectView)
     addSubview(peopleCount)
     addSubview(peopleIcon)
-    addSubview(calendarIcon)
-    addSubview(calendarLabel)
-    addSubview(heartIcon)
-    addSubview(heartLabel)
-    addSubview(commentIcon)
-    addSubview(commentLabel)
-    addSubview(shareIcon)
+    addSubview(heartButton)
+    addSubview(commentButton)
+    addSubview(shareButton)
     addSubview(shareLabel)
     addSubview(dividLine)
     addSubview(moreButton)
@@ -203,19 +202,7 @@ class MainCheeseView: UIView {
       make.left.equalTo(peopleIcon.snp.right).offset(4.5)
       make.centerY.equalTo(peopleIcon)
     }
-    
-    calendarIcon.snp.makeConstraints { (make) in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(selectView.snp.bottom).offset(11)
-      make.height.equalTo(13)
-      make.width.equalTo(14)
-    }
-    
-    calendarLabel.snp.makeConstraints { (make) in
-      make.left.equalTo(calendarIcon.snp.right).offset(4.5)
-      make.centerY.equalTo(calendarIcon)
-    }
-    
+
     dividLine.snp.makeConstraints { (make) in
       make.left.equalToSuperview()
       make.right.equalToSuperview()
@@ -223,40 +210,24 @@ class MainCheeseView: UIView {
       make.height.equalTo(1)
     }
     
-    heartIcon.snp.makeConstraints { (make) in
+    heartButton.snp.makeConstraints { (make) in
       make.left.equalToSuperview().inset(12.5)
-      make.top.equalTo(dividLine.snp.bottom).offset(10.5)
-      make.width.equalTo(13.5)
-      make.height.equalTo(12.5)
+      make.top.equalTo(dividLine.snp.bottom).offset(9)
     }
     
-    heartLabel.snp.makeConstraints { (make) in
-      make.left.equalTo(heartIcon.snp.right).offset(7.5)
-      make.centerY.equalTo(heartIcon)
+    commentButton.snp.makeConstraints { (make) in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(dividLine.snp.bottom).offset(9)
     }
     
-    commentIcon.snp.makeConstraints { (make) in
-      make.centerX.equalToSuperview().offset(-10)
-      make.top.equalTo(dividLine.snp.bottom).offset(10.5)
-      make.width.equalTo(13.5)
-      make.height.equalTo(12.5)
+    shareButton.snp.makeConstraints { (make) in
+      make.right.equalToSuperview().inset(11.5)
+      make.top.equalTo(dividLine.snp.bottom).offset(9)
     }
     
-    commentLabel.snp.makeConstraints { (make) in
-      make.left.equalTo(commentIcon.snp.right).offset(9)
-      make.centerY.equalTo(commentIcon)
-    }
-    
-    shareIcon.snp.makeConstraints { (make) in
-      make.right.equalToSuperview().inset(34)
-      make.top.equalTo(dividLine.snp.bottom).offset(10.5)
-      make.height.equalTo(12.5)
-      make.width.equalTo(10.5)
-    }
-    
-    shareLabel.snp.makeConstraints { (make) in
-      make.left.equalTo(shareIcon.snp.right).offset(8)
-      make.centerY.equalTo(shareIcon)
+    emptyReplyLabel.snp.makeConstraints { (make) in
+      make.centerY.equalTo(peopleIcon)
+      make.right.equalToSuperview().inset(11)
     }
     
     moreButton.snp.makeConstraints { (make) in

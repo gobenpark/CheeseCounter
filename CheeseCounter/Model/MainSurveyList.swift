@@ -38,12 +38,12 @@ struct MainSurveyList: Codable{
     let created_date: String
     let user_id: String
     let title: String
-    let main_img_url: String
+    let main_img_url: String?
     let limit_date: String
     let ask1: String
     let ask2: String
-    let ask3: String
-    let ask4: String
+    let ask3: String?
+    let ask4: String?
     let ask1_img_url: String
     let ask2_img_url: String
     let ask3_img_url: String?
@@ -63,9 +63,13 @@ struct MainSurveyList: Codable{
     let result_count: String?
     let select_ask: String?
     let survey_result: Survey_Result?
+    /// ## 공감리스트 용도
+    let recent_reply: String?
+    let like_count: String?
+    /// ## 매인 더보기버튼용
+    var isExpand = false
     
-    
-    
+   
     init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CodingKeys.self)
       id = try values.decode(String.self, forKey: .id)
@@ -73,12 +77,12 @@ struct MainSurveyList: Codable{
       created_date = try values.decode(String.self, forKey: .created_date)
       user_id = try values.decode(String.self, forKey: .user_id)
       title = try values.decode(String.self, forKey: .title)
-      main_img_url = try values.decode(String.self, forKey: .main_img_url)
+      main_img_url = try? values.decode(String.self, forKey: .main_img_url)
       limit_date = try values.decode(String.self, forKey: .limit_date)
       ask1 = try values.decode(String.self, forKey: .ask1)
       ask2 = try values.decode(String.self, forKey: .ask2)
-      ask3 = try values.decode(String.self, forKey: .ask3)
-      ask4 = try values.decode(String.self, forKey: .ask4)
+      ask3 = try? values.decode(String.self, forKey: .ask3)
+      ask4 = try? values.decode(String.self, forKey: .ask4)
       ask1_img_url = try values.decode(String.self, forKey: .ask1_img_url)
       ask2_img_url = try values.decode(String.self, forKey: .ask2_img_url)
       ask3_img_url = try? values.decode(String.self, forKey: .ask3_img_url)
@@ -98,6 +102,8 @@ struct MainSurveyList: Codable{
       select_ask = try? values.decode(String.self, forKey: .select_ask)
       result_count = try? values.decode(String.self, forKey: .result_count)
       is_enable = try? values.decode(String.self, forKey: .is_enable)
+      recent_reply = try? values.decode(String.self, forKey: .recent_reply)
+      like_count = try? values.decode(String.self, forKey: .like_count)
     }
   }
 }

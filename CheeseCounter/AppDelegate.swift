@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var urlCheeseData: CheeseResultByDate.Data?
   
-  var paymentViewController: PaymentViewController?
+//  var paymentViewController: PaymentViewController?
   let gcmMessageIDKey = "gcm.message_id"
   var window: UIWindow?
   let parameter: [String:String] = [:]

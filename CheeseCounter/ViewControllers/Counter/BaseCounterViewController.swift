@@ -15,3 +15,4 @@ class BaseCounterViewController: UIViewController {
         self.navigationController?.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
     }
 }
+

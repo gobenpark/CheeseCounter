@@ -14,6 +14,8 @@ enum SearchType{
 }
 
 import DZNEmptyDataSet
+import SwiftyImage
+import Moya
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
@@ -22,25 +24,24 @@ import DZNEmptyDataSet
 
 class SearchListViewController: UIViewController{
   
-  var isLoading: Bool = false
-  var nextPageNumber: Int = 1
-  
   var searchType: SearchType
   let disposeBag = DisposeBag()
-  let dataSource = RxCollectionViewSectionedReloadDataSource<SearchViewModel>(configureCell: { ds, cv, ip, item in
-    let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: BaseListCell.self), for: ip) as! BaseListCell
-    cell.data = item
+  let searchText = Variable<String>(String())
+  private let provider = MoyaProvider<CheeseCounter>().rx
+  let cheeseDatas = Variable<[CheeseViewModel]>([])
+  let dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: { ds, cv, idx, item in
+    let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
+    cell.model = item
     return cell
   }
 )
-  let cellViewModels = Variable<[SearchViewModel]>([])
   
   lazy var searchController: UISearchController = {
     let sc = UISearchController(searchResultsController: nil)
     sc.hidesNavigationBarDuringPresentation = false
-    sc.dimsBackgroundDuringPresentation = false
     sc.searchBar.showsCancelButton = true
     sc.searchBar.placeholder = "검색어를 입력하세요 "
+    sc.obscuresBackgroundDuringPresentation = false
     return sc
   }()
   
@@ -50,11 +51,23 @@ class SearchListViewController: UIViewController{
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.emptyDataSetSource = self
     collectionView.emptyDataSetDelegate = self
-    collectionView.register(BaseListCell.self, forCellWithReuseIdentifier: String(describing: BaseListCell.self))
+    collectionView.register(MainViewCell.self, forCellWithReuseIdentifier: String(describing: MainViewCell.self))
     collectionView.alwaysBounceVertical = true
+    collectionView.delegate = self
     collectionView.backgroundColor = #colorLiteral(red: 0.9489366412, green: 0.9490727782, blue: 0.9489067197, alpha: 1)
     return collectionView
   }()
+  
+  private let homeButton: UIBarButtonItem = {
+    let button = UIBarButtonItem()
+    button.image = #imageLiteral(resourceName: "header_home@1x")
+    button.style = .plain
+    return button
+  }()
+  
+  override func loadView() {
+    view = collectionView
+  }
   
   init(type: SearchType) {
     self.searchType = type
@@ -68,20 +81,23 @@ class SearchListViewController: UIViewController{
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    collectionView.dataSource = nil
-    
-    self.view = collectionView
-    
-    configure()
-    
-    collectionView.rx
-      .setDelegate(self)
+    navigationSetting()
+    definesPresentationContext = true
+    cheeseDatas.asDriver()
+      .debug()
+      .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
     
-    self.definesPresentationContext = true
+    homeButton.rx.tap
+      .subscribe {[weak self] (_) in
+        guard let `self` = self else {return}
+        self.navigationController?.popViewController(animated: false)
+    }.disposed(by: disposeBag)
     
-    cellViewModels.asDriver()
-      .drive(collectionView.rx.items(dataSource: dataSource))
+    searchText
+      .asObservable()
+      .map{ text in return (String(),text)}
+      .bind(onNext: request)
       .disposed(by: disposeBag)
     
     switch searchType {
@@ -89,71 +105,81 @@ class SearchListViewController: UIViewController{
       searchController.searchBar
         .rx
         .text
-        .flatMap { text -> Observable<[SearchViewModel]> in
-          return CheeseService.provider.rx
-            .request(.getSearchSurveyList(search: text ?? "", page_num: 0))
-            .asObservable()
-            .map(CheeseResultByDate.self)
-            .map({ data in
-              return [SearchViewModel(items: data.data!)]
-            })
-        }.bind(to: self.cellViewModels)
+        .filterNil()
+        .distinctUntilChanged()
+        .bind(to: searchText)
         .disposed(by: disposeBag)
+      
     case .list:
       searchController.searchBar
         .rx
         .text
-        .flatMap { text -> Observable<[SearchViewModel]> in
-          return CheeseService.provider.rx
-            .request(.getMySearchSurveyList(search: text ?? "", page_num: 0))
-            .asObservable()
-            .map(CheeseResultByDate.self)
-            .map({ data in
-              return [SearchViewModel(items: data.data!)]
-            })
-        }.bind(to: self.cellViewModels)
-        .disposed(by: disposeBag)
+        .subscribe({ (event) in
+          log.info(event)
+        }).disposed(by:disposeBag)
     }
-    
-    
-    let navigationBarBackGroundImage =  UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image
-    self.navigationController?.navigationBar.setBackgroundImage(navigationBarBackGroundImage, for: .default)
-    self.navigationItem.setLeftBarButton(
-      UIBarButtonItem(
-      image: #imageLiteral(resourceName: "header_home@1x"), style: .plain, target: self, action: #selector(dismissAction)
-    ), animated: true
-    )
-    self.navigationItem.titleView = searchController.searchBar
-  }
-
-  @objc func dismissAction(){
-    self.dismiss(animated: false, completion: nil)
   }
   
-  private func configure(){
-    dataSource.configureCell = { ds, cv, ip, item in
-      let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: BaseListCell.self), for: ip) as! BaseListCell
-      cell.data = item
-      return cell
+  private func request(data:(String, String)){
+    
+    if data.0 == String(){
+      self.cheeseDatas.value.removeAll()
     }
+    
+    provider.request(.getSurveyListV2Search(id: data.0, search: data.1))
+      .filter(statusCode: 200)
+      .map(MainSurveyList.self)
+      .map {CheeseViewModel(items: $0.result.data)}
+      .asObservable()
+      .catchErrorJustReturn(CheeseViewModel(items: []))
+      .filter({ (viewModel) -> Bool in
+        return viewModel.items.count != 0
+      })
+      .scan(cheeseDatas.value){ (state: [CheeseViewModel], viewModel: CheeseViewModel) -> [CheeseViewModel] in
+        return state + viewModel
+      }.bind(to: cheeseDatas)
+      .disposed(by: disposeBag)
+  }
+  
+  private func navigationSetting(){
+    self.definesPresentationContext = true
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image, for: .default)
+    self.navigationItem.setLeftBarButton(homeButton, animated: false)
+    navigationItem.titleView = searchController.searchBar
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).image, for: .default)
   }
 }
 
 extension SearchListViewController: UICollectionViewDelegateFlowLayout{
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 100)
+  
+  func collectionView(_ collectionView: UICollectionView
+    , layout collectionViewLayout: UICollectionViewLayout
+    , sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+    let sectionModel = self.dataSources.sectionModels
+    
+    switch sectionModel[indexPath.section].items[indexPath.item].type{
+    case "2":
+      if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+        return CGSize(width: collectionView.frame.width, height: 400)
+      }
+      return CGSize(width: collectionView.frame.width, height: 340)
+    case "4":
+      if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+        return CGSize(width: collectionView.frame.width, height: 570)
+      }
+      return CGSize(width: collectionView.frame.width, height: 520)
+    default:
+      return CGSize(width: collectionView.frame.width, height: 340)
+    }
   }
 }
 
 extension SearchListViewController: UICollectionViewDelegate{
-  
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let cell = collectionView.cellForItem(at: indexPath) as? BaseListCell else {return}
-    
-//    let cheeseResultVC = CheeseResultViewController()
-//    cheeseResultVC.cheeseData = cell.data
-//    self.navigationController?.pushViewController(cheeseResultVC, animated: true)
-  }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
@@ -168,8 +194,8 @@ extension SearchListViewController: UICollectionViewDelegate{
     , layout collectionViewLayout: UICollectionViewLayout
     , referenceSizeForFooterInSection section: Int) -> CGSize {
 
-    let height: CGFloat = (self.isLoading) ? 44 : 0
-    return CGSize(width: collectionView.frame.width, height: height)
+//    let height: CGFloat = (self.isLoading) ? 44 : 0
+    return CGSize(width: collectionView.frame.width, height: 44)
   }
 }
 
