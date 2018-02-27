@@ -15,7 +15,6 @@ import Firebase
 import FirebaseMessaging
 import SwiftyJSON
 import Kingfisher
-import ManualLayout
 import SwiftyImage
 import Fabric
 import Crashlytics
@@ -24,6 +23,7 @@ import FBSDKCoreKit
 import URLNavigator
 import RxSwift
 import RxCocoa
+import ChameleonFramework
 
 
 let log = SwiftyBeaver.self
@@ -38,13 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var urlCheeseData: CheeseResultByDate.Data?
   
-  var paymentViewController: PaymentViewController?
+//  var paymentViewController: PaymentViewController?
   let gcmMessageIDKey = "gcm.message_id"
   var window: UIWindow?
   let parameter: [String:String] = [:]
   let customURLScheme = "cheesecounter"
-//  var loginConfirm: LoginConfirmController!
-  
+  let urlMapper = URLNavigationMap(key: "kWGPa9nW")
+
   
   func application(
     _ application: UIApplication,
@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
+    window?.backgroundColor = .white
     
     Fabric.with([Crashlytics.self])
     Crashlytics.sharedInstance().debugMode = false
@@ -65,16 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     Messaging.messaging().delegate = self
     
-    URLNavigationMap.initialize()
     
     
-    
-//    if let url = launchOptions?[.url] as? URL {
-//      let opened = Navigator.open(url)
-//      if !opened {
-//        Navigator.push(url)
-//      }
-//    }
     if #available(iOS 10.0, *)
     {
       // For iOS 10 display notification (sent via APNS)
@@ -128,18 +121,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func loggingSetting(){
-    // add log destinations. at least one is needed!
+    
     let console = ConsoleDestination()  // log to Xcode Console
-    let file = FileDestination()  // log to default swiftybeaver.log file
     let cloud = SBPlatformDestination(appID: "VQnakm", appSecret: "ijpnVkji0funquPkTahs2efbst7gYihY", encryptionKey: "thylVjoZtl71krs32ogtM8ainhtgXzow") // to cloud
     
-    // use custom format and set console output to short time, log level & message
-    console.format = "$DHH:mm:ss$d $C$L$c $N.$F:$l - $M"
-    // or use this for JSON output: console.format = "$J"
     
-    // add the destinations to SwiftyBeaver
+    console.format = "$DHH:mm:ss$d $C$L$c $N.$F:$l - $M"
+    
     log.addDestination(console)
-    log.addDestination(file)
     log.addDestination(cloud)
   }
   
@@ -160,10 +149,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       })
     }
     self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
+    
   }
   
   func configureAppearance() {
     
+    let statusView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
+    statusView.backgroundColor = .white
+    self.window?.rootViewController?.view.addSubview(statusView)
+  
     let navigationBarBackGroundImage =  UIImage.resizable().color(.white).image
     UINavigationBar.appearance().setBackgroundImage(navigationBarBackGroundImage, for: .default)
     UIBarButtonItem.appearance().tintColor = .black
@@ -207,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     log.debug("디바이스토큰:\(token)")
   }
   
-  func kakaoSessionDidChangeWithNotification() {
+  @objc func kakaoSessionDidChangeWithNotification() {
     reloadRootViewController()
   }
   
@@ -245,20 +239,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       let message = generateDynamicLinkMessage(dynamicLink)
       log.info(message)
-      
-      if Navigator.open(url) {
-        return true
-      }
-      
-      if Navigator.present(url, wrap: true) != nil {
-        return true
-      }
-      return true
+    }else{
+      log.debug(url.queryParameters["kWGPa9nW",default:""])
     }
     
-    if Navigator.open(url) {
-      return true
-    }
+    
+    urlMapper.open(url: url)
+    
+    
+    
+
+//      if Navigator.open(url) {
+//        return true
+//      }
+      
+//      if Navigator.present(url, wrap: true) != nil {
+//        return true
+//      }
+//      return true
+//    }
+//
+//    if Navigator.open(url) {
+//      return true
+//    }
     
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)

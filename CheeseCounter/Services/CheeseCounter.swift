@@ -11,14 +11,14 @@ import Moya
 public enum CheeseCounter{
   
   case getMyPoint
-  case getMyPointHistory(parameter: [String:String])
+  case getMyPointHistory(type: String, year: String, month: String)
   
   case getMyPush
   case updateMyPush(parameter: [String:String])
   case getMyNotification(pageNum: String)
   
   case getReplyList(surveyId: String)
-  case insertReply(parameter: [String:String])
+  case insertReply(survey_id: String, parent_id: String, contents: String)
   case deleteReply(id: String)
   case insertLike(parameter: [String:String])
   
@@ -37,10 +37,10 @@ public enum CheeseCounter{
   case getMyInfo
   
   case getSurveyResult(surveyId: String)
-  case getDetailResult(parameter: [String:String])
+  case getDetailResult(survey_id: String, selectAsk: String, address: String)
   
   case getQnaList
-  case insertQna(parameter: [String:String])
+  case insertQna(title: String, contents: String)
   
   case getEmpathyList(pageNum: String)
   case insertEmpathy(id: String)
@@ -61,11 +61,25 @@ public enum CheeseCounter{
   
   case fcmSender(fcm_token: String)
   case getSurveyById(id: String)
+  case getSearchSurveyList(search: String, page_num: Int)
+  case getMySearchSurveyList(search: String, page_num: Int)
+  case getGiftList
+  case buyDirectGift(id: String)
+  case regRoulette(gift_id: String,level: String)
+  case getRouletteBoard(id: String)
+  case updateRouletteRun(id: String, stage: String, re: String)
+  case updateRouletteDone(id: String)
+  case getSurveyListV2(id: String)
+  case getSurveyListV2Search(id: String, search: String)
+  case getWinList
 }
 
 extension CheeseCounter: TargetType{
-  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
-//  public var baseURL: URL {return URL(string: "http://192.168.1.39:8088")!}
+//  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
+  public var baseURL: URL {return URL(string: "http://192.168.1.103:8088")!}
+//  public var baseURL: URL {return URL(string:  "http://192.168.1.22:8081/CheeseCounter")!}
+
+  
   
   public var path: String {
     switch self{
@@ -147,6 +161,26 @@ extension CheeseCounter: TargetType{
       return "/auth/updateFcmToken.json"
     case .getSurveyById:
       return "/survey/getSurveyById.json"
+    case .getSearchSurveyList:
+      return "/survey/getSearchSurveyList.json"
+    case .getMySearchSurveyList:
+      return "/survey/getMySearchSurveyList.json"
+    case .getGiftList:
+      return "/gift/getGiftList.json"
+    case .buyDirectGift:
+      return "/gift/buyDirectGift.json"
+    case .regRoulette:
+      return "/game/regRoulette.json"
+    case .getRouletteBoard:
+      return "/game/getRouletteBoard.json"
+    case .updateRouletteRun:
+      return "/game/updateRouletteRun.json"
+    case .updateRouletteDone:
+      return "/game/updateRouletteDone.json"
+    case .getSurveyListV2,.getSurveyListV2Search:
+      return "/survey/getSurveyListV2.json"
+    case .getWinList:
+      return "/game/getWinList.json"
     }
   }
   
@@ -164,47 +198,30 @@ extension CheeseCounter: TargetType{
   
   public var task: Task {
     switch self{
-    case .getMyNotification(let pageNum):
-      return .requestParameters(parameters: ["page_num":pageNum], encoding: URLEncoding.default)
-      //      return ["page_num":pageNum]
-      //      case .getReplyList(let surveyId):
-      //      return ["survey_id":surveyId]
-      //      case .insertReply(let parameter):
-      //      return parameter
-      //      case .deleteReply(let id):
-      //      return ["id":id]
-      //      case .insertLike(let parameter):
-      //      return parameter
-      //      case .loginUser(let id,let fcm,let img,let access,let version):
-      //      return ["id":id,"fcm_token":fcm,"img_url":img,"access_token":access,"version":version]
-      //      case .checkNickname(let nickname):
-      //      return ["nickname":nickname]
-      //      case .regUser(let parameter):
-      //      return parameter
-      //      case .getSurveyListByDate(let parameter):
-      //      return parameter
-      //      case .insertSurvey(let parameters):
-      //      return parameters
-      //      case .getSurveyResult(let id):
-      //      return ["survey_id":id]
-      //      case .insertSurveyResult(let id,let select):
-      //      return ["survey_id":id,"select_ask":select]
-      //      case .getSurveyListByOption(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .getDetailResult(let parameter):
-      //      return parameter
-      //      case .getMyRegSurveyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .getMyAnswerSurveyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .getEmpathyList(let pageNum):
-      //      return ["page_num":pageNum]
-      //      case .insertEmpathy(let id):
-      //      return ["id":id]
-      //      case .fcmSender(let token):
-    //      return ["fcm_token":token]
-    case .getSurveyById(let id):
+    case .getMyPointHistory(let type, let year, let month):
+      return .requestParameters(parameters: ["type": type, "year": year, "month": month], encoding: URLEncoding.queryString)
+    case .getReplyList(let surveyId):
+      return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.queryString)
+    case .getDetailResult(let surveyId, let selectAsk, let address):
+      return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.queryString)
+    case .getSearchSurveyList(let search, let pageNum),.getMySearchSurveyList(let search, let pageNum):
+      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
+    case .regRoulette(let gift_id, let level):
+      return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.queryString)
+    case .updateRouletteRun(let id, let s, let re):
+      return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
+    case .updateRouletteDone(let id),.buyDirectGift(let id),.getSurveyById(let id),.getRouletteBoard(let id),.getSurveyListV2(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+    case .insertSurveyResult(let survey_id, let select_ask):
+      return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)
+    case .insertReply(let survey_id, let parent_id, let contents):
+      return .requestParameters(parameters: ["survey_id": survey_id,"parent_id":parent_id,"contents":contents], encoding: URLEncoding.queryString)
+    case .getMyRegSurveyList(let page_num),.getMyAnswerSurveyList(let page_num),.getMyNotification(let page_num),.getEmpathyList(let page_num):
+      return .requestParameters(parameters:["page_num": page_num], encoding: URLEncoding.queryString)
+    case .getSurveyListV2Search(let id, let search):
+      return .requestParameters(parameters: ["id": id,"search": search], encoding: URLEncoding.queryString)
+    case .insertQna(let title, let contents):
+      return .requestParameters(parameters: ["title":title,"contents":contents], encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }

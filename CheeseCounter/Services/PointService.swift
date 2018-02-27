@@ -68,14 +68,19 @@ struct PointService {
       .responseJSON { (response) in
         switch response.result{
         case .success(_):
-          let json = JSON(data: response.data!)
-          if let result = json["result"]["code"].string
-            ,let data = json["result"]["data"].string{
-            if result == "2001"{
-              sessionExpireAction()
+          do{
+          let json = try JSON(data: response.data!)
+            if let result = json["result"]["code"].string
+              ,let data = json["result"]["data"].string{
+              if result == "2001"{
+                sessionExpireAction()
+              }
+              completion(result,data)
             }
-            completion(result,data)
+          }catch let error{
+            print(error)
           }
+        
           
         case .failure(let error):
           completion(error.localizedDescription,"error")
@@ -89,40 +94,6 @@ struct PointService {
       AppDelegate.instance?.reloadRootViewController()
     }))
     AppDelegate.instance?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-  }
-  
-  static func getMyRank(_ completion: @escaping (DataResponse<RankData>) -> Void){
-    let url = "\(UserService.url)/rank/getMyRank.json"
-    Alamofire.request(url, method: .post)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        let response: DataResponse<RankData> = response.flatMap{ json in
-          if let user = Mapper<RankData>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: HistoryData.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
-  
-  static func getTopRankList(_ completion: @escaping (DataResponse<RankData>) -> Void){
-    let url = "\(UserService.url)/rank/getTopRankList.json"
-    Alamofire.request(url, method: .post)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        let response: DataResponse<RankData> = response.flatMap{ json in
-          if let user = Mapper<RankData>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: HistoryData.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
   }
 }
 

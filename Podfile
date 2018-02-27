@@ -10,30 +10,32 @@ pod 'Moya/RxSwift'
 # UI
 pod 'XLActionController'
 pod 'XLActionController/Twitter'
-pod 'SnapKit', '~> 3.2.0'
+pod 'SnapKit'
 pod "UPCarouselFlowLayout"  
-pod 'AAFragmentManager', '~> 0.1.1'
+pod 'AAFragmentManager'
 pod 'CircleProgressView'
 pod 'NVActivityIndicatorView'
 pod 'NextGrowingTextView'
 pod 'DZNEmptyDataSet'
 pod 'BetterSegmentedControl'
 pod 'ALCameraViewController'
-pod 'Toaster', '~> 2.0'
 pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
-pod 'DynamicColor', '~> 3.3'
+pod 'Eureka'
+pod 'TTTAttributedLabel'
+pod 'XLPagerTabStrip'
+pod 'FlexibleImage', '~> 1.8'
+pod 'Toaster'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
 pod 'SwiftyJSON'
 pod 'KakaoOpenSDK'
-pod 'ObjectMapper', '~> 2.2'
+pod 'ObjectMapper'
 pod 'Kingfisher'
-pod 'ManualLayout', '~> 1.3'
-pod 'Firebase/Core', '~> 4.0' 
-pod 'Firebase/Messaging', '~> 4.0'
+pod 'Firebase/Core' 
+pod 'Firebase/Messaging'
 pod 'Firebase/DynamicLinks'
 pod 'SwiftyImage'
 pod 'Fabric'
@@ -42,24 +44,29 @@ pod 'SwiftyBeaver'
 pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
+pod 'PMAlertController'
+pod 'FSPagerView'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxDataSources'
+pod 'RxGesture'
+pod 'RxOptional'
+pod 'RxKeyboard'
 #Animation
-pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 pod 'YLGIFImage'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+
+#Color
+pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter
+
 
  target "CheeseCounterTests" do
     inherit! :search_paths
-    pod 'Firebase'
-    pod 'Moya'
-    pod 'Alamofire'
-    
     pod 'Quick'
+    pod 'Stubber'
     pod 'Nimble'
     # Pods for testing
   end
-
 end

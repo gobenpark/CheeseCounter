@@ -6,21 +6,33 @@
 //  Copyright © 2017년 xiilab. All rights reserved.
 //
 
-
+import XCTest
 import Quick
 import Nimble
-import Moya
+import RxMoya
+import RxSwift
+import RxCocoa
 
-@testable import CheeseCounter
+struct IAPManager{
+  func fetch(){
+    
+  }
+}
 
 
-class CheeseCounterTests: QuickSpec {
-  
+
+class FetchTest: QuickSpec{
   override func spec(){
-    
-    
-    it("is friendly"){
-      expect(1 + 1).to(equal(30))
+    describe("") {
+      let disposeBag = DisposeBag()
+      it(""){
+        
+      }
     }
   }
 }
+
+
+
+
+

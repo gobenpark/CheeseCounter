@@ -23,7 +23,7 @@
 #import <KakaoOpenSDK/KOSessionTask+UserManagementAPI.h>
 #import <KakaoOpenSDK/KOSessionTask+TokenAPI.h>
 #import <KakaoOpenSDK/KOSessionTask+FriendAPI.h>
-#import <KakaoOpenSDK/KOSessionTask+StorageAPI.h>
+//#import <KakaoOpenSDK/KOSessionTask+StorageAPI.h>
 
 #import <KakaoOpenSDK/KOStoryActorInfo.h>
 #import <KakaoOpenSDK/KOStoryCommentInfo.h>
