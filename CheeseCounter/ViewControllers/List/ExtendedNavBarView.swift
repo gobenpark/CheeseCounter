@@ -12,12 +12,13 @@ class ExtendedNavBarView: UIView {
   
   lazy var segmentedControl: BetterSegmentedControl = {
     let sc = BetterSegmentedControl(frame: .zero, titles: [], index: 0, options: [BetterSegmentedControlOption.backgroundColor(.white),.titleColor(.lightGray)])
-    
+
     sc.layer.borderWidth = 0.5
     sc.layer.borderColor = UIColor.lightGray.cgColor
     sc.titleFont = UIFont.CheeseFontMedium(size: 14)
     return sc
   }()
+  
   
   /**
    *  Called when the view is about to be displayed.  May be called more than

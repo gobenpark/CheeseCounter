@@ -1,6 +1,5 @@
 # Uncomment the next line to define a global platform for your project
  platform :ios, '9.0'
-
 target 'CheeseCounter' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
@@ -17,7 +16,6 @@ pod 'CircleProgressView'
 pod 'NVActivityIndicatorView'
 pod 'NextGrowingTextView'
 pod 'DZNEmptyDataSet'
-pod 'BetterSegmentedControl'
 pod 'ALCameraViewController'
 pod 'Charts'
 pod 'lottie-ios'
@@ -27,6 +25,7 @@ pod 'TTTAttributedLabel'
 pod 'XLPagerTabStrip'
 pod 'FlexibleImage', '~> 1.8'
 pod 'Toaster'
+pod 'BetterSegmentedControl'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -46,6 +45,7 @@ pod 'AnyDate'
 pod 'Hero'
 pod 'PMAlertController'
 pod 'iCarousel'
+pod 'Carte'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
@@ -61,7 +61,6 @@ pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter
 
-
  target "CheeseCounterTests" do
     inherit! :search_paths
     pod 'Quick'
@@ -69,4 +68,8 @@ pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chamel
     pod 'Nimble'
     # Pods for testing
   end
+end
+post_install do |installer|
+  pods_dir = File.dirname(installer.pods_project.path)
+  at_exit { `ruby #{pods_dir}/Carte/Sources/Carte/carte.rb configure` }
 end

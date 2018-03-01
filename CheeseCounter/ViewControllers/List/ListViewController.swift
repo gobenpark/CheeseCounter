@@ -9,7 +9,6 @@
 import UIKit
 
 import AAFragmentManager
-import BetterSegmentedControl
 import XLPagerTabStrip
 
 #if !RX_NO_MODULE

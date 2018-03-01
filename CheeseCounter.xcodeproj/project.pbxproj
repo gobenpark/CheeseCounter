@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A05A97E2047A7F900C526CA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A05A97D2047A7F900C526CA /* EventViewController.swift */; };
 		44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44017B441EA30E8B00BA1D23 /* PushData.swift */; };
 		440A5B901E6ACFEC00D8C74C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B8F1E6ACFEC00D8C74C /* MainTabBarController.swift */; };
 		440A5B921E6AD41B00D8C74C /* CheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */; };
@@ -243,6 +244,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A05A97D2047A7F900C526CA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		44017B441EA30E8B00BA1D23 /* PushData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushData.swift; sourceTree = "<group>"; };
 		440A5B8F1E6ACFEC00D8C74C /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseViewController.swift; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				B159368A1F300A6C009C29A6 /* WelcomeCoachViewController.swift */,
 				B104EF2B1ECC66F60075D80C /* CoachViewController.swift */,
 				B1B2DBB71F00917300C91CEA /* LoginConfirmController.swift */,
+				0A05A97D2047A7F900C526CA /* EventViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1008,7 +1011,9 @@
 				C69885DBA459E2610D2095D6 /* [CP] Check Pods Manifest.lock */,
 				B1F960F21E63E90D00E87B02 /* Sources */,
 				B1F960F31E63E90D00E87B02 /* Frameworks */,
+				E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */,
 				B1F960F41E63E90D00E87B02 /* Resources */,
+				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 				C6DB123CCD9E86B2CB4D3D88 /* [CP] Embed Pods Frameworks */,
 				2F7C9598F87A9247C8E6B0D6 /* [CP] Copy Pods Resources */,
 				B1F5BFED1EB1760A004A43D4 /* ShellScript */,
@@ -1151,6 +1156,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6F09AC68488332B30709BADD /* [Carte] Post Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Post Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb post";
+			showEnvVarsInLog = 0;
+		};
 		A683A8C022623CF877C1E5E4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1235,6 +1255,7 @@
 				"${BUILT_PRODUCTS_DIR}/AnyDate/AnyDate.framework",
 				"${BUILT_PRODUCTS_DIR}/BetterSegmentedControl/BetterSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Carte/Carte.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleProgressView/CircleProgressView.framework",
@@ -1285,6 +1306,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnyDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BetterSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Carte.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleProgressView.framework",
@@ -1332,6 +1354,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Pre Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb pre";
+			showEnvVarsInLog = 0;
+		};
 		E68A179E5229084716A19521 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1364,6 +1401,7 @@
 				B15EC4691E8209CF00CE52D6 /* QuestionCheeseSetCell.swift in Sources */,
 				B12E6A81202946FA006C296E /* ReplyHeaderView.swift in Sources */,
 				B172D6A62024226300CFD97B /* RankViewModel.swift in Sources */,
+				0A05A97E2047A7F900C526CA /* EventViewController.swift in Sources */,
 				B1FFDFC61F70B3CC004591B3 /* AlertViewCell.swift in Sources */,
 				B18ECC892011E1D80004CC41 /* GiftViewModel.swift in Sources */,
 				B1F5BFF41EB1CDEE004A43D4 /* PersonalInfoViewController.swift in Sources */,

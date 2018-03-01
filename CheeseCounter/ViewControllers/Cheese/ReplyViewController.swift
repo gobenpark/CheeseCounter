@@ -59,7 +59,7 @@ final class ReplyViewController: UIViewController{
     collectionView.register(ReplyViewCell.self, forCellWithReuseIdentifier: String(describing: ReplyViewCell.self))
     collectionView.alwaysBounceVertical = true
     collectionView.delegate = self
-    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
+    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
     return collectionView
   }()
   

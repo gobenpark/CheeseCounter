@@ -8,7 +8,7 @@
 
 import UIKit
 import Eureka
-
+import Carte
 
 final class ConfigViewController: FormViewController{
   
@@ -64,6 +64,8 @@ final class ConfigViewController: FormViewController{
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "오픈소스 라이센스 (OSS License)"
         cell.accessoryType = .disclosureIndicator
+      }).onCellSelection({[weak self] (cell, row) in
+        self?.navigationController?.pushViewController(CarteViewController(), animated: true)
       })
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "버전정보"
