@@ -41,7 +41,7 @@ class MainCheeseView: UIView {
         emptyReplyLabel.text = "공감 \(empathy) 댓글 \(reply)개"
         emptyReplyLabel.sizeToFit()
       }
-      
+      self.heartButton.isSelected = (model?.is_empathy == "1") ? true : false
       cheeseCount.sizeToFit()
       peopleIcon.sizeToFit()
       peopleCount.sizeToFit()
@@ -99,6 +99,7 @@ class MainCheeseView: UIView {
     button.setTitleColor(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1), for: .normal)
     button.titleLabel?.font = UIFont.CheeseFontMedium(size: 12.6)
     button.setImage(#imageLiteral(resourceName: "icHeart"), for: .normal)
+    button.setImage(#imageLiteral(resourceName: "icHeartP"), for: .selected)
     button.semanticContentAttribute = .forceLeftToRight
     return button
   }()

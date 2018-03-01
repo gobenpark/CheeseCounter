@@ -30,7 +30,6 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
       .map(MainSurveyList.self)
       .map{[CheeseViewModel(items: $0.result.data)]}
       .asObservable()
-      .debug()
       .scan(datas.value){ (state, viewModel) in
         return state + viewModel
       }.bind(to: datas)

@@ -20,7 +20,7 @@ import Crashlytics
 
 struct CheeseService {
   
-  static let provider = MoyaProvider<CheeseCounter>()
+  static let provider = MoyaProvider<CheeseCounter>().rx
   
   static func dateList(parameter:[String:String],_ completion: @escaping (DataResponse<CheeseResultByDate>) -> Void){
     let url = "\(UserService.url)/survey/getSurveyListByDate.json"
@@ -1145,7 +1145,7 @@ struct CheeseService {
     let provider = MoyaProvider<CheeseCounter>()
     return provider.rx
       .request(.getSurveyById(id: surveyId))
-      .asObservable().debug()
+      .asObservable()
       .map(CheeseResultByDate.self)
   }
   
@@ -1187,7 +1187,7 @@ struct CheeseService {
     case .next(let pageNum):
       pageNumber = pageNum
     }
-    return provider.rx
+    return provider
       .request(.getSearchSurveyList(search: surveyId, page_num: pageNumber))
       .asObservable()
       .map(CheeseResultByDate.self)
@@ -1221,34 +1221,7 @@ struct CheeseService {
     }
   }
   
-  static func getMySearchSurveyList(search: String, paging: Paging, _ completion: @escaping (DataResponse<CheeseResultByDate>) -> Void){
-    
-    var pageNumber:Int = 0
-    switch paging {
-    case .refresh:
-      break
-    case .next(let pageNum):
-      pageNumber = pageNum
-    }
-    
-    let url = "\(UserService.url)/survey/getMySearchSurveyList.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
-    manager.request(url,method: .post, parameters:["search":search,"page_num":"\(0)"])
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        let response: DataResponse<CheeseResultByDate> = response.flatMap{ json in
-          if let user = Mapper<CheeseResultByDate>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: CheeseResultByDate.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
-  
+
   
   static func sessionExpireAction(){
     let alertController = UIAlertController(title: "세션이 만료되어 재로그인 합니다.", message: "", preferredStyle: .alert)

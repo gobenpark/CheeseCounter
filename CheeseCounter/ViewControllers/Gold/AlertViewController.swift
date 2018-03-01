@@ -63,7 +63,6 @@ class AlertViewController: UIViewController{
     self.collectionView.addSubview(refresh)
     
     configure()
-    navigationBarSetup()
     fetch(paging: .refresh)
     
     collectionView.rx
@@ -74,17 +73,17 @@ class AlertViewController: UIViewController{
       .drive(collectionView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    collectionView.rx
-      .itemSelected
-      .flatMap{(indexPath) -> Observable<(AlertType, String)> in
-        let cell = self.collectionView.cellForItem(at: indexPath) as! AlertViewCell
-        guard let type = cell.model?.type?.convertAlertType(),
-          let id = cell.model?.target_id else {return Observable.empty()}
-        return Observable.of((type, id))
-      }.alertViewMapper()
-      .bind(onNext: self.pushViewController)
-      .disposed(by: disposeBag)
-    
+//    collectionView.rx
+//      .itemSelected
+//      .flatMap{(indexPath) -> Observable<(AlertType, String)> in
+//        let cell = self.collectionView.cellForItem(at: indexPath) as! AlertViewCell
+//        guard let type = cell.model?.type?.convertAlertType(),
+//          let id = cell.model?.target_id else {return Observable.empty()}
+//        return Observable.of((type, id))
+//      }.alertViewMapper()
+//      .bind(onNext: self.pushViewController)
+//      .disposed(by: disposeBag)
+//    
     collectionView.rx
       .contentOffset
       .filter { (point) in
@@ -121,15 +120,6 @@ class AlertViewController: UIViewController{
         log.error("URL Setting data: \(error.localizedDescription)")
       }
     })
-  }
-  
-  func navigationBarSetup(){
-  
-    let titleLabel = UILabel()
-    titleLabel.text = "알림"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
-    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){

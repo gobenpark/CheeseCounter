@@ -27,7 +27,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
   private let provider = MoyaProvider<CheeseCounter>().rx
   
   let cheeseDatas = Variable<[CheeseViewModel]>([])
-  let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData)>()
+  let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData,IndexPath?)>()
   let moreEvent = PublishSubject<IndexPath>()
   let replyEvent = PublishSubject<IndexPath>()
   let emptyEvent = PublishSubject<String>()
@@ -111,24 +111,23 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
       .controlEvent(.valueChanged)
       .subscribe { [weak self](event) in
         self?.cheeseDatas.value.removeAll()
-        self?.networkRequest(id: String())
+        self?.initRequest()
         self?.refreshView.endRefreshing()}
       .disposed(by: disposeBag)
     
     buttonEvent.observeOn(MainScheduler.instance)
-      .flatMap { [unowned self] (data) -> Observable<(MainSurveyAction, MainSurveyList.CheeseData)> in
+      .flatMap { [provider] (data) -> Observable<(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?)> in
         switch data.0{
         case .Button(let index):
-          return self.provider
+          return provider
             .request(.insertSurveyResult(surveyId: data.1.id, select: "\(index)"))
             .asObservable()
             .filter(statusCode: 200)
-            .debug()
             .map{ _ in
               return data
           }
         case .Image:
-          return Observable<(MainSurveyAction, MainSurveyList.CheeseData)>.just(data)
+          return Observable<(MainSurveyAction, MainSurveyList.CheeseData,IndexPath?)>.just(data)
         }
       }
       .bind(onNext: showGiftView)
@@ -166,7 +165,8 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
         self.present(vc, animated: true, completion: nil)
       }).disposed(by: disposeBag)
     
-    searchButton.rx
+    searchButton
+      .rx
       .tap.subscribe {[weak self] (_) in
         self?.navigationController?.pushViewController(SearchListViewController(type: .main), animated: false)
       }.disposed(by: disposeBag)
@@ -175,30 +175,60 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
       collectionView.contentInsetAdjustmentBehavior = .never
     }
     
-//    definesPresentationContext = true //중요
-    
-    networkRequest(id: String())
+    initRequest()
     navigationBarSetup()
   }
   
-  private func showGiftView(data:(MainSurveyAction, MainSurveyList.CheeseData)){
+  private func showGiftView(data:(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?)){
     
     switch data.0{
-    case .Button(let num):
+    case .Button:
+      
       let giftView = GifViewController()
       giftView.imageType = .cheese
       giftView.modalPresentationStyle = .overCurrentContext
       giftView.modalTransitionStyle = .flipHorizontal
       
       giftView.dismissCompleteAction = {[weak self] in
-        guard let retainSelf = self else {return}
-        
-        retainSelf.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
+        guard let `self` = self else {return}
+        self.provider.request(.getSurveyByIdV2(id: data.1.id))
+          .filter(statusCode: 200)
+          .map(MainSurveyList.self)
+          .subscribe(onSuccess: {[weak self] (response) in
+            guard let `self` = self ,let idx = data.2 ,let data = response.result.data.first else {return}
+            self.cheeseDatas.value[idx.section].items[idx.item] = data
+            self.collectionView.reloadItems(at: [idx])
+          }) { (error) in
+            log.error(error)
+          }.disposed(by: self.disposeBag)
       }
       self.present(giftView, animated: true, completion: nil)
     case .Image(let num):
       self.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
     }
+  }
+  
+  
+  private func initRequest(){
+    let event = provider.request(.getEventSurveyList)
+      .filter(statusCode: 200)
+      .map(MainSurveyList.self)
+      .map {[CheeseViewModel(items: $0.result.data)]}
+      .asObservable()
+    
+    let nonEvent = provider.request(.getSurveyListV2(id: String()))
+      .filter(statusCode: 200)
+      .map(MainSurveyList.self)
+      .map {[CheeseViewModel(items: $0.result.data)]}
+      .asObservable()
+    
+    Observable<[CheeseViewModel]>
+      .combineLatest(event, nonEvent) { (ev, nonev) -> [CheeseViewModel] in
+      var data = ev
+      data.append(contentsOf: nonev)
+      return data
+    }.bind(to: cheeseDatas)
+    .disposed(by: disposeBag)
   }
   
   private func networkRequest(id: String){
@@ -219,13 +249,8 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate
   }
   
   private func navigationBarSetup(){
-    
-    let titleLabel = UILabel()
-    titleLabel.text = "응답"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
     self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
-    self.navigationItem.titleView = titleLabel
+  
   }
 }
 

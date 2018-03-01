@@ -45,8 +45,9 @@ final class MainViewCell: UICollectionViewCell{
     fatalError("init(coder:) has not been implemented")
   }
   
+  
+  
   private func subjectBind(){
-    
     let button1 = mainView.selectView.imageButton1
       .rx
       .tap
@@ -122,7 +123,7 @@ final class MainViewCell: UICollectionViewCell{
       .merge([button1,button2,button3,button4,image1,image2,image3,image4])
       .subscribe(onNext: { [weak self] (action) in
         guard let retainSelf = self, let retainModel = self?.model else {return}
-        retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel))
+        retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel,retainSelf.indexPath))
       }).disposed(by: disposeBag)
   }
   

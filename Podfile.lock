@@ -54,13 +54,13 @@ PODS:
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
   - FlexibleImage (1.8)
-  - FSPagerView (0.7.1)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/Logger (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/NSData+zlib (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - Hero (1.0.0)
+  - iCarousel (1.8.3)
   - KakaoOpenSDK (1.5.1):
     - KakaoOpenSDK/KakaoCommon (= 1.5.1)
     - KakaoOpenSDK/KakaoLink (= 1.5.1)
@@ -152,8 +152,8 @@ DEPENDENCIES:
   - Firebase/DynamicLinks
   - Firebase/Messaging
   - FlexibleImage (~> 1.8)
-  - FSPagerView
   - Hero
+  - iCarousel
   - KakaoOpenSDK
   - Kingfisher
   - lottie-ios
@@ -225,9 +225,9 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: f2b688c66b972f30d7fa9f5f9f91455454a03b47
   FirebaseMessaging: 75d83375b0f7a9911568d7bdd1a1a8261cbcbdef
   FlexibleImage: 2beceba1bb67bc7cd9297cd2778f1fc6c5f23ada
-  FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Hero: 18e7cf8af41c04c8532d1430ac174004a9365c87
+  iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   KakaoOpenSDK: 1a539ac476e9397a373672f531e575301f0cac88
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   lottie-ios: 94fa2d82547ce3adf1e61157653ba99999fd279f
@@ -262,6 +262,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: 03cd6143665a3cd2eb804dc94cf6c4e482b1f245
+PODFILE CHECKSUM: 7b019d25f8c299dd8e17d6c269e2b4195f864704
 
 COCOAPODS: 1.4.0

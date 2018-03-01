@@ -20,6 +20,18 @@ final class GiftItemViewCell: UICollectionViewCell {
         imageView.kf.setImage(with: URL(string: url.getUrlWithEncoding()))
       }
       
+      cheeseButton.setTitle(item?.buyPoint, for: .normal)
+      
+      if item?.coupon_count == nil || item?.coupon_count == "0"{
+        let disableView = UIView()
+        disableView.backgroundColor = .black
+        disableView.alpha = 0.5
+        self.addSubview(disableView)
+        disableView.snp.makeConstraints({ (make) in
+          make.edges.equalTo(imageView)
+        })
+      }
+      
       defer {
         brandLabel.sizeToFit()
         productLabel.sizeToFit()
@@ -48,11 +60,22 @@ final class GiftItemViewCell: UICollectionViewCell {
     return label
   }()
   
+  let cheeseButton: UIButton = {
+    let button = UIButton()
+    button.setImage(#imageLiteral(resourceName: "icGiftCheese"), for: .normal)
+    button.semanticContentAttribute = .forceLeftToRight
+    button.titleLabel?.font = UIFont.CheeseFontMedium(size: 10.4)
+    button.setTitleColor(#colorLiteral(red: 1, green: 0.4901960784, blue: 0.3176470588, alpha: 1), for: .normal)
+    button.isHidden = true
+    return button
+  }()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(imageView)
     contentView.addSubview(brandLabel)
     contentView.addSubview(productLabel)
+    contentView.addSubview(cheeseButton)
     addConstraint()
   }
   
@@ -76,6 +99,11 @@ final class GiftItemViewCell: UICollectionViewCell {
       make.left.equalTo(brandLabel)
       make.top.equalTo(brandLabel.snp.bottom).offset(2.5)
       make.right.equalTo(imageView.snp.right).inset(4.5)
+    }
+    
+    cheeseButton.snp.makeConstraints { (make) in
+      make.top.equalToSuperview().inset(9)
+      make.right.equalToSuperview().inset(9)
     }
   }
 }

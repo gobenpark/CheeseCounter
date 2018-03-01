@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "btn50Cheese.png",
+      "filename" : "btnCoupon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "btn50Cheese@2x.png",
+      "filename" : "btnCoupon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "btn50Cheese@3x.png",
+      "filename" : "btnCoupon@3x.png",
       "scale" : "3x"
     }
   ],

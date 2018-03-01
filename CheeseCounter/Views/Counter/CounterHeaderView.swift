@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SwiftyJSON
 
-class CounterHeaderView: UIView {
+
+final class CounterHeaderView: UIView {
+  
+  let disposeBag = DisposeBag()
   
   let icon: UIImageView = {
     let imageView = UIImageView()
@@ -21,7 +27,11 @@ class CounterHeaderView: UIView {
     return button
   }()
   
-  let topLabel = UILabel()
+  let topLabel: UILabel = {
+    let label = UILabel()
+    label.numberOfLines = 3
+    return label
+  }()
   
   
   override init(frame: CGRect) {
@@ -30,40 +40,42 @@ class CounterHeaderView: UIView {
     addSubview(topLabel)
     addSubview(configureButton)
     configureButton.isUserInteractionEnabled = true
+    
+    CheeseService.provider.request(.getMyRank)
+      .filter(statusCode: 200)
+      .mapJSON()
+      .map{JSON($0)}
+      .asObservable()
+      .flatMap { (json)  in
+        return CheeseService.provider.request(.getMyInfo)
+          .mapJSON()
+          .map{JSON($0)}
+          .map{tempjson in return (json,tempjson)}
+          .asObservable()
+      }.map{($0.0["result"]["data"],$0.1["result"]["data"])}
+      .subscribe(onNext: { [weak self](data) in
+        let rank = data.0
+        let info = data.1
+        let gender = info["gender"].stringValue == "male" ? "남자" : "여자"
+        
+        let attribute = NSMutableAttributedString(
+          string: "\(rank["nickname"].stringValue) (\(rank["title"].stringValue))\n",
+          attributes: [.font : UIFont.CheeseFontMedium(size: 12)])
+        attribute.append(
+          NSAttributedString(string: "\(gender)/\(info["age"].stringValue)세/\(info["addr2"].stringValue)\n",
+            attributes: [.font:UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)]))
+        attribute.append(
+          NSAttributedString(string: "보유치즈: \(rank["cheese"].intValue.stringFormattedWithSeparator())치즈",
+                             attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)]))
+        self?.topLabel.attributedText = attribute
+    }).disposed(by: disposeBag)
+
     addConstraint()
   }
   
   func mapper(model: UserInfoModel){
     let data = model.result.data
     icon.kf.setImage(with: URL(string:data.img_url))
-    
-    let attributeString = NSMutableAttributedString(
-      string: "\(data.nickname)(\n",
-      attributes: [NSAttributedStringKey.font : UIFont.CheeseFontMedium(size: 12)])
-    attributeString.append(
-      NSAttributedString(string: "\(data.gender)/\(data.age)/\(data.addr)",
-        attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 12)]))
-    attributeString.append(
-      NSAttributedString(string: "보유치즈", 
-                         attributes: [NSAttributedStringKey.font: UIFont.CheeseFontMedium(size: 12)]))
-    
-    topLabel.attributedText = attributeString
-    
-//    let attributeText = NSMutableAttributedString(string: "\(data.nickname ?? "") (\(value.data?.title ?? ""), \(value.data?.rank ?? "")위)"
-    //          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)])
-    //
-    //        attributeText.append(NSAttributedString(string: "\nMy치즈 : \(cheese)치즈", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)]))
-    //
-    //        attributeText.append(NSAttributedString(string: "\n\(self.getKoreanGenderName(gender: data.gender ?? ""))/\(data.age ?? "")세/\(data.addr2 ?? "")"
-    //          , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 14),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
-    //        self.extendView.nickNameLabel.attributedText = attributeText
-    //        let urlString = data.img_url ?? ""
-    //        let url = URL(string: urlString)
-    //        if urlString != "nil" {
-    //          self.extendView.profileImg.kf.setImage(with: url)
-    //        }
-    //
-    
   }
   
   private func addConstraint(){
@@ -87,6 +99,16 @@ class CounterHeaderView: UIView {
       make.bottom.equalTo(topLabel)
       make.right.equalTo(configureButton.snp.left)
     }
+    defer {
+      setNeedsLayout()
+      layoutIfNeeded()
+    }
+  }
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    icon.layer.cornerRadius = icon.frame.width/2
+    icon.layer.masksToBounds = true
   }
   
   required init?(coder aDecoder: NSCoder) {

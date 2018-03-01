@@ -67,7 +67,6 @@ final class ListSearchViewController: UIViewController{
     navigationSetting()
     
     cheeseDatas.asDriver()
-      .debug()
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
     
@@ -124,6 +123,11 @@ final class ListSearchViewController: UIViewController{
     self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image, for: .default)
     self.navigationItem.setLeftBarButton(homeButton, animated: false)
     navigationItem.titleView = searchController.searchBar
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).image, for: .default)
   }
 }
 

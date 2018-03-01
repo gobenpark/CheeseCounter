@@ -9,8 +9,14 @@
 import UIKit
 import WebKit
 import Kingfisher
+import RxSwift
+import RxCocoa
+import Toaster
+import Moya
+import SwiftyJSON
 
 class ShopDetailViewController: UIViewController{
+  let disposeBag = DisposeBag()
   
   lazy var webView: WKWebView = {
     let preferences = WKPreferences()
@@ -19,6 +25,7 @@ class ShopDetailViewController: UIViewController{
     configuration.preferences = preferences
     let webView = WKWebView(frame: .zero, configuration: configuration)
     webView.scrollView.pinchGestureRecognizer?.isEnabled = false
+    webView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
     return webView
   }()
 
@@ -84,6 +91,11 @@ class ShopDetailViewController: UIViewController{
     imageView.addSubview(cheesePriceLabel)
     imageView.addSubview(cheeseIcon)
     
+    buyButton.rx.tap
+      .bind(onNext: buyAction)
+      .disposed(by: disposeBag)
+    
+    
     if let modelData = model{
       let html =  """
       <html>
@@ -107,6 +119,47 @@ class ShopDetailViewController: UIViewController{
       }
     }
     addConstraint()
+  }
+  
+  
+  private func buyAction(){
+    guard let model = model else {return}
+    let alert = UIAlertController(title: "\(model.title) 상품을 \(model.buyPoint) 치즈로 구매하시겠습니까?" , message: nil, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "구매하기", style: .default, handler: {[weak self] (_) in
+      guard let `self` = self else {return}
+      
+      CheeseService.provider
+        .request(.buyDirectGift(id: self.model?.id ?? String()))
+        .filter(statusCode: 200)
+        .mapJSON()
+        .map{JSON($0)}
+        .asObservable()
+        .bind(onNext: self.buyActionSuccess)
+        .disposed(by: self.disposeBag)
+    }))
+    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  private func buyActionSuccess(json: JSON){
+    
+    
+    if json["result"]["code"].intValue == 200{
+      let alert = UIAlertController(title: "구매가 완료되었습니다.", message: nil, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "쿠폰보기", style: .default, handler: { _ in
+        let navigation = self.navigationController
+        navigation?.popViewController(animated: true)
+        navigation?.present(MypageNaviViewController(), animated: true, completion: nil)
+      }))
+      alert.addAction(UIAlertAction(title: "다른상품보기", style: .cancel, handler: {[weak self] _ in
+        self?.navigationController?.popViewController(animated: true)
+      }))
+      self.present(alert, animated: true, completion: nil)
+    }else{
+      let alert = UIAlertController(title: json["result"]["data"].stringValue, message: nil, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+      self.present(alert, animated: true, completion: nil)
+    }
   }
   
   private func addConstraint(){

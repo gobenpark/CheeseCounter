@@ -92,14 +92,14 @@ final class MyPageViewController: UIViewController{
     
     titleLabel.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().inset(30)
+      make.top.equalToSuperview().inset(50)
     }
     
     dismissButton.snp.makeConstraints { (make) in
       make.right.equalToSuperview().inset(12)
-      make.top.equalToSuperview().inset(30)
-      make.height.equalTo(16)
-      make.width.equalTo(16)
+      make.top.equalToSuperview().inset(50)
+      make.height.equalTo(20)
+      make.width.equalTo(20)
     }
     
     headerView.snp.makeConstraints { (make) in

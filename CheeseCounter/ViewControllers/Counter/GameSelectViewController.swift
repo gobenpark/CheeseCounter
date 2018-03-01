@@ -12,6 +12,7 @@ import RxCocoa
 import RxDataSources
 import Moya
 import RxOptional
+import DZNEmptyDataSet
 
 protocol SelectProvider {
   func navigationHidden(point: CGPoint)
@@ -24,10 +25,15 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   
-  let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
+  private let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: GiftItemViewCell.self), for: idx) as! GiftItemViewCell
     cell.item = item
     return cell
+  },configureSupplementaryView:{ds,cv,name,idx in
+    let view = cv.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+                                                   withReuseIdentifier: String(describing: CounterCollectionHeaderView.self),
+                                                   for: idx) as! CounterCollectionHeaderView
+    return view
   })
   
   lazy var collectionView: UICollectionView = {
@@ -35,9 +41,13 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
+    layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(GiftItemViewCell.self, forCellWithReuseIdentifier: String(describing: GiftItemViewCell.self))
-    collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    collectionView.register(CounterCollectionHeaderView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                            withReuseIdentifier: String(describing: CounterCollectionHeaderView.self))
+//    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
     return collectionView
@@ -71,7 +81,9 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
   func selectedItem(item: IndexPath){
     let images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2")]
+    
     if let model = dataSources.sectionModels.first?.items[item.item]{
+      guard model.coupon_count != nil && model.coupon_count != "0" else {return}
       self.navigationController?.pushViewController(GameViewController(images: images, model: model), animated: true)
     }
   }

@@ -72,11 +72,15 @@ public enum CheeseCounter{
   case getSurveyListV2(id: String)
   case getSurveyListV2Search(id: String, search: String)
   case getWinList
+  case getMyCouponList
+  case getMyCouponById(id: String)
+  case getEventSurveyList
+  case getSurveyByIdV2(id: String)
 }
 
 extension CheeseCounter: TargetType{
-//  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
-  public var baseURL: URL {return URL(string: "http://192.168.1.103:8088")!}
+  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
+//  public var baseURL: URL {return URL(string: "http://192.168.1.103:8088")!}
 //  public var baseURL: URL {return URL(string:  "http://192.168.1.22:8081/CheeseCounter")!}
 
   
@@ -181,6 +185,14 @@ extension CheeseCounter: TargetType{
       return "/survey/getSurveyListV2.json"
     case .getWinList:
       return "/game/getWinList.json"
+    case .getMyCouponList:
+      return "/coupon/getMyCouponList.json"
+    case .getMyCouponById:
+      return "/coupon/getMyCouponById.json"
+    case .getEventSurveyList:
+      return "/survey/getEventSurveyListV2.json"
+    case .getSurveyByIdV2:
+      return "/survey/getSurveyByIdV2.json"
     }
   }
   
@@ -210,7 +222,13 @@ extension CheeseCounter: TargetType{
       return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.queryString)
     case .updateRouletteRun(let id, let s, let re):
       return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
-    case .updateRouletteDone(let id),.buyDirectGift(let id),.getSurveyById(let id),.getRouletteBoard(let id),.getSurveyListV2(let id):
+    case .updateRouletteDone(let id),
+         .buyDirectGift(let id),
+         .getSurveyById(let id),
+         .getRouletteBoard(let id),
+         .getSurveyListV2(let id),
+         .getMyCouponById(let id),
+         .getSurveyByIdV2(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
     case .insertSurveyResult(let survey_id, let select_ask):
       return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)

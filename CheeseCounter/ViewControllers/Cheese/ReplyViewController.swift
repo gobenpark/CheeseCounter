@@ -38,7 +38,7 @@ final class ReplyViewController: UIViewController{
       withReuseIdentifier: String(describing: ReplyHeaderView.self),
       for: idx) as! ReplyHeaderView
     view.model = self.model
-    
+    view.mainView.moreButton.isHidden = true
     return view
   })
   
@@ -46,7 +46,11 @@ final class ReplyViewController: UIViewController{
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
-    layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 350)
+    if model.type == "2"{
+      layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 350)
+    }else {
+      layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 520)
+    }
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.backgroundColor = .white
     collectionView.register(ReplyHeaderView.self,
@@ -88,8 +92,8 @@ final class ReplyViewController: UIViewController{
     collectionView.addSubview(refreshView)
     view.addSubview(messageInputBar)
     
-    addConstraint()
     navigationBarSetup()
+    addConstraint()
     replyRequest()
     
     refreshView.rx.controlEvent(.valueChanged)
@@ -142,6 +146,19 @@ final class ReplyViewController: UIViewController{
       })
       .disposed(by: self.disposeBag)
     
+    searchButton
+      .rx
+      .tap.subscribe {[weak self] (_) in
+        self?.navigationController?.pushViewController(SearchListViewController(type: .main), animated: false)
+      }.disposed(by: disposeBag)
+    
+    myPageButton.rx.tap
+      .map{ _ in return MypageNaviViewController()}
+      .subscribe(onNext: { [weak self] (vc) in
+        self?.present(vc, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
     messageInputBar.sendButton
       .rx
       .tap
@@ -173,16 +190,19 @@ final class ReplyViewController: UIViewController{
       .disposed(by: disposeBag)
     
   }
+  private func navigationBarSetup(){
+    self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
+  }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.hidesBarsOnSwipe = false
-    self.navigationController?.setNavigationBarHidden(false, animated: true)
+//    self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    self.navigationController?.hidesBarsOnSwipe = true
+//    self.navigationController?.hidesBarsOnSwipe = true
   }
   
   private func addConstraint(){
@@ -213,18 +233,7 @@ final class ReplyViewController: UIViewController{
       make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
     }
   }
-  
-  private func navigationBarSetup(){
-    
-    let titleLabel = UILabel()
-    titleLabel.text = "댓글"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
-    self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
-    self.navigationItem.titleView = titleLabel
-  }
 }
-
 extension ReplyViewController: UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let height = self.dataSources.sectionModels.first?.items[indexPath.item]

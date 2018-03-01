@@ -42,8 +42,8 @@ struct UserService {
   
   static let provider = MoyaProvider<CheeseCounter>()
   
-  static let url = serverType.test.url
-  static let imgString = serverType.test.imgString
+  static let url = serverType.release.url
+  static let imgString = serverType.release.imgString
   
   static var kakao_ID: NSNumber?
   static var isLogin: Bool = false

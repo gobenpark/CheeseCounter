@@ -72,21 +72,21 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   let threeButton: UIButton = {
     let button = UIButton()
     button.tag = 0
-    button.setBackgroundImage(#imageLiteral(resourceName: "btn30Cheese"), for: .normal)
+    button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
   let fiveButton: UIButton = {
     let button = UIButton()
     button.tag = 1
-    button.setBackgroundImage(#imageLiteral(resourceName: "btn50Cheese"), for: .normal)
+    button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
   let sevenButton: UIButton = {
     let button = UIButton()
     button.tag = 2
-    button.setBackgroundImage(#imageLiteral(resourceName: "btn75Cheese"), for: .normal)
+    button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
@@ -223,6 +223,11 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .filterNil()
       .drive(onNext: defaultNavSetting)
       .disposed(by: disposeBag)
+    
+    
+    threeButton.setAttributedTitle(buttonAttribute(text:model.game1Point), for: .normal)
+    fiveButton.setAttributedTitle(buttonAttribute(text:model.game2Point), for: .normal)
+    sevenButton.setAttributedTitle(buttonAttribute(text:model.game3Point), for: .normal)
     
     let button1 = threeButton.rx
       .tap
@@ -380,6 +385,16 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
   }
   
+  private func buttonAttribute(text: String) -> NSAttributedString{
+    let attribute = NSAttributedString(
+      string: text+"치즈",
+      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontBold(size: 12),
+                   NSAttributedStringKey.foregroundColor: UIColor.white,
+                   NSAttributedStringKey.strokeColor: UIColor(red: 1.0, green: 0.564, blue: 0.342, alpha: 1.0),
+                   NSAttributedStringKey.strokeWidth: 4.5])
+    return attribute
+  }
+  
   private func defaultNavSetting(point: Int){
     let label = UILabel()
     label.numberOfLines = 2
@@ -455,7 +470,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }
   
   private func request(index: Int){
-    
+  
     provider.request(.regRoulette(gift_id: model.id, level: "\(index+1)"))
       .map(RouletteModel.self)
       .flatMap {[weak self] (model)  in
@@ -797,12 +812,12 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 3번 모두 같은 치즈 캐릭터가 나오면
 경품을 얻어 가실 수 있습니다!
 
-더 높은 치즈를 베팅할 수록
+더 높은 치즈를 배팅할 수록
 당첨될 확률은 높아집니다.
 
-예) 75치즈 베팅 -> 5칸의 판
-50치즈 베팅 -> 6칸의 판
-30치즈 베팅 -> 7칸의 판
+예) 75치즈 배팅 -> 5칸의 판
+50치즈 배팅 -> 6칸의 판
+30치즈 배팅 -> 7칸의 판
 """
       
       let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)

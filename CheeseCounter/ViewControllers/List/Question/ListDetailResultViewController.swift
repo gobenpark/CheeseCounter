@@ -103,7 +103,7 @@ class ListDetailResultViewController: FormViewController{
       // Fallback on earlier versions
     }
     
-    CheeseService.provider.rx
+    CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
       .map(ResultSurveyModel.self)
@@ -113,10 +113,9 @@ class ListDetailResultViewController: FormViewController{
   
   private func request(){
     log.info(self.selectedNum)
-    CheeseService.provider.rx
+    CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
-      .debug()
       .map(ResultSurveyModel.self)
       .bind(onNext: graphPatch)
       .disposed(by: disposeBag)

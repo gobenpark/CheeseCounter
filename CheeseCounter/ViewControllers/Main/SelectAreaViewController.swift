@@ -84,6 +84,7 @@ class SelectAreaViewController: BaseSetupViewController{
     self.view.backgroundColor = .white
     self.titleLabel.text = "회원정보 추가"
     isdisableScroll = true
+    
     self.view.addSubview(mainLabel)
     self.view.addSubview(citySelectView)
     self.view.addSubview(guSelectView)

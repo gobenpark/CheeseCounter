@@ -45,7 +45,7 @@ pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
 pod 'PMAlertController'
-pod 'FSPagerView'
+pod 'iCarousel'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'

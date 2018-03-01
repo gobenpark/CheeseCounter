@@ -29,7 +29,7 @@ class BaseListViewController: UIViewController{
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.alwaysBounceVertical = true
     collectionView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
-    collectionView.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 44, right: 0)
+    collectionView.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 44, right: 0)
     return collectionView
   }()
 

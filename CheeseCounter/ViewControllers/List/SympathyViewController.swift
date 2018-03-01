@@ -17,6 +17,7 @@ class SympathyViewController: BaseListViewController, IndicatorInfoProvider{
     datas.asDriver()
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
+    request(pageNum: "0")
   }
   
   override func request(pageNum: String) {
