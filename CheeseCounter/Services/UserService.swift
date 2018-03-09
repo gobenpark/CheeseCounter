@@ -24,7 +24,6 @@ public enum serverType{
       return "https://cheesecounter.co.kr/"
     case .test:
       return "http://192.168.1.103:8088"
-//      return "http://192.168.1.22:8081/CheeseCounter"
     }
   }
   
@@ -40,8 +39,8 @@ public enum serverType{
 
 struct UserService {
   
-  static let url = serverType.test.url
-  static let imgString = serverType.test.imgString
+  static let url = serverType.release.url
+  static let imgString = serverType.release.imgString
   
   static var kakao_ID: NSNumber?
   static var isLogin: Bool = false
@@ -106,6 +105,7 @@ struct UserService {
         mainParameter["img_url"] = profile ?? ""
         mainParameter["id"] = user.id
         mainParameter["access_token"] = KOSession.shared().accessToken
+        mainParameter["version"] = "1.0.2i"
       }
       dispatchGroup.leave()
     }

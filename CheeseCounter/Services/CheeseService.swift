@@ -19,8 +19,11 @@ import Crashlytics
 #endif
 
 struct CheeseService {
-  
+  #if DEBUG
   static let provider = MoyaProvider<CheeseCounter>(plugins:[NetworkLoggerPlugin(verbose:true)]).rx
+  #else
+  static let provider = MoyaProvider<CheeseCounter>().rx
+  #endif
   
   static func dateList(parameter:[String:String],_ completion: @escaping (DataResponse<CheeseResultByDate>) -> Void){
     let url = "\(UserService.url)/survey/getSurveyListByDate.json"
