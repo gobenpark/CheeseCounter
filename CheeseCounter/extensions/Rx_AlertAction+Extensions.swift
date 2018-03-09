@@ -97,7 +97,6 @@ extension ObservableType where E == (AlertType, String){
       case .qna:
         return Observable.just(UIViewController())
       case .reply:
-        
         let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {

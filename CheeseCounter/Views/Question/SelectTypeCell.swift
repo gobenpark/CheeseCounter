@@ -26,10 +26,10 @@ class SelectTypeCell: UITableViewCell {
   
   lazy var secondWayButton: UIButton = {
     let button = UIButton()
-    button.setBackgroundImage(#imageLiteral(resourceName: "tab_box_select_2@1x"), for: .selected)
-    button.setTitle("보기(2)", for: .normal)
-    button.setTitleColor(UIColor.lightGray, for: .normal)
-    button.setTitleColor(UIColor.white, for: .selected)
+    button.setTitle("2지 선다", for: .normal)
+    button.setTitleColor(#colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1), for: .normal)
+    button.setTitleColor(#colorLiteral(red: 1, green: 0.4823529412, blue: 0.2745098039, alpha: 1), for: .selected)
+    button.titleLabel?.font = UIFont.CheeseFontBold(size: 14.8)
     button.tag = 0
     button.addTarget(self, action: #selector(selectAction(_:)), for: .touchUpInside)
     return button
@@ -37,10 +37,10 @@ class SelectTypeCell: UITableViewCell {
   
   lazy var fourWayButton: UIButton = {
     let button = UIButton()
-    button.setBackgroundImage(#imageLiteral(resourceName: "tab_box_select_2@1x"), for: .selected)
-    button.setTitle("보기(4)", for: .normal)
-    button.setTitleColor(UIColor.lightGray, for: .normal)
-    button.setTitleColor(UIColor.white, for: .selected)
+    button.setTitle("4지 선다", for: .normal)
+    button.setTitleColor(#colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1), for: .normal)
+    button.setTitleColor(#colorLiteral(red: 1, green: 0.4823529412, blue: 0.2745098039, alpha: 1), for: .selected)
+    button.titleLabel?.font = UIFont.CheeseFontBold(size: 14.8)
     button.addTarget(self, action: #selector(selectAction(_:)), for: .touchUpInside)
     button.tag = 1
     return button

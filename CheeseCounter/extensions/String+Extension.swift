@@ -42,6 +42,10 @@ extension String{
       let index = self.index(self.startIndex, offsetBy: 9)
       let encodedUrl = String(self[index...]).encodeUrl()
       return UserService.imgString+"/giftImg/"+encodedUrl
+    case _ where self.contains("/eventImg/"):
+      let index = self.index(self.startIndex, offsetBy: 9)
+      let encodedUrl = String(self[index...]).encodeUrl()
+      return UserService.imgString+"/eventImg/"+encodedUrl
     default:
       return ""
     }
