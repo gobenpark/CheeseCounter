@@ -22,7 +22,7 @@ final class QuestionViewCell: BaseListViewCell{
 //        NSAttributedString(string: model?.select_ask ?? String(),
 //                           attributes: [.foregroundColor:UIColor.lightGray]))
 //      detailContents.attributedText = attributeString
-      peopleLabel.text = model?.reply_count ?? "0"
+      peopleLabel.text = model?.total_count ?? "0"
       
       if let empathy = model?.is_empathy{
         if empathy == "0"{

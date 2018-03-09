@@ -87,7 +87,7 @@ class ProvisionViewController: BaseSetupViewController {
   
   lazy var nextButton: UIButton = {
     let button = UIButton()
-    button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_select_1@1x"), for: .normal)
+    button.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     button.setTitleColor(.cheeseColor(), for: .normal)
     button.setTitle("시작하기", for: .normal)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)

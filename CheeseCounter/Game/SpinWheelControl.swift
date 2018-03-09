@@ -2,8 +2,6 @@
 //  SpinWheelControl.swift
 //  SpinWheelControl
 //
-//  Created by Josh Henry on 4/27/17.
-//  Copyright © 2017 Big Smash Software. All rights reserved.
 //
 //Trigonometry is used extensively in SpinWheel Control. Here is a quick refresher.
 //Sine, Cosine and Tangent are each a ratio of sides of a right angled triangle

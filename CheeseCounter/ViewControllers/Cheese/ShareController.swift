@@ -11,53 +11,44 @@ import UIKit
 import XLActionController
 import KakaoLink
 import KakaoS2
+import KakaoMessageTemplate
 import FBSDKShareKit
 import FirebaseDynamicLinks
 
 
 
 class ShareController{
-//  static func shareAction(title: String, tag: String, imageURL: URL?, webURL: URL?,surveyId: String,likeCount: NSNumber, commnentCount: NSNumber){
-//
-//    let template = KLKFeedTemplate { (feedTemplateBuilder) in
-//      feedTemplateBuilder.content = KLKContentObject(builderBlock: { (contentBuilder) in
-//        contentBuilder.title = title
-//        contentBuilder.desc = tag
-//        contentBuilder.imageURL = imageURL!
-//        contentBuilder.link = KLKLinkObject(builderBlock: { (linkBuilder) in
-//          linkBuilder.mobileWebURL = webURL
-//        })
-//      })
-//
-//      feedTemplateBuilder.social = KLKSocialObject.init(builderBlock: { (socialBuilder) in
-//        socialBuilder.likeCount = likeCount
-//        socialBuilder.commnentCount = commnentCount
-//      })
-//
-//      feedTemplateBuilder.addButton(KLKButtonObject.init(builderBlock: { (buttonBuilder) in
-//        buttonBuilder.title = "앱으로 보기"
-//        buttonBuilder.link = KLKLinkObject.init(builderBlock: { (linkBuilder) in
-//          linkBuilder.mobileWebURL = webURL
-//          linkBuilder.iosExecutionParams = "kWGPa9nW=\(surveyId)"
-//          linkBuilder.androidExecutionParams = "kWGPa9nW=\(surveyId)"
-//        })
-//      }))
-//    }
-//
-//    //    self.view.startLoading()
-//    KLKTalkLinkCenter.shared().sendDefault(with: template, success: { (warningMsg, argumentMsg) in
-//
-//      // 성공
-//      //      self.view.stopLoading()
-//
-//    }, failure: { (error) in
-//
-//      // 실패
-//      //      self.view.stopLoading()
-//      log.error(error.localizedDescription)
-//
-//    })
-//  }
+  static func kakaoShareAction(title: String, tag: String, imageURL: URL, webURL: URL?,surveyId: String, likeCount: NSNumber,commnentCount: NSNumber){
+    let template = KMTFeedTemplate { (builder) in
+      builder.content = KMTContentObject(builderBlock: { (contentBuilder) in
+        contentBuilder.title = title
+        contentBuilder.desc = tag
+        contentBuilder.imageURL = imageURL
+        contentBuilder.link = KMTLinkObject(builderBlock: { (linkBuilder) in
+          linkBuilder.mobileWebURL = webURL
+        })
+      })
+      
+      builder.social = KMTSocialObject(builderBlock: { (socialBuilder) in
+        socialBuilder.likeCount = likeCount
+        socialBuilder.commnentCount = commnentCount
+      })
+      
+      builder.addButton(KMTButtonObject(builderBlock: { (buttonBuilder) in
+        buttonBuilder.title = "앱으로 보기"
+        buttonBuilder.link = KMTLinkObject(builderBlock: { (linkBuilder) in
+          linkBuilder.mobileWebURL = webURL
+          linkBuilder.iosExecutionParams = "kWGPa9nW=\(surveyId)"
+          linkBuilder.androidExecutionParams = "kWGPa9nW=\(surveyId)"
+        })
+      }))
+    }
+    
+    KLKTalkLinkCenter.shared().sendDefault(with: template, success: { (warningMsg, argumentMsg) in
+    }) { (error) in
+      log.error(error)
+    }
+  }
   
   static func dynamicLinks(surveyId: String,title: String, imageURL: URL,_ completion: @escaping (URL?)->Void){
     
@@ -103,7 +94,7 @@ class ShareController{
       guard let imgURL = URL(string: model.main_img_url?.getUrlWithEncoding() ?? String()) else {return}
       ShareController.dynamicLinks(surveyId: model.id, title: model.title, imageURL: imgURL, { (url) in
         guard let url = url else {return}
-//        ShareController.shareAction(title: model.title, tag: model.hash_tag, imageURL: imgURL, webURL: url, surveyId: model.id, likeCount: 0, commnentCount: 0)
+        ShareController.kakaoShareAction(title: model.title, tag: model.hash_tag, imageURL: imgURL, webURL: url, surveyId: model.id, likeCount: 0, commnentCount: 0)
       })
     }
     

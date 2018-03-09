@@ -101,6 +101,7 @@ PODS:
   - Protobuf (3.5.0)
   - Quick (1.2.0)
   - Result (3.2.4)
+  - Reveal-SDK (13)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
   - RxDataSources (3.0.2):
@@ -168,6 +169,7 @@ DEPENDENCIES:
   - ObjectMapper
   - PMAlertController
   - Quick
+  - Reveal-SDK
   - RxCocoa
   - RxDataSources
   - RxGesture
@@ -246,6 +248,7 @@ SPEC CHECKSUMS:
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
@@ -267,6 +270,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: afcfa32ca3d164d9728a2aaee68da63d06961c09
+PODFILE CHECKSUM: ac70993638f0ebd2efdd58082d2bdd4cecbd2b44
 
 COCOAPODS: 1.4.0

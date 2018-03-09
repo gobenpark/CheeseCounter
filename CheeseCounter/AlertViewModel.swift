@@ -26,3 +26,17 @@ extension SectionOfAlertData: SectionModelType{
     self.items = items
   }
 }
+
+
+struct AlertViewModel{
+  var items: [Item]
+}
+
+extension AlertViewModel: SectionModelType{
+  typealias Item = NotiModel.Data
+  
+  init(original: AlertViewModel, items: [Item]) {
+    self = original
+    self.items = items
+  }
+}

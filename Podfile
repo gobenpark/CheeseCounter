@@ -56,7 +56,7 @@ pod 'RxKeyboard'
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-
+pod 'Reveal-SDK', :configurations => ['Debug']
 #Color
 pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter

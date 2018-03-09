@@ -26,77 +26,79 @@ enum StageStatus: Int{
 
 class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWheelControlDelegate {
   
-  let cheeseIcons = [#imageLiteral(resourceName: "cheeseEmental"),#imageLiteral(resourceName: "cheeseGorgonzola"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseColbyjack"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseHavati"),#imageLiteral(resourceName: "cheeseBrick")]
-  var userRouletteFirstTouch: Bool = false
-  var images: [UIImage]
-  var isPresentingForFirstTime: Bool = false
-  var isPopViewControllerAgree: Bool = false
-  var patterns:[Array<Substring>] = []
-  var stageStatus: StageStatus = .default
-  var gameID = ""
-  var startGame: Bool = false
-  var pointModel: PointModel?
+  private let cheeseIcons = ["a":#imageLiteral(resourceName: "cheeseEmental"),"b":#imageLiteral(resourceName: "cheeseGorgonzola"),"c":#imageLiteral(resourceName: "cheeseBrie2"),"d":#imageLiteral(resourceName: "cheeseColbyjack"),"e":#imageLiteral(resourceName: "cheeseGauda"),"f":#imageLiteral(resourceName: "cheeseHavati"),"g":#imageLiteral(resourceName: "cheeseBrick")]
   
-  var history: [Int] = []
-  var selectedHistory: [Int] = []
-  var currentLevel: Int = 0
+  private var userRouletteFirstTouch: Bool = false
+  private var images: [UIImage]
+  private var isPresentingForFirstTime: Bool = false
+  
+  private var isPopViewControllerAgree: Bool = false
+  private var patterns:[Array<Substring>] = []
+  private var stageStatus: StageStatus = .default
+  private var gameID = ""
+  private var startGame: Bool = false
+  private var pointModel: PointModel?
+  
+  private var history: [Int] = []
+  private var selectedHistory: [Int] = []
+  private var currentLevel: Int = 0
   private var selectedImages: NSArray = []
   
   private let roulettePies: [Int] = [7,6,5]
-  let disposeBag = DisposeBag()
-  let provider = MoyaProvider<CheeseCounter>().rx
-  let model: GiftViewModel.Item
-  let modelSubject: PublishSubject<RouletteModel> = PublishSubject()
-  let colorPalette: [UIColor]
+  private let disposeBag = DisposeBag()
+  let provider = CheeseService.provider
+  private let model: GiftViewModel.Item
+  private let modelSubject: PublishSubject<RouletteModel> = PublishSubject()
+  private let colorPalette: [UIColor]
   
-  let imageView: UIImageView = {
+  private let imageView: UIImageView = {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "counterGameBg"))
     imageView.contentMode = .center
     return imageView
   }()
   
-  let pinView: UIImageView = {
+  private let pinView: UIImageView = {
     let view = UIImageView(image: #imageLiteral(resourceName: "pointer"))
     return view
   }()
   
-  var previousIndex: Int = 0
-  var spinWheelControl:SpinWheelControl!
+  private var previousIndex: Int = 0
+  private var spinWheelControl:SpinWheelControl!
   
-  let spinBGView: UIView = {
+  private let spinBGView: UIView = {
     let view = UIView()
     view.backgroundColor = #colorLiteral(red: 0.9787054658, green: 0.8919286728, blue: 0.3518205881, alpha: 1)
     return view
   }()
   
-  let threeButton: UIButton = {
+  private let threeButton: UIButton = {
     let button = UIButton()
     button.tag = 0
     button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
-  let fiveButton: UIButton = {
+  private let fiveButton: UIButton = {
     let button = UIButton()
     button.tag = 1
     button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
-  let sevenButton: UIButton = {
+  private let sevenButton: UIButton = {
     let button = UIButton()
     button.tag = 2
     button.setBackgroundImage(#imageLiteral(resourceName: "btnBattingCheese"), for: .normal)
     return button
   }()
   
-  let centerIcon: UIImageView = {
+  private let centerIcon: UIImageView = {
     let icon = UIImageView(image: #imageLiteral(resourceName: "invalidName"))
     icon.contentMode = UIViewContentMode.scaleAspectFit
     return icon
   }()
   
-  let centerColorView: UIView = {
+  private let centerColorView: UIView = {
     let view = UIView()
     view.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.8901960784, blue: 0.3529411765, alpha: 1)
     view.layer.masksToBounds = true
@@ -104,21 +106,21 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     return view
   }()
   
-  let divideView: UIView = {
+  private let divideView: UIView = {
     let view = UIView()
     view.backgroundColor = .black
     return view
   }()
   
-  let divideView1: UIView = {
+  private let divideView1: UIView = {
     let view = UIView()
     view.backgroundColor = .black
     return view
   }()
   
-  let rouletteImage: UIImageView = UIImageView(image: #imageLiteral(resourceName: "rouletteType"))
+  private let rouletteImage: UIImageView = UIImageView(image: #imageLiteral(resourceName: "rouletteType"))
   
-  let selectedImageButton: [UIButton] = {
+  private let selectedImageButton: [UIButton] = {
     var imageButtons = [UIButton]()
     let button = UIButton()
     let button1 = UIButton()
@@ -135,7 +137,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     return imageButtons
   }()
   
-  let choiceImageView: UIImageView = {
+  private let choiceImageView: UIImageView = {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "777Light").withRenderingMode(.alwaysTemplate))
     imageView.tintColor = .white
     imageView.backgroundColor = #colorLiteral(red: 0.9787054658, green: 0.8919286728, blue: 0.3518205881, alpha: 1)
@@ -175,12 +177,8 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     fatalError("init(coder:) has not been implemented")
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  
-    ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
-    ToastView.appearance().bottomOffsetPortrait = 200
-    
+  override func loadView() {
+    super.loadView()
     UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
       self.navigationController?.setNavigationBarHidden(false, animated: true)
     }, completion: nil)
@@ -192,7 +190,8 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     spinWheelControl.dataSource = self
     spinWheelControl.delegate = self
     spinWheelControl.isUserInteractionEnabled = false
-    
+    ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
+    ToastView.appearance().bottomOffsetPortrait = 200
     self.view.addSubview(imageView)
     self.view.addSubview(spinWheelControl)
     self.view.addSubview(pinView)
@@ -209,11 +208,14 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
     self.view.addSubview(divideView)
     self.view.addSubview(divideView1)
-    
     self.spinBGView.backgroundColor = .gray
     addConstraint()
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    provider.request(.getMyPoint)
+    CheeseService.provider.request(.getMyPoint)
       .filter(statusCode: 200)
       .map(PointModel.self)
       .map{$0.result.data.cheese}
@@ -223,7 +225,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .filterNil()
       .drive(onNext: defaultNavSetting)
       .disposed(by: disposeBag)
-    
     
     threeButton.setAttributedTitle(buttonAttribute(text:model.game1Point), for: .normal)
     fiveButton.setAttributedTitle(buttonAttribute(text:model.game2Point), for: .normal)
@@ -244,10 +245,13 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .map{[unowned self] _ in return self.sevenButton.tag}
       .share()
     
-    // touch Begin && Game Start??
+    // 게임 시작전 버튼 클릭
     let beginGameObserver = Observable.of(button1,button2,button3)
       .merge()
+    
+    beginGameObserver
       .do(onNext: { [unowned self] (index) in
+        log.info(index)
         self.currentLevel = index
         ToastCenter.default.cancelAll()
       })
@@ -261,35 +265,14 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .filterNil()
       .map { [unowned self] index in
         return (index > self.levelConverter(index: self.currentLevel),index)
-    }.share()
-    
-    beginGameObserver
-      .bind(onNext: navigationSetting)
+      }.bind(onNext: navigationSetting)
       .disposed(by: disposeBag)
     
     beginGameObserver
-      .filter{$0.0}
-      .do(onNext:{_ in Toast(text: "룰렛을 돌려보세요!", delay: 0.2, duration: 1).show()})
-      .do(onNext:{[unowned self] _ in
-        self.images = self.shuffleIcons(index: self.roulettePies[self.currentLevel])
-        self.spinWheelControl.reloadData()
-      })
-      .bind(onNext: buttonTouch)
-      .disposed(by: disposeBag)
-    
-    spinWheelControl.rx
-      .controlEvent(UIControlEvents.touchDown)
-      .filter { return !self.userRouletteFirstTouch}
-      .do(onNext: { [unowned self] _ in
-        self.threeButton.isUserInteractionEnabled = false
-        self.fiveButton.isUserInteractionEnabled = false
-        self.sevenButton.isUserInteractionEnabled = false
-        self.userRouletteFirstTouch = true
-      })
-      .map{[unowned self] _ in return self.currentLevel}
       .bind(onNext: request)
       .disposed(by: disposeBag)
     
+
     spinWheelControl.velocitySubject
       .map{abs($0) > 10}
       .subscribe(onNext: {[unowned self] (isStart) in
@@ -363,7 +346,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     self.present(alert, animated: true, completion: nil)
   }
   
-  private func buttonTouch(index: (Bool,Int)){
+  private func buttonTouch(){
     
     self.spinWheelControl.isUserInteractionEnabled = true
     self.spinBGView.backgroundColor = #colorLiteral(red: 0.9787054658, green: 0.8919286728, blue: 0.3518205881, alpha: 1)
@@ -459,20 +442,27 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   
   private func levelConverter(index: Int) -> Int{
     if index == 0{
-      return 30
+      return Int(model.game1Point) ?? 0
     }else if index == 1{
-      return 50
+      return Int(model.game2Point) ?? 0
     }else if index == 2{
-      return 75
+      return Int(model.game3Point) ?? 0
     }else{
       return 0
     }
   }
   
   private func request(index: Int){
-  
-    provider.request(.regRoulette(gift_id: model.id, level: "\(index+1)"))
+    CheeseService.provider.request(.regRoulette(gift_id: model.id, level: "\(index+1)"))
+      .filter(statusCode: 200)
       .map(RouletteModel.self)
+      .do(onSuccess: { (_) in
+        self.threeButton.isUserInteractionEnabled = false
+        self.fiveButton.isUserInteractionEnabled = false
+        self.sevenButton.isUserInteractionEnabled = false
+        self.userRouletteFirstTouch = true
+        self.buttonTouch()
+      })
       .flatMap {[weak self] (model)  in
         guard let retainSelf = self else {return Single<Response>.error(NSError())}
         return retainSelf.provider
@@ -503,17 +493,28 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
                     .filter(statusCode: 200)
         })
         .mapJSON()
-        .subscribe({[weak self] (event) in
-          switch event{
-          case .success:
-            self?.gameEnd()
-          case .error(let error):
-            log.error(error)
-          }
-        }).disposed(by: disposeBag)
+        .map{JSON($0)}
+        .asObservable()
+        .bind(onNext: gameEnd)
+        .disposed(by: disposeBag)
     }
   }
   
+  
+  /// 스테이지당 이미지 셔플 및 세팅
+  private func imagesSetting(stage: Int){
+    var tempImages:[UIImage] = []
+    for i in patterns[stage]{
+      tempImages.append(cheeseIcons[String(i),default: UIImage()])
+    }
+    images = tempImages
+    spinWheelControl.reloadData()
+  }
+  
+  
+  /// 게임 초기 세팅
+  ///
+  /// - Parameter model: 룰렛 모델
   private func gameSetting(model: RouletteModel){
     
     guard let pattern1 = model.result.data.pattern1,
@@ -526,8 +527,16 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     patterns.append(pattern2.split(separator: ","))
     patterns.append(pattern3.split(separator: ","))
     gameID = id
+    
+    log.info(patterns)
+    
+    
+    imagesSetting(stage: 0)
+    Toast(text: "룰렛을 돌려보세요!", delay: 0.2, duration: 1).show()
   }
   
+  
+  /// 게임 시작
   private func gameRun(){
     switch stageStatus{
     case .default:
@@ -544,6 +553,8 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
   }
   
+  
+  /// 스테이지 종료
   private func gameStop(){
     guard startGame else {return}
     var temp:[String] = []
@@ -560,8 +571,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       let vc = GetIconViewController(icon: images[spinWheelControl.selectedIndex],stage: stageStatus)
       vc.modalPresentationStyle = .overCurrentContext
       self.present(vc, animated: true, completion: nil)
-      images = shuffleIcons(index: patterns[0].count)
-      spinWheelControl.reloadData()
+      imagesSetting(stage: 1)
     case .middle:
       for i in history{
         let char = patterns[1][i]
@@ -573,8 +583,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       let vc = GetIconViewController(icon: images[spinWheelControl.selectedIndex], stage: stageStatus)
       vc.modalPresentationStyle = .overCurrentContext
       self.present(vc, animated: true, completion: nil)
-      images = shuffleIcons(index: patterns[0].count)
-      spinWheelControl.reloadData()
+      imagesSetting(stage: 2)
     case .last:
       for i in history{
         let char = patterns[2][i]
@@ -593,27 +602,12 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
   }
   
-  private func gameEnd(){
-    if Set(selectedHistory).count == 1{
-      Observable.just(model.imageURL)
-        .filterNil()
-        .map({URL(string: $0.getUrlWithEncoding())})
-        .filterNil()
-        .map({try Data(contentsOf: $0)})
-        .map({UIImage(data: $0)})
-        .filterNil()
-        .subscribe(onNext: {[weak self] image in
-          let alertVC = PMAlertController(title: "당첨을 축하합니다!", description: self?.model.title ?? "", image: image, style: .alert)
-          alertVC.addAction(PMAlertAction(title: "다른 상품보기", style: .default, action: {[weak self] in
-            self?.navigationController?.popViewController(animated: true)
-          }))
-          alertVC.addAction(PMAlertAction(title: "쿠폰받기", style: .cancel, action: {
-            log.info("쿠폰받기")
-          }))
-          self?.present(alertVC, animated: true, completion: nil)
-        })
-        .disposed(by: disposeBag)
-    }else{
+  /// 게임종료
+  ///
+  /// - Parameter json: 게임결과 
+  private func gameEnd(json: JSON){
+    
+    if json["result"]["data"].stringValue == "아쉽지만 다음 기회에...."{
       let vc = GetIconViewController(icon: images[spinWheelControl.selectedIndex],stage: stageStatus)
       vc.modalPresentationStyle = .overCurrentContext
       vc.dismissAction = {[weak self] in
@@ -628,32 +622,48 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
         self?.present(alert, animated: true, completion: nil)
       }
       self.present(vc, animated: true, completion: nil)
-    }
-  }
-  
-  private func shuffleIcons(index: Int) -> [UIImage]{
-    var items = [UIImage]()
-    
-    if !startGame{
-      let tempArray = NSArray(array: cheeseIcons, copyItems: true).shuffled() as NSArray
-      selectedImages = tempArray.subarray(with: NSRange(location: 0, length: index)) as NSArray
-      selectedImages = selectedImages.shuffled() as NSArray
     }else{
-      selectedImages = selectedImages.shuffled() as NSArray
+      Observable.just(model.imageURL)
+        .filterNil()
+        .map({URL(string: $0.getUrlWithEncoding())})
+        .filterNil()
+        .map({try Data(contentsOf: $0)})
+        .map({UIImage(data: $0)})
+        .filterNil()
+        .subscribe(onNext: {[weak self] image in
+          let alertVC = PMAlertController(title: "당첨을 축하합니다!", description: self?.model.title ?? "", image: image, style: .alert)
+          alertVC.addAction(PMAlertAction(title: "다른 상품보기", style: .default, action: {[weak self] in
+            self?.navigationController?.popViewController(animated: true)
+          }))
+          alertVC.addAction(PMAlertAction(title: "쿠폰받기", style: .cancel, action: {[weak self] in
+            guard let `self` = self else {return}
+            let navigation = self.navigationController
+            navigation?.popViewController(animated: true)
+            navigation?.present(MypageNaviViewController(), animated: true, completion: nil)
+          }))
+          self?.present(alertVC, animated: true, completion: nil)
+        })
+        .disposed(by: disposeBag)
     }
-    
-    for i in 0..<index
-    {
-      items.append(selectedImages[i] as! UIImage)
-    }
-    return items
   }
+
   
   private func reloadData(){
+    provider.request(.getMyPoint)
+      .filter(statusCode: 200)
+      .map(PointModel.self)
+      .map{$0.result.data.cheese}
+      .asDriver(onErrorJustReturn: nil)
+      .filterNil()
+      .map{Int($0)}
+      .filterNil()
+      .drive(onNext: defaultNavSetting)
+      .disposed(by: disposeBag)
+    
     spinWheelControl.isUserInteractionEnabled = false
     spinBGView.backgroundColor = .lightGray
     patterns = []
-    images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2")]
+    images = [#imageLiteral(resourceName: "cheeseEmental"),#imageLiteral(resourceName: "cheeseGorgonzola"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseColbyjack"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseHavati"),#imageLiteral(resourceName: "cheeseBrick")]
     startGame = false
     history = []
     currentLevel = 0
@@ -671,7 +681,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     isPopViewControllerAgree  = false
     
     stageStatus  = .default
-    request(index: currentLevel)
     
     self.spinWheelControl.reloadData()
     for button in selectedImageButton{

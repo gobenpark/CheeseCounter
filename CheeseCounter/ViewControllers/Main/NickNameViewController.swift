@@ -44,7 +44,7 @@ class NickNameViewController: BaseSetupViewController{
     let bt = UIButton()
     bt.setTitle("중복확인", for: .normal)
     bt.setTitle("중복확인 완료", for: .selected)
-    bt.setBackgroundImage(#imageLiteral(resourceName: "txt_box_select_1@1x"), for: .normal)
+    bt.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     bt.setTitleColor(.white, for: .normal)
     bt.addTarget(self, action: #selector(self.confirmDuplicated(_:)), for: .touchUpInside)
     return bt

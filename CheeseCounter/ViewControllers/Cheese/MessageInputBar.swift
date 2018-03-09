@@ -27,7 +27,7 @@ final class MessageInputBar: UIView{
   private let disposeBag = DisposeBag()
   var parentId: String = String()
   
-  let toolbar = UIToolbar()
+  private let toolbar = UIToolbar()
   lazy var textView: NextGrowingTextView = {
     let textView = NextGrowingTextView()
     textView.backgroundColor = .white
@@ -49,7 +49,7 @@ final class MessageInputBar: UIView{
     didSet{
       switch replyType{
       case .Reply:
-        self.parentId = "0"
+        self.parentId = String()
       self.textView.placeholderAttributedText = NSAttributedString(string: "댓글을 입력하세요..."
         ,attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)
           ,NSAttributedStringKey.foregroundColor: UIColor.gray])
@@ -61,7 +61,6 @@ final class MessageInputBar: UIView{
       }
     }
   }
-  
   
   override init(frame: CGRect){
     super.init(frame:frame)
@@ -91,6 +90,14 @@ final class MessageInputBar: UIView{
       })
       .disposed(by: self.disposeBag)
     
+    
+    textView.textView
+      .rx
+      .text
+      .filterNil()
+      .map { Int($0.count) >= 2}
+      .bind(to: sendButton.rx.isEnabled)
+      .disposed(by:disposeBag)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -110,6 +117,12 @@ final class MessageInputBar: UIView{
     }
   }
   
+  func reloadData(){
+    textView.textView.text = String()
+    textView.textView.resignFirstResponder()
+    self.replyType = .Reply
+  }
+  
   private func addConstraint(){
     toolbar.snp.makeConstraints { make in
       make.edges.equalTo(0)
@@ -127,6 +140,7 @@ final class MessageInputBar: UIView{
       make.right.equalTo(-7)
     }
   }
+  
   override var intrinsicContentSize: CGSize {
     return CGSize(width: self.bounds.size.width, height: 44)
   }

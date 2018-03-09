@@ -37,11 +37,8 @@ class CounterViewController: ButtonBarPagerTabStripViewController{
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    let titleLabel = UILabel()
-    titleLabel.text = "카운터"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
-    self.navigationItem.titleView = titleLabel
+  
+    title = "카운터"
     self.navigationItem.setRightBarButtonItems([myPageButton], animated: true)
     settings.style.buttonBarItemTitleColor = .black
     settings.style.selectedBarBackgroundColor = .white

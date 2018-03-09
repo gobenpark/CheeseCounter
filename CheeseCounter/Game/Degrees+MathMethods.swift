@@ -16,7 +16,6 @@ extension Degrees {
   }
 }
 
-
 extension Radians{
   var toDegrees: Degrees{
     return self * (180 / CGFloat.pi)

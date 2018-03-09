@@ -41,10 +41,11 @@ final class ListSearchViewController: UIViewController{
     let layout = UICollectionViewFlowLayout()
     layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
     layout.scrollDirection = .vertical
+    layout.minimumLineSpacing = 5.5
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.emptyDataSetSource = self
     collectionView.register(SearchViewCell.self, forCellWithReuseIdentifier: String(describing: SearchViewCell.self))
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
     return collectionView
   }()
   
@@ -90,8 +91,13 @@ final class ListSearchViewController: UIViewController{
       .bind(to: searchText)
       .disposed(by: disposeBag)
     
+    collectionView.rx
+      .itemSelected
+      .map {(self.dataSources.sectionModels[$0.section].items[$0.item],$0)}
+      .subscribe(onNext: {
+        self.navigationController?.pushViewController(ReplyViewController(model: $0.0, indexPath: $0.1), animated: true)
+      }).disposed(by: disposeBag)
   }
-  
   
   private func request(data:(String, String)){
     if data.0 == String(){
@@ -120,7 +126,7 @@ final class ListSearchViewController: UIViewController{
   
   private func navigationSetting(){
     self.definesPresentationContext = true
-    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image, for: .default)
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1, green: 0.848323524, blue: 0.005472274031, alpha: 1)).image, for: .any, barMetrics: .default)
     self.navigationItem.setLeftBarButton(homeButton, animated: false)
     navigationItem.titleView = searchController.searchBar
   }

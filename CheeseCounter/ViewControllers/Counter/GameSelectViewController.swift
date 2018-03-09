@@ -4,7 +4,7 @@
 //
 //  Created by xiilab on 2018. 1. 19..
 //  Copyright © 2018년 xiilab. All rights reserved.
-//
+//  게임으로 구매하기 페이지
 
 import XLPagerTabStrip
 import RxSwift
@@ -17,7 +17,6 @@ import DZNEmptyDataSet
 protocol SelectProvider {
   func navigationHidden(point: CGPoint)
 }
-
 
 class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
@@ -56,12 +55,8 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   override func viewDidLoad() {
     super.viewDidLoad()
     view = collectionView
-    provider.request(.getGiftList)
-      .map(GiftModel.self)
-      .map {[GiftViewModel(items: $0.result.data)]}
-      .asObservable()
-      .bind(to: dataSubject)
-      .disposed(by: disposeBag)
+    
+    request()
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
@@ -79,8 +74,22 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
       .disposed(by: disposeBag)
   }
   
+  private func request(){
+    provider.request(.getGiftList)
+      .map(GiftModel.self)
+      .map {[GiftViewModel(items: $0.result.data)]}
+      .asObservable()
+      .bind(to: dataSubject)
+      .disposed(by: disposeBag)
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    request()
+  }
+  
   func selectedItem(item: IndexPath){
-    let images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2")]
+    let images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseGorgonzola")]
     
     if let model = dataSources.sectionModels.first?.items[item.item]{
       guard model.coupon_count != nil && model.coupon_count != "0" else {return}

@@ -32,7 +32,6 @@ final class SearchViewCell: UICollectionViewCell{
     return label
   }()
   
-  
   let peopleImage = UIImageView(image: #imageLiteral(resourceName: "user"))
   let contents: UILabel = {
     let label = UILabel()
@@ -53,9 +52,8 @@ final class SearchViewCell: UICollectionViewCell{
     contentView.addSubview(contents)
     contentView.addSubview(peopleImage)
     contentView.addSubview(peopleLabel)
-    
+    backgroundColor = .white
     addConstraint()
-    
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -91,7 +89,7 @@ final class SearchViewCell: UICollectionViewCell{
     
     peopleLabel.snp.makeConstraints { (make) in
       make.left.equalTo(peopleImage.snp.right).offset(6.5)
-      make.width.equalTo(10)
+      make.width.equalTo(43)
       make.centerY.equalTo(peopleImage)
     }
   }

@@ -4,7 +4,7 @@
 //
 //  Created by xiilab on 2018. 2. 6..
 //  Copyright © 2018년 xiilab. All rights reserved.
-//
+//  한개의 데이터를 리프레시후 모델 삽입 메인도 똑같이 적용 예정
 
 import UIKit
 import RxSwift
@@ -14,17 +14,26 @@ import RxKeyboard
 import Moya
 import NextGrowingTextView
 import Toaster
+import SwiftyJSON
+import SnapKit
 
 final class ReplyViewController: UIViewController{
   
   private let disposeBag = DisposeBag()
   private let provider = MoyaProvider<CheeseCounter>().rx
   private let refreshView = UIRefreshControl()
+  private let indexPath: IndexPath
+  
   let writeReplySubject = PublishSubject<ReplyActionData>()
   let dataSubject = Variable<[ReplyViewModel]>([])
   let messageInputBar = MessageInputBar()
+  let empathyAction = PublishSubject<Bool>()
+  let shareEvent = PublishSubject<Bool>()
+  let detailAction = PublishSubject<Int>()
   
   private var didSetupViewConstraints = false
+  
+  var boxBottomConstraint: Constraint?
   var model: MainSurveyList.CheeseData
   
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<ReplyViewModel>(configureCell: { ds,cv,idx,item in
@@ -39,9 +48,9 @@ final class ReplyViewController: UIViewController{
       for: idx) as! ReplyHeaderView
     view.model = self.model
     view.mainView.moreButton.isHidden = true
+    view.replyViewController = self
     return view
   })
-  
   
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -51,6 +60,7 @@ final class ReplyViewController: UIViewController{
     }else {
       layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 520)
     }
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.backgroundColor = .white
     collectionView.register(ReplyHeaderView.self,
@@ -59,7 +69,11 @@ final class ReplyViewController: UIViewController{
     collectionView.register(ReplyViewCell.self, forCellWithReuseIdentifier: String(describing: ReplyViewCell.self))
     collectionView.alwaysBounceVertical = true
     collectionView.delegate = self
-    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
+    collectionView.keyboardDismissMode = .interactive
+    if #available(iOS 11, *){
+      collectionView.insetsLayoutMarginsFromSafeArea = true
+    }
     return collectionView
   }()
   
@@ -70,15 +84,9 @@ final class ReplyViewController: UIViewController{
     return button
   }()
   
-  let searchButton: UIBarButtonItem = {
-    let barbutton = UIBarButtonItem()
-    barbutton.image = #imageLiteral(resourceName: "header_search@1x").withRenderingMode(.alwaysTemplate)
-    barbutton.style = .plain
-    return barbutton
-  }()
-  
-  init(model: MainSurveyList.CheeseData) {
+  init(model: MainSurveyList.CheeseData, indexPath: IndexPath) {
     self.model = model
+    self.indexPath = indexPath
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -88,13 +96,40 @@ final class ReplyViewController: UIViewController{
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    title = "댓글"
     view.addSubview(collectionView)
     collectionView.addSubview(refreshView)
     view.addSubview(messageInputBar)
-    
+    ToastView.appearance().bottomOffsetPortrait = 200
     navigationBarSetup()
     addConstraint()
     replyRequest()
+    
+    shareEvent
+      .subscribe(onNext: {[weak self] (_) in
+        guard let `self` = self else {return}
+        self.present(ShareController.shareActionSheet(model: self.model, fromViewController: self), animated: true, completion: nil)
+      }).disposed(by: disposeBag)
+    
+    empathyAction
+      .flatMap { [unowned self] _ in
+        return CheeseService.provider
+          .request(.insertEmpathy(id: self.model.id))
+          .filter(statusCode: 200)
+          .mapJSON()
+          .map{JSON($0)}
+          .asObservable()
+      }.flatMap {[unowned self] (_)  in
+        return CheeseService
+          .provider
+          .request(.getSurveyByIdV2(id: self.model.id))
+          .map(MainSurveyList.self)
+          .asObservable()
+      }.subscribe(onNext: {[weak self] (model) in
+        guard let model = model.result.data.first else {return}
+        self?.model = model
+      }).disposed(by: disposeBag)
     
     refreshView.rx.controlEvent(.valueChanged)
       .do(onNext: {[weak self] (_) in
@@ -108,13 +143,13 @@ final class ReplyViewController: UIViewController{
       })
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
-    
-    collectionView.rx.didScroll
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: {[weak self] (_) in
-        guard let `self` = self else {return}
-        self.messageInputBar.textView.endEditing(true)
-      }).disposed(by: disposeBag)
+//
+//    collectionView.rx.didScroll
+//      .observeOn(MainScheduler.asyncInstance)
+//      .subscribe(onNext: {[weak self] (_) in
+//        guard let `self` = self else {return}
+//        self.messageInputBar.textView.endEditing(true)
+//      }).disposed(by: disposeBag)
     
     writeReplySubject
       .asDriver(onErrorJustReturn: ReplyActionData(nickname: String(), parentID: String()))
@@ -124,6 +159,14 @@ final class ReplyViewController: UIViewController{
       .drive(onNext: {[weak self] data in
         guard let `self` = self else {return}
         self.messageInputBar.replyType = .ReReply(replyData: data)
+        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
+      }).disposed(by: disposeBag)
+    
+    detailAction
+      .subscribe (onNext:{[weak self] (idx) in
+        guard let `self` = self else {return}
+        self.navigationController?
+          .pushViewController(ListDetailResultViewController(model: self.model, selectedNum: idx), animated: true)
       }).disposed(by: disposeBag)
     
     RxKeyboard.instance.visibleHeight
@@ -137,20 +180,24 @@ final class ReplyViewController: UIViewController{
         self.messageInputBar.snp.updateConstraints { make in
           make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-actualKeyboardHeight)
         }
+        
         self.view.setNeedsLayout()
-        UIView.animate(withDuration: 0) {
-          self.collectionView.contentInset.bottom = keyboardVisibleHeight + self.messageInputBar.bounds.size.height
+        UIView.animate(withDuration: 0) {[weak self] in
+          guard let `self` = self else {return}
+          self.collectionView.contentInset.bottom = actualKeyboardHeight + self.messageInputBar.bounds.size.height
           self.collectionView.scrollIndicatorInsets.bottom = self.collectionView.contentInset.bottom
           self.view.layoutIfNeeded()
         }
       })
       .disposed(by: self.disposeBag)
     
-    searchButton
-      .rx
-      .tap.subscribe {[weak self] (_) in
-        self?.navigationController?.pushViewController(SearchListViewController(type: .main), animated: false)
-      }.disposed(by: disposeBag)
+    RxKeyboard.instance
+      .willShowVisibleHeight
+      .drive(onNext:{[weak self] in
+        guard let `self` = self else {return}
+        self.collectionView.contentOffset.y += $0
+      })
+      .disposed(by:disposeBag)
     
     myPageButton.rx.tap
       .map{ _ in return MypageNaviViewController()}
@@ -159,50 +206,60 @@ final class ReplyViewController: UIViewController{
       })
       .disposed(by: disposeBag)
     
-    messageInputBar.sendButton
+    let messageSend = messageInputBar.sendButton
       .rx
       .tap
-      .bind(onNext: insertRequest)
-      .disposed(by: disposeBag)
-  }
-  
-  private func insertRequest(){
-    ToastView.appearance().bottomOffsetPortrait = 200
-    provider.request(
-      .insertReply(survey_id: self.model.id,
-                   parent_id: self.messageInputBar.parentId,
-                   contents: self.messageInputBar.textView.textView.text))
-      .mapJSON()
-      .do(onNext: { (_) in
-        Toast(text: "댓글이 작성되었습니다.", delay: 0.2, duration: 1.5).show()
-      }, onError: { (error) in
-        Toast(text: "댓글 작성 실패.", delay: 0.5, duration: 1.5).show()
-      })
-      .map{[weak self] _ in return self?.messageInputBar}
-      .subscribe(onSuccess: {[weak self] (view) in
-        view?.textView.textView.text = String()
-        view?.textView.textView.resignFirstResponder()
-        view?.replyType = .Reply
+      .flatMap { _ in
+        return CheeseService.provider.request(
+          .insertReply(survey_id: self.model.id,
+                       parent_id: self.messageInputBar.parentId,
+                       contents: self.messageInputBar.textView.textView.text))
+          .mapJSON()
+          .do(onSuccess: { (_) in
+            Toast(text: "댓글이 작성되었습니다.", delay: 0.2, duration: 1.5).show()
+          }, onError: { (error) in
+            Toast(text: "댓글 작성 실패.", delay: 0.5, duration: 1.5).show()
+          }).map{[weak self] _ in return self?.messageInputBar}
+          .do(onSuccess: {[weak self] (bar) in
+            bar?.reloadData()
+          })
+    }.share()
+    
+    messageSend
+      .flatMap {[unowned self] (_)  in
+        return CheeseService
+        .provider
+        .request(.getSurveyByIdV2(id: self.model.id))
+        .map(MainSurveyList.self)
+        .asObservable()
+      }.subscribe(onNext: {[weak self] (model) in
+        guard let model = model.result.data.first else {return}
+        self?.model = model
         self?.replyRequest()
-      }, onError: { (error) in
-        log.error(error)
-      })
-      .disposed(by: disposeBag)
+        self?.collectionView.reloadData()
+      }).disposed(by: disposeBag)
+    
+    messageSend
+      .subscribe(onNext: {[weak self] (bar) in
+        guard let `self` = self else {return}
+        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
+      }).disposed(by: disposeBag)
     
   }
+  
   private func navigationBarSetup(){
-    self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
+    self.navigationItem.setRightBarButtonItems([myPageButton], animated: true)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.hidesBarsOnSwipe = false
-//    self.navigationController?.setNavigationBarHidden(false, animated: true)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-//    self.navigationController?.hidesBarsOnSwipe = true
+    self.navigationController?.hidesBarsOnSwipe = true
   }
   
   private func addConstraint(){
@@ -212,7 +269,6 @@ final class ReplyViewController: UIViewController{
   }
   
   private func replyRequest(){
-    
     provider.request(.getReplyList(surveyId: model.id))
       .filter(statusCode: 200)
       .map(ReplyModel.self)
@@ -230,7 +286,7 @@ final class ReplyViewController: UIViewController{
 
     self.messageInputBar.snp.makeConstraints { make in
       make.left.right.equalTo(0)
-      make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+      boxBottomConstraint = make.bottom.equalTo(self.bottomLayoutGuide.snp.top).constraint
     }
   }
 }

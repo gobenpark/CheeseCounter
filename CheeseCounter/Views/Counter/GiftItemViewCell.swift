@@ -8,9 +8,12 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 final class GiftItemViewCell: UICollectionViewCell {
-  
+  let disposeBag = DisposeBag()
+  let disableView = UIView()
   var item: GiftModel.Result.Data?{
     didSet{
       brandLabel.text = item?.brand
@@ -23,7 +26,6 @@ final class GiftItemViewCell: UICollectionViewCell {
       cheeseButton.setTitle(item?.buyPoint, for: .normal)
       
       if item?.coupon_count == nil || item?.coupon_count == "0"{
-        let disableView = UIView()
         disableView.backgroundColor = .black
         disableView.alpha = 0.5
         self.addSubview(disableView)
@@ -77,6 +79,16 @@ final class GiftItemViewCell: UICollectionViewCell {
     contentView.addSubview(productLabel)
     contentView.addSubview(cheeseButton)
     addConstraint()
+    
+    disableView.rx.tapGesture()
+      .when(.ended)
+      .map{ _ in
+        let view = UIAlertController(title: "해당 상품은 모두 소진되었습니다.", message: nil, preferredStyle: .alert)
+        view.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+        return view
+      }.subscribe(onNext:{view in
+        AppDelegate.instance?.window?.rootViewController?.present(view, animated: true, completion: nil)
+      }).disposed(by: disposeBag)
   }
   
   required init?(coder aDecoder: NSCoder) {

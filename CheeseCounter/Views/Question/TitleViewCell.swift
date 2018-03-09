@@ -21,7 +21,7 @@ class TitleViewCell: UITableViewCell {
     let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 20))
     field.leftView = paddingView
     field.leftViewMode = .always
-    field.attributedPlaceholder = NSAttributedString(string: "질문 입력(필수)", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 12)])
+    field.attributedPlaceholder = NSAttributedString(string: "질문 입력(필수)", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontRegular(size: 14.8)])
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
     field.delegate = self

@@ -16,7 +16,6 @@ import XLPagerTabStrip
   import RxCocoa
 #endif
 
-
 protocol listViewControllerDelegate {
   func pushViewController(cheeseData:CheeseResult)
 }
@@ -33,13 +32,13 @@ class ListViewController: ButtonBarPagerTabStripViewController{
     return button
   }()
   
-//  let searchButton: UIBarButtonItem = {
-//    let barbutton = UIBarButtonItem()
-//    barbutton.image = #imageLiteral(resourceName: "header_search@1x").withRenderingMode(.alwaysTemplate)
-//    barbutton.style = .plain
-//    barbutton.tintColor = .black
-//    return barbutton
-//  }()
+  let searchButton: UIBarButtonItem = {
+    let barbutton = UIBarButtonItem()
+    barbutton.image = #imageLiteral(resourceName: "header_search@1x").withRenderingMode(.alwaysTemplate)
+    barbutton.style = .plain
+    barbutton.tintColor = .black
+    return barbutton
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -55,11 +54,11 @@ class ListViewController: ButtonBarPagerTabStripViewController{
       })
       .disposed(by: disposeBag)
     
-//    searchButton.rx.tap
-//      .map {return ListSearchViewController()}
-//      .subscribe(onNext: {[weak self] (vc) in
-//        self?.navigationController?.pushViewController(vc, animated: false)
-//      }).disposed(by: disposeBag)
+    searchButton.rx.tap
+      .map {return ListSearchViewController()}
+      .subscribe(onNext: {[weak self] (vc) in
+        self?.navigationController?.pushViewController(vc, animated: false)
+      }).disposed(by: disposeBag)
     
     changeCurrentIndexProgressive = {
       (oldCell: ButtonBarViewCell?
@@ -93,19 +92,9 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    bottomView = self.navigationController?.navigationBar.setBottomBorderColor2(color: .white, height: 2)
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    bottomView?.removeFromSuperview()
-  }
   
   private func navigationBarSetup(){
-    self.navigationItem.setRightBarButtonItems([myPageButton], animated: true)
+    self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white
   }

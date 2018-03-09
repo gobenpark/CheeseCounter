@@ -14,7 +14,6 @@ class CircleView: UIView{
     let progressView = CircleProgressView()
     progressView.trackWidth = 13
     progressView.centerFillColor = .clear
-//    progressView.progress = 0.5
     progressView.trackFillColor = .yellow
     progressView.backgroundColor = .clear
     progressView.trackBackgroundColor = .clear
@@ -32,20 +31,16 @@ class CircleView: UIView{
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
     addSubview(circleProgressView)
     addSubview(circleLabel)
-//    view.circleProgressView.trackFillColor = colors[i]
-//    view.tag = i+1
-//    view.circleProgressView.trackBorderColor = .white
     addConstraint()
   }
   
   private func addConstraint(){
-    circleProgressView.snp.makeConstraints { (make) in
+    circleProgressView.snp.remakeConstraints { (make) in
       make.edges.equalToSuperview().inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
-    circleLabel.snp.makeConstraints { (make) in
+    circleLabel.snp.remakeConstraints { (make) in
       make.center.equalToSuperview()
     }
   }

@@ -11,6 +11,7 @@ import XLPagerTabStrip
 import RxSwift
 import RxCocoa
 import RxDataSources
+import DZNEmptyDataSet
 
 final class CouponHistoryViewController: UIViewController, IndicatorInfoProvider{
   
@@ -26,7 +27,7 @@ final class CouponHistoryViewController: UIViewController, IndicatorInfoProvider
     return cell
   })
   
-  let collectionView: UICollectionView = {
+  lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
@@ -34,6 +35,7 @@ final class CouponHistoryViewController: UIViewController, IndicatorInfoProvider
     collectionView.register(CouponHistoryCell.self, forCellWithReuseIdentifier: String(describing: CouponHistoryCell.self))
     collectionView.alwaysBounceVertical = true
     collectionView.backgroundColor = .white
+    collectionView.emptyDataSetSource = self
     return collectionView
   }()
   
@@ -72,5 +74,15 @@ final class CouponHistoryViewController: UIViewController, IndicatorInfoProvider
   
   func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "쿠폰내역")
+  }
+}
+
+extension CouponHistoryViewController: DZNEmptyDataSetSource{
+  func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+    return NSAttributedString(string: "아직 보유하신 쿠폰이 없습니다.", attributes: [.font: UIFont.CheeseFontMedium(size: 13)])
+  }
+  
+  func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+    return #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
   }
 }
