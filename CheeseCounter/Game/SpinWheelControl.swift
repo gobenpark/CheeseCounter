@@ -93,7 +93,7 @@ open class SpinWheelControl: UIControl {
   @objc weak public var dataSource: SpinWheelControlDataSource?
   @objc public var delegate: SpinWheelControlDelegate?
   
-  @objc static let kMinimumRadiansForSpin: Radians = 0.1
+  @objc static let kMinimumRadiansForSpin: Radians = 0.01
   
   /// 중앙으로부터 거리
   @objc static let kMinDistanceFromCenter: CGFloat = 30.0
