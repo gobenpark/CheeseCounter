@@ -32,6 +32,9 @@ final class GiftItemViewCell: UICollectionViewCell {
         disableView.snp.makeConstraints({ (make) in
           make.edges.equalTo(imageView)
         })
+      }else{
+        disableView.removeFromSuperview()
+        disableView.snp.removeConstraints()
       }
       
       defer {

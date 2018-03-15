@@ -86,7 +86,7 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   }
   
   override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-    return [QuestionViewController(),AnswerViewController(),SympathyViewController()]
+    return [ListQuestionViewController(),AnswerViewController(),SympathyViewController()]
   }
   
   required init?(coder aDecoder: NSCoder) {

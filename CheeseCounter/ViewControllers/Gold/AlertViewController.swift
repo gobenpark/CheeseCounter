@@ -10,6 +10,7 @@ import UIKit
 
 import DZNEmptyDataSet
 import Moya
+import Toaster
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
@@ -88,15 +89,20 @@ class AlertViewController: UIViewController{
     
     collectionView.rx
       .itemSelected
-      .flatMap{(indexPath) -> Observable<(AlertType, String)> in
-        let cell = self.collectionView.cellForItem(at: indexPath) as! AlertViewCell
-        guard let type = cell.model?.type?.convertAlertType(),
-          let id = cell.model?.target_id else {return Observable.empty()}
-        return Observable.of((type, id))
-      }.alertViewMapper()
-      .subscribe(onNext: {[weak self] (vc) in
-        self?.navigationController?.pushViewController(vc, animated: true)
-      }).disposed(by: disposeBag)
+      .subscribe{
+        Toast(text: "준비중입니다.", delay: 0.4, duration: 1).show()
+      }.disposed(by: disposeBag)
+    
+    
+//      .flatMap{(indexPath) -> Observable<(AlertType, String)> in
+//        let cell = self.collectionView.cellForItem(at: indexPath) as! AlertViewCell
+//        guard let type = cell.model?.type?.convertAlertType(),
+//          let id = cell.model?.target_id else {return Observable.empty()}
+//        return Observable.of((type, id))
+//      }.alertViewMapper()
+//      .subscribe(onNext: {[weak self] (vc) in
+//        self?.navigationController?.pushViewController(vc, animated: true)
+//      }).disposed(by: disposeBag)
 
     
     refresh.rx

@@ -21,7 +21,6 @@ enum PagingType{
   case ordinary(id: String)
 }
 
-
 final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate
 {
   // 검색

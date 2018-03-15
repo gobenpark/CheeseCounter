@@ -47,8 +47,8 @@ class MainTabBarController: UITabBarController
     return vc
   }()
   
-  let questionViewController: UINavigationController = {
-    let vc = UINavigationController(rootViewController: QuestionTableViewController())
+  let questionNavViewController: UINavigationController = {
+    let vc = UINavigationController(rootViewController: QuestionViewController())
     vc.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
     let tabBar = UITabBarItem(title: "질문", image: #imageLiteral(resourceName: "btnQuestion"), tag: 2)
     tabBar.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 11)
@@ -90,7 +90,7 @@ class MainTabBarController: UITabBarController
     
     viewControllers = [cheeseViewController,
                        listViewController,
-                       questionViewController,
+                       questionNavViewController,
                        alertViewController,
                        counterViewController]
     

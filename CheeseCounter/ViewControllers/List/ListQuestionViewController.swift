@@ -16,7 +16,7 @@ import Moya
 import Toaster
 import DZNEmptyDataSet
 
-class QuestionViewController: BaseListViewController, IndicatorInfoProvider{
+class ListQuestionViewController: BaseListViewController, IndicatorInfoProvider{
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -98,7 +98,7 @@ class QuestionViewController: BaseListViewController, IndicatorInfoProvider{
   }
 }
 
-extension QuestionViewController: DZNEmptyDataSetSource{
+extension ListQuestionViewController: DZNEmptyDataSetSource{
   
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
      return NSAttributedString(string: "아직 작성한 질문이 없습니다.", attributes: [.font: UIFont.CheeseFontMedium(size: 13)])
