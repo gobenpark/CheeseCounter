@@ -3,3 +3,4 @@ pods/
 .DS_Store
 *.dSYM
 *.zip
+xcuserdata/

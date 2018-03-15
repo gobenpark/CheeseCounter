@@ -44,6 +44,11 @@ class HashTagCell: UITableViewCell {
     field.selectedColor = .lightGray
     field.selectedTextColor = .white
     field.delimiter = " "
+    field.onDidChangeText = { field, text in
+        if let text = text, text.contains(" ") {
+            field.tokenizeTextFieldText()
+        }
+    }
     field.placeholder = "태그 입력"
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
