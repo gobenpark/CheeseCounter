@@ -13,10 +13,10 @@ import UIKit
 class AlertViewCell: UICollectionViewCell{
   static let ID = "AlertViewCell"
   
-  var model: PushListData.Data? {
+  var model: NotiModel.Data? {
     didSet{
       self.titleLabel.text = model?.summary
-      self.createLabel.text = model?.created_date?.components(separatedBy: " ")[0] ?? ""
+      self.createLabel.text = model?.created_date.components(separatedBy: " ")[0] ?? ""
       guard let type = model?.type else {return}
       self.typeLabel.text = type.convertAlertType()?.typeString
       self.typeLabel.sizeToFit()

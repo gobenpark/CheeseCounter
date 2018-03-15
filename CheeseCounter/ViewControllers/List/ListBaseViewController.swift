@@ -12,9 +12,14 @@ import RxSwift
 import RxDataSources
 import Moya
 
+enum RequestAction{
+  case reload
+  case paging(String)
+}
+
 class BaseListViewController: UIViewController{
   
-  public let provider = MoyaProvider<CheeseCounter>().rx
+  public let provider = CheeseService.provider
   public let disposeBag = DisposeBag()
   public let datas = Variable<[CheeseViewModel]>([])
   public let dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell:{ds ,cv ,idx, item in
@@ -29,18 +34,21 @@ class BaseListViewController: UIViewController{
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.alwaysBounceVertical = true
     collectionView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
-    collectionView.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 44, right: 0)
+    collectionView.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 44, right: 0)
     return collectionView
   }()
+  
+  let refreshView = UIRefreshControl()
 
   override func loadView() {
     view = collectionView
-    collectionView.rx.itemSelected
-      .map {[unowned self] idx in self.datas.value[idx.section].items[idx.item]}
-      .subscribe (onNext:{ [weak self] (data) in
-        guard let `self` = self else {return}
-        self.navigationController?.pushViewController(ReplyViewController(model: data), animated: true)
-    }).disposed(by: disposeBag)
+    
+    collectionView.addSubview(refreshView)    
+    refreshView.rx
+      .controlEvent(.valueChanged)
+      .subscribe({[weak self] (_) in
+        self?.request(requestType: .reload)
+      }).disposed(by: disposeBag)
   }
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView,
@@ -51,9 +59,9 @@ class BaseListViewController: UIViewController{
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 300
     if didReachBottom{
-      request(pageNum: dataSources.sectionModels.last?.items.last?.id ?? String())
+      request(requestType: .paging(dataSources.sectionModels.last?.items.last?.id ?? String()))
     }
   }
   
-  open func request(pageNum: String){}
+  open func request(requestType: RequestAction){}
 }

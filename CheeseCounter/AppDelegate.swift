@@ -148,8 +148,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
       })
     }
-    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()
-    
+    self.window?.rootViewController = isOpened ? SplashViewController() : KakaoLoginController()    
   }
   
   func configureAppearance() {

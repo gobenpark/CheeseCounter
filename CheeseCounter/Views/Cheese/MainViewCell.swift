@@ -21,6 +21,10 @@ final class MainViewCell: UICollectionViewCell{
   weak var cheeseVC: CheeseViewController?
   private let disposeBag = DisposeBag()
   
+//  let selectImage: UIImageView = UIImageView(image: #imageLiteral(resourceName: "img_select@1x"))
+  let selectImage = SelectedImageView()
+  
+  
   var indexPath: IndexPath?
   var model: MainSurveyList.CheeseData?{
     didSet{
@@ -46,7 +50,6 @@ final class MainViewCell: UICollectionViewCell{
   }
   
   private func subjectBind(){
-    
     let button1 = mainView.selectView.imageButton1
       .rx
       .tap
@@ -87,10 +90,23 @@ final class MainViewCell: UICollectionViewCell{
       .tapGesture()
       .map{_ in return MainSurveyAction.Image(index: 4)}
     
-    mainView.heartButton.rx.tap
+    mainView
+      .emptyReplyLabel
+      .rx
+      .tapGesture()
+      .when(.ended)
+      .subscribe {[weak self] (_) in
+        guard let vc = self?.cheeseVC ,
+          let idx = self?.indexPath else {return}
+        vc.replyEvent.onNext(idx)
+    }.disposed(by: disposeBag)
+    
+    mainView.heartButton
+      .rx
+      .tap
       .subscribe { [weak self](_) in
-        guard let id = self?.model?.id else {return}
-        self?.cheeseVC?.emptyEvent.onNext(id)
+        guard let id = self?.model?.id, let idx = self?.indexPath else {return}
+        self?.cheeseVC?.empathyEvent.onNext((id,idx))
       }.disposed(by: disposeBag)
     
     mainView.moreButton.isUserInteractionEnabled = true
@@ -122,18 +138,63 @@ final class MainViewCell: UICollectionViewCell{
       .merge([button1,button2,button3,button4,image1,image2,image3,image4])
       .subscribe(onNext: { [weak self] (action) in
         guard let retainSelf = self, let retainModel = self?.model else {return}
-        retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel))
+        retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel,retainSelf.indexPath))
       }).disposed(by: disposeBag)
+    
+    Observable<MainSurveyAction>
+      .merge([button1,button2,button3,button4])
+      .map{ idx in
+        guard case let .Button(index) = idx else {return 0}
+        return index
+      }.bind(onNext: selectImageSetting)
+      .disposed(by: disposeBag)
   }
   
-  override func updateConstraints() {
-    super.updateConstraints()
-    mainView.moreButton.isHidden = mainView.title.isTruncated()
+  private func selectImageSetting(index: Int){
+    mainView.addSubview(selectImage)
+
+    if index == 1{
+      selectImage.snp.remakeConstraints { (make) in
+        make.edges.equalTo(mainView.selectView.imageButton1)
+      }
+    }else if index == 2{
+      selectImage.snp.remakeConstraints { (make) in
+        make.edges.equalTo(mainView.selectView.imageButton2)
+      }
+    }else if index == 3 {
+      selectImage.snp.remakeConstraints { (make) in
+        make.edges.equalTo(mainView.selectView.imageButton3)
+      }
+    }else if index == 4{
+      selectImage.snp.remakeConstraints { (make) in
+        make.edges.equalTo(mainView.selectView.imageButton4)
+      }
+    }
   }
-  
+
   override func layoutSubviews() {
     super.layoutSubviews()
     mainView.moreButton.isHidden = mainView.title.isTruncated()
   }
 }
 
+class SelectedImageView: UIView {
+  
+  let imageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "icAnswerCheck"))
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    addSubview(imageView)
+    self.backgroundColor = .yellow
+    self.alpha = 0.5
+    imageView.contentMode = .scaleAspectFit
+    imageView.snp.makeConstraints { (make) in
+      make.center.equalToSuperview()
+      make.size.equalToSuperview().dividedBy(2)
+    }
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}

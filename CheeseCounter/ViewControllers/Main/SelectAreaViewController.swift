@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyImage
 
 class SelectAreaViewController: BaseSetupViewController{
   
@@ -84,6 +85,7 @@ class SelectAreaViewController: BaseSetupViewController{
     self.view.backgroundColor = .white
     self.titleLabel.text = "회원정보 추가"
     isdisableScroll = true
+    
     self.view.addSubview(mainLabel)
     self.view.addSubview(citySelectView)
     self.view.addSubview(guSelectView)
@@ -211,7 +213,7 @@ extension SelectAreaViewController: UITableViewDataSource{
       self.userSetupViewController?.signUp.addr1 = cityButton.title(for: .normal)
       self.userSetupViewController?.signUp.addr2 = nil
       // commitAction()
-      cityButton.backgroundColor = #colorLiteral(red: 0.9983282685, green: 0.5117852092, blue: 0.2339783907, alpha: 1)
+      cityButton.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     } else {
       self.regionsiData[cityButton.tag].isSelect = cityButton.isSelected
       self.userSetupViewController?.signUp.addr1 = nil
@@ -235,7 +237,7 @@ extension SelectAreaViewController: UITableViewDataSource{
       regionAllData[siIndex]?[guButton.tag].isSelect = guButton.isSelected
       self.userSetupViewController?.signUp.addr1 = regionsiData[siIndex].si
       self.userSetupViewController?.signUp.addr2 = guButton.title(for: .normal)
-      guButton.backgroundColor = #colorLiteral(red: 0.9983282685, green: 0.5117852092, blue: 0.2339783907, alpha: 1)
+      guButton.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
       isdisableScroll = false
       self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 5)
     } else {
@@ -260,7 +262,7 @@ class SelectRegionCell: UITableViewCell{
     button.backgroundColor = .lightGray
     button.setTitleColor(.black, for: .normal)
     button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_5_nomal@1x"), for: .normal)
-    button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_5_select@1x"), for: .selected)
+    button.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)).image, for: .selected)
     button.setTitleColor(.white, for: .selected)
     return button
   }()
@@ -278,7 +280,7 @@ class SelectRegionCell: UITableViewCell{
   override func layoutSubviews() {
     super.layoutSubviews()
     if regionButton.isSelected{
-      regionButton.backgroundColor = #colorLiteral(red: 0.9983282685, green: 0.5117852092, blue: 0.2339783907, alpha: 1)
+      regionButton.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     } else {
       regionButton.backgroundColor = .white
     }

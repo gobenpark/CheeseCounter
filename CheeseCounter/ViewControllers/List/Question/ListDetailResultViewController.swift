@@ -103,7 +103,7 @@ class ListDetailResultViewController: FormViewController{
       // Fallback on earlier versions
     }
     
-    CheeseService.provider.rx
+    CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
       .map(ResultSurveyModel.self)
@@ -112,11 +112,10 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func request(){
-    log.info(self.selectedNum)
-    CheeseService.provider.rx
+
+    CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
-      .debug()
       .map(ResultSurveyModel.self)
       .bind(onNext: graphPatch)
       .disposed(by: disposeBag)
@@ -215,18 +214,21 @@ class ListDetailResultViewController: FormViewController{
     var rankRows = [RankRow]()
     let headerSection = Section(){
       var header = HeaderFooterView<UILabel>(.class)
-      header.height = {40}
+      let size = self.model.title.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 20, height: 100),
+                                    attributes: [.font : UIFont.CheeseFontBold(size: 17)])
+      header.height = {size.height + 10}
       header.onSetupView = { label,_ in
         label.backgroundColor = .white
         label.text = self.model.title
-        label.adjustsFontSizeToFitWidth = true
+        label.adjustsFontSizeToFitWidth = false
         label.font = UIFont.CheeseFontBold(size: 17)
         label.textAlignment = .center
+        label.numberOfLines = 0
       }
       $0.header = header
       $0.tag = "타이틀"
     }
-    
+
     for (i,rank) in calculateRank().enumerated() {
       let tempRank = RankRow()
       tempRank.cellSetup({ [unowned self] (cell, row) in
@@ -265,13 +267,16 @@ class ListDetailResultViewController: FormViewController{
     headerSection
       <<< buttonRow
     
-    form.insert(headerSection, at: 0)
-    form +++ circleChart.cellSetup({ (cell, row) in
-      cell.dataFetch(datas: model)
-    })
-    form +++ graphChart.cellSetup({ (cell, row) in
-      cell.dataFetch(datas: model)
-    })
+    UIView.performWithoutAnimation {
+      form.insert(headerSection, at: 0)
+      form +++ circleChart.cellSetup({ (cell, row) in
+        cell.dataFetch(datas: model)
+      })
+      form +++ graphChart.cellSetup({ (cell, row) in
+        cell.dataFetch(datas: model)
+      })
+      
+    }
   }
   
   override func viewWillDisappear(_ animated: Bool) {

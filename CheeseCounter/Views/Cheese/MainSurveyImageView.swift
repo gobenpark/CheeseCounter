@@ -18,6 +18,11 @@ final class MainSurveyImageView: UIView{
   var model: MainSurveyList.CheeseData?{
     didSet{
       guard let cheeseModel = model else {return}
+      
+      if let ask = cheeseModel.select_ask{
+        selectedColor(of: ask)
+      }
+      
       addConstraintWithImage(model: cheeseModel)
       resultImageMapper(model: cheeseModel)
     }
@@ -43,12 +48,14 @@ final class MainSurveyImageView: UIView{
     }else if model.type == "4"{
       result4ImageMapper(result: surveyResult)
     }
+    self.layoutIfNeeded()
+    self.setNeedsLayout()
   }
   
   private func result2ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
     
-    guard var survey1 = Double(result.ask1_count ?? "0") ,
-      var survey2 = Double(result.ask2_count ?? "0") else {return}
+    if var survey1 = Double(result.ask1_count ?? "0"),
+      var survey2 = Double(result.ask2_count ?? "0"){
     
     let total = survey1 + survey2
     
@@ -71,14 +78,18 @@ final class MainSurveyImageView: UIView{
     circleView2.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton2)
     })
+    }else {
+      circleView1.removeFromSuperview()
+      circleView2.removeFromSuperview()
+    }
   }
   
   private func result4ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
     
-    guard var survey1 = Double(result.ask1_count ?? "0") ,
+    if var survey1 = Double(result.ask1_count ?? "0") ,
       var survey2 = Double(result.ask2_count ?? "0"),
       var survey3 = Double(result.ask3_count ?? "0"),
-      var survey4 = Double(result.ask4_count ?? "0") else {return}
+      var survey4 = Double(result.ask4_count ?? "0"){
     
     let total = survey1 + survey2 + survey3 + survey4
     
@@ -117,6 +128,12 @@ final class MainSurveyImageView: UIView{
     circleView4.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton4)
     })
+    }else{
+      circleView1.removeFromSuperview()
+      circleView2.removeFromSuperview()
+      circleView3.removeFromSuperview()
+      circleView4.removeFromSuperview()
+    }
   }
   
   private func attributeFactory(count: Double) -> NSMutableAttributedString{
@@ -127,10 +144,34 @@ final class MainSurveyImageView: UIView{
       attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
     attributeString.append(NSAttributedString(
         string: "자세히 보기",
-        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1),NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
+        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1)
+          ,NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
     return attributeString
   }
   
+  private func selectedColor(of number: String){
+    if number == "1"{
+      circleView1.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 0, alpha: 0.5)
+      circleView2.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView3.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView4.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+    }else if number == "2"{
+      circleView2.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 0, alpha: 0.5)
+      circleView1.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView3.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView4.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+    }else if number == "3"{
+      circleView3.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 0, alpha: 0.5)
+      circleView2.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView1.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView4.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+    }else if number == "4"{
+      circleView4.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 0, alpha: 0.5)
+      circleView2.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView3.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+      circleView1.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+    }
+  }
   
   private func addConstraintWithImage(model: MainSurveyList.CheeseData){
     
@@ -145,16 +186,12 @@ final class MainSurveyImageView: UIView{
       imageButton2.setTitle(model.ask2, for: .normal)
       
       imageButton1.snp.remakeConstraints({ (make) in
-        make.left.equalToSuperview()
-        make.top.equalToSuperview()
-        make.bottom.equalToSuperview()
+        make.left.top.bottom.equalToSuperview()
         make.right.equalTo(self.snp.centerX)
       })
     
       imageButton2.snp.remakeConstraints({ (make) in
-        make.top.equalToSuperview()
-        make.right.equalToSuperview()
-        make.bottom.equalToSuperview()
+        make.top.right.bottom.equalToSuperview()
         make.left.equalTo(imageButton1.snp.right)
       })
     }else if model.type == "4"{

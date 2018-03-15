@@ -11,7 +11,6 @@ import Foundation
 struct MainSurveyList: Codable{
   let result: Result
   
-  
   struct Result: Codable{
     let code: String
     let data: [CheeseData]
@@ -20,10 +19,10 @@ struct MainSurveyList: Codable{
   struct CheeseData: Codable{
     
     struct Survey_Result: Codable{
-      let ask1_count: String?
-      let ask2_count: String?
-      let ask3_count: String?
-      let ask4_count: String?
+      var ask1_count: String?
+      var ask2_count: String?
+      var ask3_count: String?
+      var ask4_count: String?
       init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         ask1_count = try? values.decode(String.self, forKey: .ask1_count)
@@ -50,26 +49,25 @@ struct MainSurveyList: Codable{
     let ask4_img_url: String?
     let hash_tag: String
     let total_count: String
-    let user_img_url: String
-    let nickname: String
+    let user_img_url: String?
+    let nickname: String?
     let is_option: String
     let option_cut_cheese: String
     let option_remain_count: String?
     let option_set_count: String?
     let empathy_count: String
-    let is_empathy: String
+    var is_empathy: String?
     let is_enable: String?
     let reply_count: String?
     let result_count: String?
     let select_ask: String?
-    let survey_result: Survey_Result?
+    var survey_result: Survey_Result?
     /// ## 공감리스트 용도
     let recent_reply: String?
     let like_count: String?
     /// ## 매인 더보기버튼용
     var isExpand = false
     
-   
     init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CodingKeys.self)
       id = try values.decode(String.self, forKey: .id)
@@ -89,13 +87,13 @@ struct MainSurveyList: Codable{
       ask4_img_url = try? values.decode(String.self, forKey: .ask4_img_url)
       hash_tag = try values.decode(String.self, forKey: .hash_tag)
       total_count = try values.decode(String.self, forKey: .total_count)
-      user_img_url = try values.decode(String.self, forKey: .user_img_url)
-      nickname = try values.decode(String.self, forKey: .nickname)
+      user_img_url = try? values.decode(String.self, forKey: .user_img_url)
+      nickname = try? values.decode(String.self, forKey: .nickname)
       is_option = try values.decode(String.self, forKey: .is_option)
       option_cut_cheese = try values.decode(String.self, forKey: .option_cut_cheese)
       option_set_count = try values.decodeIfPresent(String.self, forKey: .option_set_count)
       empathy_count = try values.decode(String.self, forKey: .empathy_count)
-      is_empathy = try values.decode(String.self, forKey: .is_empathy)
+      is_empathy = try? values.decode(String.self, forKey: .is_empathy)
       option_remain_count = try? values.decode(String.self, forKey: .option_remain_count)
       survey_result = try? values.decode(Survey_Result.self, forKey: .survey_result)
       reply_count = try? values.decode(String.self, forKey: .reply_count)

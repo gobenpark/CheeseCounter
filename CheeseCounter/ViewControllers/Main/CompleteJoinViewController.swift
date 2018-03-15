@@ -48,7 +48,7 @@ class CompleteJoinViewController: BaseSetupViewController {
   lazy var startButton: UIButton = {
     let button = UIButton()
     button.setTitle("시작하기", for: .normal)
-    button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_select_1@1x"), for: .normal)
+    button.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     button.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
     return button
   }()

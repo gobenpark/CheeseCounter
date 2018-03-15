@@ -8,9 +8,12 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 final class GiftItemViewCell: UICollectionViewCell {
-  
+  let disposeBag = DisposeBag()
+  let disableView = UIView()
   var item: GiftModel.Result.Data?{
     didSet{
       brandLabel.text = item?.brand
@@ -18,6 +21,17 @@ final class GiftItemViewCell: UICollectionViewCell {
       
       if let url = item?.imageURL{
         imageView.kf.setImage(with: URL(string: url.getUrlWithEncoding()))
+      }
+      
+      cheeseButton.setTitle(item?.buyPoint, for: .normal)
+      
+      if item?.coupon_count == nil || item?.coupon_count == "0"{
+        disableView.backgroundColor = .black
+        disableView.alpha = 0.5
+        self.addSubview(disableView)
+        disableView.snp.makeConstraints({ (make) in
+          make.edges.equalTo(imageView)
+        })
       }
       
       defer {
@@ -48,12 +62,33 @@ final class GiftItemViewCell: UICollectionViewCell {
     return label
   }()
   
+  let cheeseButton: UIButton = {
+    let button = UIButton()
+    button.setImage(#imageLiteral(resourceName: "icGiftCheese"), for: .normal)
+    button.semanticContentAttribute = .forceLeftToRight
+    button.titleLabel?.font = UIFont.CheeseFontMedium(size: 10.4)
+    button.setTitleColor(#colorLiteral(red: 1, green: 0.4901960784, blue: 0.3176470588, alpha: 1), for: .normal)
+    button.isHidden = true
+    return button
+  }()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(imageView)
     contentView.addSubview(brandLabel)
     contentView.addSubview(productLabel)
+    contentView.addSubview(cheeseButton)
     addConstraint()
+    
+    disableView.rx.tapGesture()
+      .when(.ended)
+      .map{ _ in
+        let view = UIAlertController(title: "해당 상품은 모두 소진되었습니다.", message: nil, preferredStyle: .alert)
+        view.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+        return view
+      }.subscribe(onNext:{view in
+        AppDelegate.instance?.window?.rootViewController?.present(view, animated: true, completion: nil)
+      }).disposed(by: disposeBag)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -76,6 +111,11 @@ final class GiftItemViewCell: UICollectionViewCell {
       make.left.equalTo(brandLabel)
       make.top.equalTo(brandLabel.snp.bottom).offset(2.5)
       make.right.equalTo(imageView.snp.right).inset(4.5)
+    }
+    
+    cheeseButton.snp.makeConstraints { (make) in
+      make.top.equalToSuperview().inset(9)
+      make.right.equalToSuperview().inset(9)
     }
   }
 }

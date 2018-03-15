@@ -97,7 +97,7 @@ struct QuestionData {
         if self.hash_tag == ""{
             return (false,"해시태그를 입력해주세요")
         }
-        return (true,"성공")
+        return (true,"사진 입력해주세요")
     }
     
 }

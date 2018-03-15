@@ -44,25 +44,16 @@ class HashTagCell: UITableViewCell {
     field.selectedColor = .lightGray
     field.selectedTextColor = .white
     field.delimiter = " "
-    field.placeholder = "태그 후 Enter입력(필수)"
+    field.onDidChangeText = { field, text in
+        if let text = text, text.contains(" ") {
+            field.tokenizeTextFieldText()
+        }
+    }
+    field.placeholder = "태그 입력"
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
     return field
   }()
-  
-  //  lazy var titleField: UITextField = {
-  //    let field = UITextField()
-  //    let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 20))
-  //    field.leftView = paddingView
-  //    let attribute = NSMutableAttributedString(string: "태그 입력(필수)"
-  //      , attributes: [NSFontAttributeName:UIFont.CheeseFontMedium(size: 12)])
-  //    field.attributedPlaceholder = attribute
-  //    field.leftViewMode = .always
-  //    field.layer.borderWidth = 0.5
-  //    field.layer.borderColor = UIColor.lightGray.cgColor
-  //    field.delegate = self
-  //    return field
-  //  }()
   
   let dividView: UIView = {
     let view = UIView()

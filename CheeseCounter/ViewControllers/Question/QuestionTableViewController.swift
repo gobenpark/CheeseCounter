@@ -8,9 +8,20 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
   
   //MARK: - Property
+  
+  let myPageButton: UIBarButtonItem = {
+    let button = UIBarButtonItem()
+    button.image = #imageLiteral(resourceName: "btnMypage").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    button.style = .plain
+    return button
+  }()
+  let disposeBag = DisposeBag()
   
   let CellIds = ["setCheese","limit_date","option_gender","option_age","option_addr"]
   
@@ -56,7 +67,7 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     tableView.addGestureRecognizer(tapGesture)
     tableView.separatorStyle = .none
     
-    navigationBarSetup()
+    title = "질문"
     self.view = tableView
     self.navigationItem.rightBarButtonItem = UIBarButtonItem()
     
@@ -64,29 +75,19 @@ class QuestionTableViewController: UITableViewController, UITextFieldDelegate{
     regionFetch()
     
     self.questionData.limit_date = defaultEndDate()
+    
+    myPageButton.rx.tap
+      .map{ _ in return MypageNaviViewController()}
+      .subscribe(onNext: { [weak self] (vc) in
+        self?.present(vc, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    self.navigationItem.setRightBarButtonItems([myPageButton], animated: true)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     fetchPoint()
-  }
-  
-  func navigationBarSetup(){
-    
-    let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
-    titleButton.setTitle("질문", for: .normal)
-    titleButton.setImage(#imageLiteral(resourceName: "icon_gold@1x"), for: .normal)
-    titleButton.addTarget(self, action: #selector(presentCoachView), for: .touchUpInside)
-    titleButton.titleLabel?.font = UIFont.CheeseFontBold(size: 17)
-    titleButton.semanticContentAttribute = .forceRightToLeft
-    titleButton.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 10, bottom: 0, right: 0)
-    titleButton.setTitleColor(.black, for: .normal)
-    
-    let titleLabel = UILabel()
-    titleLabel.text = "질문"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
-    self.navigationItem.titleView = titleLabel
   }
   
   @objc func presentCoachView(){
@@ -380,15 +381,9 @@ extension QuestionTableViewController {
             activityView.stopAnimating()
             activityView.removeFromSuperview()
             
-            let gifVC = GifViewController()
-            gifVC.imageType = .cheese
-            gifVC.modalPresentationStyle = .overCurrentContext
-            gifVC.modalTransitionStyle = .flipHorizontal
-            gifVC.dismissCompleteAction = { [weak self] in
-              self?.tabBarController?.selectedIndex = 0
-              NotificationCenter.default.post(name: NSNotification.Name("mainfetch"), object: nil)
-            }
-            AppDelegate.instance?.window?.rootViewController?.present(gifVC, animated: true, completion: nil)
+            AlertView(title: "등록되었습니다.")
+              .addChildAction(title: "확인", style: .default, handeler:nil)
+              .show()
           }
           else {
             AlertView(title: data)
@@ -532,7 +527,6 @@ extension QuestionTableViewController{
       return 0
     }
   }
-  
   
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     if section == 0 {

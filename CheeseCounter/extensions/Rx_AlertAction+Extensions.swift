@@ -82,7 +82,7 @@ extension ObservableType where E == (AlertType, String){
   func alertViewMapper() -> Observable<UIViewController>{
     return asObservable().flatMap { (data) -> Observable<UIViewController> in
       
-      let cheeseData = CheeseService.provider.rx
+      let cheeseData = CheeseService.provider
         .request(.getSurveyById(id: data.1.components(separatedBy: ",").first!))
         .asObservable()
         .map(CheeseResultByDate.self)
@@ -97,7 +97,6 @@ extension ObservableType where E == (AlertType, String){
       case .qna:
         return Observable.just(UIViewController())
       case .reply:
-        
         let observable = Observable.just(UIViewController())
         return Observable<UIViewController>
           .zip(cheeseData, observable, resultSelector: {

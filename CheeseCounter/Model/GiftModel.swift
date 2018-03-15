@@ -34,6 +34,7 @@ struct GiftModel: Codable{
       let totalCount: String?
       let type: String?
       let userID: String?
+      let coupon_count: String?
       
       enum CodingKeys: String,CodingKey{
         case brand
@@ -53,6 +54,7 @@ struct GiftModel: Codable{
         case totalCount = "total_count"
         case type
         case userID = "user_id"
+        case coupon_count
       }
       
       init(from decoder: Decoder) throws {
@@ -75,6 +77,7 @@ struct GiftModel: Codable{
         totalCount = try? values.decode(String.self, forKey: .totalCount)
         type = try? values.decode(String.self, forKey: .type)
         userID = try? values.decode(String.self, forKey: .userID)
+        coupon_count = try? values.decode(String.self, forKey: .coupon_count)
       }
     }
   }

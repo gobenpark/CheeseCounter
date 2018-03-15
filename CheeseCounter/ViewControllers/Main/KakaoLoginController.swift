@@ -8,16 +8,21 @@
 
 import UIKit
 
-class KakaoLoginController: UIViewController{
+import RxSwift
+import RxCocoa
+import RxOptional
+
+final class KakaoLoginController: UIViewController{
   
-  lazy var kakaoLoginButton : UIButton = {
+  private let disposeBag = DisposeBag()
+  private lazy var kakaoLoginButton : UIButton = {
     let button = UIButton()
     let attribute = NSAttributedString(string: "카카오톡으로 로그인",
                                        attributes: [NSAttributedStringKey.foregroundColor : UIColor.rgb(red: 255, green: 135, blue: 0),
                                                     NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)])
     button.backgroundColor = .white
     button.setAttributedTitle(attribute, for: .normal)
-    button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)
+//    button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)
     return button
   }()
   
@@ -36,6 +41,22 @@ class KakaoLoginController: UIViewController{
     view.addSubview(backgroundImageView)
     view.addSubview(kakaoLoginButton)
     view.addSubview(logoImageView)
+    
+    kakaoLoginButton
+      .rx
+      .tap
+      .map{_ in return KOSession.shared()}
+      .filterNil()
+      .do(onNext: { (session) in
+        if session.isOpen(){
+          session.close()
+        }
+      }).subscribe(onNext: { (session) in
+        session.open(completionHandler: { (error) in
+        })
+      }).disposed(by: disposeBag)
+    
+    
     addConstraint()
   }
   
@@ -60,26 +81,25 @@ class KakaoLoginController: UIViewController{
     }
   }
   
-  @objc fileprivate dynamic func kakaoLogin(){
-    
-    let session:KOSession = KOSession.shared()
-    
-    if session.isOpen(){
-      session.close()
-    }
-    
-    session.open{ (error) in
-      if !session.isOpen() {
-        switch ((error as! NSError).code) {
-        case Int(KOErrorCancelled.rawValue):
-          break
-        default:
-          let alertController = UIAlertController(title: "에러", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-          let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-          alertController.addAction(defaultAction)
-          break
-        }
-      }
-    }
-  }
+//  @objc fileprivate dynamic func kakaoLogin(){
+//
+//    let session:KOSession = KOSession.shared()
+//
+//    if session.isOpen(){
+//      session.close()
+//    }
+//    session.open{ (error) in
+//      if !session.isOpen() {
+//        switch ((error as! NSError).code) {
+//        case Int(KOErrorCancelled.rawValue):
+//          break
+//        default:
+//          let alertController = UIAlertController(title: "에러", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+//          let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//          alertController.addAction(defaultAction)
+//          break
+//        }
+//      }
+//    }
+//  }
 }

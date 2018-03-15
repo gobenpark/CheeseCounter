@@ -4,11 +4,11 @@
 //
 //  Created by xiilab on 2018. 2. 23..
 //  Copyright © 2018년 xiilab. All rights reserved.
-//
+//  설정 메인
 
 import UIKit
 import Eureka
-
+import Carte
 
 final class ConfigViewController: FormViewController{
   
@@ -42,6 +42,12 @@ final class ConfigViewController: FormViewController{
         self?.navigationController?.pushViewController(NoticeViewController(), animated: true)
       })
       <<< LabelRow().cellSetup({ (cell, row) in
+        row.title = "이벤트"
+        cell.accessoryType = .disclosureIndicator
+      }).onCellSelection({[weak self] (cell, row) in
+        self?.navigationController?.pushViewController(CounterEventViewController(), animated: true)
+      })
+      <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "이용약관 및 개인정보 취급방침"
         cell.accessoryType = .disclosureIndicator
       }).onCellSelection({[weak self] (cell, row) in
@@ -58,6 +64,8 @@ final class ConfigViewController: FormViewController{
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "오픈소스 라이센스 (OSS License)"
         cell.accessoryType = .disclosureIndicator
+      }).onCellSelection({[weak self] (cell, row) in
+        self?.navigationController?.pushViewController(CarteViewController(), animated: true)
       })
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "버전정보"
@@ -69,13 +77,20 @@ final class ConfigViewController: FormViewController{
     +++ Section()
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "로그아웃"
-        cell.detailTextLabel?.textColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
         cell.accessoryType = .disclosureIndicator
+      }).cellUpdate({ (cell, row) in
+        cell.detailTextLabel?.textColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
+      }).onCellSelection({ (cell, row) in
+        KOSession.shared().logoutAndClose(completionHandler: nil)
       })
       <<< LabelRow().cellSetup({ (cell, row) in
         row.title = "회원탈퇴"
         cell.detailTextLabel?.textColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
         cell.accessoryType = .disclosureIndicator
+      }).onCellSelection({[weak self] (cell, row) in
+        self?.navigationController?.pushViewController(DropOutViewController(), animated: true)
       })
+    
+    tableView.reloadData()
   }
 }

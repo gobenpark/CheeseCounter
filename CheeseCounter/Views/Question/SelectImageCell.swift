@@ -44,7 +44,7 @@ class SelectImageCell: UITableViewCell {
   
   lazy var textField: UITextField = {
     let textField = UITextField()
-    textField.placeholder = "보기 입력(필수)"
+    textField.attributedPlaceholder = NSAttributedString(string: "보기 입력(필수)", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontRegular(size: 14.8)])
     textField.font = UIFont.systemFont(ofSize: 12)
     textField.textAlignment = .center
     textField.tag = 0
@@ -56,7 +56,7 @@ class SelectImageCell: UITableViewCell {
   
   lazy var textField1: UITextField = {
     let textField = UITextField()
-    textField.placeholder = "보기 입력(필수)"
+    textField.attributedPlaceholder = NSAttributedString(string: "보기 입력(필수)", attributes: [NSAttributedStringKey.font:UIFont.CheeseFontRegular(size: 14.8)])
     textField.font = UIFont.systemFont(ofSize: 12)
     textField.textAlignment = .center
     textField.tag = 1

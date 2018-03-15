@@ -82,9 +82,7 @@ class SearchListViewController: UIViewController{
     super.viewDidLoad()
     
     navigationSetting()
-    definesPresentationContext = true
     cheeseDatas.asDriver()
-      .debug()
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
     

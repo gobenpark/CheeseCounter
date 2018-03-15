@@ -4,7 +4,7 @@
 //
 //  Created by xiilab on 2017. 4. 27..
 //  Copyright © 2017년 xiilab. All rights reserved.
-//
+//  약관페이지 
 
 import UIKit
 import WebKit

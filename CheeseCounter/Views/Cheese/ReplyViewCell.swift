@@ -10,51 +10,34 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import Moya
 
 class ReplyViewCell: UICollectionViewCell{
   let disposeBag = DisposeBag()
+  
+  var constraint: Constraint?
   var model: ReplyModel.Data?{
     didSet{
-      self.nickNameLabel.text = model?.nickname
-      self.profileimg.kf.setImage(with: URL(string:model?.img_url ?? String()))
-      self.replyLabel.text = model?.contents
+      guard let model = model else {return}
+      self.nickNameLabel.text = model.nickname
+      self.profileimg.kf.setImage(with: URL(string:model.img_url))
+      self.replyLabel.text = model.contents
+      self.hartCount.text = model.like_count
+      
+      self.dateSet(of: self.createDateLabel, data: model)
+      
+      if model.parent_id != "0"{
+        constraint?.update(inset: 30)
+        writeReplyButton.isHidden = true
+        sympathyButton.isHidden = true
+      }
+      
+      if model.is_like == "1"{
+        sympathyButton.isSelected = true
+      }
+      
       setNeedsLayout()
       layoutIfNeeded()
-//      guard let replyList = model else {return}
-//      self.userID = replyList.user_id
-//      self.id = replyList.id
-//
-//      if let parentId = replyList.parent_id {
-//        if parentId != "0"{
-//          profileimgLeft?.update(inset: 30)
-//          self.writeReplyButton.isHidden = true
-//          self.sympathyButton.isHidden = true
-//        } else {
-//          profileimgLeft?.update(inset: 10)
-//          self.writeReplyButton.isHidden = false
-//          self.sympathyButton.isHidden = false
-//        }
-//
-//        self.parentID = parentId
-//      }
-//
-//      self.tag = Int(replyList.id) ?? 0
-//      self.replyLabel.text = replyList.contents
-//
-//      if let imgurl = replyList.img_url {
-//        let url = URL(string: imgurl)
-//        self.profileimg.kf.setImage(with: url)
-//      }
-//      if let isLike = replyList.is_like{
-//        self.sympathyButton.isSelected = isLike == "1" ?
-//          true : false
-//      }
-//
-//      self.nickNameLabel.text = model?.nickname
-//      self.hartCount.text = model?.like_count ?? "0"
-//
-//      dateSet(of: createDateLabel, data: replyList)
-//      setNeedsUpdateConstraints()
     }
   }
   
@@ -85,7 +68,7 @@ class ReplyViewCell: UICollectionViewCell{
   fileprivate(set) lazy var sympathyButton: UIButton = {
     let button = UIButton()
     button.setImage(#imageLiteral(resourceName: "result_like_big_nomal@1x"), for: .normal)
-    button.setImage(#imageLiteral(resourceName: "result_like_big_select@1x"), for: .selected)
+    button.setImage(#imageLiteral(resourceName: "icHeart"), for: .selected)
     return button
   }()
   
@@ -137,9 +120,28 @@ class ReplyViewCell: UICollectionViewCell{
         self.parentViewController?.writeReplySubject.onNext(data)
     }).disposed(by: disposeBag)
     
+    sympathyButton
+      .rx
+      .tap
+      .filter{ [sympathyButton] in
+        return !sympathyButton.isSelected
+      }.flatMap {[unowned self] _ in
+        return CheeseService
+          .provider
+          .request(.insertLike(reply_id: self.model?.id ?? String(), survey_id: self.model?.survey_id ?? String()))
+          .filter(statusCode: 200)
+          .asObservable()
+    }.do(onNext: {[sympathyButton] _ in
+      sympathyButton.isSelected = true
+    }).catchErrorJustReturn(Response(statusCode: 400, data: Data()))
+      .subscribe(onNext: { (response) in
+        if response.statusCode == 200{
+          log.info("성공")
+        }
+      }).disposed(by: disposeBag)
+    
     addConstraint()
   }
-  
   
   override func updateConstraints() {
     super.updateConstraints()
@@ -152,7 +154,7 @@ class ReplyViewCell: UICollectionViewCell{
   private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
       make.top.equalTo(self.snp.topMargin)
-      make.left.equalTo(self.snp.leftMargin)
+      constraint = make.left.equalTo(self.snp.leftMargin).constraint
       make.height.equalTo(50)
       make.width.equalTo(50)
     }

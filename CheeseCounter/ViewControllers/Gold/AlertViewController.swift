@@ -17,15 +17,23 @@ import Moya
 #endif
 
 class AlertViewController: UIViewController{
+  let provider = CheeseService.provider
+  var isPaging: Bool = false
+  let myPageButton: UIBarButtonItem = {
+    let button = UIBarButtonItem()
+    button.image = #imageLiteral(resourceName: "btnMypage").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    button.style = .plain
+    return button
+  }()
   
   let disposeBag = DisposeBag()
-  let dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfAlertData>(configureCell: { ds, cv, ip, item in
+  let dataSource = RxCollectionViewSectionedReloadDataSource<AlertViewModel>(configureCell: { ds, cv, ip, item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: AlertViewCell.ID, for: ip) as! AlertViewCell
     cell.model = item
     return cell
   })
-  let cellViewModels = Variable<[SectionOfAlertData]>([])
-  var currentPage = 0
+  let datas = Variable<[AlertViewModel]>([])
+  var currentPage = 1
 
   var isLoading:Bool = false{
     didSet{
@@ -37,12 +45,15 @@ class AlertViewController: UIViewController{
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     layout.minimumLineSpacing = 10
+    layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 75)
+    layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.emptyDataSetDelegate = self
     collectionView.emptyDataSetSource = self
     collectionView.register(AlertViewCell.self, forCellWithReuseIdentifier: AlertViewCell.ID)
     collectionView.backgroundColor = .lightGray
     collectionView.alwaysBounceVertical = true
+    collectionView.delegate = self
     return collectionView
   }()
   
@@ -62,16 +73,17 @@ class AlertViewController: UIViewController{
     self.navigationItem.title = "알림"
     self.collectionView.addSubview(refresh)
     
-    configure()
-    navigationBarSetup()
-    fetch(paging: .refresh)
+    self.navigationItem.setRightBarButtonItems([myPageButton], animated: true)
     
-    collectionView.rx
-      .setDelegate(self)
+    datas.asDriver()
+      .drive(collectionView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    cellViewModels.asDriver()
-      .drive(collectionView.rx.items(dataSource: dataSource))
+    myPageButton.rx.tap
+      .map{ _ in return MypageNaviViewController()}
+      .subscribe(onNext: { [weak self] (vc) in
+        self?.present(vc, animated: true, completion: nil)
+      })
       .disposed(by: disposeBag)
     
     collectionView.rx
@@ -82,33 +94,25 @@ class AlertViewController: UIViewController{
           let id = cell.model?.target_id else {return Observable.empty()}
         return Observable.of((type, id))
       }.alertViewMapper()
-      .bind(onNext: self.pushViewController)
-      .disposed(by: disposeBag)
+      .subscribe(onNext: {[weak self] (vc) in
+        self?.navigationController?.pushViewController(vc, animated: true)
+      }).disposed(by: disposeBag)
+
     
-    collectionView.rx
-      .contentOffset
-      .filter { (point) in
-        let data = point.y + self.collectionView.frame.size.height
-        return data >= self.collectionView.contentSize.height ? true : false
-    }.subscribe { [weak self](_) in
-      guard let `self` = self else {return}
-      self.fetch(paging: .next(self.currentPage))
-    }.disposed(by: disposeBag)
-    
-    refresh.rx.controlEvent(.valueChanged)
+    refresh.rx
+      .controlEvent(.valueChanged)
       .subscribe { [weak self](event) in
-        self?.fetch(paging: .refresh)
+        self?.request(of: .reload)
         self?.refresh.endRefreshing()
       }.disposed(by: disposeBag)
     
-    globalTabEvent.filter { $0 == 3}
+    globalTabEvent
+      .filter { $0 == 3}
       .subscribe {[weak self] _ in
-        self?.fetch(paging: .refresh)
+        self?.request(of: .reload)
     }.disposed(by: disposeBag)
-  }
-  
-  private func pushViewController(VC: UIViewController){
-    self.navigationController?.pushViewController(VC, animated: true)
+    
+    request(of: .reload)
   }
   
   private func getCheeseData(surveyID: String,_ completion: @escaping (CheeseResultByDate.Data?)-> Void){
@@ -123,65 +127,56 @@ class AlertViewController: UIViewController{
     })
   }
   
-  func navigationBarSetup(){
-  
-    let titleLabel = UILabel()
-    titleLabel.text = "알림"
-    titleLabel.font = UIFont.CheeseFontBold(size: 17)
-    titleLabel.sizeToFit()
-    self.navigationItem.titleView = titleLabel
-  }
-  
   @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[4]
     self.present(coachView, animated: true, completion: nil)
   }
-
-  fileprivate func fetch(paging: Paging){
-    guard !self.isLoading else { return }
-    self.isLoading = true
-    CheeseService.getMyNotifications(paging: paging) {[weak self] (response) in
-      guard let `self` = self else {return}
-      switch response.result{
-      case .success(let value):
-        let newData = value.data ?? []
-        switch paging {
-        case .refresh:
-          Observable.just(newData)
-            .map{(customData)-> [SectionOfAlertData] in
-              [SectionOfAlertData(items: customData)]
-          }.bind(to: self.cellViewModels)
-          .disposed(by: self.disposeBag)
-          self.refresh.endRefreshing()
-          self.currentPage = 0
-        case .next:
-          guard !newData.isEmpty else {return}
-          self.cellViewModels.value.append(SectionOfAlertData(items: newData))
-          self.currentPage += 1
-        }
-        self.collectionView.reloadData()
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-      self.isLoading = false
-    }
-  }
   
-  func configure(){
-    dataSource.configureCell = { ds, cv, ip, item in
-      let cell = cv.dequeueReusableCell(withReuseIdentifier: AlertViewCell.ID, for: ip) as! AlertViewCell
-      cell.model = item
-      return cell
+  private func request(of type: RequestAction){
+    switch type{
+    case .reload:
+      currentPage = 1
+      provider.request(.getMyNotification(pageNum: "0"))
+        .filter(statusCode: 200)
+        .map(NotiModel.self)
+        .map{[AlertViewModel(items: $0.result.data)]}
+        .asObservable()
+        .bind(to: datas)
+        .disposed(by: disposeBag)
+    case .paging(let id):
+      guard !isPaging else {return}
+      isPaging = true
+      provider.request(.getMyNotification(pageNum: id))
+        .filter(statusCode: 200)
+        .map(NotiModel.self)
+        .asObservable()
+        .filter{!$0.result.data.isEmpty}
+        .map{[AlertViewModel(items: $0.result.data)]}
+        .do(onNext: { [weak self](_) in
+          self?.refresh.endRefreshing()
+          self?.currentPage += 1
+          self?.isPaging = false
+        })
+        .scan(datas.value){ (state, viewModel) in
+          return state + viewModel
+        }.bind(to: datas)
+        .disposed(by: disposeBag)
     }
   }
 }
 
-extension AlertViewController: UICollectionViewDelegateFlowLayout{
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: self.view.frame.width, height: 75)
+extension AlertViewController: UICollectionViewDelegate{
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                 withVelocity velocity: CGPoint,
+                                 targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    
+    let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
+    let didReachBottom = scrollView.contentSize.height > 0
+      && contentOffsetBottom >= scrollView.contentSize.height - 50
+    if didReachBottom{
+      request(of: .paging("\(currentPage)"))
+    }
   }
 }
 

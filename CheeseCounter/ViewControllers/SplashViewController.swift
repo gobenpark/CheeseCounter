@@ -32,11 +32,10 @@ class SplashViewController: UIViewController {
   }
   
   func viewLoadAction(){
-    let startTime = CFAbsoluteTimeGetCurrent()
-    log.info("스플레시 스타트:\(startTime)")
     UserService.me() {[weak self] response in
       switch response.result {
       case .success(let value):
+//        UIApplication.shared.open(URL(string: "itms-apps://https://itunes.apple.com/app/id1235147317"), options: [:], completionHandler: nil)
         if let enabled = value.data?.isEnable {
           switch enabled {
           case "0":
@@ -49,8 +48,6 @@ class SplashViewController: UIViewController {
             self?.activityView.stopAnimating()
             break
           }
-          
-          log.info("스플레시뷰 끝: \(CFAbsoluteTimeGetCurrent()-startTime)")
         }
       case .failure(let error):
         log.error(error.localizedDescription)

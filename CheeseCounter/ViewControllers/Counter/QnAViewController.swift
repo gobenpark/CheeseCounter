@@ -172,7 +172,7 @@ final class QnAQViewController: UIViewController, IndicatorInfoProvider{
     commitButton.rx
       .tap
       .flatMap{[unowned self] _ in
-        CheeseService.provider.rx.request(.insertQna(title: self.titleTextField.text!, contents: self.commentTextView.text!))
+        CheeseService.provider.request(.insertQna(title: self.titleTextField.text!, contents: self.commentTextView.text!))
           .filter(statusCode: 200)
       }.subscribe { (event) in
         log.info(event)

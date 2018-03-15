@@ -14,6 +14,8 @@ class EmptyListViewCell: BaseListViewCell{
       cheeseLabel.text = model?.option_cut_cheese
       heartLabel.text = model?.empathy_count
       contents.text = model?.title
+      heartButton.isSelected = true
+      
       let attributeString = NSMutableAttributedString(
         string: "선택응답 : ",
         attributes: [.font:UIFont.CheeseFontBold(size: 10.8)])
@@ -23,13 +25,8 @@ class EmptyListViewCell: BaseListViewCell{
       detailContents.attributedText = attributeString
       peopleLabel.text = model?.reply_count ?? "0"
       
-      if let empathy = model?.is_empathy{
-        if empathy == "0"{
-          self.heartButton.isSelected = false
-        }else{
-          self.heartButton.isSelected = true
-        }
-      }
+      cheeseImage.removeFromSuperview()
+      cheeseLabel.removeFromSuperview()
     }
   }
 }

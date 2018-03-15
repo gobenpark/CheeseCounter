@@ -9,14 +9,12 @@
 import UIKit
 
 import AAFragmentManager
-import BetterSegmentedControl
 import XLPagerTabStrip
 
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
 #endif
-
 
 protocol listViewControllerDelegate {
   func pushViewController(cheeseData:CheeseResult)
@@ -44,7 +42,7 @@ class ListViewController: ButtonBarPagerTabStripViewController{
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    title = "리스트"
     navigationBarSetup()
     self.view.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
     
@@ -94,30 +92,8 @@ class ListViewController: ButtonBarPagerTabStripViewController{
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
-  @objc private dynamic func searchViewPresent(){
-    let searchView = UINavigationController(rootViewController: SearchListViewController(type: .list))
-    searchView.modalPresentationStyle = .overCurrentContext
-    AppDelegate.instance?.window?.rootViewController?.present(searchView, animated: false, completion: nil)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    bottomView = self.navigationController?.navigationBar.setBottomBorderColor2(color: .white, height: 2)
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    bottomView?.removeFromSuperview()
-  }
   
   private func navigationBarSetup(){
-    
-    let titleLabel = UILabel()
-    titleLabel.text = "리스트"
-    titleLabel.font = UIFont.CheeseFontBold(size: 18)
-    titleLabel.sizeToFit()
-    self.navigationItem.titleView = titleLabel
     self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white

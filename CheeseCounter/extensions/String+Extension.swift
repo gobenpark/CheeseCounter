@@ -42,6 +42,10 @@ extension String{
       let index = self.index(self.startIndex, offsetBy: 9)
       let encodedUrl = String(self[index...]).encodeUrl()
       return UserService.imgString+"/giftImg/"+encodedUrl
+    case _ where self.contains("/eventImg/"):
+      let index = self.index(self.startIndex, offsetBy: 9)
+      let encodedUrl = String(self[index...]).encodeUrl()
+      return UserService.imgString+"/eventImg/"+encodedUrl
     default:
       return ""
     }
@@ -52,4 +56,6 @@ extension String{
     return "https://x3exr.app.goo.gl/?link=https://www.cheesecounter.co.kr/cheese?survey=\(self)&apn=com.xiilab.servicedev.cheesecounter&isi=1235147317&ibi=com.xiilab.CheeseCounter&osl=https://x3exr.app.goo.gl/UDPG&fpbin=CJsFEPcCGgVrby1LUg==&cpt=cp&plt=1274&uit=1051&fpbin=CJsFEPcCGgVrby1LUg==&cpt=cp&plt=1274&uit=98318"
   }
 }
+
+
 
