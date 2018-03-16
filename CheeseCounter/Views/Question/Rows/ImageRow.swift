@@ -32,6 +32,8 @@ public class ImageCell: Cell<QuestionType>, CellType {
     return img
   }()
   
+  var touchEvent: Observable<UIImageView>?
+  
   public override func prepareForReuse() {
     disposeBag = DisposeBag()
   }
@@ -45,7 +47,20 @@ public class ImageCell: Cell<QuestionType>, CellType {
     contentView.addSubview(firstImgView)
     contentView.addSubview(secondImgView)
     
+    let firstimgEvent = firstImgView.rx
+      .tapGesture()
+      .when(.ended)
+      .map{[unowned self]_ in self.firstImgView}
+      .asObservable()
     
+    let secondImgEvent = secondImgView.rx
+      .tapGesture()
+      .when(.ended)
+      .map{[unowned self] _ in self.secondImgView}
+      .asObservable()
+    
+    touchEvent = Observable<UIImageView>.merge([firstimgEvent,secondImgEvent])
+
     firstImgView.snp.makeConstraints { (make) in
       make.left.equalToSuperview().inset(15)
       make.right.equalTo(self.snp.centerX).inset(-5)

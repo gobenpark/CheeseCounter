@@ -8,6 +8,9 @@
 
 import UIKit
 import Eureka
+import RxSwift
+import RxCocoa
+
 
 public enum QuestionType{
   case Two
@@ -15,6 +18,8 @@ public enum QuestionType{
 }
 
 class QuestionViewController: FormViewController{
+  
+  let disposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,27 +35,32 @@ class QuestionViewController: FormViewController{
         row.value = .Four
       })
       
-      <<< ImageRow(tag: "imageRow")
+      <<< ImageRow(tag: "imageRow").cellSetup({[weak self] (cell, row) in
+        guard let `self` = self else {return}
+        cell.touchEvent?.subscribe(onNext: { (imgView) in
+          self.navigationController?.pushViewController(ImagePickerViewController(), animated: true)
+        }).disposed(by: self.disposeBag)
+      })
       <<< AskRow("askRow")
       <<< ImageRow(tag: "imageRow1").cellUpdate({ (cell, row) in
-          row.hidden = Condition.function(["selectType"], { (form) -> Bool in
-            if let row = form.rowBy(tag: "selectType") as? SelectionButtonRow{
-              return row.value == .Two
-            }else{
-              return false
-            }
-          })
+        row.hidden = Condition.function(["selectType"], { (form) -> Bool in
+          if let row = form.rowBy(tag: "selectType") as? SelectionButtonRow{
+            return row.value == .Two
+          }else{
+            return false
+          }
+        })
       })
       
       <<< AskRow(tag: "askRow1").cellUpdate({ (cell, row) in
-          row.hidden = Condition.function(["selectType"], { (form) -> Bool in
-            if let row = form.rowBy(tag: "selectType") as? SelectionButtonRow{
-              return row.value == .Two
-            }else{
-              return false
-            }
-          })
+        row.hidden = Condition.function(["selectType"], { (form) -> Bool in
+          if let row = form.rowBy(tag: "selectType") as? SelectionButtonRow{
+            return row.value == .Two
+          }else{
+            return false
+          }
         })
+      })
       
       +++ Section(){ section in
         section.header = {
@@ -65,7 +75,6 @@ class QuestionViewController: FormViewController{
       }
       <<< TagRow(tag: "tagRow")
       <<< SubmitRow()
-    
   }
   
   override func viewDidAppear(_ animated: Bool) {
