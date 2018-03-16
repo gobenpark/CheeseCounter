@@ -273,8 +273,8 @@ class ListDetailResultViewController: FormViewController{
       form.insert(headerSection, at: 0)
       form +++ circleChart.cellSetup({ (cell, row) in
         cell.dataFetch(datas: model)
-        
-        //차트가 선택될 때마다 하단의 성별 및 연령 정보 request
+      
+        //차트가 선택될 때마다 하단의 성별 및 연령 정보 request//
         cell.didTap = { [weak self] country in
           guard let vc = self else {
             return
