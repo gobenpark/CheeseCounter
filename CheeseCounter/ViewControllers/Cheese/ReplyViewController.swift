@@ -84,7 +84,7 @@ final class ReplyViewController: UIViewController{
     return button
   }()
   
-  init(model: MainSurveyList.CheeseData, indexPath: IndexPath) {
+  init(model: MainSurveyList.CheeseData, indexPath: IndexPath = IndexPath()) {
     self.model = model
     self.indexPath = indexPath
     super.init(nibName: nil, bundle: nil)
