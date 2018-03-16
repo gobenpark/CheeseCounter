@@ -815,6 +815,9 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       
       spinWheelControl.reloadData()
       
+      
+      
+      
       let message = """
 직접 룰렛을 돌려 경품을 얻어가세요!
 
@@ -824,9 +827,9 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 더 높은 치즈를 배팅할 수록
 당첨될 확률은 높아집니다.
 
-예) 75치즈 배팅 -> 5칸의 판
-50치즈 배팅 -> 6칸의 판
-30치즈 배팅 -> 7칸의 판
+예) \(model.game1Point)치즈 배팅 -> 5칸의 판
+\(model.game2Point)치즈 배팅 -> 6칸의 판
+\(model.game3Point)치즈 배팅 -> 7칸의 판
 """
       
       let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)

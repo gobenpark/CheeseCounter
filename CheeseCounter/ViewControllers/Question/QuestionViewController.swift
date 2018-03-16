@@ -72,7 +72,7 @@ class QuestionViewController: FormViewController{
     super.viewDidAppear(animated)
     if let row = form.rowBy(tag: "selectType") as? SelectionButtonRow{
       row.value = .Two
+      row.updateCell()
     }
-    
   }
 }

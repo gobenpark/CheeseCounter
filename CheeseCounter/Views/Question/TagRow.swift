@@ -46,34 +46,15 @@ public class TagCell: Cell<QuestionType>, CellType {
       make.left.right.bottom.equalToSuperview().inset(15)
       make.top.equalToSuperview()
     }
-    
-    tagsField.onDidAddTag = {[weak self] (_,_) in
-      guard let `self` = self else {return}
-      
-      var tags = String()
-      for tag in self.tagsField.tags{
-        tags = tags+" "+tag.text
-      }
-      
-      tags.remove(at: tags.startIndex)
-    }
-    
-    tagsField.onDidRemoveTag = {[weak self] (_,_) in
-      guard let `self` = self else {return}
-      var tags = String()
-      for tag in self.tagsField.tags{
-        tags = tags+" "+tag.text
-      }
-      if self.tagsField.tags.count != 0 {
-        tags.remove(at: tags.startIndex)
+
+    tagsField.onDidChangeText = { field, text in
+      if let text = text, text.contains(" ") {
+        field.tokenizeTextFieldText()
       }
     }
-    
   }
   
   public override func update() {
-    
-    
   }
 }
 
