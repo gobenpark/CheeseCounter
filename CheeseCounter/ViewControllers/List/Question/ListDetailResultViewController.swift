@@ -276,9 +276,7 @@ class ListDetailResultViewController: FormViewController{
       
         //차트가 선택될 때마다 하단의 성별 및 연령 정보 request//
         cell.didTap = { [weak self] country in
-          guard let vc = self else {
-            return
-          }
+          guard let vc = self else {return}
           vc.selectedAddress = country
           vc.request()
         }
