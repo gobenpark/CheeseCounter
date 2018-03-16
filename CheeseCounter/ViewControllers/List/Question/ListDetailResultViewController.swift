@@ -19,6 +19,7 @@ import Eureka
 #endif
 
 enum FoldAction{
+  
   case Fold
   case Expand
 }
@@ -71,12 +72,12 @@ class ListDetailResultViewController: FormViewController{
   
   let disposeBag = DisposeBag()
   var model: CheeseViewModel.Item
+  var selectedAddress = ""
   var selectedNum: Int{
     didSet{
       request()
     }
   }
-  
   let circleChart = CircleChartRow()
   let graphChart = DetailGraphRow()
   
@@ -112,9 +113,8 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func request(){
-
     CheeseService.provider
-      .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
+      .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: self.selectedAddress))
       .asObservable()
       .map(ResultSurveyModel.self)
       .bind(onNext: graphPatch)
@@ -124,11 +124,11 @@ class ListDetailResultViewController: FormViewController{
   private func calculateRank() -> [ResultRank]{
     var tempArray = [ResultRank]()
     
-      if let ask1 = Int(model.survey_result?.ask1_count ?? "0"),
-        let ask2 = Int(model.survey_result?.ask2_count ?? "0"){
-        tempArray.append(ResultRank(type: .ask1, count: ask1))
-        tempArray.append(ResultRank(type: .ask2, count: ask2))
-      }
+    if let ask1 = Int(model.survey_result?.ask1_count ?? "0"),
+      let ask2 = Int(model.survey_result?.ask2_count ?? "0"){
+      tempArray.append(ResultRank(type: .ask1, count: ask1))
+      tempArray.append(ResultRank(type: .ask2, count: ask2))
+    }
     if model.type == "4"{
       if let ask3 = Int(model.survey_result?.ask3_count ?? "0"),
         let ask4 = Int(model.survey_result?.ask4_count ?? "0"){
@@ -198,8 +198,10 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func graphPatch(model: ResultSurveyModel){
-    circleChart.cellUpdate { (cell, row) in
-      cell.dataFetch(datas: model)
+    if self.selectedAddress == "" {
+      circleChart.cellUpdate { (cell, row) in
+        cell.dataFetch(datas: model)
+      }
     }
     
     graphChart.cellUpdate { (cell, row) in
@@ -215,7 +217,7 @@ class ListDetailResultViewController: FormViewController{
     let headerSection = Section(){
       var header = HeaderFooterView<UILabel>(.class)
       let size = self.model.title.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 20, height: 100),
-                                    attributes: [.font : UIFont.CheeseFontBold(size: 17)])
+                                               attributes: [.font : UIFont.CheeseFontBold(size: 17)])
       header.height = {size.height + 10}
       header.onSetupView = { label,_ in
         label.backgroundColor = .white
@@ -228,7 +230,7 @@ class ListDetailResultViewController: FormViewController{
       $0.header = header
       $0.tag = "타이틀"
     }
-
+    
     for (i,rank) in calculateRank().enumerated() {
       let tempRank = RankRow()
       tempRank.cellSetup({ [unowned self] (cell, row) in
@@ -263,7 +265,7 @@ class ListDetailResultViewController: FormViewController{
         headerSection <<< row
       }
     }
-
+    
     headerSection
       <<< buttonRow
     
@@ -271,11 +273,20 @@ class ListDetailResultViewController: FormViewController{
       form.insert(headerSection, at: 0)
       form +++ circleChart.cellSetup({ (cell, row) in
         cell.dataFetch(datas: model)
+        
+        //차트가 선택될 때마다 하단의 성별 및 연령 정보 request
+        cell.didTap = { [weak self] country in
+          guard let vc = self else {
+            return
+          }
+          vc.selectedAddress = country
+          vc.request()
+          
+        }
       })
       form +++ graphChart.cellSetup({ (cell, row) in
         cell.dataFetch(datas: model)
       })
-      
     }
   }
   
@@ -286,10 +297,10 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
-
+  
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "데이터가 비어있음"
-
+    
     let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
     return NSAttributedString(string: text, attributes: attributes)
   }
