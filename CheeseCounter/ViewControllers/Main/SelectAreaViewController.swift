@@ -9,6 +9,19 @@
 import UIKit
 import SwiftyImage
 
+
+struct si{
+  var si: String
+  var isSelect: Bool = true
+  var buttonSelect: Bool = false
+}
+
+struct gu{
+  var gu: String
+  var isSelect: Bool = true
+  var id: String
+}
+
 class SelectAreaViewController: BaseSetupViewController{
   
   var didTap:((String) -> Void)?

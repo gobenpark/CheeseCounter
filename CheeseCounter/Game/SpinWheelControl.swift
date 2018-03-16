@@ -100,7 +100,7 @@ open class SpinWheelControl: UIControl {
   /// 최대 가속도
   @objc static let kMaxVelocity: Velocity = 30
   /// 감속 배율 0.98 설정 낮을수록 감속이 빠름
-  @objc static let kDecelerationVelocityMultiplier: CGFloat = 0.98
+  @objc static let kDecelerationVelocityMultiplier: CGFloat = 0.99
   @objc static let kSpeedToSnap: CGFloat = 0.05
   @objc static let kSnapRadiansProximity: Radians = 0.001
   @objc static let kWedgeSnapVelocityMultiplier: CGFloat = 10.0

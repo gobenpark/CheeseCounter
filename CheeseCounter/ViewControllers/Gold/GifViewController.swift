@@ -10,7 +10,6 @@ import UIKit
 import YLGIFImage
 import Lottie
 
-
 enum gifType{
   case gold
   case cheese

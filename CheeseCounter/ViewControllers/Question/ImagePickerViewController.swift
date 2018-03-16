@@ -135,7 +135,6 @@ extension CameraViewController {
 
 extension ImagePickerViewController: SetUpPageViewControllerDelegate{
   func setUpPageViewController(_ PageViewController: SetUpPageViewController,didUpdatePageCount count: Int){
-    
   }
   
   func setUpPageViewController(_ PageViewController: SetUpPageViewController,didUpdatePageIndex index: Int){

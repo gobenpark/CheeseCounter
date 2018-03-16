@@ -10,7 +10,7 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-public class AskCell: Cell<QuestionType>, CellType {
+public class AskCell: Cell<String>, CellType {
   
   private var disposeBag = DisposeBag()
   
