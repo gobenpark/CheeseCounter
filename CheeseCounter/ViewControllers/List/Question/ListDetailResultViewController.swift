@@ -281,7 +281,6 @@ class ListDetailResultViewController: FormViewController{
           }
           vc.selectedAddress = country
           vc.request()
-          
         }
       })
       form +++ graphChart.cellSetup({ (cell, row) in
