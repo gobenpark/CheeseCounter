@@ -11,6 +11,7 @@ import Moya
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
+  import RxOptional
 #endif
 
 enum AlertType{
@@ -83,53 +84,32 @@ extension ObservableType where E == (AlertType, String){
     return asObservable().flatMap { (data) -> Observable<UIViewController> in
       
       let cheeseData = CheeseService.provider
-        .request(.getSurveyById(id: data.1.components(separatedBy: ",").first!))
+        .request(.getSurveyByIdV2(id: data.1.components(separatedBy: ",").first!))
+        .filter(statusCode: 200)
+        .map(MainSurveyList.self)
+        .map{$0.result.data.first}
         .asObservable()
-        .map(CheeseResultByDate.self)
+        .filterNil()
       
       switch data.0{
       case .gold_return:
         return Observable.just(UIViewController())
       case .event:
-        return Observable.just(UIViewController())
+        return Observable.just(CounterEventViewController())
       case .notice:
-        return Observable.just(UIViewController())
+        return Observable.just(NoticeViewController())
       case .qna:
-        return Observable.just(UIViewController())
+        return Observable.just(QnAQViewController())
       case .reply:
-        let observable = Observable.just(UIViewController())
-        return Observable<UIViewController>
-          .zip(cheeseData, observable, resultSelector: {
-            (data, VC) -> UIViewController in
-//          VC.cheeseData = data.singleData
-          return VC
-        })
+        return cheeseData.map{ReplyViewController(model: $0)}
       case .survey_done:
-        let observable = Observable.just(UIViewController())
-        return Observable<UIViewController>
-          .zip(cheeseData, observable, resultSelector: {
-            (data, VC) -> UIViewController in
-//          VC.cheeseData = data.singleData
-          return VC
-        })
+        return cheeseData.map{ReplyViewController(model: $0)}
       case .update:
-        return Observable.just(UIViewController())
+        return Observable.just(NoticeViewController())
       case .answer_survey_done:
-        let observable = Observable.just(UIViewController())
-        return Observable<UIViewController>
-          .zip(cheeseData, observable, resultSelector: {
-            (data, VC) -> UIViewController in
-//          VC.cheeseData = data.singleData
-          return VC
-        })
+        return cheeseData.map{ReplyViewController(model: $0)}
       case .reply_empathy:
-        let observable = Observable.just(UIViewController())
-        return Observable<UIViewController>
-          .zip(cheeseData, observable, resultSelector: {
-            (data, VC) -> UIViewController in
-//          VC.cheeseData = data.singleData
-          return VC
-        })
+        return cheeseData.map{ReplyViewController(model: $0)}
       }
     }
   }
