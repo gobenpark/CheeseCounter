@@ -36,6 +36,8 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   private var patterns:[Array<Substring>] = []
   private var stageStatus: StageStatus = .default
   private var gameID = ""
+  
+  /// 게임이 시작이 되었는지 판단
   private var startGame: Bool = false
   private var pointModel: PointModel?
   
@@ -272,7 +274,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .bind(onNext: request)
       .disposed(by: disposeBag)
     
-
     spinWheelControl.velocitySubject
       .map{abs($0) > 10}
       .subscribe(onNext: {[unowned self] (isStart) in
@@ -282,6 +283,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
           self.spinWheelControl.isUserInteractionEnabled = false
         }else{
           Toast(text: "더 세게 돌려주세요!", delay: 0, duration: 0.5).show()
+          self.spinWheelControl.reloadRotate()
           self.startGame = false
           self.spinWheelControl.isUserInteractionEnabled = true
         }
@@ -827,7 +829,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 더 높은 치즈를 배팅할 수록
 당첨될 확률은 높아집니다.
 
-예) \(model.game1Point)치즈 배팅 -> 5칸의 판
+\(model.game1Point)치즈 배팅 -> 5칸의 판
 \(model.game2Point)치즈 배팅 -> 6칸의 판
 \(model.game3Point)치즈 배팅 -> 7칸의 판
 """

@@ -190,7 +190,6 @@ open class SpinWheelControl: UIControl {
     return computedVelocity
   }
   
-  
   //MARK: Initialization Methods
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -205,6 +204,13 @@ open class SpinWheelControl: UIControl {
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     self.drawWheel()
+  }
+  
+  
+  func reloadRotate(){
+    self.spinWheelView.transform = CGAffineTransform(rotationAngle: 0)
+    currentDecelerationVelocity = 0
+    setNeedsLayout()
   }
   
   //MARK: Methods
