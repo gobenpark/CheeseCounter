@@ -65,7 +65,13 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }()
   
   private var previousIndex: Int = 0
-  private var spinWheelControl:SpinWheelControl!
+  private lazy var spinWheelControl: SpinWheelControl = {
+    let spinWheel = SpinWheelControl()
+    spinWheel.dataSource = self
+    spinWheel.delegate = self
+    spinWheel.isUserInteractionEnabled = false
+    return spinWheel
+  }()
   
   private let spinBGView: UIView = {
     let view = UIView()
@@ -164,7 +170,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
         UIImage.resizable().color(#colorLiteral(red: 0.9787054658, green: 0.8919286728, blue: 0.3518205881, alpha: 1)).image, for: UIBarMetrics.default)
     }
   }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -188,16 +194,13 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "gameBtnBack"), style: .plain, target: self, action: #selector(backButtonAction))
     self.navigationItem.leftBarButtonItem = backButton
     
-    spinWheelControl = SpinWheelControl()
-    spinWheelControl.dataSource = self
-    spinWheelControl.delegate = self
-    spinWheelControl.isUserInteractionEnabled = false
+   
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 200
     self.view.addSubview(imageView)
-    self.view.addSubview(spinWheelControl)
     self.view.addSubview(pinView)
     self.view.addSubview(rouletteImage)
+    self.view.addSubview(spinWheelControl)
     self.view.insertSubview(spinBGView, belowSubview: spinWheelControl)
     self.view.addSubview(threeButton)
     self.view.addSubview(fiveButton)
@@ -211,6 +214,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     self.view.addSubview(divideView)
     self.view.addSubview(divideView1)
     self.spinBGView.backgroundColor = .gray
+    
     addConstraint()
   }
   
@@ -253,7 +257,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     
     beginGameObserver
       .do(onNext: { [unowned self] (index) in
-        log.info(index)
         self.currentLevel = index
         ToastCenter.default.cancelAll()
       })
@@ -807,6 +810,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }
   
   override func viewDidLayoutSubviews() {
+    spinWheelControl.reloadData()
     spinBGView.layer.cornerRadius = spinBGView.frame.size.width/2
     spinBGView.layer.masksToBounds = true
   }
@@ -814,12 +818,12 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   override func viewDidAppear(_ animated: Bool) {
 
     if !isPresentingForFirstTime{
-      
+
       spinWheelControl.reloadData()
-      
-      
-      
-      
+
+
+
+
       let message = """
 직접 룰렛을 돌려 경품을 얻어가세요!
 
@@ -833,7 +837,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 \(model.game2Point)치즈 배팅 -> 6칸의 판
 \(model.game3Point)치즈 배팅 -> 7칸의 판
 """
-      
+
       let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)
       alertView.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
       self.present(alertView, animated: true, completion: nil)

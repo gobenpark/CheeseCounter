@@ -230,6 +230,8 @@ open class SpinWheelControl: UIControl {
   
   //Draw the spinWheelView
   @objc public func drawWheel() {
+    
+  
     spinWheelView = UIView(frame: self.bounds)
     
     guard self.dataSource?.numberOfWedgesInSpinWheel(spinWheel: self) != nil else {
