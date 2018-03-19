@@ -22,7 +22,6 @@ final class KakaoLoginController: UIViewController{
                                                     NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)])
     button.backgroundColor = .white
     button.setAttributedTitle(attribute, for: .normal)
-//    button.addTarget(self, action: #selector(kakaoLogin), for: UIControlEvents.touchUpInside)
     return button
   }()
   

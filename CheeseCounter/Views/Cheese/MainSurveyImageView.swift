@@ -282,10 +282,13 @@ final class ImageButton: UIButton {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.gradientLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-    self.topLineLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 0.5)
-    self.bottomLineLayer.frame = CGRect(x: 0, y: self.frame.height-0.5, width: self.frame.width, height: 0.5)
-    self.rightLineLayer.frame = CGRect(x: self.frame.width-0.5, y: 0, width: 0.5, height: self.frame.height)
+    UIView.performWithoutAnimation { [weak self] in
+      guard let `self` = self else {return}
+      self.gradientLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+      self.topLineLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 0.5)
+      self.bottomLineLayer.frame = CGRect(x: 0, y: self.frame.height-0.5, width: self.frame.width, height: 0.5)
+      self.rightLineLayer.frame = CGRect(x: self.frame.width-0.5, y: 0, width: 0.5, height: self.frame.height)
+    }
   }
   
   required init?(coder aDecoder: NSCoder) {

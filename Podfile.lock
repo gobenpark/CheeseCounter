@@ -1,7 +1,6 @@
 PODS:
   - AAFragmentManager (0.1.1)
   - Alamofire (4.6.0)
-  - ALCameraViewController (3.0.3)
   - AnyDate (1.0.4)
   - BetterSegmentedControl (0.9)
   - Bolts (1.9.0):
@@ -124,6 +123,7 @@ PODS:
   - SwiftyBeaver (1.5.1)
   - SwiftyImage (1.2.0)
   - SwiftyJSON (4.0.0)
+  - TLPhotoPicker (1.5.3)
   - Toaster (2.1.1)
   - TTTAttributedLabel (2.0.0)
   - UPCarouselFlowLayout (1.1.1)
@@ -140,7 +140,6 @@ PODS:
 DEPENDENCIES:
   - AAFragmentManager
   - Alamofire
-  - ALCameraViewController
   - AnyDate
   - BetterSegmentedControl
   - Carte
@@ -182,6 +181,7 @@ DEPENDENCIES:
   - SwiftyBeaver
   - SwiftyImage
   - SwiftyJSON
+  - TLPhotoPicker (~> 1.5.3)
   - Toaster
   - TTTAttributedLabel
   - UPCarouselFlowLayout
@@ -210,7 +210,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AAFragmentManager: ece927d46c1b64c6bf9a79fc0fd77de0abc32dd2
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  ALCameraViewController: 6398a9282057f709b87a1ecc52a83b48028ade64
   AnyDate: 71846ac55f25c3e78ff5aa87ad173deb196f6b40
   BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -261,6 +260,7 @@ SPEC CHECKSUMS:
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
   SwiftyImage: ebaa7c7b6163cd4ad102f3bb05a8fb276d35b4f3
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  TLPhotoPicker: b0b1b0cb123d241200d6a3a031f14120e2a80af7
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
@@ -270,6 +270,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: ac70993638f0ebd2efdd58082d2bdd4cecbd2b44
+PODFILE CHECKSUM: ef449697931ef4bb57e6bf3353fc2364bc4bfc5d
 
 COCOAPODS: 1.4.0
