@@ -20,7 +20,7 @@ protocol SelectProvider {
 
 class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
-  let provider = MoyaProvider<CheeseCounter>().rx
+  let provider = CheeseService.provider
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   
@@ -32,6 +32,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     let view = cv.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
                                                    withReuseIdentifier: String(describing: CounterCollectionHeaderView.self),
                                                    for: idx) as! CounterCollectionHeaderView
+    view.screenType = .game
     return view
   })
   
@@ -55,8 +56,6 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   override func viewDidLoad() {
     super.viewDidLoad()
     view = collectionView
-    
-    request()
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
