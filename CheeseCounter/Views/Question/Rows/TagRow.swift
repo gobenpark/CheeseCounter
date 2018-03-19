@@ -14,6 +14,19 @@ import WSTagsField
 public class TagCell: Cell<QuestionType>, CellType {
   
   private var disposeBag = DisposeBag()
+  var isValid: Bool{
+    get{
+      return tagsField.tags.count != 0
+    }
+  }
+  
+  var tagText: String{
+    get{
+      var temp = tagSerlization()
+      temp.removeLast()
+      return temp
+    }
+  }
   
   let tagsField: WSTagsField = {
     let field = WSTagsField()
@@ -55,6 +68,16 @@ public class TagCell: Cell<QuestionType>, CellType {
   }
   
   public override func update() {
+  }
+  
+  
+  func tagSerlization() -> String{
+    var tempString = String()
+    for tag in tagsField.tags{
+      tempString.append(tag.text)
+      tempString.append(",")
+    }
+    return tempString
   }
 }
 

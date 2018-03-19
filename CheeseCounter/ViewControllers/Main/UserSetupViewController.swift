@@ -94,7 +94,7 @@ class UserSetupViewController: UIViewController {
       switch response.result {
       case .success(let value):
         if value.data?.isEnable == "1" {
-          Answers.logSignUp(withMethod: "SignUp!", success: true, customAttributes: self.signUp.getParameters())
+          
           self.present(cheeseVC, animated: true, completion: nil)
         }
       case .failure(let error):

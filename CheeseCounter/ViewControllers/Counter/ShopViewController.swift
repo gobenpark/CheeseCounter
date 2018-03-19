@@ -19,7 +19,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
-  var dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
+  let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
   
   let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
@@ -54,14 +54,13 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   }()
   
   private func request() {
-    self.provider.request(.getGiftList)
-        .map(GiftModel.self)
-        .map {[GiftViewModel(items: $0.result.data)]}
-        .asObservable()
-        .bind(to: dataSubject)
-        .disposed(by: disposeBag)
+    provider.request(.getGiftList)
+      .map(GiftModel.self)
+      .map {[GiftViewModel(items: $0.result.data)]}
+      .asObservable()
+      .bind(to: dataSubject)
+      .disposed(by: disposeBag)
   }
-    
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

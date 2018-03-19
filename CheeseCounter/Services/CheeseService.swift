@@ -379,46 +379,7 @@ struct CheeseService {
         }
     }
   }
-  
-  
-  /// Base 이미지를 가져옴
-  ///
-  /// - Parameter completion: 콜백 메소드
-  static func getBaseImg(_ completion: @escaping (DataResponse<BaseImg>) -> Void) {
-    let url = "\(UserService.url)/baseImg/getBaseImgList.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
-    
-    manager.request(url,method: .post)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        switch response.result{
-        case .success(_):
-          do{
-            let json = try JSON(data: response.data!)
-            if let result = json["code"].string{
-              if result == "2001"{
-                sessionExpireAction()
-              }
-            }
-          }catch let error{
-            log.error(error)
-          }
-        case .failure(let error):
-          log.error(error.localizedDescription)
-        }
-        let response: DataResponse<BaseImg> = response.flatMap{ json in
-          if let user = Mapper<BaseImg>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: BaseImg.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
-  
+
   
   /// 설문 일자별 리스트 구성: 일반
   ///

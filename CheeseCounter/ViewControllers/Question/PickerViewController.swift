@@ -7,8 +7,28 @@
 //
 
 import XLPagerTabStrip
+import TLPhotoPicker
+import RxSwift
+import RxCocoa
+import Photos
 
 class PickerViewController: ButtonBarPagerTabStripViewController{
+  
+  lazy var gararyViewController = TLPhotosPickerViewController(withPHAssets: {[weak self] (assets) in
+    guard let asset = assets.first else {return}
+    self?.getAssetThumbnail(asset: asset)
+  })
+  let disposeBag = DisposeBag()
+  
+  lazy var sampleImageViewController: SampleImageSelectVC = {
+    let vc =  SampleImageSelectVC(selectedImage: self.imageSelected)
+    return vc
+  }()
+  
+  var configure = TLPhotosPickerConfigure()
+  
+  let imageSelected = PublishSubject<QuestionImageType>()
+  
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     
@@ -37,13 +57,38 @@ class PickerViewController: ButtonBarPagerTabStripViewController{
       oldCell?.label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
       newCell?.label.textColor = .black
     }
+    
+    configure.doneTitle = "선택"
+    configure.cancelTitle = String()
+    
+    configure.maxSelectedAssets = 1
+    
+    gararyViewController.configure = configure
+    
+  }
+  
+  func getAssetThumbnail(asset: PHAsset){
+    let manager = PHImageManager.default()
+    let option = PHImageRequestOptions()
+    option.isSynchronous = true
+    manager.requestImage(for: asset,
+                         targetSize: CGSize(width: 500, height: 500),
+                         contentMode: .aspectFit,
+                         options: option){
+                          [weak self] (image, info) in
+                          guard let `self` = self, let image = image else {return}
+      self.imageSelected.onNext(.image(image))
+      self.navigationController?.popViewController(animated: true)
+    }
   }
   
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-    return []
+    return [sampleImageViewController,gararyViewController]
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 }
+
+

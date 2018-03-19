@@ -45,7 +45,7 @@ public enum CheeseCounter{
   case getEmpathyList(pageNum: String)
   case insertEmpathy(id: String)
   
-  case insertSurvey(parameters: [String:String])
+  case insertSurvey(data: [MultipartFormData])
   case checkSurveyResult
   case insertSurveyResult(surveyId: String,select: String)
   case getSurveyList
@@ -248,6 +248,8 @@ extension CheeseCounter: TargetType{
       return .requestParameters(parameters: ["reply_id": id,"survey_id": survey_id], encoding: URLEncoding.queryString)
     case .getSurveyResult(let id):
       return .requestParameters(parameters: ["survey_id": id], encoding: URLEncoding.queryString)
+    case .insertSurvey(let data):
+      return .uploadMultipart(data)
     default:
       return .requestPlain
     }

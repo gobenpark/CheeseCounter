@@ -10,10 +10,10 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-public class TitleCell: Cell<NSAttributedString>, CellType {
+public class TitleCell: Cell<String>, CellType {
   
   private var disposeBag = DisposeBag()
-  
+  var isValid: Bool = false
   lazy var titleField: UITextField = {
     let field = UITextField()
     let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 20))
@@ -21,6 +21,8 @@ public class TitleCell: Cell<NSAttributedString>, CellType {
     field.leftViewMode = .always
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
+    field.attributedPlaceholder = NSAttributedString(string: "제목 입력 (필수)",
+                                                     attributes: [.font:UIFont.CheeseFontRegular(size: 14.8)])
     field.font = UIFont.systemFont(ofSize: 12)
     return field
   }()
@@ -47,11 +49,25 @@ public class TitleCell: Cell<NSAttributedString>, CellType {
       .subscribe {[weak self] (_) in
         self?.titleField.endEditing(true)
     }.disposed(by: disposeBag)
+    
+    let fieldValue = titleField.rx.text
+      .orEmpty
+      .share()
+    
+    
+    fieldValue
+      .map{$0.count >= 2}
+      .subscribe(onNext: {[weak self] (result) in
+        self?.isValid = result
+      })
+      .disposed(by: disposeBag)
+    
+    fieldValue.subscribe(onNext: {[weak self] (result) in
+      self?.row.value = result
+    }).disposed(by: disposeBag)
   }
   
   public override func update() {
-    guard let holder = row.value else {return}
-    titleField.attributedPlaceholder = holder
   }
 }
 

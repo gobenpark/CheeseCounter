@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '9.0'
+ platform :ios, '9.1'
 target 'CheeseCounter' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
@@ -16,7 +16,6 @@ pod 'CircleProgressView'
 pod 'NVActivityIndicatorView'
 pod 'NextGrowingTextView'
 pod 'DZNEmptyDataSet'
-pod 'ALCameraViewController'
 pod 'Charts'
 pod 'lottie-ios'
 pod "WSTagsField"
@@ -46,6 +45,7 @@ pod 'Hero'
 pod 'PMAlertController'
 pod 'iCarousel'
 pod 'Carte'
+pod 'TLPhotoPicker', '~> 1.5.3'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'

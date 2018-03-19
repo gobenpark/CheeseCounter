@@ -14,6 +14,12 @@ public class ImageCell: Cell<QuestionType>, CellType {
   
   private var disposeBag = DisposeBag()
   
+  var isValid: Bool{
+    get{
+      return (firstImgView.image != nil && secondImgView.image != nil)
+    }
+  }
+  
   lazy var firstImgView: UIImageView = {
     let img = UIImageView(image: #imageLiteral(resourceName: "question_img_nomal@1x").withRenderingMode(.alwaysOriginal))
     img.isUserInteractionEnabled = true
