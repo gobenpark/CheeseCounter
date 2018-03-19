@@ -174,7 +174,9 @@ final class MainViewCell: UICollectionViewCell{
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    mainView.moreButton.isHidden = mainView.title.isTruncated()
+    if let model = model, !model.isExpand {
+      mainView.moreButton.isHidden = mainView.title.isTruncated()
+    }
   }
 }
 
