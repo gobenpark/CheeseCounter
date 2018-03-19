@@ -17,16 +17,17 @@ class HistoryViewCell: UICollectionViewCell{
       
       guard let text = item?.summary else {return}
       self.titleLabel.text = text
+      self.titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
       
-      if text.contains("[질문등록]"){
-        self.titleLabel.textColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
-      }else if text.contains("[골드구매]"){
-        self.titleLabel.textColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
-      }else if text.contains("[응답참여]"){
-        self.titleLabel.textColor = #colorLiteral(red: 1, green: 0.5535024405, blue: 0.3549469709, alpha: 1)
-      }else if text.contains("[회원가입]"){
-        self.titleLabel.textColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
-      }
+//      if text.contains("[질문등록]"){
+//        self.titleLabel.textColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+//      }else if text.contains("[골드구매]"){
+//        self.titleLabel.textColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+//      }else if text.contains("[응답참여]"){
+//        self.titleLabel.textColor = #colorLiteral(red: 1, green: 0.5535024405, blue: 0.3549469709, alpha: 1)
+//      }else if text.contains("[회원가입]"){
+//        self.titleLabel.textColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+//      }
     }
   }
   
