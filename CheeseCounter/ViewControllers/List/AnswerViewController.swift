@@ -44,7 +44,7 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
           log.error(error)
       }).disposed(by: disposeBag)
   }
-  
+   
   override func request(requestType: RequestAction) {
     switch requestType{
     case .reload:

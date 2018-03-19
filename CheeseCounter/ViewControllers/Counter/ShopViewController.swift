@@ -12,12 +12,14 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import SwiftyJSON
+import Moya
+import RxDataSources
 
 final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
-  let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
+  var dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
   
   let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
@@ -29,6 +31,8 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
     let view = cv.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
                                                    withReuseIdentifier: String(describing: CounterCollectionHeaderView.self),
                                                    for: idx) as! CounterCollectionHeaderView
+    //Tab의 Type을 지정
+    view.screenType = .shop
     return view
   })
   
@@ -49,8 +53,22 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
     return collectionView
   }()
   
+  private func request() {
+    self.provider.request(.getGiftList)
+        .map(GiftModel.self)
+        .map {[GiftViewModel(items: $0.result.data)]}
+        .asObservable()
+        .bind(to: dataSubject)
+        .disposed(by: disposeBag)
+  }
+    
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    
+    //화면이 이동할 때마다 request
+    request()
+    
     CheeseService.provider.request(.getMyPoint)
       .filter(statusCode: 200)
       .mapJSON()
@@ -60,23 +78,26 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       }) { (error) in
         log.error(error)
       }.disposed(by: disposeBag)
+    
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     view = collectionView
+
+    //request()
     
-    provider.request(.getGiftList)
-      .map(GiftModel.self)
-      .map {[GiftViewModel(items: $0.result.data)]}
-      .asObservable()
-      .bind(to: dataSubject)
-      .disposed(by: disposeBag)
+//    provider.request(.getGiftList)
+//      .map(GiftModel.self)
+//      .map {[GiftViewModel(items: $0.result.data)]}
+//      .asObservable()
+//      .bind(to: dataSubject)
+//      .disposed(by: disposeBag)
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
-    
+
     collectionView.rx.willEndDragging
       .map{$0.0}
       .asDriver(onErrorJustReturn: .zero)
@@ -88,6 +109,8 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       .bind(onNext: selectedItem)
       .disposed(by: disposeBag)
   }
+  
+  
   
   func navigationHidden(point: CGPoint){
     if point.y > 0{
