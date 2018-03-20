@@ -10,7 +10,7 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-public class TitleCell: Cell<String>, CellType {
+public class TitleCell: Cell<QuestionModel>, CellType {
   
   private var disposeBag = DisposeBag()
   var isValid: Bool = false
@@ -63,11 +63,13 @@ public class TitleCell: Cell<String>, CellType {
       .disposed(by: disposeBag)
     
     fieldValue.subscribe(onNext: {[weak self] (result) in
-      self?.row.value = result
+      self?.row.value?.title = result
     }).disposed(by: disposeBag)
   }
   
   public override func update() {
+    guard let value = row.value else {return}
+    self.titleField.text = value.title
   }
 }
 

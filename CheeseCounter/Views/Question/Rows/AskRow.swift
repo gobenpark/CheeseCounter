@@ -100,6 +100,7 @@ public class AskCell: Cell<Bool>, CellType {
 
 // The custom Row also has the cell: CustomCell and its correspond value
 public final class AskRow: Row<AskCell>, RowType {
+  
   required public init(tag: String?) {
     super.init(tag: tag)
     // We set the cellProvider to load the .xib corresponding to our cell

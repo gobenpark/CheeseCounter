@@ -46,6 +46,7 @@ pod 'PMAlertController'
 pod 'iCarousel'
 pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
+pod 'SwiftyUserDefaults'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
