@@ -54,7 +54,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   let replyEvent = PublishSubject<IndexPath>()
   let empathyEvent = PublishSubject<(String, IndexPath)>()
   let shareEvent = PublishSubject<IndexPath>()
-
+  
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
     cell.model = item
