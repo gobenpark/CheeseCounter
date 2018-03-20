@@ -50,13 +50,17 @@ final class QnAViewController: ButtonBarPagerTabStripViewController{
   }
   
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-    return [QnAQViewController(),MyInquireViewController()]
+    let qnaVC = QnAQViewController()
+    qnaVC.pagerTabStripVC = pagerTabStripController    
+    return [qnaVC, MyInquireViewController()]
   }
+  
 }
 
 
 final class QnAQViewController: UIViewController, IndicatorInfoProvider{
   
+  weak var pagerTabStripVC : PagerTabStripViewController?
   let disposeBag = DisposeBag()
   
   fileprivate let titleLabel: UILabel = {
@@ -174,15 +178,17 @@ final class QnAQViewController: UIViewController, IndicatorInfoProvider{
           .filter(statusCode: 200)
       }.subscribe(onNext: { [weak self] (_) in
         self?.showAlert(message: "문의가 등록되었습니다.")
-        self?.titleTextField.text = ""
-        self?.commentTextView.text = ""
       }).disposed(by: disposeBag)
     
   }
   
   private func showAlert(message: String) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-    let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+    let action = UIAlertAction(title: "확인", style: .default) { [weak self] (_) in
+      self?.titleTextField.text = ""
+      self?.commentTextView.text = ""
+      self?.pagerTabStripVC?.moveToViewController(at: 1)
+    }
     alert.addAction(action)
     self.present(alert, animated: true, completion: nil)
   }
