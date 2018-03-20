@@ -85,6 +85,23 @@ class MainTabBarController: UITabBarController
   }()
 
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    CheeseService.provider.request(.getTodayEventList)
+      .filter(statusCode: 200)
+      .map(EventModel.self)
+      .asObservable()
+      .bind(onNext: popUpEvent)
+      .disposed(by: disposeBag)
+  }
+  
+  func popUpEvent(models: EventModel){
+    let eventView = EventViewController(model: models.result.data)
+    eventView.modalPresentationStyle = .overCurrentContext
+    self.present(eventView, animated: true, completion: nil)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -108,16 +125,7 @@ class MainTabBarController: UITabBarController
     message.subscribe(toTopic: "notice")
     message.subscribe(toTopic: "update")
     message.subscribe(toTopic: "event")
-    
-    
-    CheeseService.provider.request(.getTodayEventList)
-      .filter(statusCode: 200)
-      .mapJSON()
-      .subscribe(onSuccess: { (response) in
-        log.info(response)
-      }) { (error) in
-        log.error(error)
-      }.disposed(by:disposeBag)
+  
   }
   
   override func viewWillAppear(_ animated: Bool) {
