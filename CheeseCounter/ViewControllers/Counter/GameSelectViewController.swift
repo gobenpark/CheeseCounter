@@ -25,7 +25,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
-  var indicatorView: NVActivityIndicatorView?
+  let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
  
   
   private let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
@@ -61,11 +61,8 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     super.viewDidLoad()
     //view = collectionView
     view.addSubview(collectionView)
-    let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-    indicatorView = NVActivityIndicatorView(frame: frame, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
-    view.addSubview(indicatorView!)
+    view.addSubview(indicatorView)
     
-    collectionView.translatesAutoresizingMaskIntoConstraints = false;
     collectionView.snp.makeConstraints { (make) in
       make.top.equalToSuperview()
       make.right.equalToSuperview()
@@ -73,8 +70,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
       make.left.equalToSuperview()
     }
     
-    indicatorView!.translatesAutoresizingMaskIntoConstraints = false;
-    indicatorView!.snp.makeConstraints { (make) in
+    indicatorView.snp.makeConstraints { (make) in
       make.width.equalTo(50)
       make.height.equalTo(50)
       make.centerX.equalTo(collectionView)
@@ -103,10 +99,10 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
       .do(onSubscribed: {[weak self] in
-        self?.indicatorView!.startAnimating()
+        self?.indicatorView.startAnimating()
         self?.collectionView.isHidden = true })
       .do(onDispose: {[weak self] in
-        self?.indicatorView!.stopAnimating()
+        self?.indicatorView.stopAnimating()
         self?.collectionView.isHidden = false })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)

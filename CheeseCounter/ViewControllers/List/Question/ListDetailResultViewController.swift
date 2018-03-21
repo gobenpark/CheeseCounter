@@ -81,7 +81,7 @@ class ListDetailResultViewController: FormViewController{
   }
   let circleChart = CircleChartRow()
   let graphChart = DetailGraphRow()
-  var indicatorView: NVActivityIndicatorView?
+  let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
   
   init(model: CheeseViewModel.Item, selectedNum: Int) {
     self.model = model
@@ -106,35 +106,23 @@ class ListDetailResultViewController: FormViewController{
       // Fallback on earlier versions
     }
     
-    let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-    indicatorView = NVActivityIndicatorView(frame: frame, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
-    view.addSubview(indicatorView!)
+    view.addSubview(indicatorView)
     
-//    collectionView.translatesAutoresizingMaskIntoConstraints = false;
-//    collectionView.snp.makeConstraints { (make) in
-//      make.top.equalToSuperview()
-//      make.right.equalToSuperview()
-//      make.bottom.equalToSuperview()
-//      make.left.equalToSuperview()
-//    }
-    
-    indicatorView!.translatesAutoresizingMaskIntoConstraints = false;
-    indicatorView!.snp.makeConstraints { (make) in
+    indicatorView.snp.makeConstraints { (make) in
       make.width.equalTo(50)
       make.height.equalTo(50)
       make.centerX.equalTo(view)
       make.centerY.equalTo(view)
     }
     
-    
     CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
       .do(onSubscribed: {[weak self] in
-        self?.indicatorView!.startAnimating()
+        self?.indicatorView.startAnimating()
         self?.tableView.isHidden = true })
       .do(onDispose: {[weak self] in
-        self?.indicatorView!.stopAnimating()
+        self?.indicatorView.stopAnimating()
         self?.tableView.isHidden = false })
       .map(ResultSurveyModel.self)
       .bind(onNext: showForm)
