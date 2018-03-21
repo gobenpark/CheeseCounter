@@ -22,7 +22,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
-  var indicatorView: NVActivityIndicatorView?
+  let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
   
   let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: GiftItemViewCell.self), for: idx) as! GiftItemViewCell
@@ -64,10 +64,10 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
       .do(onSubscribed: {[weak self] in
-        self?.indicatorView!.startAnimating()
+        self?.indicatorView.startAnimating()
         self?.collectionView.isHidden = true })
       .do(onDispose: {[weak self] in
-        self?.indicatorView!.stopAnimating()
+        self?.indicatorView.stopAnimating()
         self?.collectionView.isHidden = false })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
@@ -94,11 +94,8 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
     super.viewDidLoad()
     //view = collectionView
     view.addSubview(collectionView)
-    let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-    indicatorView = NVActivityIndicatorView(frame: frame, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
-    view.addSubview(indicatorView!)
+    view.addSubview(indicatorView)
     
-    collectionView.translatesAutoresizingMaskIntoConstraints = false;
     collectionView.snp.makeConstraints { (make) in
       make.top.equalToSuperview()
       make.right.equalToSuperview()
@@ -106,8 +103,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       make.left.equalToSuperview()
     }
   
-    indicatorView!.translatesAutoresizingMaskIntoConstraints = false;
-    indicatorView!.snp.makeConstraints { (make) in
+    indicatorView.snp.makeConstraints { (make) in
       make.width.equalTo(30)
       make.height.equalTo(30)
       make.centerX.equalTo(view)
