@@ -13,6 +13,7 @@ import RxDataSources
 import Moya
 import RxOptional
 import DZNEmptyDataSet
+import NVActivityIndicatorView
 
 protocol SelectProvider {
   func navigationHidden(point: CGPoint)
@@ -20,9 +21,12 @@ protocol SelectProvider {
 
 class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
+
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
+  var indicatorView: NVActivityIndicatorView?
+ 
   
   private let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: GiftItemViewCell.self), for: idx) as! GiftItemViewCell
@@ -55,7 +59,27 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view = collectionView
+    //view = collectionView
+    view.addSubview(collectionView)
+    let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+    indicatorView = NVActivityIndicatorView(frame: frame, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
+    view.addSubview(indicatorView!)
+    
+    collectionView.translatesAutoresizingMaskIntoConstraints = false;
+    collectionView.snp.makeConstraints { (make) in
+      make.top.equalToSuperview()
+      make.right.equalToSuperview()
+      make.bottom.equalToSuperview()
+      make.left.equalToSuperview()
+    }
+    
+    indicatorView!.translatesAutoresizingMaskIntoConstraints = false;
+    indicatorView!.snp.makeConstraints { (make) in
+      make.width.equalTo(50)
+      make.height.equalTo(50)
+      make.centerX.equalTo(collectionView)
+      make.centerY.equalTo(collectionView)
+    }
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
@@ -78,6 +102,12 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
       .map(GiftModel.self)
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
+      .do(onSubscribed: {[weak self] in
+        self?.indicatorView!.startAnimating()
+        self?.collectionView.isHidden = true })
+      .do(onDispose: {[weak self] in
+        self?.indicatorView!.stopAnimating()
+        self?.collectionView.isHidden = false })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
   }
