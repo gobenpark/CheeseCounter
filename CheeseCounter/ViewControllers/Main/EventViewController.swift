@@ -10,13 +10,15 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import SwiftyUserDefaults
 
 class EventViewController: UIViewController{
   
   private let disposeBag = DisposeBag()
   
   var modalFlag = false
-  var model: [EventModel.Data]?
+  var model: EventModel.Data
+  var childVC: EventViewController?
   
   let imageView: UIImageView = {
     let imageView = UIImageView()
@@ -39,49 +41,72 @@ class EventViewController: UIViewController{
     return button
   }()
   
-  init(model: [EventModel.Data]) {
+  let item = UIBarButtonItem(title: "닫기", style: .done, target: nil, action: nil)
+  lazy var eventPage: CounterEventViewController = {
+    let vc = CounterEventViewController()
+    vc.id = self.model.id
+    return vc
+  }()
+  
+  init(model: EventModel.Data) {
     self.model = model
     super.init(nibName: nil, bundle: nil)
+    self.modalPresentationStyle = .overCurrentContext
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    guard let vc = childVC , !modalFlag else {return}
+    self.present(vc, animated: false, completion: nil)
+    modalFlag = true
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     view.addSubview(imageView)
     view.addSubview(detailButton)
     imageView.addSubview(cancelButton)
     
     cancelButton.rx
       .tap
+      .do(onNext: {[model] (_) in
+        Defaults[.popUpIDs].append(model.id)
+      })
       .subscribe {[weak self] (_) in
       self?.dismiss(animated: true, completion: nil)
     }.disposed(by: disposeBag)
     
+    //      .do(onNext: {[model] (_) in
+    //        Defaults[.popUpIDs].append(model.id)
+    //      })
+    
     detailButton.rx
       .tap
-      .subscribe { (_) in
-        log.info("gogo")
+      .subscribe {[weak self] (item) in
+        guard let `self` = self else {return}
+        self.eventPage.navigationItem.setRightBarButton(self.item, animated: true)
+        self.eventPage.modalPresentationStyle = .overCurrentContext
+        self.present(UINavigationController(rootViewController: self.eventPage), animated: true, completion: nil)
       }.disposed(by: disposeBag)
     
+    item.rx
+      .tap
+      .subscribe {[weak self] (_) in
+        self?.eventPage.dismiss(animated: true, completion: {[weak self] in
+          self?.dismiss(animated: true, completion: nil)
+        })
+    }.disposed(by: disposeBag)
+
     addConstraint()
-    
-    guard let url = model?.first?.img_url else {return}
-    imageView.kf.setImage(with: URL(string: url.getUrlWithEncoding()))
+    imageView.kf.setImage(with: URL(string: model.img_url?.getUrlWithEncoding() ?? String()))
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-
-    guard var model = model ,!modalFlag else {return}
-    if model.count > 1 {
-      model.removeFirst()
-      self.present(EventViewController(model: model), animated: false, completion: nil)
-    }
-    modalFlag = true
-  }
+  
   
   private func addConstraint(){
     imageView.snp.makeConstraints { (make) in
