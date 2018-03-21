@@ -28,7 +28,6 @@ class CircleView: UIView{
     return label
   }()
   
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(circleProgressView)
@@ -43,6 +42,7 @@ class CircleView: UIView{
     circleLabel.snp.remakeConstraints { (make) in
       make.center.equalToSuperview()
     }
+
   }
   
   required init?(coder aDecoder: NSCoder) {
