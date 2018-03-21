@@ -14,6 +14,7 @@ import RxDataSources
 import SwiftyJSON
 import Moya
 import RxDataSources
+import NVActivityIndicatorView
 
 final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
@@ -21,6 +22,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
+  var indicatorView: NVActivityIndicatorView?
   
   let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: GiftItemViewCell.self), for: idx) as! GiftItemViewCell
@@ -50,21 +52,29 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
 //    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
+    
     return collectionView
   }()
   
+
   private func request() {
+    
     provider.request(.getGiftList)
       .map(GiftModel.self)
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
+      .do(onSubscribed: {[weak self] in
+        self?.indicatorView!.startAnimating()
+        self?.collectionView.isHidden = true })
+      .do(onDispose: {[weak self] in
+        self?.indicatorView!.stopAnimating()
+        self?.collectionView.isHidden = false })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
     //화면이 이동할 때마다 request
     request()
     
@@ -82,16 +92,27 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view = collectionView
-
-    //request()
+    //view = collectionView
+    view.addSubview(collectionView)
+    let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+    indicatorView = NVActivityIndicatorView(frame: frame, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
+    view.addSubview(indicatorView!)
     
-//    provider.request(.getGiftList)
-//      .map(GiftModel.self)
-//      .map {[GiftViewModel(items: $0.result.data)]}
-//      .asObservable()
-//      .bind(to: dataSubject)
-//      .disposed(by: disposeBag)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false;
+    collectionView.snp.makeConstraints { (make) in
+      make.top.equalToSuperview()
+      make.right.equalToSuperview()
+      make.bottom.equalToSuperview()
+      make.left.equalToSuperview()
+    }
+  
+    indicatorView!.translatesAutoresizingMaskIntoConstraints = false;
+    indicatorView!.snp.makeConstraints { (make) in
+      make.width.equalTo(30)
+      make.height.equalTo(30)
+      make.centerX.equalTo(view)
+      make.centerY.equalTo(view)
+    }
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
