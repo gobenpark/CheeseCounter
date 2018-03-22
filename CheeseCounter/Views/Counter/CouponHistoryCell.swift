@@ -133,11 +133,17 @@ class CouponHistoryCell: UICollectionViewCell{
     }
     
     couponButton.snp.makeConstraints { (make) in
-      
       make.centerX.equalTo(couponImage)
       make.top.equalTo(couponImage.snp.bottom).offset(5)
     }
-    
+  }
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    let layer = CALayer()
+    layer.backgroundColor = UIColor.lightGray.cgColor
+    layer.frame = CGRect(x: 0, y: self.contentView.bounds.height - 0.5, width: self.contentView.bounds.width, height: 0.5)
+    self.contentView.layer.addSublayer(layer)
   }
   
   private func dateConvert(model: GiftListModel.Data?) -> String?{

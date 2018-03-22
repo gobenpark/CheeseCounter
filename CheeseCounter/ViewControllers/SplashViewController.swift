@@ -60,6 +60,7 @@ class SplashViewController: UIViewController {
                 UIApplication.shared.open(URL(string: "itms-apps://itunes.apple.com/app/id1235147317")!, options: [:], completionHandler: nil)
               }).show()
             }
+            self.activityView.stopAnimating()
           }, onError: { (error) in
             log.error(error)
           }).disposed(by: self.disposeBag)
