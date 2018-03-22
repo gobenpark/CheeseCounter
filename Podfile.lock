@@ -146,6 +146,7 @@ DEPENDENCIES:
   - Carte
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`, branch `wip/swift4`)
   - Charts
+  - CircleProgressBar (~> 0.32)
   - CircleProgressView
   - Crashlytics
   - DZNEmptyDataSet

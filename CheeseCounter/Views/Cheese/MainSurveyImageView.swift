@@ -65,13 +65,19 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView1)
     addSubview(circleView2)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
-    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    //circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
+    //circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    
+    circleView1.circleProgressView.setHintTextGenerationBlock{ _ in return String(format: "%.0f%%", survey1 * 100) }
+    circleView2.circleProgressView.setHintTextGenerationBlock{ _ in return String(format: "%.0f%%", survey2 * 100) }
+      
+      
+      
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
     })
@@ -103,18 +109,27 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView3)
     addSubview(circleView4)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
-    circleView3.circleProgressView.progress = survey3
-    circleView4.circleProgressView.progress = survey4
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
+    circleView3.circleProgressView.setProgress(CGFloat(survey3), animated: false)
+    circleView4.circleProgressView.setProgress(CGFloat(survey4), animated: false)
     
-    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
-    circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
-    circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
+    //circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
+    //circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    //circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
+    //circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
+  
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
-    circleView4.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+
+      circleView1.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey1 * 100) }
+      circleView2.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey2 * 100) }
+      circleView3.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey3 * 100) }
+      circleView4.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey4 * 100) }
+      
+
+    
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView4.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
@@ -136,18 +151,18 @@ final class MainSurveyImageView: UIView{
     }
   }
   
-  private func attributeFactory(count: Double) -> NSMutableAttributedString{
-    let attributedStringParagraphStyle = NSMutableParagraphStyle()
-    attributedStringParagraphStyle.alignment = NSTextAlignment.center
-    
-    let attributeString = NSMutableAttributedString(string: "\((count*100).roundToPlaces(places: 1))%\n",
-      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
-    attributeString.append(NSAttributedString(
-        string: "자세히 보기",
-        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1)
-          ,NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
-    return attributeString
-  }
+//  private func attributeFactory(count: Double) -> NSMutableAttributedString{
+//    let attributedStringParagraphStyle = NSMutableParagraphStyle()
+//    attributedStringParagraphStyle.alignment = NSTextAlignment.center
+//
+//    let attributeString = NSMutableAttributedString(string: "\((count*100).roundToPlaces(places: 1))%\n",
+//      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
+//    attributeString.append(NSAttributedString(
+//        string: "자세히 보기",
+//        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1)
+//          ,NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
+//    return attributeString
+//  }
   
   private func selectedColor(of number: String){
     if number == "1"{
