@@ -6,19 +6,21 @@
 //  Copyright © 2018년 xiilab. All rights reserved.
 //
 
-import CircleProgressView
+import CircleProgressBar
 
 class CircleView: UIView{
   
-  let circleProgressView: CircleProgressView = {
-    let progressView = CircleProgressView()
-    progressView.trackWidth = 13
-    progressView.centerFillColor = .clear
-    progressView.trackFillColor = .yellow
+  let circleProgressView: CircleProgressBar = {
+    let progressView = CircleProgressBar()
     progressView.backgroundColor = .clear
-    progressView.trackBackgroundColor = .clear
+    progressView.progressBarWidth = 13
+    progressView.progressBarProgressColor = .yellow
+    progressView.progressBarTrackColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    progressView.hintHidden = true
+    progressView.startAngle = -90.0
     return progressView
   }()
+  
   
   let circleLabel: UILabel = {
     let label = UILabel()

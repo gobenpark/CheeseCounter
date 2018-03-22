@@ -16,6 +16,7 @@ PODS:
   - Charts (3.0.5):
     - Charts/Core (= 3.0.5)
   - Charts/Core (3.0.5)
+  - CircleProgressBar (0.32)
   - CircleProgressView (1.1.3)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
@@ -146,6 +147,7 @@ DEPENDENCIES:
   - Carte
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`, branch `wip/swift4`)
   - Charts
+  - CircleProgressBar (~> 0.32)
   - CircleProgressView
   - Crashlytics
   - DZNEmptyDataSet
@@ -218,6 +220,7 @@ SPEC CHECKSUMS:
   Carte: c8200bfb59b77336aa2f02e84cc4ac0fa820034d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   CircleProgressView: 66e4d663a2bc7a9086e37b518868be923cd0a23a
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
@@ -273,7 +276,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: c1e9a75f896cfa62982d72587bf0ddc999020790
-
+PODFILE CHECKSUM: 62ee5f87f31d806d5150822d67cbafe6a3e7cc96
 
 COCOAPODS: 1.4.0
