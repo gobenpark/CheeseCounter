@@ -25,7 +25,7 @@ pod 'XLPagerTabStrip'
 pod 'FlexibleImage', '~> 1.8'
 pod 'Toaster'
 pod 'BetterSegmentedControl'
-
+pod 'CircleProgressBar', '~> 0.32'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
