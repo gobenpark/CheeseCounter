@@ -252,6 +252,10 @@ extension CheeseCounter: TargetType{
       return .uploadMultipart(data)
     case .regUser(let parameters):
       return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+    case .loginUser(let id, let fcm_token, let img_url, let access_token, let version):
+      return .requestParameters(
+        parameters: ["id":id,"fcm_token":fcm_token,"img_url":img_url,"access_token":access_token,"version": version],
+        encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }
