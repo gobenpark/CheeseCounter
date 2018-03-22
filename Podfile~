@@ -25,7 +25,7 @@ pod 'XLPagerTabStrip'
 pod 'FlexibleImage', '~> 1.8'
 pod 'Toaster'
 pod 'BetterSegmentedControl'
-
+pod 'NVActivityIndicatorView'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -47,7 +47,6 @@ pod 'PMAlertController'
 pod 'iCarousel'
 pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
-pod 'SwiftyUserDefaults'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
