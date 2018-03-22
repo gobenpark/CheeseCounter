@@ -81,12 +81,11 @@ class EventViewController: UIViewController{
       self?.dismiss(animated: true, completion: nil)
     }.disposed(by: disposeBag)
     
-    //      .do(onNext: {[model] (_) in
-    //        Defaults[.popUpIDs].append(model.id)
-    //      })
-    
     detailButton.rx
       .tap
+      .do(onNext: {[model] (_) in
+        Defaults[.popUpIDs].append(model.id)
+      })
       .subscribe {[weak self] (item) in
         guard let `self` = self else {return}
         self.eventPage.navigationItem.setRightBarButton(self.item, animated: true)
@@ -105,8 +104,6 @@ class EventViewController: UIViewController{
     addConstraint()
     imageView.kf.setImage(with: URL(string: model.img_url?.getUrlWithEncoding() ?? String()))
   }
-  
-  
   
   private func addConstraint(){
     imageView.snp.makeConstraints { (make) in

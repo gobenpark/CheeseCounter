@@ -84,7 +84,7 @@ class BaseListViewCell: UICollectionViewCell{
       make.left.equalTo(heartLabel.snp.right).offset(32)
       make.centerY.equalTo(heartLabel)
       make.height.equalTo(13.5)
-      make.width.equalTo(13.5)
+      make.width.equalTo(30)
     }
     
     cheeseLabel.snp.makeConstraints { (make) in
