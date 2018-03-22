@@ -10,11 +10,15 @@ import UIKit
 
 import SnapKit
 import Crashlytics
+import SwiftyJSON
+import RxSwift
+import RxCocoa
 
 class UserSetupViewController: UIViewController {
   
   var isdisableScroll: Bool = true
   var signUp: SignUp = SignUp()
+  private let disposeBag = DisposeBag()
   
   lazy var viewControllers: [UIViewController] = {
     var VCS: [UIViewController] = []
@@ -85,22 +89,29 @@ class UserSetupViewController: UIViewController {
   
   func uploadUserInfo(){
     
-    UserService.register(parameter: signUp.getParameters()) { (response) in
-      let cheeseVC = WelcomeCoachViewController()
-      cheeseVC.modalPresentationStyle = .popover
-      cheeseVC.didTap = {
-        AppDelegate.instance?.reloadRootViewController()
-      }
-      switch response.result {
-      case .success(let value):
-        if value.data?.isEnable == "1" {
-          
-          self.present(cheeseVC, animated: true, completion: nil)
+    CheeseService.provider.request(.regUser(parameter: signUp.getParameters()))
+      .filter(statusCode: 200)
+      .mapJSON()
+      .map{JSON($0)}
+      .subscribe { (event) in
+        switch event{
+        case .success(let json):
+          let cheeseVC = StartWithCheeseViewController()
+          cheeseVC.modalPresentationStyle = .popover
+          cheeseVC.didTap = {
+            AppDelegate.instance?.reloadRootViewController()
+          }
+          if json["result"]["code"].intValue == 200{
+            AppDelegate.instance?.window?.rootViewController?.present(cheeseVC, animated: true, completion: nil)
+          }else{
+            AlertView(title: json["result"]["data"].stringValue)
+              .addChildAction(title: "확인", style: .default, handeler: nil)
+              .show()
+          }
+        case .error(let error):
+          log.error(error)
         }
-      case .failure(let error):
-        log.error(error.localizedDescription)
-      }
-    }
+    }.disposed(by: disposeBag)
   }
 }
 

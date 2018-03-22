@@ -98,61 +98,6 @@ struct CheeseService {
     }
   }
   
-  /// 데이터 업로드
-  ///- parameter parameter: post 파라메터
-  ///- parameter dataParameter: 데이터 파라메터
-  static func dataUpload(parameter:[String:String],dataParameter:DataParameter,_ completion: @escaping (String,String) -> Void){
-    var count = 0
-    var urlString = UserService.url+"/survey/insertSurvey.json?"
-    
-    for (key,value) in parameter {
-      if key != "option_addr"{
-        urlString = urlString + "\(key)=\(value.encodeUrl())"
-        if count != parameter.count - 1{
-          urlString = urlString + "&"
-          count += 1
-        }
-      }
-    }
-    
-    Alamofire.upload(multipartFormData: { multipartFormData in
-      if parameter["is_option"] == "1"{
-        multipartFormData.append((parameter["option_addr"]?.data(using: .utf8))!, withName: "option_addr")
-      }
-      for value in dataParameter.getDataParameter() {
-        multipartFormData.append(value, withName: "img_file", fileName: "jpg", mimeType: "image/jpeg")
-      }},
-                     
-                     to: urlString,
-                     method: .post,
-                     encodingCompletion: { result in
-                      
-                      switch result {
-                      case .success(let result, _, _):
-                        result.validate(statusCode: 200..<400)
-                          .responseJSON(completionHandler: { (response) in
-                            do{
-                              let json = try JSON(data: response.data!)
-                              if let result = json["result"]["code"].string
-                                ,let data = json["result"]["data"].string{
-                                if result == "2001"{
-                                  sessionExpireAction()
-                                }
-                                
-                                completion(result,data)
-                              }
-                            }catch let error{
-                              log.error(error)
-                            }
-                          })
-                        
-                      case .failure(let encodingError):
-                        Crashlytics.sharedInstance().recordError(encodingError)
-                      }
-    })
-  }
-  
-  
   /// # 설문 상세결과
   /// ## 선택한문항,설문아이디, 득표수가 반환됨
   /// - Parameters:

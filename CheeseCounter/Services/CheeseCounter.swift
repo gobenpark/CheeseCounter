@@ -250,6 +250,8 @@ extension CheeseCounter: TargetType{
       return .requestParameters(parameters: ["survey_id": id], encoding: URLEncoding.queryString)
     case .insertSurvey(let data):
       return .uploadMultipart(data)
+    case .regUser(let parameters):
+      return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
     default:
       return .requestPlain
     }
