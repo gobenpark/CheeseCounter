@@ -65,10 +65,10 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView1)
     addSubview(circleView2)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
     circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
     circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
@@ -103,18 +103,18 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView3)
     addSubview(circleView4)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
-    circleView3.circleProgressView.progress = survey3
-    circleView4.circleProgressView.progress = survey4
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
+    circleView3.circleProgressView.setProgress(CGFloat(survey3), animated: false)
+    circleView4.circleProgressView.setProgress(CGFloat(survey4), animated: false)
     
     circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
     circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
     circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
     circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
-    circleView4.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView4.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
