@@ -53,6 +53,13 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   private let modelSubject: PublishSubject<RouletteModel> = PublishSubject()
   private let colorPalette: [UIColor]
   
+  private let pointShare = CheeseService
+    .provider
+    .request(.getMyPoint)
+    .filter(statusCode: 200)
+    .asObservable()
+    .share()
+  
   private let imageView: UIImageView = {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "counterGameBg"))
     imageView.contentMode = .center
@@ -221,8 +228,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    CheeseService.provider.request(.getMyPoint)
-      .filter(statusCode: 200)
+    pointShare
       .map(PointModel.self)
       .map{$0.result.data.cheese}
       .asDriver(onErrorJustReturn: nil)
@@ -261,8 +267,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
         ToastCenter.default.cancelAll()
       })
       .flatMap {[unowned self] _ in
-        return self.provider.request(.getMyPoint)
-          .filter(statusCode: 200)
+        self.pointShare
           .map(PointModel.self)
           .map{$0.result.data.cheese}
       }.filterNil()
@@ -723,26 +728,28 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       make.height.equalTo(75)
     }
     
-    fiveButton.snp.makeConstraints { (make) in
-      make.centerX.equalToSuperview()
-      make.bottom.equalToSuperview().inset(27)
-      make.height.equalTo(42)
-      make.width.equalTo(98)
-    }
+//    fiveButton.snp.makeConstraints { (make) in
+//      make.centerX.equalToSuperview()
+//      make.bottom.equalToSuperview().inset(27)
+//      make.height.equalTo(42)
+//      make.width.equalTo(98)
+//    }
+//
+//    threeButton.snp.makeConstraints { (make) in
+//      make.height.equalTo(fiveButton)
+//      make.width.equalTo(fiveButton)
+//      make.centerY.equalTo(fiveButton)
+//      make.right.equalTo(fiveButton.snp.left).offset(-5.5)
+//    }
+//
+//    sevenButton.snp.makeConstraints { (make) in
+//      make.height.equalTo(fiveButton)
+//      make.width.equalTo(fiveButton)
+//      make.centerY.equalTo(fiveButton)
+//      make.left.equalTo(fiveButton.snp.right).offset(5.5)
+//    }
     
-    threeButton.snp.makeConstraints { (make) in
-      make.height.equalTo(fiveButton)
-      make.width.equalTo(fiveButton)
-      make.centerY.equalTo(fiveButton)
-      make.right.equalTo(fiveButton.snp.left).offset(-5.5)
-    }
-    
-    sevenButton.snp.makeConstraints { (make) in
-      make.height.equalTo(fiveButton)
-      make.width.equalTo(fiveButton)
-      make.centerY.equalTo(fiveButton)
-      make.left.equalTo(fiveButton.snp.right).offset(5.5)
-    }
+    constraintFromServer()
     
     selectedImageButton[1].snp.makeConstraints { (make) in
       make.centerX.equalTo(choiceImageView)
@@ -821,9 +828,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 
       spinWheelControl.reloadData()
 
-
-
-
       let message = """
 직접 룰렛을 돌려 경품을 얻어가세요!
 
@@ -833,9 +837,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
 더 높은 치즈를 배팅할 수록
 당첨될 확률은 높아집니다.
 
-\(model.game1Point)치즈 배팅 -> 5칸의 판
-\(model.game2Point)치즈 배팅 -> 6칸의 판
-\(model.game3Point)치즈 배팅 -> 7칸의 판
+\(alertCheeseString())
 """
 
       let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -847,6 +849,96 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   
   func numberOfWedgesInSpinWheel(spinWheel: SpinWheelControl) -> UInt {
     return UInt(self.images.count)
+  }
+  
+  private func constraintFromServer(){
+    var buttons = [UIButton]()
+    if model.game1Point != "999999"{
+      buttons.append(threeButton)
+    }else{
+      threeButton.removeFromSuperview()
+    }
+    
+    if model.game2Point != "999999"{
+      buttons.append(fiveButton)
+    }else{
+      fiveButton.removeFromSuperview()
+    }
+    
+    if model.game3Point != "999999"{
+      buttons.append(sevenButton)
+    }else{
+      sevenButton.removeFromSuperview()
+    }
+    
+    buttonConstraint(buttons: buttons)
+  }
+  
+  private func buttonConstraint(buttons: [UIButton]){
+    switch buttons.count{
+    case 1:
+      buttons[0].snp.makeConstraints({ (make) in
+        make.centerX.equalToSuperview()
+        make.height.equalTo(42)
+        make.width.equalTo(98)
+        make.bottom.equalToSuperview().inset(27)
+      })
+    case 2:
+      buttons[0].snp.makeConstraints({ (make) in
+        make.right.equalTo(self.view.snp.centerX).inset(-10)
+        make.height.equalTo(42)
+        make.width.equalTo(98)
+        make.bottom.equalToSuperview().inset(27)
+      })
+      
+      buttons[1].snp.makeConstraints({ (make) in
+        make.left.equalTo(self.view.snp.centerX).offset(10)
+        make.height.equalTo(buttons[0])
+        make.width.equalTo(buttons[0])
+        make.bottom.equalTo(buttons[0])
+      })
+    case 3:
+      fiveButton.snp.makeConstraints { (make) in
+        make.centerX.equalToSuperview()
+        make.bottom.equalToSuperview().inset(27)
+        make.height.equalTo(42)
+        make.width.equalTo(98)
+      }
+      
+      threeButton.snp.makeConstraints { (make) in
+        make.height.equalTo(fiveButton)
+        make.width.equalTo(fiveButton)
+        make.centerY.equalTo(fiveButton)
+        make.right.equalTo(fiveButton.snp.left).offset(-5.5)
+      }
+      
+      sevenButton.snp.makeConstraints { (make) in
+        make.height.equalTo(fiveButton)
+        make.width.equalTo(fiveButton)
+        make.centerY.equalTo(fiveButton)
+        make.left.equalTo(fiveButton.snp.right).offset(5.5)
+      }
+    default:
+      break
+    }
+  }
+  
+  private func alertCheeseString() -> String{
+    var temp = String()
+    
+    if model.game1Point != "999999"{
+      temp.append("\(model.game1Point)치즈 배팅 -> 7칸의 판\n")
+    }
+    
+    if model.game2Point != "999999"{
+      temp.append("\(model.game2Point)치즈 배팅 -> 6칸의 판\n")
+    }
+    
+    if model.game3Point != "999999"{
+      temp.append("\(model.game3Point)치즈 배팅 -> 5칸의 판")
+    }
+    
+    return temp
   }
   
   override func didReceiveMemoryWarning() {
