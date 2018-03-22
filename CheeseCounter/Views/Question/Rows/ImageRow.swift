@@ -10,7 +10,11 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-public class ImageCell: Cell<QuestionType>, CellType {
+public class QuestionImageView: UIImageView{
+  var imageURL: String?
+}
+
+public class ImageCell: Cell<QuestionModel>, CellType {
   
   private var disposeBag = DisposeBag()
   
@@ -20,8 +24,8 @@ public class ImageCell: Cell<QuestionType>, CellType {
     }
   }
   
-  lazy var firstImgView: UIImageView = {
-    let img = UIImageView(image: #imageLiteral(resourceName: "question_img_nomal@1x").withRenderingMode(.alwaysOriginal))
+  lazy var firstImgView: QuestionImageView = {
+    let img = QuestionImageView(image: #imageLiteral(resourceName: "question_img_nomal@1x").withRenderingMode(.alwaysOriginal))
     img.isUserInteractionEnabled = true
     img.layer.masksToBounds = true
     img.contentMode = .scaleAspectFill
@@ -29,8 +33,8 @@ public class ImageCell: Cell<QuestionType>, CellType {
     return img
   }()
   
-  lazy var secondImgView: UIImageView = {
-    let img = UIImageView(image: #imageLiteral(resourceName: "question_img_nomal@1x").withRenderingMode(.alwaysOriginal))
+  lazy var secondImgView: QuestionImageView = {
+    let img = QuestionImageView(image: #imageLiteral(resourceName: "question_img_nomal@1x").withRenderingMode(.alwaysOriginal))
     img.isUserInteractionEnabled = true
     img.layer.masksToBounds = true
     img.contentMode = .scaleAspectFill
@@ -38,7 +42,7 @@ public class ImageCell: Cell<QuestionType>, CellType {
     return img
   }()
   
-  var touchEvent: Observable<UIImageView>?
+  var touchEvent: Observable<QuestionImageView>?
   
   public override func prepareForReuse() {
     disposeBag = DisposeBag()
@@ -65,7 +69,7 @@ public class ImageCell: Cell<QuestionType>, CellType {
       .map{[unowned self] _ in self.secondImgView}
       .asObservable()
     
-    touchEvent = Observable<UIImageView>.merge([firstimgEvent,secondImgEvent])
+    touchEvent = Observable<QuestionImageView>.merge([firstimgEvent,secondImgEvent])
 
     firstImgView.snp.makeConstraints { (make) in
       make.left.equalToSuperview().inset(15)
@@ -81,8 +85,6 @@ public class ImageCell: Cell<QuestionType>, CellType {
   }
   
   public override func update() {
-  
-    
   }
 }
 

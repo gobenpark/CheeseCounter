@@ -151,6 +151,7 @@
 		B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */; };
 		B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC862011DC090004CC41 /* GiftItemViewCell.swift */; };
 		B18ECC892011E1D80004CC41 /* GiftViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC882011E1D80004CC41 /* GiftViewModel.swift */; };
+		B18EE8362061E03C0078AC76 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18EE8352061E03C0078AC76 /* UserDefaults.swift */; };
 		B1A16B2D1E7F6BB7007A1946 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */; };
 		B1A16B2F1E7F6BD4007A1946 /* Response+ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */; };
 		B1A16B331E7F84DA007A1946 /* NickResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A16B321E7F84DA007A1946 /* NickResult.swift */; };
@@ -394,6 +395,7 @@
 		B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectViewController.swift; sourceTree = "<group>"; };
 		B18ECC862011DC090004CC41 /* GiftItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftItemViewCell.swift; sourceTree = "<group>"; };
 		B18ECC882011E1D80004CC41 /* GiftViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftViewModel.swift; sourceTree = "<group>"; };
+		B18EE8352061E03C0078AC76 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		B19991611E7BBEE20037E767 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		B1A16B2C1E7F6BB7007A1946 /* MappingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
 		B1A16B2E1E7F6BD4007A1946 /* Response+ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ErrorInfo.swift"; sourceTree = "<group>"; };
@@ -790,10 +792,19 @@
 			path = Provision;
 			sourceTree = "<group>";
 		};
+		B18EE8342061049F0078AC76 /* RxModalStack */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RxModalStack;
+			sourceTree = "<group>";
+		};
 		B1AE29E7203D335E0078DB3C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				B18EE8342061049F0078AC76 /* RxModalStack */,
 				B1AE29E8203D33710078DB3C /* Operators.swift */,
+				B18EE8352061E03C0078AC76 /* UserDefaults.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1270,6 +1281,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyImage/SwiftyImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/TLPhotoPicker/TLPhotoPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework",
@@ -1322,6 +1334,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TLPhotoPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toaster.framework",
@@ -1413,6 +1426,7 @@
 				B1F30071203FA2A1002A7516 /* ListSearchViewController.swift in Sources */,
 				B1ACA8FA203AD41D0096E61B /* RxSwift+Extension.swift in Sources */,
 				B1F30073203FA564002A7516 /* SearchViewCell.swift in Sources */,
+				B18EE8362061E03C0078AC76 /* UserDefaults.swift in Sources */,
 				B1EF7EB92015734F00F3AFA5 /* ShopViewController.swift in Sources */,
 				B1BBB15E203A5DD000EBE71F /* AnswerViewController.swift in Sources */,
 				B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */,

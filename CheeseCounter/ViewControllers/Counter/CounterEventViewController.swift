@@ -9,9 +9,8 @@ import DZNEmptyDataSet
 class CounterEventViewController: UIViewController{
   
   var events:[EventModel.Data] = []
-  
   var isEmptyViews:Bool = true
-  
+  var id: String?
   private let disposeBag = DisposeBag()
   
   lazy var collectionView: UICollectionView = {
@@ -42,14 +41,24 @@ class CounterEventViewController: UIViewController{
       .request(.getEventAllList)
       .filter(statusCode: 200)
       .map(EventModel.self)
-      .subscribe(onSuccess: {[weak self] (model) in
-        guard let `self` = self else {return}
+      .do(onSuccess: {[unowned self] (model) in
         self.events = model.result.data
         self.collectionView.reloadData()
-      }, onError: { (error) in
-        log.error(error)
       })
+      .asObservable()
+      .bind(onNext: expandPage)
       .disposed(by: disposeBag)
+  }
+  
+  func expandPage(from model: EventModel){
+    guard let id = id else {return}
+    for i in 0..<events.count{
+      if events[i].id == id{
+        events[i].isExpand = true
+        self.collectionView.reloadItems(at: [IndexPath(row: 0, section: i)])
+        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: i), at: .top, animated: true)
+      }
+    }
   }
   
   @objc fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){

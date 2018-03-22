@@ -14,7 +14,7 @@ struct EventModel: Codable{
   
   struct Result: Codable{
     let code: String
-    let data: [Data]
+    var data: [Data]
   }
   
   struct Data: Codable {

@@ -9,6 +9,7 @@
 import Foundation
 
 extension UIImage{
+  
   func filledBlendImage(blendMode: CGBlendMode) -> UIImage{
     UIGraphicsBeginImageContextWithOptions(size, false, scale)
     self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))

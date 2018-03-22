@@ -98,6 +98,8 @@ public class SelectionButtonCell: Cell<QuestionType>, CellType {
         }
         self?.row.updateCell()
       }).disposed(by: disposeBag)
+    
+    row.value = .Four
   }
   
   public override func update() {
