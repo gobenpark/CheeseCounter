@@ -112,6 +112,10 @@ extension CounterEventViewController: UICollectionViewDataSource{
         , for: indexPath) as! EventView
     view.fetch(data: events[indexPath.section])
     view.tag = indexPath.section
+    
+    
+    
+    
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expandAction(_:))))
     return view
   }
@@ -123,7 +127,11 @@ extension CounterEventViewController: UICollectionViewDataSource{
     let size = events[section].title.boundingRect(with: CGSize(width: 374-57, height: 100)
       , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
     
-    return CGSize(width: collectionView.frame.width, height: size.height+30)
+    if events[section].isExpand{
+      return CGSize(width: collectionView.frame.width, height: size.height+30)
+    }else{
+      return CGSize(width: collectionView.frame.width, height: 50)
+    }
   }
 }
 
@@ -136,6 +144,8 @@ extension CounterEventViewController: UICollectionViewDelegateFlowLayout{
       , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 14)])
     return CGSize(width: collectionView.frame.width, height: size.height+481)
   }
+  
+  
 }
 
 class EventViewCell: UICollectionViewCell{
@@ -210,7 +220,7 @@ class EventView: UICollectionReusableView{
     let label = UILabel()
     label.sizeToFit()
     label.font = UIFont.systemFont(ofSize: 16)
-    label.numberOfLines = 2
+    label.numberOfLines = 0
     return label
   }()
   
@@ -236,8 +246,7 @@ class EventView: UICollectionReusableView{
     }
     
     titleLabel.snp.makeConstraints { (make) in
-      make.left.equalToSuperview().inset(21)
-      make.centerY.equalToSuperview()
+      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 30))
     }
     
     arrowButton.snp.makeConstraints { (make) in
@@ -260,8 +269,10 @@ class EventView: UICollectionReusableView{
     titleLabel.attributedText = attribute
     
     if (data.isExpand){
+      titleLabel.numberOfLines = 0
       arrowButton.isSelected = true
     }else {
+      titleLabel.numberOfLines = 1
       arrowButton.isSelected = false
     }
   }

@@ -129,8 +129,10 @@ final class ReplyViewController: UIViewController{
           .map(MainSurveyList.self)
           .asObservable()
       }.subscribe(onNext: {[weak self] (model) in
-        guard let model = model.result.data.first else {return}
-        self?.model = model
+        guard let model = model.result.data.first, let `self` = self else {return}
+        self.model = model
+        self.collectionView.reloadSections([0], animationStyle: .none)
+        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
       }).disposed(by: disposeBag)
     
     refreshView.rx.controlEvent(.valueChanged)
@@ -151,13 +153,6 @@ final class ReplyViewController: UIViewController{
       .subscribe {[weak self] (_) in
       self?.replyRequest()
       }.disposed(by: disposeBag)
-//
-//    collectionView.rx.didScroll
-//      .observeOn(MainScheduler.asyncInstance)
-//      .subscribe(onNext: {[weak self] (_) in
-//        guard let `self` = self else {return}
-//        self.messageInputBar.textView.endEditing(true)
-//      }).disposed(by: disposeBag)
     
     writeReplySubject
       .asDriver(onErrorJustReturn: ReplyActionData(nickname: String(), parentID: String()))

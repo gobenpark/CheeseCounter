@@ -257,7 +257,6 @@ class MainCheeseView: UIView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    //log.info("moreButton.isHidden = \(!title.isTruncated()) in layoutSubviews")
     moreButton.isHidden = !title.isTruncated()
   }
 }

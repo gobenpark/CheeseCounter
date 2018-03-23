@@ -129,7 +129,9 @@ class QuestionViewController: FormViewController{
       <<< TagRow(tag: "tagRow")
       <<< SubmitRow().cellSetup({[weak self] (cell, row) in
         guard let `self` = self else {return}
-        cell.submitButton.rx.tap
+        cell.submitButton.rx
+          .tap
+          .debounce(3, scheduler: MainScheduler.instance)
           .bind(onNext: self.uploadDatas)
           .disposed(by: cell.disposeBag)
       })
@@ -212,9 +214,9 @@ class QuestionViewController: FormViewController{
       multiparts.append(MultipartFormData(provider: .data(image4Data!), name: "img_file", fileName: "jpg", mimeType: "image/jpeg"))
       multiparts.append(MultipartFormData(provider: .data(ask3!.data(using: .utf8)!), name: "ask3"))
       multiparts.append(MultipartFormData(provider: .data(ask4!.data(using: .utf8)!), name: "ask4"))
-      multiparts.append(MultipartFormData(provider: .data("0,1,none,none".data(using: .utf8)!), name: "img_status"))
-    }else{
       multiparts.append(MultipartFormData(provider: .data("0,1,2,3".data(using: .utf8)!), name: "img_status"))
+    }else{
+      multiparts.append(MultipartFormData(provider: .data("0,1,none,none".data(using: .utf8)!), name: "img_status"))
     }
     
     CheeseService.provider
