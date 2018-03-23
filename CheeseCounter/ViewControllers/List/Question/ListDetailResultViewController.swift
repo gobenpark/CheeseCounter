@@ -322,14 +322,4 @@ extension ListDetailResultViewController: DZNEmptyDataSetSource{
   }
 }
 
-extension UITableView {
-  func scrollToBottom(animated: Bool) {
-    let y = contentSize.height - frame.size.height
-    setContentOffset(CGPoint(x: 0, y: (y<0) ? 0 : y), animated: animated)
-  }
-}
-
-
-
-
 
