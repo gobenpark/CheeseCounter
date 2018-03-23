@@ -23,7 +23,7 @@ final class HistoryViewController: UIViewController, IndicatorInfoProvider{
     cell.item = item
     return cell
   })
-  let datas = BehaviorSubject<[HistoryViewModel]>(value: [])
+  let datas = Variable<[HistoryViewModel]>([])
   let calendarView = CalendarSelectView()
   var isLoading: Bool = false {
     didSet{
@@ -62,7 +62,7 @@ final class HistoryViewController: UIViewController, IndicatorInfoProvider{
       self?.request(date: date)
     }
     
-    datas.asDriver(onErrorJustReturn: [])
+    datas.asDriver()
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
     
@@ -72,6 +72,10 @@ final class HistoryViewController: UIViewController, IndicatorInfoProvider{
   private func request(date: [String: String]){
     let year = date["year",default: "0"]
     let month = date["month",default: "0"]
+    
+    
+    log.info(year)
+    log.info(month)
     provider.request(.getMyPointHistory(type: "cheese", year: year, month: month))
       .map(HistoryModel.self)
       .map{[HistoryViewModel(items: $0.result.data)]}
@@ -124,3 +128,4 @@ extension HistoryViewController: DZNEmptyDataSetSource{
     return #colorLiteral(red: 0.9489366412, green: 0.9490727782, blue: 0.9489067197, alpha: 1)
   }
 }
+

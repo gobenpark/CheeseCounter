@@ -132,27 +132,7 @@ struct UserService {
         completion(response)
     }
   }
-  
-  /// 유저정보 등록
-  static func register(parameter:[String:String], _ completion: @escaping (DataResponse<UserRegisterResult>) -> Void){
-    let urlString = "\(url)/auth/regUser.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
-    manager.request(urlString, method: .post, parameters: parameter)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        let response: DataResponse<UserRegisterResult> = response.flatMap{ json in
-          if let user = Mapper<UserRegisterResult>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: UserRegisterResult.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
-  
+    
   /// 유저정보 가져오기 (현재 로그인 되어있는 사용자)
   ///
   /// - Parameter completion: 콜백

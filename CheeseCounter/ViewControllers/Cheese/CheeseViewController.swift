@@ -24,7 +24,7 @@ enum PagingType{
 final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate
 {
   // 검색
-  let searchText = Variable<String>(String())
+  let searchText = BehaviorRelay<String>(value: String())
   lazy var searchController: UISearchController = {
     let sc = UISearchController(searchResultsController: nil)
     sc.hidesNavigationBarDuringPresentation = false

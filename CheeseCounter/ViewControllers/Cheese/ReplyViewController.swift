@@ -30,6 +30,8 @@ final class ReplyViewController: UIViewController{
   let empathyAction = PublishSubject<Bool>()
   let shareEvent = PublishSubject<Bool>()
   let detailAction = PublishSubject<Int>()
+  let replyEmpathyAction = PublishSubject<Bool>()
+  
   
   private var didSetupViewConstraints = false
   
@@ -143,6 +145,12 @@ final class ReplyViewController: UIViewController{
       })
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
+    
+    
+    replyEmpathyAction
+      .subscribe {[weak self] (_) in
+      self?.replyRequest()
+      }.disposed(by: disposeBag)
 //
 //    collectionView.rx.didScroll
 //      .observeOn(MainScheduler.asyncInstance)

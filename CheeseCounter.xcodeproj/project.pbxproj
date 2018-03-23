@@ -80,7 +80,7 @@
 		B154FE831E77B35700F4A2F5 /* DropOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B154FE821E77B35700F4A2F5 /* DropOutViewController.swift */; };
 		B157BB011E6FF9C0008F50AF /* ListDetailResultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B157BB001E6FF9C0008F50AF /* ListDetailResultViewCell.swift */; };
 		B15936891F300686009C29A6 /* KakaoLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15936881F300686009C29A6 /* KakaoLoginController.swift */; };
-		B159368B1F300A6C009C29A6 /* WelcomeCoachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159368A1F300A6C009C29A6 /* WelcomeCoachViewController.swift */; };
+		B159368B1F300A6C009C29A6 /* StartWithCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159368A1F300A6C009C29A6 /* StartWithCheeseViewController.swift */; };
 		B15993BB1E6D5E1900FCEF85 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15993BA1E6D5E1900FCEF85 /* ListViewController.swift */; };
 		B15993BD1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15993BC1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift */; };
 		B15A4CF41EAF2FA3006F8022 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15A4CF31EAF2FA3006F8022 /* Launch Screen.storyboard */; };
@@ -209,7 +209,6 @@
 		B1EF7EBD2019834400F3AFA5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF7EBC2019834400F3AFA5 /* UIImage+Extension.swift */; };
 		B1F30071203FA2A1002A7516 /* ListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F30070203FA2A1002A7516 /* ListSearchViewController.swift */; };
 		B1F30073203FA564002A7516 /* SearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F30072203FA564002A7516 /* SearchViewCell.swift */; };
-		B1F5BFF41EB1CDEE004A43D4 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */; };
 		B1F5BFF61EB1CE82004A43D4 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF51EB1CE82004A43D4 /* PrivacyViewController.swift */; };
 		B1F5BFFA1EB303F1004A43D4 /* QuestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFF91EB303F1004A43D4 /* QuestionData.swift */; };
 		B1F5BFFE1EB851A6004A43D4 /* ListDetailTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFFD1EB851A6004A43D4 /* ListDetailTitleCell.swift */; };
@@ -316,7 +315,7 @@
 		B154FE821E77B35700F4A2F5 /* DropOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropOutViewController.swift; sourceTree = "<group>"; };
 		B157BB001E6FF9C0008F50AF /* ListDetailResultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListDetailResultViewCell.swift; path = Question/ListDetailResultViewCell.swift; sourceTree = "<group>"; };
 		B15936881F300686009C29A6 /* KakaoLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoLoginController.swift; sourceTree = "<group>"; };
-		B159368A1F300A6C009C29A6 /* WelcomeCoachViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeCoachViewController.swift; sourceTree = "<group>"; };
+		B159368A1F300A6C009C29A6 /* StartWithCheeseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartWithCheeseViewController.swift; sourceTree = "<group>"; };
 		B15993BA1E6D5E1900FCEF85 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		B15993BC1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListQuestionTableViewCell.swift; path = Question/ListQuestionTableViewCell.swift; sourceTree = "<group>"; };
 		B15A4CF31EAF2FA3006F8022 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -454,7 +453,6 @@
 		B1EF7EBC2019834400F3AFA5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		B1F30070203FA2A1002A7516 /* ListSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSearchViewController.swift; sourceTree = "<group>"; };
 		B1F30072203FA564002A7516 /* SearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewCell.swift; sourceTree = "<group>"; };
-		B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		B1F5BFF51EB1CE82004A43D4 /* PrivacyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		B1F5BFF91EB303F1004A43D4 /* QuestionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionData.swift; sourceTree = "<group>"; };
 		B1F5BFFD1EB851A6004A43D4 /* ListDetailTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailTitleCell.swift; sourceTree = "<group>"; };
@@ -645,7 +643,7 @@
 				B15E4C711E8CCCE300C059D0 /* CompleteJoinViewController.swift */,
 				440A5B8F1E6ACFEC00D8C74C /* MainTabBarController.swift */,
 				B15E4C751E8CE8D300C059D0 /* BaseSetupViewController.swift */,
-				B159368A1F300A6C009C29A6 /* WelcomeCoachViewController.swift */,
+				B159368A1F300A6C009C29A6 /* StartWithCheeseViewController.swift */,
 				B104EF2B1ECC66F60075D80C /* CoachViewController.swift */,
 				B1B2DBB71F00917300C91CEA /* LoginConfirmController.swift */,
 				0A05A97D2047A7F900C526CA /* EventViewController.swift */,
@@ -721,7 +719,6 @@
 				B15A4CFE1EB0B483006F8022 /* VersionViewController.swift */,
 				B154FE821E77B35700F4A2F5 /* DropOutViewController.swift */,
 				B1BB43901EBAF8F8004D2462 /* DropOutConfirmViewController.swift */,
-				B1F5BFF31EB1CDEE004A43D4 /* PersonalInfoViewController.swift */,
 				B1F5BFF51EB1CE82004A43D4 /* PrivacyViewController.swift */,
 				B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */,
 				B1EF7EB82015734F00F3AFA5 /* ShopViewController.swift */,
@@ -1393,7 +1390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B172D6A02023FA4E00CFD97B /* MyPageViewController.swift in Sources */,
-				B159368B1F300A6C009C29A6 /* WelcomeCoachViewController.swift in Sources */,
+				B159368B1F300A6C009C29A6 /* StartWithCheeseViewController.swift in Sources */,
 				B183FD291F90953500AF5CBA /* Bundle+Extension.swift in Sources */,
 				B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */,
 				B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */,
@@ -1406,7 +1403,6 @@
 				0A05A97E2047A7F900C526CA /* EventViewController.swift in Sources */,
 				B1FFDFC61F70B3CC004591B3 /* AlertViewCell.swift in Sources */,
 				B18ECC892011E1D80004CC41 /* GiftViewModel.swift in Sources */,
-				B1F5BFF41EB1CDEE004A43D4 /* PersonalInfoViewController.swift in Sources */,
 				B173D7AD20244049001FCEB0 /* PointData.swift in Sources */,
 				B1BB43911EBAF8F8004D2462 /* DropOutConfirmViewController.swift in Sources */,
 				B1486FF9205A6B34004197AA /* PickerImageCell.swift in Sources */,

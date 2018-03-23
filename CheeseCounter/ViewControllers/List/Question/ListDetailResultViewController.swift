@@ -313,13 +313,6 @@ extension ListDetailResultViewController: DZNEmptyDataSetSource{
     indicatorView.startAnimating()
     return indicatorView
   }
-  
-  func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-    let text = "데이터가 비어있음"
-    
-    let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
-    return NSAttributedString(string: text, attributes: attributes)
-  }
 }
 
 
