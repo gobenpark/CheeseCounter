@@ -89,7 +89,6 @@ public class AskCell: Cell<Bool>, CellType {
     Observable<Bool>.combineLatest(field1Valid, field2Valid) { $0 && $1}
       .subscribe(onNext: {[weak self] (result) in
         guard let `self` = self else {return}
-        log.info(result)
         self.isValid = result
       }).disposed(by: disposeBag)
   }

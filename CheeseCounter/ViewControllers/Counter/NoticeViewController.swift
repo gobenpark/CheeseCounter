@@ -112,13 +112,16 @@ extension NoticeViewController: UICollectionViewDataSource{
     , layout collectionViewLayout: UICollectionViewLayout
     , referenceSizeForHeaderInSection section: Int) -> CGSize {
     
-    if let title = notices[section].title {
+    
+    guard let title = notices[section].title else {return CGSize(width: collectionView.frame.width, height: 50)}
       let size = title.boundingRect(with: CGSize(width: 374-57, height: 100)
         , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
-      
+    
+    if notices[section].isExpand{
       return CGSize(width: collectionView.frame.width, height: size.height+30)
+    }else{
+      return CGSize(width: collectionView.frame.width, height: 50)
     }
-    return CGSize(width: collectionView.frame.width, height: 50)
   }
 }
 
@@ -224,9 +227,7 @@ class NoticeView: UICollectionReusableView{
     }
     
     titleLabel.snp.makeConstraints { (make) in
-      make.left.equalToSuperview().inset(21)
-      make.centerY.equalToSuperview()
-      make.right.equalToSuperview().inset(60)
+      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 40))
     }
     
     arrowButton.snp.makeConstraints { (make) in
@@ -250,8 +251,10 @@ class NoticeView: UICollectionReusableView{
     titleLabel.attributedText = attribute
     
     if (data?.isExpand ?? false){
+      titleLabel.numberOfLines = 0
       arrowButton.isSelected = true
     }else {
+      titleLabel.numberOfLines = 1
       arrowButton.isSelected = false
     }
   }

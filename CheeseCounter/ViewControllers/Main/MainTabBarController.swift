@@ -99,15 +99,22 @@ class MainTabBarController: UITabBarController
   }
   
   private func popUpEvent(models: EventModel){
-    let vc = EventViewController(model: models.result.data[0])
-    log.info(models.result.data.count)
+    
+    var idx: Int = -1
+    for i in 0..<models.result.data.count{
+      if !Defaults[.popUpIDs].contains(models.result.data[i].id){
+        idx = i
+        break
+      }
+    }
+    guard idx != -1 else {return}
+    
+    let vc = EventViewController(model: models.result.data[idx])
     vc.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2960455908)
-    for i in 0..<models.result.data.count - 1{
+    for i in idx..<models.result.data.count - 1{
       searchChildVC(vc: vc, model: models.result.data[i+1])
     }
-    if !(Defaults[.popUpIDs] == models.result.data[0].id){
-      AppDelegate.instance?.window?.rootViewController?.present(vc, animated: true, completion: nil)
-    }
+    AppDelegate.instance?.window?.rootViewController?.present(vc, animated: true, completion: nil)
   }
   
   private func searchChildVC(vc: EventViewController, model: EventModel.Data){
@@ -156,6 +163,7 @@ class MainTabBarController: UITabBarController
 }
 
 func ==(lhs: [String], rhs: [EventModel.Data]) -> Bool{
+  var result = false
   for lh in lhs{
     for rh in rhs{
       return lh == rh.id

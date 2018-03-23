@@ -107,7 +107,9 @@ class EventViewController: UIViewController{
   
   private func addConstraint(){
     imageView.snp.makeConstraints { (make) in
-      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 168, left: 39, bottom: 200, right: 39))
+      make.center.equalToSuperview()
+      make.width.equalToSuperview().dividedBy(1.2)
+      make.height.equalTo(imageView.snp.width)
     }
     
     detailButton.snp.makeConstraints { (make) in
