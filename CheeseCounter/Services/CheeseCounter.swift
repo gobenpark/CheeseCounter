@@ -214,17 +214,17 @@ extension CheeseCounter: TargetType{
   public var task: Task {
     switch self{
     case .getMyPointHistory(let type, let year, let month):
-      return .requestParameters(parameters: ["type": type, "year": year, "month": month], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["type": type, "year": year, "month": month], encoding: URLEncoding.httpBody)
     case .getReplyList(let surveyId):
-      return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["survey_id":surveyId], encoding: URLEncoding.httpBody)
     case .getDetailResult(let surveyId, let selectAsk, let address):
-      return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["survey_id": surveyId,"select_ask": selectAsk, "addr":address], encoding: URLEncoding.httpBody)
     case .getSearchSurveyList(let search, let pageNum),.getMySearchSurveyList(let search, let pageNum):
-      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["search": search,"page_num":pageNum], encoding: URLEncoding.httpBody)
     case .regRoulette(let gift_id, let level):
-      return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["gift_id": gift_id,"level":level], encoding: URLEncoding.httpBody)
     case .updateRouletteRun(let id, let s, let re):
-      return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["id":id,"s":s,"re":re], encoding: URLEncoding.httpBody)
     case .updateRouletteDone(let id),
          .buyDirectGift(let id),
          .getSurveyById(let id),
@@ -233,35 +233,35 @@ extension CheeseCounter: TargetType{
          .getMyCouponById(let id),
          .getSurveyByIdV2(let id),
          .insertEmpathy(let id):
-      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
     case .insertSurveyResult(let survey_id, let select_ask):
-      return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["survey_id": survey_id,"select_ask": select_ask], encoding: URLEncoding.httpBody)
     case .insertReply(let survey_id, let parent_id, let contents):
-      return .requestParameters(parameters: ["survey_id": survey_id,"parent_id":parent_id,"contents":contents], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["survey_id": survey_id,"parent_id":parent_id,"contents":contents], encoding: URLEncoding.httpBody)
     case .getMyRegSurveyList(let page_num),.getMyAnswerSurveyList(let page_num),.getMyNotification(let page_num),.getEmpathyList(let page_num):
-      return .requestParameters(parameters:["page_num": page_num], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters:["page_num": page_num], encoding: URLEncoding.httpBody)
     case .getSurveyListV2Search(let id, let search):
-      return .requestParameters(parameters: ["id": id,"search": search], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["id": id,"search": search], encoding: URLEncoding.httpBody)
     case .insertQna(let title, let contents):
-      return .requestParameters(parameters: ["title":title,"contents":contents], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["title":title,"contents":contents], encoding: URLEncoding.httpBody)
     case .insertLike(let id, let survey_id):
-      return .requestParameters(parameters: ["reply_id": id,"survey_id": survey_id], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["reply_id": id,"survey_id": survey_id], encoding: URLEncoding.httpBody)
     case .getSurveyResult(let id):
-      return .requestParameters(parameters: ["survey_id": id], encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: ["survey_id": id], encoding: URLEncoding.httpBody)
     case .insertSurvey(let data):
       return .uploadMultipart(data)
     case .regUser(let parameters):
-      return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+      return .requestParameters(parameters: parameters, encoding: URLEncoding.httpBody)
     case .loginUser(let id, let fcm_token, let img_url, let access_token, let version):
       return .requestParameters(
         parameters: ["id":id,"fcm_token":fcm_token,"img_url":img_url,"access_token":access_token,"version": version],
-        encoding: URLEncoding.queryString)
+        encoding: URLEncoding.httpBody)
     default:
       return .requestPlain
     }
   }
   
   public var headers: [String : String]? {
-    return ["Content-Type":"application/json"]
+    return nil
   }
 }
