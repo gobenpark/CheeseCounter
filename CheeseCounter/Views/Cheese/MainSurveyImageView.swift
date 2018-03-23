@@ -70,13 +70,13 @@ final class MainSurveyImageView: UIView{
     
     circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
-    //circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    //circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
-    
-    circleView1.circleProgressView.setHintTextGenerationBlock{ _ in return String(format: "%.0f%%", survey1 * 100) }
-    circleView2.circleProgressView.setHintTextGenerationBlock{ _ in return String(format: "%.0f%%", survey2 * 100) }
+    circleView1.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey1)
+    }
       
-      
+    circleView2.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey2)
+    }
       
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
@@ -88,6 +88,15 @@ final class MainSurveyImageView: UIView{
       circleView1.removeFromSuperview()
       circleView2.removeFromSuperview()
     }
+  }
+  
+  private func makeCircleProgressViewInnerText(_ survey: Double) -> NSMutableAttributedString {
+    let text = String(format: "%.1f%%", survey * 100)
+    let textAttributes = [ .foregroundColor : UIColor.white,
+                           .font: UIFont.CheeseFontRegular(size: 25.8) ] as [NSAttributedStringKey : Any]
+    let attributedText = NSMutableAttributedString(string: text, attributes: textAttributes)
+    attributedText.addAttribute(.font, value: UIFont.CheeseFontRegular(size: 15.8), range: (text as NSString).range(of: "%"))
+    return attributedText
   }
   
   private func result4ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
@@ -114,17 +123,20 @@ final class MainSurveyImageView: UIView{
     circleView3.circleProgressView.setProgress(CGFloat(survey3), animated: false)
     circleView4.circleProgressView.setProgress(CGFloat(survey4), animated: false)
     
-    //circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    //circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
-    //circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
-    //circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
-  
+    circleView1.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey1)
+    }
     
-
-      circleView1.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey1 * 100) }
-      circleView2.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey2 * 100) }
-      circleView3.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey3 * 100) }
-      circleView4.circleProgressView.setHintTextGenerationBlock{ _ in return String.init(format: "%.0f%%", survey4 * 100) }
+    circleView2.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey2)
+    }
+    circleView3.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey3)
+    }
+    
+    circleView4.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey4)
+    }
       
 
     
