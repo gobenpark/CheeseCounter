@@ -98,6 +98,7 @@ class ListDetailResultViewController: FormViewController{
     self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
     self.tableView.separatorStyle = .none
     self.tableView.emptyDataSetSource = self
+   
     navigationController?.hidesBarsOnSwipe = false
     navigationController?.isNavigationBarHidden = false
     if #available(iOS 11.0, *) {
@@ -213,7 +214,6 @@ class ListDetailResultViewController: FormViewController{
     if self.selectedAddress == "" {
       circleChart.cellUpdate { (cell, row) in
         cell.dataFetch(datas: model)
-        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
       }
     }
     
@@ -221,7 +221,7 @@ class ListDetailResultViewController: FormViewController{
       cell.dataFetch(datas: model)
     }
     tableView.reloadData()
-   
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   private func showForm(model: ResultSurveyModel){
@@ -298,6 +298,8 @@ class ListDetailResultViewController: FormViewController{
         cell.dataFetch(datas: model)
       })
     }
+    
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -319,6 +321,14 @@ extension ListDetailResultViewController: DZNEmptyDataSetSource{
     return NSAttributedString(string: text, attributes: attributes)
   }
 }
+
+extension UITableView {
+  func scrollToBottom(animated: Bool) {
+    let y = contentSize.height - frame.size.height
+    setContentOffset(CGPoint(x: 0, y: (y<0) ? 0 : y), animated: animated)
+  }
+}
+
 
 
 
