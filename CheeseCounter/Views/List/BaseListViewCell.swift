@@ -84,7 +84,7 @@ class BaseListViewCell: UICollectionViewCell{
       make.left.equalTo(heartLabel.snp.right).offset(32)
       make.centerY.equalTo(heartLabel)
       make.height.equalTo(13.5)
-      make.width.equalTo(30)
+      make.width.equalTo(13.5)
     }
     
     cheeseLabel.snp.makeConstraints { (make) in
@@ -108,7 +108,7 @@ class BaseListViewCell: UICollectionViewCell{
     
     peopleLabel.snp.makeConstraints { (make) in
       make.left.equalTo(peopleImage.snp.right).offset(6.5)
-      make.width.equalTo(10)
+      make.width.equalTo(30)
       make.centerY.equalTo(peopleImage)
     }
     

@@ -16,6 +16,7 @@ PODS:
   - Charts (3.1.0):
     - Charts/Core (= 3.1.0)
   - Charts/Core (3.1.0)
+  - CircleProgressBar (0.32)
   - CircleProgressView (1.1.3)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
@@ -219,6 +220,7 @@ SPEC CHECKSUMS:
   Carte: c8200bfb59b77336aa2f02e84cc4ac0fa820034d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Charts: 0b0c96f6118b6ce63f11adbcaa3b31045ee4d772
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   CircleProgressView: 66e4d663a2bc7a9086e37b518868be923cd0a23a
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
@@ -274,6 +276,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: ac3b38ed42e0a4233f25d17b1ba7ac41927f5bb6
+PODFILE CHECKSUM: 62ee5f87f31d806d5150822d67cbafe6a3e7cc96
 
 COCOAPODS: 1.4.0
