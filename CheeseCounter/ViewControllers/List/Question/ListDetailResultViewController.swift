@@ -76,6 +76,7 @@ class ListDetailResultViewController: FormViewController{
   var selectedAddress = ""
   var selectedNum: Int{
     didSet{
+      log.info(selectedNum)
       request()
     }
   }
@@ -112,8 +113,7 @@ class ListDetailResultViewController: FormViewController{
     indicatorView.snp.makeConstraints { (make) in
       make.width.equalTo(50)
       make.height.equalTo(50)
-      make.centerX.equalTo(view)
-      make.centerY.equalTo(view)
+      make.center.equalTo(view)
     }
     
     CheeseService.provider
@@ -289,9 +289,15 @@ class ListDetailResultViewController: FormViewController{
       
         //차트가 선택될 때마다 하단의 성별 및 연령 정보 request//
         cell.didTap = { [weak self] country in
-          guard let vc = self else {return}
-          vc.selectedAddress = country
-          vc.request()
+          guard let `self` = self else { return }
+          self.selectedAddress = country
+          self.request()
+        }
+        
+        cell.didNotTap = { [weak self] in
+          guard let `self` = self else { return }
+          self.selectedAddress = ""
+          self.request()
         }
       })
       form +++ graphChart.cellSetup({ (cell, row) in
