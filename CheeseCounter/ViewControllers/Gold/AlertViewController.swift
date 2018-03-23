@@ -115,19 +115,7 @@ class AlertViewController: UIViewController{
     
     request(of: .reload)
   }
-  
-  private func getCheeseData(surveyID: String,_ completion: @escaping (CheeseResultByDate.Data?)-> Void){
     
-    CheeseService.getSurveyById(surveyId: surveyID, {(response) in
-      switch response.result{
-      case .success(let value):
-        completion(value.singleData)
-      case .failure(let error):
-        log.error("URL Setting data: \(error.localizedDescription)")
-      }
-    })
-  }
-  
   @objc func presentCoachView(){
     let coachView = CoachViewController()
     coachView.imgView.image = coachView.images[4]

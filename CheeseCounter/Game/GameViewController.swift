@@ -490,7 +490,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
         .filter(statusCode: 200)
         .mapJSON()
         .subscribe(onSuccess: { (result) in
-          log.info(result)
         }, onError: { (error) in
           log.error(error)
         }).disposed(by: disposeBag)
@@ -537,9 +536,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     patterns.append(pattern2.split(separator: ","))
     patterns.append(pattern3.split(separator: ","))
     gameID = id
-    
-    log.info(patterns)
-    
     
     imagesSetting(stage: 0)
     Toast(text: "룰렛을 돌려보세요!", delay: 0.2, duration: 1).show()

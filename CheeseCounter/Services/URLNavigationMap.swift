@@ -64,26 +64,7 @@ struct URLNavigationMap{
     }.disposed(by: disposeBag)
     
   }
-  
-  
-  private static func checkProcess(surveyID: String){
-    getCheeseData(surveyID: surveyID) { (data) in
-      checkSurveyLive(data: data)
-    }
-  }
-  
-  private static func getCheeseData(surveyID: String,_ completion: @escaping (CheeseResultByDate.Data?)-> Void){
-    
-    CheeseService.getSurveyById(surveyId: surveyID, {(response) in
-      switch response.result{
-      case .success(let value):
-        completion(value.singleData)
-      case .failure(let error):
-        log.error("URL Setting data: \(error.localizedDescription)")
-      }
-    })
-  }
-  
+
   private static func checkSurveyLive(data: CheeseResultByDate.Data?){
     guard let date = data?.limit_date else {return}
     let dateFormatter = DateFormatter()
