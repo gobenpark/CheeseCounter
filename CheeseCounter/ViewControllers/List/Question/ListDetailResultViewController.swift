@@ -118,12 +118,6 @@ class ListDetailResultViewController: FormViewController{
     CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
-      .do(onSubscribed: {[weak self] in
-        self?.indicatorView.startAnimating()
-        self?.tableView.isHidden = true })
-      .do(onDispose: {[weak self] in
-        self?.indicatorView.stopAnimating()
-        self?.tableView.isHidden = false })
       .map(ResultSurveyModel.self)
       .bind(onNext: showForm)
       .disposed(by: disposeBag)
@@ -215,9 +209,11 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func graphPatch(model: ResultSurveyModel){
+    
     if self.selectedAddress == "" {
       circleChart.cellUpdate { (cell, row) in
         cell.dataFetch(datas: model)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
       }
     }
     
@@ -225,7 +221,7 @@ class ListDetailResultViewController: FormViewController{
       cell.dataFetch(datas: model)
     }
     tableView.reloadData()
-    tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+   
   }
   
   private func showForm(model: ResultSurveyModel){
@@ -311,6 +307,10 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    indicatorView.startAnimating()
+    return indicatorView
+  }
   
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "데이터가 비어있음"
