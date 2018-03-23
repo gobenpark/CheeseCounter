@@ -30,6 +30,10 @@ class ReplyViewCell: UICollectionViewCell{
         constraint?.update(inset: 30)
         writeReplyButton.isHidden = true
         sympathyButton.isHidden = true
+      }else{
+        constraint?.update(inset: 0)
+        sympathyButton.isHidden = false
+        writeReplyButton.isHidden = false
       }
       
       if model.is_like == "1"{
@@ -143,14 +147,6 @@ class ReplyViewCell: UICollectionViewCell{
       }).disposed(by: disposeBag)
     
     addConstraint()
-  }
-  
-  override func updateConstraints() {
-    super.updateConstraints()
-    guard let model = model else {return}
-    if model.parent_id != "0"{
-      writeReplyButton.removeFromSuperview()
-    }
   }
   
   private func addConstraint(){

@@ -14,13 +14,14 @@ import RxDataSources
 import SwiftyJSON
 import Moya
 import RxDataSources
+import DZNEmptyDataSet
 import NVActivityIndicatorView
 
 final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
-  let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
+  let dataSubject = BehaviorRelay<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
   let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
   
@@ -52,7 +53,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
 //    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
-    
+    collectionView.emptyDataSetSource = self
     return collectionView
   }()
   
@@ -63,12 +64,6 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       .map(GiftModel.self)
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
-      .do(onSubscribed: {[weak self] in
-        self?.indicatorView.startAnimating()
-        self?.collectionView.isHidden = true })
-      .do(onDispose: {[weak self] in
-        self?.indicatorView.stopAnimating()
-        self?.collectionView.isHidden = false })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
   }
@@ -87,7 +82,6 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       }) { (error) in
         log.error(error)
       }.disposed(by: disposeBag)
-    
   }
   
   override func viewDidLoad() {
@@ -154,6 +148,14 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "쇼핑")
+  }
+}
+
+extension ShopViewController: DZNEmptyDataSetSource{
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    let indicatorView = NVActivityIndicatorView(frame: CGRect(x: scrollView.frame.width/2, y: scrollView.frame.height/2, width: 50, height: 50), type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
+    indicatorView.startAnimating()
+    return indicatorView
   }
 }
 
