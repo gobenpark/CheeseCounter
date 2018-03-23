@@ -80,10 +80,10 @@ public class AskCell: Cell<Bool>, CellType {
       }).disposed(by: disposeBag)
     
     let field1Valid = ask1Field.rx.text.orEmpty
-      .map{$0.count >= 2}
+      .map{$0.count >= 1}
       .share()
     let field2Valid = ask2Field.rx.text.orEmpty
-      .map{$0.count >= 2}
+      .map{$0.count >= 1}
       .share()
     
     Observable<Bool>.combineLatest(field1Valid, field2Valid) { $0 && $1}

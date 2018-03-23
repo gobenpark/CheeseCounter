@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import Moya
 import SwiftyJSON
+import NVActivityIndicatorView
 
 public enum QuestionImageType{
   case url(String)
@@ -67,10 +68,23 @@ class QuestionViewController: FormViewController{
   
   var model = QuestionModel()
   
+  let indicator: NVActivityIndicatorView = {
+    let indicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .lightGray)
+    indicator.isHidden = true
+    return indicator
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     title = "질문"
+    tableView.addSubview(indicator)
+    
+    indicator.snp.makeConstraints { (make) in
+      make.center.equalToSuperview()
+      make.height.width.equalTo(50)
+    }
+    
     tableView.separatorStyle = .none
     tableView.backgroundColor = .white
     form +++ Section()
@@ -131,7 +145,8 @@ class QuestionViewController: FormViewController{
         guard let `self` = self else {return}
         cell.submitButton.rx
           .tap
-          .debounce(3, scheduler: MainScheduler.instance)
+          .debounce(1, scheduler: MainScheduler.instance)
+          .do(onNext: {[weak self] _ in self?.tableView.isUserInteractionEnabled = false})
           .bind(onNext: self.uploadDatas)
           .disposed(by: cell.disposeBag)
       })
@@ -165,6 +180,13 @@ class QuestionViewController: FormViewController{
   
   private func uploadDatas(){
     
+    indicator.startAnimating()
+    indicator.isHidden = false
+    defer {
+      self.tableView.isUserInteractionEnabled = true
+      self.indicator.isHidden = true
+    }
+    
     let titleRow: TitleRow? = form.rowBy(tag: "title")
     let sectionType: SelectionButtonRow? = form.rowBy(tag: "selectType")
     let imgrow: ImageRow? = form.rowBy(tag: "imageRow")
@@ -178,7 +200,7 @@ class QuestionViewController: FormViewController{
       (imgrow?.cell.isValid ?? false) &&
       (askrow?.cell.isValid ?? false) &&
       (tagRow?.cell.isValid ?? false) else{
-      
+      alertAction(title: "필수 사항을 입력해 주세요.")
       return
     }
     let title = titleRow?.cell.titleField.text
