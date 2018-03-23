@@ -311,7 +311,7 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
-  
+
   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     let text = "데이터가 비어있음"
     

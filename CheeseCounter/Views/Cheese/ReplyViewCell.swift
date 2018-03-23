@@ -34,6 +34,8 @@ class ReplyViewCell: UICollectionViewCell{
       
       if model.is_like == "1"{
         sympathyButton.isSelected = true
+      }else{
+        sympathyButton.isSelected = false
       }
       
       setNeedsLayout()
@@ -134,9 +136,9 @@ class ReplyViewCell: UICollectionViewCell{
     }.do(onNext: {[sympathyButton] _ in
       sympathyButton.isSelected = true
     }).catchErrorJustReturn(Response(statusCode: 400, data: Data()))
-      .subscribe(onNext: { (response) in
+      .subscribe(onNext: {[weak self] (response) in
         if response.statusCode == 200{
-          log.info("성공")
+          self?.parentViewController?.replyEmpathyAction.onNext(true)
         }
       }).disposed(by: disposeBag)
     

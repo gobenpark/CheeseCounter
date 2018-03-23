@@ -18,7 +18,6 @@ PODS:
     - Charts/Core (= 3.0.5)
   - Charts/Core (3.0.5)
   - CircleProgressBar (0.32)
-=======
   - Charts (3.1.0):
     - Charts/Core (= 3.1.0)
   - Charts/Core (3.1.0)
@@ -286,8 +285,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-<<<<<<< master
-PODFILE CHECKSUM: 62ee5f87f31d806d5150822d67cbafe6a3e7cc96
 =======
 PODFILE CHECKSUM: ac3b38ed42e0a4233f25d17b1ba7ac41927f5bb6
 >>>>>>> 버전 체크 스토어이동 완료
