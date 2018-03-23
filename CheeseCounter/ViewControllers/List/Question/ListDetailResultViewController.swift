@@ -98,6 +98,7 @@ class ListDetailResultViewController: FormViewController{
     self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
     self.tableView.separatorStyle = .none
     self.tableView.emptyDataSetSource = self
+   
     navigationController?.hidesBarsOnSwipe = false
     navigationController?.isNavigationBarHidden = false
     if #available(iOS 11.0, *) {
@@ -118,12 +119,6 @@ class ListDetailResultViewController: FormViewController{
     CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
-      .do(onSubscribed: {[weak self] in
-        self?.indicatorView.startAnimating()
-        self?.tableView.isHidden = true })
-      .do(onDispose: {[weak self] in
-        self?.indicatorView.stopAnimating()
-        self?.tableView.isHidden = false })
       .map(ResultSurveyModel.self)
       .bind(onNext: showForm)
       .disposed(by: disposeBag)
@@ -215,6 +210,7 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func graphPatch(model: ResultSurveyModel){
+    
     if self.selectedAddress == "" {
       circleChart.cellUpdate { (cell, row) in
         cell.dataFetch(datas: model)
@@ -225,7 +221,7 @@ class ListDetailResultViewController: FormViewController{
       cell.dataFetch(datas: model)
     }
     tableView.reloadData()
-    tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   private func showForm(model: ResultSurveyModel){
@@ -302,6 +298,8 @@ class ListDetailResultViewController: FormViewController{
         cell.dataFetch(datas: model)
       })
     }
+    
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -311,15 +309,10 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
-
-  func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-    let text = "데이터가 비어있음"
-    
-    let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
-    return NSAttributedString(string: text, attributes: attributes)
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    indicatorView.startAnimating()
+    return indicatorView
   }
 }
-
-
 
 
