@@ -13,13 +13,14 @@ class CircleView: UIView{
   let circleProgressView: CircleProgressBar = {
     let progressView = CircleProgressBar()
     progressView.backgroundColor = .clear
-    progressView.progressBarWidth = 13
+    progressView.progressBarWidth = 9
     progressView.progressBarProgressColor = .yellow
-    progressView.progressBarTrackColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    progressView.progressBarTrackColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     progressView.startAngle = -90.0
     
-    progressView.hintTextColor = .white
+    
     progressView.hintViewBackgroundColor = .clear
+    
     
     return progressView
   }()
@@ -38,8 +39,8 @@ class CircleView: UIView{
     label.contentMode = .center
     label.numberOfLines = 1
     label.textColor = .white
-    label.text = "자세히보기"
-    label.font = UIFont.systemFont(ofSize: 12.0)
+    label.text = "자세히 보기"
+    label.font = UIFont.CheeseFontRegular(size: 8.1)
     return label
   }()
   
@@ -55,11 +56,11 @@ class CircleView: UIView{
   
   private func addConstraint(){
     circleProgressView.snp.remakeConstraints { (make) in
-      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     }
     circleLabel.snp.remakeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.centerY.equalToSuperview().offset(30)
+      make.centerY.equalToSuperview().offset(25)
     }
   }
   
