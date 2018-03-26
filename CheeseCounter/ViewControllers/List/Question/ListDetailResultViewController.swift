@@ -216,6 +216,7 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func graphPatch(model: ResultSurveyModel){
+    
     if self.selectedAddress == "" {
       circleChart.cellUpdate { (cell, row) in
         cell.dataFetch(datas: model)
@@ -320,12 +321,9 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
-
-  func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-    let text = "데이터가 비어있음"
-    
-    let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
-    return NSAttributedString(string: text, attributes: attributes)
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    indicatorView.startAnimating()
+    return indicatorView
   }
 }
 
