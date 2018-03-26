@@ -9,11 +9,13 @@
 import UIKit
 
 import FirebaseMessaging
+import SwiftyUserDefaults
 
 #if !RX_NO_MODULE
   import RxSwift
   import RxCocoa
 #endif
+
 
 let globalTabEvent = PublishSubject<Int>()
 
@@ -84,6 +86,46 @@ class MainTabBarController: UITabBarController
     return vc
   }()
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    CheeseService.provider
+      .request(.getTodayEventList)
+      .filter(statusCode: 200)
+      .map(EventModel.self)
+      .asObservable()
+      .filter{$0.result.data.count > 0}
+      .bind(onNext: popUpEvent)
+      .disposed(by: disposeBag)
+  }
+  
+  private func popUpEvent(models: EventModel){
+    
+    var idx: Int = -1
+    for i in 0..<models.result.data.count{
+      if !Defaults[.popUpIDs].contains(models.result.data[i].id){
+        idx = i
+        break
+      }
+    }
+    guard idx != -1 else {return}
+    
+    let vc = EventViewController(model: models.result.data[idx])
+    vc.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2960455908)
+    for i in idx..<models.result.data.count - 1{
+      searchChildVC(vc: vc, model: models.result.data[i+1])
+    }
+    AppDelegate.instance?.window?.rootViewController?.present(vc, animated: true, completion: nil)
+  }
+  
+  private func searchChildVC(vc: EventViewController, model: EventModel.Data){
+    guard !Defaults[.popUpIDs].contains(model.id) else {return}
+    
+    if vc.childVC == nil {
+      vc.childVC = EventViewController(model: model)
+    }else{
+      searchChildVC(vc: vc.childVC!, model: model)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -108,16 +150,6 @@ class MainTabBarController: UITabBarController
     message.subscribe(toTopic: "notice")
     message.subscribe(toTopic: "update")
     message.subscribe(toTopic: "event")
-    
-    
-    CheeseService.provider.request(.getTodayEventList)
-      .filter(statusCode: 200)
-      .mapJSON()
-      .subscribe(onSuccess: { (response) in
-        log.info(response)
-      }) { (error) in
-        log.error(error)
-      }.disposed(by:disposeBag)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -130,5 +162,23 @@ class MainTabBarController: UITabBarController
   }
 }
 
+func ==(lhs: [String], rhs: [EventModel.Data]) -> Bool{
+  var result = false
+  for lh in lhs{
+    for rh in rhs{
+      return lh == rh.id
+    }
+  }
+  return false
+}
+
+func ==(lhs:[String], rhs: String) -> Bool{
+  for lh in lhs{
+    if lh == rhs{
+      return true
+    }
+  }
+  return false
+}
 
 

@@ -10,7 +10,6 @@ import UIKit
 
 class CompleteJoinViewController: BaseSetupViewController {
   
-  
   let mainLabel: UILabel = {
     let label = UILabel()
     label.text = "THANK YOU!"

@@ -10,9 +10,10 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-public class AskCell: Cell<String>, CellType {
+public class AskCell: Cell<Bool>, CellType {
   
   private var disposeBag = DisposeBag()
+  var isValid: Bool = false
   
   lazy var ask1Field: UITextField = {
     let field = UITextField()
@@ -73,10 +74,22 @@ public class AskCell: Cell<String>, CellType {
       .asObservable()
       .map{[unowned self] _ in return self.ask2Field}
     
-    
     Observable<UITextField>.merge([ask1,ask2])
       .subscribe(onNext: { (field) in
         field.endEditing(true)
+      }).disposed(by: disposeBag)
+    
+    let field1Valid = ask1Field.rx.text.orEmpty
+      .map{$0.count >= 1}
+      .share()
+    let field2Valid = ask2Field.rx.text.orEmpty
+      .map{$0.count >= 1}
+      .share()
+    
+    Observable<Bool>.combineLatest(field1Valid, field2Valid) { $0 && $1}
+      .subscribe(onNext: {[weak self] (result) in
+        guard let `self` = self else {return}
+        self.isValid = result
       }).disposed(by: disposeBag)
   }
   
@@ -86,6 +99,7 @@ public class AskCell: Cell<String>, CellType {
 
 // The custom Row also has the cell: CustomCell and its correspond value
 public final class AskRow: Row<AskCell>, RowType {
+  
   required public init(tag: String?) {
     super.init(tag: tag)
     // We set the cellProvider to load the .xib corresponding to our cell

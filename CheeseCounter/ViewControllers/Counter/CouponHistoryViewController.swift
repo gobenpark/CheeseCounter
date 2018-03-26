@@ -30,6 +30,7 @@ final class CouponHistoryViewController: UIViewController, IndicatorInfoProvider
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
+    layout.minimumLineSpacing = 0
     layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(CouponHistoryCell.self, forCellWithReuseIdentifier: String(describing: CouponHistoryCell.self))

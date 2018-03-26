@@ -12,9 +12,9 @@ import RxCocoa
 
 public class SubmitCell: Cell<QuestionType>, CellType {
   
-  private var disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
   
-  private let submitButton: UIButton = {
+  let submitButton: UIButton = {
     let button = UIButton()
     button.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
     button.titleLabel?.font = UIFont.CheeseFontBold(size: 15.1)

@@ -11,6 +11,7 @@ import UIKit
 import DZNEmptyDataSet
 import Charts
 import Eureka
+import NVActivityIndicatorView
 
 #if !RX_NO_MODULE
   import RxSwift
@@ -75,11 +76,13 @@ class ListDetailResultViewController: FormViewController{
   var selectedAddress = ""
   var selectedNum: Int{
     didSet{
+      log.info(selectedNum)
       request()
     }
   }
   let circleChart = CircleChartRow()
   let graphChart = DetailGraphRow()
+  let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
   
   init(model: CheeseViewModel.Item, selectedNum: Int) {
     self.model = model
@@ -96,6 +99,7 @@ class ListDetailResultViewController: FormViewController{
     self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
     self.tableView.separatorStyle = .none
     self.tableView.emptyDataSetSource = self
+   
     navigationController?.hidesBarsOnSwipe = false
     navigationController?.isNavigationBarHidden = false
     if #available(iOS 11.0, *) {
@@ -104,9 +108,23 @@ class ListDetailResultViewController: FormViewController{
       // Fallback on earlier versions
     }
     
+    view.addSubview(indicatorView)
+    
+    indicatorView.snp.makeConstraints { (make) in
+      make.width.equalTo(50)
+      make.height.equalTo(50)
+      make.center.equalTo(view)
+    }
+    
     CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
+      .do(onSubscribed: {[weak self] in
+        self?.indicatorView.startAnimating()
+        self?.tableView.isHidden = true })
+      .do(onDispose: {[weak self] in
+        self?.indicatorView.stopAnimating()
+        self?.tableView.isHidden = false })
       .map(ResultSurveyModel.self)
       .bind(onNext: showForm)
       .disposed(by: disposeBag)
@@ -198,6 +216,7 @@ class ListDetailResultViewController: FormViewController{
   }
   
   private func graphPatch(model: ResultSurveyModel){
+    
     if self.selectedAddress == "" {
       circleChart.cellUpdate { (cell, row) in
         cell.dataFetch(datas: model)
@@ -208,7 +227,7 @@ class ListDetailResultViewController: FormViewController{
       cell.dataFetch(datas: model)
     }
     tableView.reloadData()
-    tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   private func showForm(model: ResultSurveyModel){
@@ -276,15 +295,23 @@ class ListDetailResultViewController: FormViewController{
       
         //차트가 선택될 때마다 하단의 성별 및 연령 정보 request//
         cell.didTap = { [weak self] country in
-          guard let vc = self else {return}
-          vc.selectedAddress = country
-          vc.request()
+          guard let `self` = self else { return }
+          self.selectedAddress = country
+          self.request()
+        }
+        
+        cell.didNotTap = { [weak self] in
+          guard let `self` = self else { return }
+          self.selectedAddress = ""
+          self.request()
         }
       })
       form +++ graphChart.cellSetup({ (cell, row) in
         cell.dataFetch(datas: model)
       })
     }
+    
+    tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .bottom, animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -294,15 +321,10 @@ class ListDetailResultViewController: FormViewController{
 }
 
 extension ListDetailResultViewController: DZNEmptyDataSetSource{
-  
-  func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-    let text = "데이터가 비어있음"
-    
-    let attributes = [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18),NSAttributedStringKey.foregroundColor:UIColor.white]
-    return NSAttributedString(string: text, attributes: attributes)
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    indicatorView.startAnimating()
+    return indicatorView
   }
 }
-
-
 
 

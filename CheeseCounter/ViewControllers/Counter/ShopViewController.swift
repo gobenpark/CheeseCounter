@@ -12,13 +12,18 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import SwiftyJSON
+import Moya
+import RxDataSources
+import DZNEmptyDataSet
+import NVActivityIndicatorView
 
 final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
-  let dataSubject = BehaviorSubject<[GiftViewModel]>(value: [])
+  let dataSubject = BehaviorRelay<[GiftViewModel]>(value: [])
   private var currentCheese: Int = 0
+  let indicatorView = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
   
   let dataSources = RxCollectionViewSectionedReloadDataSource<GiftViewModel>(configureCell:{ (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: GiftItemViewCell.self), for: idx) as! GiftItemViewCell
@@ -29,6 +34,8 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
     let view = cv.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
                                                    withReuseIdentifier: String(describing: CounterCollectionHeaderView.self),
                                                    for: idx) as! CounterCollectionHeaderView
+    //Tab의 Type을 지정
+    view.screenType = .shop
     return view
   })
   
@@ -46,11 +53,26 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
 //    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
+    collectionView.emptyDataSetSource = self
     return collectionView
   }()
   
+
+  private func request() {
+    
+    provider.request(.getGiftList)
+      .map(GiftModel.self)
+      .map {[GiftViewModel(items: $0.result.data)]}
+      .asObservable()
+      .bind(to: dataSubject)
+      .disposed(by: disposeBag)
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    //화면이 이동할 때마다 request
+    request()
+    
     CheeseService.provider.request(.getMyPoint)
       .filter(statusCode: 200)
       .mapJSON()
@@ -64,19 +86,28 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view = collectionView
+    //view = collectionView
+    view.addSubview(collectionView)
+    view.addSubview(indicatorView)
     
-    provider.request(.getGiftList)
-      .map(GiftModel.self)
-      .map {[GiftViewModel(items: $0.result.data)]}
-      .asObservable()
-      .bind(to: dataSubject)
-      .disposed(by: disposeBag)
+    collectionView.snp.makeConstraints { (make) in
+      make.top.equalToSuperview()
+      make.right.equalToSuperview()
+      make.bottom.equalToSuperview()
+      make.left.equalToSuperview()
+    }
+  
+    indicatorView.snp.makeConstraints { (make) in
+      make.width.equalTo(30)
+      make.height.equalTo(30)
+      make.centerX.equalTo(view)
+      make.centerY.equalTo(view)
+    }
     
     dataSubject.asDriver(onErrorJustReturn: [])
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
-    
+
     collectionView.rx.willEndDragging
       .map{$0.0}
       .asDriver(onErrorJustReturn: .zero)
@@ -88,6 +119,8 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
       .bind(onNext: selectedItem)
       .disposed(by: disposeBag)
   }
+  
+  
   
   func navigationHidden(point: CGPoint){
     if point.y > 0{
@@ -115,6 +148,14 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
   func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "쇼핑")
+  }
+}
+
+extension ShopViewController: DZNEmptyDataSetSource{
+  func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+    let indicatorView = NVActivityIndicatorView(frame: CGRect(x: scrollView.frame.width/2, y: scrollView.frame.height/2, width: 50, height: 50), type: .ballSpinFadeLoader, color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
+    indicatorView.startAnimating()
+    return indicatorView
   }
 }
 

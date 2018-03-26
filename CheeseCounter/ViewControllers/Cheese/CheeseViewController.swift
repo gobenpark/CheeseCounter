@@ -24,7 +24,7 @@ enum PagingType{
 final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate
 {
   // 검색
-  let searchText = Variable<String>(String())
+  let searchText = BehaviorRelay<String>(value: String())
   lazy var searchController: UISearchController = {
     let sc = UISearchController(searchResultsController: nil)
     sc.hidesNavigationBarDuringPresentation = false
@@ -54,7 +54,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   let replyEvent = PublishSubject<IndexPath>()
   let empathyEvent = PublishSubject<(String, IndexPath)>()
   let shareEvent = PublishSubject<IndexPath>()
-
+  
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
     cell.model = item

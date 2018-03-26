@@ -20,7 +20,9 @@ extension UILabel{
           , options: .usesLineFragmentOrigin
           , attributes: [NSAttributedStringKey.font: self.font]
           , context: nil).size
-      if size.height < self.frame.size.height {
+      
+//      log.info("text: \(size.height), view: \(self.frame.size.height)")
+      if (size.height > self.frame.size.height) && (size.height - self.frame.size.height) >= 9 {
         return true
       }
     }

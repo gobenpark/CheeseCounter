@@ -9,9 +9,8 @@ import DZNEmptyDataSet
 class CounterEventViewController: UIViewController{
   
   var events:[EventModel.Data] = []
-  
   var isEmptyViews:Bool = true
-  
+  var id: String?
   private let disposeBag = DisposeBag()
   
   lazy var collectionView: UICollectionView = {
@@ -42,14 +41,24 @@ class CounterEventViewController: UIViewController{
       .request(.getEventAllList)
       .filter(statusCode: 200)
       .map(EventModel.self)
-      .subscribe(onSuccess: {[weak self] (model) in
-        guard let `self` = self else {return}
+      .do(onSuccess: {[unowned self] (model) in
         self.events = model.result.data
         self.collectionView.reloadData()
-      }, onError: { (error) in
-        log.error(error)
       })
+      .asObservable()
+      .bind(onNext: expandPage)
       .disposed(by: disposeBag)
+  }
+  
+  func expandPage(from model: EventModel){
+    guard let id = id else {return}
+    for i in 0..<events.count{
+      if events[i].id == id{
+        events[i].isExpand = true
+        self.collectionView.reloadItems(at: [IndexPath(row: 0, section: i)])
+        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: i), at: .top, animated: true)
+      }
+    }
   }
   
   @objc fileprivate dynamic func expandAction(_ sender: UIGestureRecognizer){
@@ -103,6 +112,10 @@ extension CounterEventViewController: UICollectionViewDataSource{
         , for: indexPath) as! EventView
     view.fetch(data: events[indexPath.section])
     view.tag = indexPath.section
+    
+    
+    
+    
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expandAction(_:))))
     return view
   }
@@ -114,7 +127,11 @@ extension CounterEventViewController: UICollectionViewDataSource{
     let size = events[section].title.boundingRect(with: CGSize(width: 374-57, height: 100)
       , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
     
-    return CGSize(width: collectionView.frame.width, height: size.height+30)
+    if events[section].isExpand{
+      return CGSize(width: collectionView.frame.width, height: size.height+30)
+    }else{
+      return CGSize(width: collectionView.frame.width, height: 50)
+    }
   }
 }
 
@@ -127,6 +144,8 @@ extension CounterEventViewController: UICollectionViewDelegateFlowLayout{
       , attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 14)])
     return CGSize(width: collectionView.frame.width, height: size.height+481)
   }
+  
+  
 }
 
 class EventViewCell: UICollectionViewCell{
@@ -201,7 +220,7 @@ class EventView: UICollectionReusableView{
     let label = UILabel()
     label.sizeToFit()
     label.font = UIFont.systemFont(ofSize: 16)
-    label.numberOfLines = 2
+    label.numberOfLines = 0
     return label
   }()
   
@@ -227,8 +246,7 @@ class EventView: UICollectionReusableView{
     }
     
     titleLabel.snp.makeConstraints { (make) in
-      make.left.equalToSuperview().inset(21)
-      make.centerY.equalToSuperview()
+      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 30))
     }
     
     arrowButton.snp.makeConstraints { (make) in
@@ -251,8 +269,10 @@ class EventView: UICollectionReusableView{
     titleLabel.attributedText = attribute
     
     if (data.isExpand){
+      titleLabel.numberOfLines = 0
       arrowButton.isSelected = true
     }else {
+      titleLabel.numberOfLines = 1
       arrowButton.isSelected = false
     }
   }

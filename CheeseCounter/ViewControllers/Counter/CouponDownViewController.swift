@@ -128,7 +128,6 @@ final class CouponDownViewController: UIViewController{
       string: model.title ?? String(),
       attributes: [.font: UIFont.CheeseFontMedium(size: 11.8)]))
     titleLabel.attributedText = attributeString
-    imageView.kf.setImage(with: URL(string: model.img_url.getUrlWithEncoding()))
   }
   
   private func addConstraint(){

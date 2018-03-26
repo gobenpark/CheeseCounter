@@ -65,13 +65,19 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView1)
     addSubview(circleView2)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
-    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
+    circleView1.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey1)
+    }
+      
+    circleView2.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey2)
+    }
+      
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
     })
@@ -82,6 +88,15 @@ final class MainSurveyImageView: UIView{
       circleView1.removeFromSuperview()
       circleView2.removeFromSuperview()
     }
+  }
+  
+  private func makeCircleProgressViewInnerText(_ survey: Double) -> NSMutableAttributedString {
+    let text = String(format: "%.1f%%", survey * 100)
+    let textAttributes = [ .foregroundColor : UIColor.white,
+                           .font: UIFont.CheeseFontRegular(size: 25.8) ] as [NSAttributedStringKey : Any]
+    let attributedText = NSMutableAttributedString(string: text, attributes: textAttributes)
+    attributedText.addAttribute(.font, value: UIFont.CheeseFontRegular(size: 15.8), range: (text as NSString).range(of: "%"))
+    return attributedText
   }
   
   private func result4ImageMapper(result: MainSurveyList.CheeseData.Survey_Result){
@@ -103,18 +118,30 @@ final class MainSurveyImageView: UIView{
     addSubview(circleView3)
     addSubview(circleView4)
     
-    circleView1.circleProgressView.progress = survey1
-    circleView2.circleProgressView.progress = survey2
-    circleView3.circleProgressView.progress = survey3
-    circleView4.circleProgressView.progress = survey4
+    circleView1.circleProgressView.setProgress(CGFloat(survey1), animated: false)
+    circleView2.circleProgressView.setProgress(CGFloat(survey2), animated: false)
+    circleView3.circleProgressView.setProgress(CGFloat(survey3), animated: false)
+    circleView4.circleProgressView.setProgress(CGFloat(survey4), animated: false)
     
-    circleView1.circleLabel.attributedText = attributeFactory(count: survey1)
-    circleView2.circleLabel.attributedText = attributeFactory(count: survey2)
-    circleView3.circleLabel.attributedText = attributeFactory(count: survey3)
-    circleView4.circleLabel.attributedText = attributeFactory(count: survey4)
+    circleView1.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey1)
+    }
     
-    circleView2.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
-    circleView4.circleProgressView.trackFillColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView2.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey2)
+    }
+    circleView3.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey3)
+    }
+    
+    circleView4.circleProgressView.setHintAttributedGenerationBlock { [weak self] _ in
+      self?.makeCircleProgressViewInnerText(survey4)
+    }
+      
+
+    
+    circleView2.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
+    circleView4.circleProgressView.progressBarProgressColor = #colorLiteral(red: 0.5810118318, green: 0.8874687552, blue: 0.3601810932, alpha: 1)
     
     circleView1.snp.remakeConstraints({ (make) in
       make.edges.equalTo(imageButton1)
@@ -136,18 +163,18 @@ final class MainSurveyImageView: UIView{
     }
   }
   
-  private func attributeFactory(count: Double) -> NSMutableAttributedString{
-    let attributedStringParagraphStyle = NSMutableParagraphStyle()
-    attributedStringParagraphStyle.alignment = NSTextAlignment.center
-    
-    let attributeString = NSMutableAttributedString(string: "\((count*100).roundToPlaces(places: 1))%\n",
-      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
-    attributeString.append(NSAttributedString(
-        string: "자세히 보기",
-        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1)
-          ,NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
-    return attributeString
-  }
+//  private func attributeFactory(count: Double) -> NSMutableAttributedString{
+//    let attributedStringParagraphStyle = NSMutableParagraphStyle()
+//    attributedStringParagraphStyle.alignment = NSTextAlignment.center
+//
+//    let attributeString = NSMutableAttributedString(string: "\((count*100).roundToPlaces(places: 1))%\n",
+//      attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 25.8)])
+//    attributeString.append(NSAttributedString(
+//        string: "자세히 보기",
+//        attributes: [NSAttributedStringKey.font: UIFont.CheeseFontRegular(size: 8.1)
+//          ,NSAttributedStringKey.paragraphStyle:attributedStringParagraphStyle]))
+//    return attributeString
+//  }
   
   private func selectedColor(of number: String){
     if number == "1"{
@@ -282,10 +309,13 @@ final class ImageButton: UIButton {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.gradientLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-    self.topLineLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 0.5)
-    self.bottomLineLayer.frame = CGRect(x: 0, y: self.frame.height-0.5, width: self.frame.width, height: 0.5)
-    self.rightLineLayer.frame = CGRect(x: self.frame.width-0.5, y: 0, width: 0.5, height: self.frame.height)
+    UIView.performWithoutAnimation { [weak self] in
+      guard let `self` = self else {return}
+      self.gradientLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+      self.topLineLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 0.5)
+      self.bottomLineLayer.frame = CGRect(x: 0, y: self.frame.height-0.5, width: self.frame.width, height: 0.5)
+      self.rightLineLayer.frame = CGRect(x: self.frame.width-0.5, y: 0, width: 0.5, height: self.frame.height)
+    }
   }
   
   required init?(coder aDecoder: NSCoder) {

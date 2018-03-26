@@ -1,7 +1,7 @@
 pods/
 .DS_Store
 *.zip
-*.lock
+
 ## Build generated
 build/
 DerivedData/
@@ -67,4 +67,4 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-*.xcuserstate
+xcuserstate/

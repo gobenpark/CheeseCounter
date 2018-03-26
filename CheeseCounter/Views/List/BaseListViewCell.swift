@@ -108,7 +108,7 @@ class BaseListViewCell: UICollectionViewCell{
     
     peopleLabel.snp.makeConstraints { (make) in
       make.left.equalTo(peopleImage.snp.right).offset(6.5)
-      make.width.equalTo(10)
+      make.width.equalTo(30)
       make.centerY.equalTo(peopleImage)
     }
     

@@ -172,10 +172,12 @@ final class MainViewCell: UICollectionViewCell{
     }
   }
 
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    mainView.moreButton.isHidden = mainView.title.isTruncated()
-  }
+//  override func layoutSubviews() {
+//    super.layoutSubviews()
+//    //if let model = model, !model.isExpand {
+//      mainView.moreButton.isHidden = !mainView.title.isTruncated()
+//    //}
+//  }
 }
 
 class SelectedImageView: UIView {

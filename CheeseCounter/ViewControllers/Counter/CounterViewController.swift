@@ -89,7 +89,7 @@ class CounterViewController: ButtonBarPagerTabStripViewController{
       , progressPercentage: CGFloat
       , changeCurrentIndex: Bool
       , animated: Bool) -> Void in
-      
+
       guard changeCurrentIndex == true else { return }
       oldCell?.label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
       newCell?.label.textColor = .black

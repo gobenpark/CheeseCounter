@@ -1,7 +1,6 @@
 PODS:
   - AAFragmentManager (0.1.1)
-  - Alamofire (4.6.0)
-  - ALCameraViewController (3.0.3)
+  - Alamofire (4.7.0)
   - AnyDate (1.0.4)
   - BetterSegmentedControl (0.9)
   - Bolts (1.9.0):
@@ -14,46 +13,47 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - Charts (3.0.5):
-    - Charts/Core (= 3.0.5)
-  - Charts/Core (3.0.5)
+  - Charts (3.1.0):
+    - Charts/Core (= 3.1.0)
+  - Charts/Core (3.1.0)
+  - CircleProgressBar (0.32)
   - CircleProgressView (1.1.3)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - Differentiator (3.0.2)
   - DZNEmptyDataSet (1.8.1)
-  - Eureka (4.0.1)
-  - Fabric (1.7.5)
-  - FBSDKCoreKit (4.31.0):
+  - Eureka (4.1.1)
+  - Fabric (1.7.6)
+  - FBSDKCoreKit (4.31.1):
     - Bolts (~> 1.7)
-  - FBSDKShareKit (4.31.0):
-    - FBSDKCoreKit (~> 4.31.0)
-  - Firebase/Core (4.9.0):
-    - FirebaseAnalytics (= 4.0.9)
-    - FirebaseCore (= 4.0.15)
-  - Firebase/DynamicLinks (4.9.0):
+  - FBSDKShareKit (4.31.1):
+    - FBSDKCoreKit (~> 4.31.1)
+  - Firebase/Core (4.11.0):
+    - FirebaseAnalytics (= 4.1.0)
+    - FirebaseCore (= 4.0.18)
+  - Firebase/DynamicLinks (4.11.0):
     - Firebase/Core
     - FirebaseDynamicLinks (= 2.3.2)
-  - Firebase/Messaging (4.9.0):
+  - Firebase/Messaging (4.11.0):
     - Firebase/Core
-    - FirebaseMessaging (= 2.1.0)
-  - FirebaseAnalytics (4.0.9):
+    - FirebaseMessaging (= 2.1.1)
+  - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.15):
+  - FirebaseCore (4.0.18):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseDynamicLinks (2.3.2):
     - FirebaseAnalytics (~> 4.0)
-  - FirebaseInstanceID (2.0.9):
+  - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.1.0):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseMessaging (2.1.1):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
+    - Protobuf (~> 3.5)
   - FlexibleImage (1.8)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/Logger (2.1.3):
@@ -78,7 +78,7 @@ PODS:
   - KakaoOpenSDK/KakaoOpenSDK (1.7.0)
   - KakaoOpenSDK/KakaoS2 (1.7.0):
     - KakaoOpenSDK/KakaoCommon
-  - Kingfisher (4.6.2)
+  - Kingfisher (4.6.4)
   - lottie-ios (2.5.0)
   - Moya/Core (11.0.1):
     - Alamofire (~> 4.1)
@@ -124,6 +124,8 @@ PODS:
   - SwiftyBeaver (1.5.1)
   - SwiftyImage (1.2.0)
   - SwiftyJSON (4.0.0)
+  - SwiftyUserDefaults (3.0.1)
+  - TLPhotoPicker (1.5.4)
   - Toaster (2.1.1)
   - TTTAttributedLabel (2.0.0)
   - UPCarouselFlowLayout (1.1.1)
@@ -140,12 +142,12 @@ PODS:
 DEPENDENCIES:
   - AAFragmentManager
   - Alamofire
-  - ALCameraViewController
   - AnyDate
   - BetterSegmentedControl
   - Carte
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`, branch `wip/swift4`)
   - Charts
+  - CircleProgressBar (~> 0.32)
   - CircleProgressView
   - Crashlytics
   - DZNEmptyDataSet
@@ -182,6 +184,8 @@ DEPENDENCIES:
   - SwiftyBeaver
   - SwiftyImage
   - SwiftyJSON
+  - SwiftyUserDefaults
+  - TLPhotoPicker (~> 1.5.3)
   - Toaster
   - TTTAttributedLabel
   - UPCarouselFlowLayout
@@ -209,34 +213,34 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AAFragmentManager: ece927d46c1b64c6bf9a79fc0fd77de0abc32dd2
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  ALCameraViewController: 6398a9282057f709b87a1ecc52a83b48028ade64
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   AnyDate: 71846ac55f25c3e78ff5aa87ad173deb196f6b40
   BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Carte: c8200bfb59b77336aa2f02e84cc4ac0fa820034d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
+  Charts: 0b0c96f6118b6ce63f11adbcaa3b31045ee4d772
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   CircleProgressView: 66e4d663a2bc7a9086e37b518868be923cd0a23a
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
-  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
-  FBSDKCoreKit: 54db4c581123745d25a9f7c1608020b3aeabd118
-  FBSDKShareKit: 7c3a2e6bb5be15676aebe256444afb18c5d238b3
-  Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
-  FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
-  FirebaseCore: 3bd047463058fa6b5d312c97502c52e45401cdfb
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
+  FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
+  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
+  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
+  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
   FirebaseDynamicLinks: 38b68641d24e78d0277a9205d988ce22875d5a25
-  FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
-  FirebaseMessaging: 2bafab2d0f3ab3dfd753101c2c32995c2051b5da
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  FirebaseMessaging: db0e01c52ef7e1f42846431273558107d084ede4
   FlexibleImage: 2beceba1bb67bc7cd9297cd2778f1fc6c5f23ada
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Hero: ce59e81c79390613d97b43da7179e2c5e1017e04
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   KakaoOpenSDK: 82e9c4d57c7d273360e4b49c2d8a0d8626216143
-  Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
+  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
   lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   Moya: 3d594ada51a21cc02b18739ab578a1984f900c8a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -261,6 +265,8 @@ SPEC CHECKSUMS:
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
   SwiftyImage: ebaa7c7b6163cd4ad102f3bb05a8fb276d35b4f3
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
+  TLPhotoPicker: 23cf96367d0aa5cfe35d324be1f2c0db76d72c32
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
@@ -270,6 +276,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: ac70993638f0ebd2efdd58082d2bdd4cecbd2b44
+PODFILE CHECKSUM: 62ee5f87f31d806d5150822d67cbafe6a3e7cc96
 
 COCOAPODS: 1.4.0

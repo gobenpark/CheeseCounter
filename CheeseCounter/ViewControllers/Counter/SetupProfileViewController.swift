@@ -70,7 +70,7 @@ extension SetupProfileViewController: UITableViewDataSource{
       let cell = tableView.dequeueReusableCell(withIdentifier: CounterProfileCell.ID, for: indexPath) as! CounterProfileCell
       guard let data = userData else {return cell}
       let url = URL(string: data.img_url ?? "")
-      cell.imgView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "profile_medium"), options: nil, progressBlock: nil, completionHandler: nil)
+      cell.imgView.kf.setImage(with: url)
       return cell
     case 1...4:
       let cell = tableView.dequeueReusableCell(withIdentifier: SubProfileCell.ID, for: indexPath) as! SubProfileCell
