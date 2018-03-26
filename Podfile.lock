@@ -13,15 +13,10 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-<<<<<<< master
-  - Charts (3.0.5):
-    - Charts/Core (= 3.0.5)
-  - Charts/Core (3.0.5)
-  - CircleProgressBar (0.32)
   - Charts (3.1.0):
     - Charts/Core (= 3.1.0)
   - Charts/Core (3.1.0)
->>>>>>> 버전 체크 스토어이동 완료
+  - CircleProgressBar (0.32)
   - CircleProgressView (1.1.3)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
@@ -224,12 +219,8 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Carte: c8200bfb59b77336aa2f02e84cc4ac0fa820034d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-<<<<<<< master
-  Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
-  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
-=======
   Charts: 0b0c96f6118b6ce63f11adbcaa3b31045ee4d772
->>>>>>> 버전 체크 스토어이동 완료
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   CircleProgressView: 66e4d663a2bc7a9086e37b518868be923cd0a23a
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
@@ -285,8 +276,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-=======
-PODFILE CHECKSUM: ac3b38ed42e0a4233f25d17b1ba7ac41927f5bb6
->>>>>>> 버전 체크 스토어이동 완료
+PODFILE CHECKSUM: 62ee5f87f31d806d5150822d67cbafe6a3e7cc96
 
 COCOAPODS: 1.4.0
