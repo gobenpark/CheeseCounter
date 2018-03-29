@@ -32,11 +32,11 @@ final class ReplyViewController: UIViewController{
   let detailAction = PublishSubject<Int>()
   let replyEmpathyAction = PublishSubject<Bool>()
   
-  
   private var didSetupViewConstraints = false
   
   var boxBottomConstraint: Constraint?
   var model: MainSurveyList.CheeseData
+  let updateSurvey: ((_ model: MainSurveyList.CheeseData, _ indexPath: IndexPath) -> Void)?
   
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<ReplyViewModel>(configureCell: { ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: ReplyViewCell.self), for: idx) as! ReplyViewCell
@@ -86,9 +86,11 @@ final class ReplyViewController: UIViewController{
     return button
   }()
   
-  init(model: MainSurveyList.CheeseData, indexPath: IndexPath = IndexPath()) {
+  init(model: MainSurveyList.CheeseData, indexPath: IndexPath = IndexPath(), updateSurvey: (((_ model: MainSurveyList.CheeseData, _ indexPath: IndexPath) -> Void))? = nil) {
+    
     self.model = model
     self.indexPath = indexPath
+    self.updateSurvey = updateSurvey
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -132,7 +134,7 @@ final class ReplyViewController: UIViewController{
         guard let model = model.result.data.first, let `self` = self else {return}
         self.model = model
         self.collectionView.reloadSections([0], animationStyle: .none)
-        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
+        self.updateSurvey?(self.model, self.indexPath)
       }).disposed(by: disposeBag)
     
     refreshView.rx.controlEvent(.valueChanged)
@@ -162,7 +164,21 @@ final class ReplyViewController: UIViewController{
       .drive(onNext: {[weak self] data in
         guard let `self` = self else {return}
         self.messageInputBar.replyType = .ReReply(replyData: data)
-        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
+      })
+      .disposed(by: disposeBag)
+    
+    writeReplySubject
+      .flatMap {[unowned self] (_)  in
+        return CheeseService
+          .provider
+          .request(.getSurveyByIdV2(id: self.model.id))
+          .map(MainSurveyList.self)
+          .asObservable()
+      }.subscribe(onNext: {[weak self] (model) in
+        guard let model = model.result.data.first, let `self` = self else {return}
+        self.model = model
+        self.collectionView.reloadSections([0], animationStyle: .none)
+        self.updateSurvey?(self.model, self.indexPath)
       }).disposed(by: disposeBag)
     
     detailAction
@@ -236,18 +252,12 @@ final class ReplyViewController: UIViewController{
         .map(MainSurveyList.self)
         .asObservable()
       }.subscribe(onNext: {[weak self] (model) in
-        guard let model = model.result.data.first else {return}
-        self?.model = model
-        self?.replyRequest()
-        self?.collectionView.reloadData()
+        guard let `self` = self, let model = model.result.data.first else {return}
+        self.model = model
+        self.replyRequest()
+        self.collectionView.reloadData()
+        self.updateSurvey?(self.model, self.indexPath)
       }).disposed(by: disposeBag)
-    
-    messageSend
-      .subscribe(onNext: {[weak self] (bar) in
-        guard let `self` = self else {return}
-        CheeseViewController.updateSurvey.onNext((self.model.id,self.indexPath))
-      }).disposed(by: disposeBag)
-    
   }
   
   private func navigationBarSetup(){

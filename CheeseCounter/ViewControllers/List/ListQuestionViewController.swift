@@ -17,6 +17,11 @@ import Toaster
 import DZNEmptyDataSet
 
 class ListQuestionViewController: BaseListViewController, IndicatorInfoProvider{
+  
+  lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { model, indexPath in
+    self.datas.value[indexPath.section].items[indexPath.item] = model
+    self.collectionView.reloadItems(at: [indexPath])
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,7 +53,7 @@ class ListQuestionViewController: BaseListViewController, IndicatorInfoProvider{
       })
       .subscribe (onNext:{ [weak self] (data) in
         guard let `self` = self else {return}
-        self.navigationController?.pushViewController(ReplyViewController(model: data.0,indexPath: data.1), animated: true)
+        self.navigationController?.pushViewController(ReplyViewController(model: data.0, indexPath: data.1, updateSurvey: self.updateSurvey), animated: true)
         },onError:{ error in
           log.error(error)
       }).disposed(by: disposeBag)

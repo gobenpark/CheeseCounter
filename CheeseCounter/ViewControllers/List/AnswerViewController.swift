@@ -16,6 +16,11 @@ import DZNEmptyDataSet
 
 class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
   
+  lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { model, indexPath in
+    self.datas.value[indexPath.section].items[indexPath.item] = model
+    self.collectionView.reloadItems(at: [indexPath])
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.emptyDataSetSource = self
@@ -39,7 +44,9 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
       })
       .subscribe (onNext:{ [weak self] (data) in
         guard let `self` = self else {return}
-        self.navigationController?.pushViewController(ReplyViewController(model: data.0,indexPath: data.1), animated: true)
+        log.info("Data0 : \(data.0)")
+        log.info("Data1 : \(data.1)")
+        self.navigationController?.pushViewController(ReplyViewController(model: data.0,indexPath: data.1, updateSurvey: self.updateSurvey), animated: true)
         },onError:{ error in
           log.error(error)
       }).disposed(by: disposeBag)

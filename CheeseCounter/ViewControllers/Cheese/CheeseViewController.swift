@@ -46,7 +46,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   /// 검색인지
   let isSearch: Bool
   
-  static let updateSurvey = PublishSubject<(String,IndexPath)>()
+  //static let updateSurvey = PublishSubject<(String,IndexPath)>()
   let disposeBag = DisposeBag()
   let cheeseDatas = Variable<[CheeseViewModel]>([])
   let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData,IndexPath?)>()
@@ -54,6 +54,11 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   let replyEvent = PublishSubject<IndexPath>()
   let empathyEvent = PublishSubject<(String, IndexPath)>()
   let shareEvent = PublishSubject<IndexPath>()
+  
+  lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { model, indexPath in
+    self.cheeseDatas.value[indexPath.section].items[indexPath.item] = model
+    self.collectionView.reloadItems(at: [indexPath])
+  }
   
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
@@ -130,22 +135,25 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 100
+    
 
-    CheeseViewController
-      .updateSurvey
-      .flatMap { (data) in
-        return CheeseService.provider
-          .request(.getSurveyByIdV2(id: data.0))
-          .filter(statusCode: 200)
-          .map(MainSurveyList.self)
-          .map{model in return (model, data.1)}
-      }.subscribe(onNext: {[weak self] (data) in
-        guard let `self` = self , let result = data.0.result.data.first else {return}
-        self.cheeseDatas.value[data.1.section].items[data.1.item] = result
-        self.collectionView.reloadItems(at: [data.1])
-        },onError:{error in
-          log.error(error)
-      }).disposed(by: disposeBag)
+//    CheeseViewController
+//      .updateSurvey
+//      .flatMap { (data) in
+//        return CheeseService.provider
+//          .request(.getSurveyByIdV2(id: data.0))
+//          .filter(statusCode: 200)
+//          .map(MainSurveyList.self)
+//          .map{model in return (model, data.1)}
+//      }.subscribe(onNext: {[weak self] (data) in
+//        guard let `self` = self , let result = data.0.result.data.first else {return}
+//        log.info(data)
+//        self.cheeseDatas.value[data.1.section].items[data.1.item] = result
+//        self.collectionView.reloadItems(at: [data.1])
+//
+//        },onError:{error in
+//          log.error(error)
+//      }).disposed(by: disposeBag)
     
     myPageButton.rx.tap
       .map{ _ in return MypageNaviViewController()}
@@ -219,7 +227,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
         if model.0.survey_result == nil{
           Toast(text: "질문에 먼저 응답해주세요", delay: 0.4, duration: 1).show()
         }else{
-          self.navigationController?.pushViewController(ReplyViewController(model: model.0, indexPath: model.1), animated: true)
+          self.navigationController?.pushViewController(ReplyViewController(model: model.0, indexPath: model.1, updateSurvey: self.updateSurvey), animated: true)
         }
       }).disposed(by: disposeBag)
     
