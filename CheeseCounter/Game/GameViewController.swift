@@ -205,7 +205,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 200
     self.view.addSubview(imageView)
-    self.view.addSubview(pinView)
     self.view.addSubview(rouletteImage)
     self.view.addSubview(spinWheelControl)
     self.view.insertSubview(spinBGView, belowSubview: spinWheelControl)
@@ -221,6 +220,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     self.view.addSubview(divideView)
     self.view.addSubview(divideView1)
     self.spinBGView.backgroundColor = .gray
+    self.view.addSubview(pinView)
     
     addConstraint()
   }

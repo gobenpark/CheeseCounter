@@ -14,6 +14,11 @@ import RxSwift
 import RxCocoa
 import SwiftyJSON
 
+class UserData{
+  static let instance = UserData()
+  var userID = String()
+}
+
 class SplashViewController: UIViewController {
   let disposeBag = DisposeBag()
   
@@ -53,6 +58,7 @@ class SplashViewController: UIViewController {
                 NotificationCenter.default.post(name: NSNotification.Name("splashEnd"), object: ["isEnable":false])
               }else if json["result"]["data"]["is_enable"].intValue == 1{
                 AppDelegate.instance?.window?.rootViewController = MainTabBarController()
+                UserData.instance.userID = json["result"]["data"]["id"].stringValue
                 NotificationCenter.default.post(name: NSNotification.Name("splashEnd"), object: ["isEnable":true])
               }
             }else{
