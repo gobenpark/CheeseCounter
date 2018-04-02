@@ -48,7 +48,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
       }else{
         sympathyButton.isSelected = false
       }
-
+      
       setNeedsLayout()
       layoutIfNeeded()
     }
@@ -129,7 +129,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     deleteLabel = UILabel()
     deleteLabel.text = "삭제"
     deleteLabel.textColor = .white
-
+    
     self.insertSubview(deleteLabel, belowSubview: self.contentView)
     
     pan = UIPanGestureRecognizer(target: self, action: #selector(self.onPan))
@@ -145,7 +145,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
           let parentID = self.model?.id else {return}
         let data = ReplyActionData(nickname: nickname, parentID: parentID)
         self.parentViewController?.writeReplySubject.onNext(data)
-    }).disposed(by: disposeBag)
+      }).disposed(by: disposeBag)
     
     sympathyButton
       .rx
@@ -158,15 +158,15 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
           .request(.insertLike(reply_id: self.model?.id ?? String(), survey_id: self.model?.survey_id ?? String()))
           .filter(statusCode: 200)
           .asObservable()
-    }.do(onNext: {[sympathyButton] _ in
-      sympathyButton.isSelected = true
-    }).catchErrorJustReturn(Response(statusCode: 400, data: Data()))
+      }.do(onNext: {[sympathyButton] _ in
+        sympathyButton.isSelected = true
+      }).catchErrorJustReturn(Response(statusCode: 400, data: Data()))
       .subscribe(onNext: {[weak self] (response) in
         if response.statusCode == 200{
           self?.parentViewController?.replyEmpathyAction.onNext(true)
         }
       }).disposed(by: disposeBag)
-   
+    
     deleteLabel.rx.tapGesture()
       .when(.recognized)
       .subscribe(onNext: { [weak self] _ in
@@ -178,18 +178,6 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     
     addConstraint()
   }
-  
-//  if abs(pan.velocity(in: self).x) > 500 {
-//  let collectionView: UICollectionView = self.superview as! UICollectionView
-//  let indexPath: IndexPath = collectionView.indexPathForItem(at: self.center)!
-//  self.parentViewController?.deleteReplyAction.onNext((self.model!, indexPath))
-//  } else {
-//  UIView.animate(withDuration: 0.2, animations: {
-//  self.setNeedsLayout()
-//  self.layoutIfNeeded()
-//
-  
-  
   
   private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
@@ -244,6 +232,9 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
       make.left.equalTo(createDateLabel.snp.right).offset(10)
       make.bottom.equalTo(hartIcon)
     }
+    
+   
+    
     
   }
   
@@ -300,7 +291,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
         // cancel
         // 메뉴 닫기
         UIView.animate(withDuration: 0.2, animations: {
-          self.sympathyButton.isHidden = false
+          
           self.setNeedsLayout()
           self.layoutIfNeeded()
         })
@@ -309,19 +300,12 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
         UIView.animate(withDuration: 0.2, animations: {
           let width = self.contentView.frame.width
           let height = self.contentView.frame.height
-          self.sympathyButton.isHidden = true
           self.contentView.frame = CGRect(x: -100, y: 0, width: width, height: height)
           self.deleteLabel.frame = CGRect(x: -80 + width, y: 0, width: 100, height: height)
         })
       }
     }
   }
-  
-  
-  
-  
-  
-  
   
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return true
@@ -331,7 +315,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
   }
   
- fileprivate func dateSet(of label: UILabel, data: ReplyModel.Data){
+  fileprivate func dateSet(of label: UILabel, data: ReplyModel.Data){
     let now = Date()
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
