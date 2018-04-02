@@ -16,7 +16,6 @@ import SwiftyUserDefaults
   import RxCocoa
 #endif
 
-
 let globalTabEvent = PublishSubject<Int>()
 
 class MainTabBarController: UITabBarController
@@ -151,6 +150,8 @@ class MainTabBarController: UITabBarController
     message.subscribe(toTopic: "update")
     message.subscribe(toTopic: "event")
   }
+  
+
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

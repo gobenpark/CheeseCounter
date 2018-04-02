@@ -263,6 +263,8 @@ extension CheeseCounter: TargetType{
       return .requestParameters(
         parameters: ["id":id,"fcm_token":fcm_token,"img_url":img_url,"access_token":access_token,"version": version],
         encoding: URLEncoding.httpBody)
+    case .deleteReply(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
     default:
       return .requestPlain
     }

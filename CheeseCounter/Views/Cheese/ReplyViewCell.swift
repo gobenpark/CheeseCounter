@@ -11,9 +11,16 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Moya
+import RxGesture
 
-class ReplyViewCell: UICollectionViewCell{
+
+class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
   let disposeBag = DisposeBag()
+  
+  var pan: UIPanGestureRecognizer!
+  var isSwipeMenuOpened: Bool = false
+  
+  var deleteLabel: UILabel!
   
   var constraint: Constraint?
   var model: ReplyModel.Data?{
@@ -41,7 +48,7 @@ class ReplyViewCell: UICollectionViewCell{
       }else{
         sympathyButton.isSelected = false
       }
-      
+
       setNeedsLayout()
       layoutIfNeeded()
     }
@@ -116,6 +123,20 @@ class ReplyViewCell: UICollectionViewCell{
     self.contentView.addSubview(hartIcon)
     self.contentView.addSubview(hartCount)
     
+    self.contentView.backgroundColor = .white
+    self.backgroundColor = .red
+    
+    deleteLabel = UILabel()
+    deleteLabel.text = "삭제"
+    deleteLabel.textColor = .white
+
+    self.insertSubview(deleteLabel, belowSubview: self.contentView)
+    
+    pan = UIPanGestureRecognizer(target: self, action: #selector(self.onPan))
+    pan.delegate = self
+    
+    self.addGestureRecognizer(pan)
+    
     writeReplyButton.rx
       .tap
       .subscribe(onNext:{[weak self] in
@@ -145,9 +166,30 @@ class ReplyViewCell: UICollectionViewCell{
           self?.parentViewController?.replyEmpathyAction.onNext(true)
         }
       }).disposed(by: disposeBag)
+   
+    deleteLabel.rx.tapGesture()
+      .when(.recognized)
+      .subscribe(onNext: { [weak self] _ in
+        guard let `self` = self, let model = self.model else { return }
+        let collectionView: UICollectionView = self.superview as! UICollectionView
+        let indexPath: IndexPath = collectionView.indexPathForItem(at: self.center)!
+        self.parentViewController?.deleteReplyAction.onNext((model, indexPath)) })
+      .disposed(by: disposeBag)
     
     addConstraint()
   }
+  
+//  if abs(pan.velocity(in: self).x) > 500 {
+//  let collectionView: UICollectionView = self.superview as! UICollectionView
+//  let indexPath: IndexPath = collectionView.indexPathForItem(at: self.center)!
+//  self.parentViewController?.deleteReplyAction.onNext((self.model!, indexPath))
+//  } else {
+//  UIView.animate(withDuration: 0.2, animations: {
+//  self.setNeedsLayout()
+//  self.layoutIfNeeded()
+//
+  
+  
   
   private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
@@ -202,12 +244,91 @@ class ReplyViewCell: UICollectionViewCell{
       make.left.equalTo(createDateLabel.snp.right).offset(10)
       make.bottom.equalTo(hartIcon)
     }
+    
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
     profileimg.layer.cornerRadius = profileimg.frame.height/2
     profileimg.layer.masksToBounds = true
+    
+    if (pan.state == UIGestureRecognizerState.changed) {
+      let p: CGPoint = pan.translation(in: self)
+      let width = self.contentView.frame.width
+      let height = self.contentView.frame.height
+      
+      var x = p.x
+      if x < -100 {
+        x = -100
+      }
+      if x > 0 {
+        x = 0
+      }
+      self.contentView.frame = CGRect(x: x, y: 0, width: width, height: height)
+      self.deleteLabel.frame = CGRect(x: x + width + 20, y: 0, width: 100, height: height)
+    }
+  }
+  
+  
+  @objc func onPan(_ pan: UIPanGestureRecognizer) {
+    guard let model = self.model else { return }
+    
+    if model.user_id != UserData.instance.userID || model.hasReply {
+      return
+    }
+    
+    let p: CGPoint = pan.translation(in: self)
+    if pan.state == UIGestureRecognizerState.began {
+      
+    } else if pan.state == UIGestureRecognizerState.changed {
+      self.setNeedsLayout()
+      //self.layoutIfNeeded()
+    } else {
+      if abs(pan.velocity(in: self).x) > 500 {
+        self.isSwipeMenuOpened = true
+        
+      } else {
+        // touch up OR touch cancel
+        if p.x < -80 {
+          self.isSwipeMenuOpened = true
+        } else {
+          self.isSwipeMenuOpened = false
+        }
+      }
+      
+      if !self.isSwipeMenuOpened {
+        // cancel
+        // 메뉴 닫기
+        UIView.animate(withDuration: 0.2, animations: {
+          self.sympathyButton.isHidden = false
+          self.setNeedsLayout()
+          self.layoutIfNeeded()
+        })
+      } else {
+        // 메뉴 열기
+        UIView.animate(withDuration: 0.2, animations: {
+          let width = self.contentView.frame.width
+          let height = self.contentView.frame.height
+          self.sympathyButton.isHidden = true
+          self.contentView.frame = CGRect(x: -100, y: 0, width: width, height: height)
+          self.deleteLabel.frame = CGRect(x: -80 + width, y: 0, width: 100, height: height)
+        })
+      }
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
+  }
+  
+  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
   }
   
  fileprivate func dateSet(of label: UILabel, data: ReplyModel.Data){

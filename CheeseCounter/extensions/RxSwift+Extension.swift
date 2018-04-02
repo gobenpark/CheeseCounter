@@ -13,21 +13,33 @@ extension ObservableType where E == (ReplyModel){
   
   func replyMapper() -> Observable<[ReplyViewModel]>{
     return flatMap { (model) -> Observable<[ReplyViewModel]> in
-        var copy = model
-        var tempArray = [ReplyModel.Data]()
+      var copy = model
+      var dataArray = [ReplyModel.Data]()
+      
       for parent in model.result.data{
+        var tempArray = [ReplyModel.Data]()
+        
         if parent.parent_id == "0"{
-          tempArray.append(parent)
           for child in model.result.data{
             if child.parent_id == parent.id{
               tempArray.append(child)
             }
           }
+        } else {
+          continue
         }
+        
+        if tempArray.count > 0 {
+          var copiedParent = parent
+          copiedParent.hasReply = true
+          tempArray.insert(copiedParent, at: 0)
+        } else {
+          tempArray.append(parent)
+        }
+        dataArray.append(contentsOf: tempArray)
       }
-      log.info(copy.result.data)
-        copy.result.data = tempArray
-     return Observable<[ReplyViewModel]>.just([ReplyViewModel(items: copy.result.data)])
+      copy.result.data = dataArray
+      return Observable<[ReplyViewModel]>.just([ReplyViewModel(items: copy.result.data)])
     }
   }
   

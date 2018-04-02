@@ -31,9 +31,9 @@ final class ReplyViewController: UIViewController{
   let shareEvent = PublishSubject<Bool>()
   let detailAction = PublishSubject<Int>()
   let replyEmpathyAction = PublishSubject<Bool>()
+  let deleteReplyAction = PublishSubject<(ReplyModel.Data, IndexPath)>()
   
   private var didSetupViewConstraints = false
-  
   var boxBottomConstraint: Constraint?
   var model: MainSurveyList.CheeseData
   let updateSurvey: ((_ model: MainSurveyList.CheeseData, _ indexPath: IndexPath) -> Void)?
@@ -150,10 +150,9 @@ final class ReplyViewController: UIViewController{
       .drive(collectionView.rx.items(dataSource: dataSources))
       .disposed(by: disposeBag)
     
-    
     replyEmpathyAction
       .subscribe {[weak self] (_) in
-      self?.replyRequest()
+        self?.replyRequest()
       }.disposed(by: disposeBag)
     
     writeReplySubject
@@ -180,6 +179,41 @@ final class ReplyViewController: UIViewController{
         self.collectionView.reloadSections([0], animationStyle: .none)
         self.updateSurvey?(self.model, self.indexPath)
       }).disposed(by: disposeBag)
+    
+    deleteReplyAction
+      .flatMap {(data) in
+        return CheeseService.provider
+          .request(.deleteReply(id: data.0.id))
+          .filter(statusCode: 200)
+          .map{ _ in return data }
+          .asObservable()}
+      .flatMap { (data) in
+        CheeseService.provider
+          .request(.getSurveyByIdV2(id: data.0.survey_id))
+          .filter(statusCode: 200)
+          .map(MainSurveyList.self)
+          .map{model in return (model, data.1)}}
+     
+      .subscribe(onNext: { [weak self] (data) in
+        guard let model = data.0.result.data.first, let `self` = self else {return}
+        self.model = model
+//        self.dataSubject.value.remove(at: data.1.)
+//        self.dataSources.sectionModels.first?.items.remove(at: data.
+//        self.dataSources.sectionModels[0].items.remove(at: data.1.item)
+        var sectionModel = self.dataSources.sectionModels
+        sectionModel[0].items.remove(at: data.1.item)
+        self.dataSources.setSections(sectionModel)
+        
+        self.collectionView.performBatchUpdates({
+          self.collectionView.deleteItems(at: [data.1])
+        }) { (finished) in
+          self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
+        }
+        //self.collectionView.reloadData()
+        //                self.collectionView.reloadItemsAtIndexPaths([data.1], animationStyle: .none)
+        //        self.collectionView.reloadSections([0], animationStyle: .none)
+        self.updateSurvey?(self.model, self.indexPath)})
+      .disposed(by: disposeBag)
     
     detailAction
       .subscribe (onNext:{[weak self] (idx) in
@@ -242,15 +276,15 @@ final class ReplyViewController: UIViewController{
           .do(onSuccess: {[weak self] (bar) in
             bar?.reloadData()
           })
-    }.share()
+      }.share()
     
     messageSend
       .flatMap {[unowned self] (_)  in
         return CheeseService
-        .provider
-        .request(.getSurveyByIdV2(id: self.model.id))
-        .map(MainSurveyList.self)
-        .asObservable()
+          .provider
+          .request(.getSurveyByIdV2(id: self.model.id))
+          .map(MainSurveyList.self)
+          .asObservable()
       }.subscribe(onNext: {[weak self] (model) in
         guard let `self` = self, let model = model.result.data.first else {return}
         self.model = model
@@ -293,10 +327,10 @@ final class ReplyViewController: UIViewController{
   
   override func updateViewConstraints() {
     super.updateViewConstraints()
-
+    
     guard !self.didSetupViewConstraints else { return }
     self.didSetupViewConstraints = true
-
+    
     self.messageInputBar.snp.makeConstraints { make in
       make.left.right.equalTo(0)
       boxBottomConstraint = make.bottom.equalTo(self.bottomLayoutGuide.snp.top).constraint

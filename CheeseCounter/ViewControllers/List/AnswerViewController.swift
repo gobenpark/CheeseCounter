@@ -44,8 +44,6 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
       })
       .subscribe (onNext:{ [weak self] (data) in
         guard let `self` = self else {return}
-        log.info("Data0 : \(data.0)")
-        log.info("Data1 : \(data.1)")
         self.navigationController?.pushViewController(ReplyViewController(model: data.0,indexPath: data.1, updateSurvey: self.updateSurvey), animated: true)
         },onError:{ error in
           log.error(error)
