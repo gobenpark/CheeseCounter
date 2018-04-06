@@ -16,6 +16,7 @@ import Toaster
 import GameplayKit
 import PMAlertController
 import Kingfisher
+import CryptoSwift
 
 enum StageStatus: Int{
   case first = 1
@@ -484,9 +485,9 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }
   
   private func updateRequest(id: String, stage: String,re: String, isDone: Bool){
-    
+    guard let result = cryptoGenerate(of: re) else {return}
     if !isDone{
-      provider.request(.updateRouletteRun(id: id, stage: stage, re: re))
+      provider.request(.updateRouletteRun(id: id, stage: stage, re: result))
         .filter(statusCode: 200)
         .mapJSON()
         .subscribe(onSuccess: { (result) in
@@ -494,7 +495,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
           log.error(error)
         }).disposed(by: disposeBag)
     }else{
-      provider.request(.updateRouletteRun(id: id, stage: stage, re: re))
+      provider.request(.updateRouletteRun(id: id, stage: stage, re: result))
         .filter(statusCode: 200)
         .flatMap({[weak self] _ in
           guard let retainSelf = self else {return Single<Response>.error(NSError())}
@@ -509,6 +510,35 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
   }
   
+  /// 암호화 (AES)
+  ///
+  /// - Parameter data: 암호화 대상
+  /// - Returns: 암호화 결과
+  private func cryptoGenerate(of data: String) -> String?{
+    let key = "xiilabxiilabxiilabxiilabxiilabxi"
+    let index = key.index(key.startIndex, offsetBy: 16)
+    let initVector = String(key[..<index])
+    do{
+      let result = try AES(key: key, iv: initVector, padding: .pkcs7).encrypt(Array(data.utf8))
+      return result.toHexString()
+    }catch let error{
+      return nil
+    }
+    
+//    do{
+//      let aes = try AES(key: Array(key), blockMode: .CBC(iv: Array(iv)), padding: .pkcs7).encrypt(Array(data.utf8))
+//
+//      log.info(aes)
+//    }catch {}
+//    do{
+//      let aes = try AES(key: key, iv: String(key[..<index]))
+//      let result = try? data.encrypt(cipher: aes)
+//      log.info(result)
+//
+//    }catch let error{
+//      log.error(error)
+//    }
+  }
   
   /// 스테이지당 이미지 셔플 및 세팅
   private func imagesSetting(stage: Int){

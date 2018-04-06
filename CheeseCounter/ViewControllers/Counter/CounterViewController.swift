@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Moya
 import XLPagerTabStrip
-import iCarousel
+
 
 
 class CounterViewController: ButtonBarPagerTabStripViewController{

@@ -78,6 +78,8 @@ public enum CheeseCounter{
   case getSurveyByIdV2(id: String)
   case getEventAllList
   case getTodayEventList
+  case getAvailableSurveyListV2
+  case isAvailableGame
 }
 
 extension CheeseCounter: TargetType{
@@ -203,6 +205,10 @@ extension CheeseCounter: TargetType{
       return "/event/getEventAllList.json"
     case .getTodayEventList:
       return "/event/getTodayEventList.json"
+    case .getAvailableSurveyListV2:
+      return "/survey/getAvailableSurveyListV2.json"
+    case .isAvailableGame:
+      return "/game/isAvailableGame.json"
     }
   }
   
