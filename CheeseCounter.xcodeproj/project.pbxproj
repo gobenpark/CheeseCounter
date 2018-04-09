@@ -31,6 +31,8 @@
 		B114BB882044F1B400D6264E /* CounterCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114BB872044F1B400D6264E /* CounterCollectionHeaderView.swift */; };
 		B11910A72027E4E300A1A88C /* HistoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11910A62027E4E300A1A88C /* HistoryViewCell.swift */; };
 		B11910A92027E83600A1A88C /* CouponHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11910A82027E83600A1A88C /* CouponHistoryViewController.swift */; };
+		B119716B20761BB900FB283F /* CheeseTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716A20761BB900FB283F /* CheeseTabViewController.swift */; };
+		B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */; };
 		B123381B1E977F9C00DE9640 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381A1E977F9C00DE9640 /* Paging.swift */; };
 		B123381D1E97936F00DE9640 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381C1E97936F00DE9640 /* HistoryData.swift */; };
 		B1254A2820524FE10022EC23 /* SurveyResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1254A2720524FE10022EC23 /* SurveyResultModel.swift */; };
@@ -265,6 +267,8 @@
 		B114BB872044F1B400D6264E /* CounterCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionHeaderView.swift; sourceTree = "<group>"; };
 		B11910A62027E4E300A1A88C /* HistoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewCell.swift; sourceTree = "<group>"; };
 		B11910A82027E83600A1A88C /* CouponHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryViewController.swift; sourceTree = "<group>"; };
+		B119716A20761BB900FB283F /* CheeseTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseTabViewController.swift; sourceTree = "<group>"; };
+		B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerableCheeseViewController.swift; sourceTree = "<group>"; };
 		B123381A1E977F9C00DE9640 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		B123381C1E97936F00DE9640 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
 		B1254A2720524FE10022EC23 /* SurveyResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyResultModel.swift; sourceTree = "<group>"; };
@@ -610,6 +614,8 @@
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
 				B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */,
 				B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */,
+				B119716A20761BB900FB283F /* CheeseTabViewController.swift */,
+				B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */,
 			);
 			path = Cheese;
 			sourceTree = "<group>";
@@ -1391,6 +1397,7 @@
 				B159368B1F300A6C009C29A6 /* StartWithCheeseViewController.swift in Sources */,
 				B183FD291F90953500AF5CBA /* Bundle+Extension.swift in Sources */,
 				B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */,
+				B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */,
 				B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */,
 				B1F5BFFE1EB851A6004A43D4 /* ListDetailTitleCell.swift in Sources */,
 				B1486FFD205F4638004197AA /* PhotoLibraryViewController.swift in Sources */,
@@ -1571,6 +1578,7 @@
 				B114BB882044F1B400D6264E /* CounterCollectionHeaderView.swift in Sources */,
 				B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */,
 				B1C9E9BE20451F7000B697C9 /* CouponHistoryCell.swift in Sources */,
+				B119716B20761BB900FB283F /* CheeseTabViewController.swift in Sources */,
 				B1730FD11E9225550023FE7B /* ReplyViewCell.swift in Sources */,
 				B101A4D020117B2400313748 /* SpinWheelControlDataSource.swift in Sources */,
 				B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */,

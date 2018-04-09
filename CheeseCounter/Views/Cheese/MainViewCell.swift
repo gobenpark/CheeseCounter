@@ -96,8 +96,7 @@ final class MainViewCell: UICollectionViewCell{
       .tapGesture()
       .when(.ended)
       .subscribe {[weak self] (_) in
-        guard let vc = self?.cheeseVC ,
-          let idx = self?.indexPath else {return}
+        guard let vc = self?.cheeseVC, let idx = self?.indexPath else {return}
         vc.replyEvent.onNext(idx)
     }.disposed(by: disposeBag)
     
@@ -118,6 +117,7 @@ final class MainViewCell: UICollectionViewCell{
         guard let vc = self?.cheeseVC ,
           let idx = self?.indexPath else {return}
         vc.moreEvent.onNext(idx)
+        
       }.disposed(by: disposeBag)
     
     mainView.commentButton.rx.tap
@@ -125,6 +125,7 @@ final class MainViewCell: UICollectionViewCell{
         guard let vc = self?.cheeseVC ,
           let idx = self?.indexPath else {return}
         vc.replyEvent.onNext(idx)
+        
       }.disposed(by: disposeBag)
     
     mainView.shareButton.rx.tap
@@ -132,6 +133,7 @@ final class MainViewCell: UICollectionViewCell{
         guard let idx = self?.indexPath ,
           let vc = self?.cheeseVC else {return}
         vc.shareEvent.onNext(idx)
+        
       }).disposed(by: disposeBag)
     
     Observable<MainSurveyAction>
@@ -139,6 +141,8 @@ final class MainViewCell: UICollectionViewCell{
       .subscribe(onNext: { [weak self] (action) in
         guard let retainSelf = self, let retainModel = self?.model else {return}
         retainSelf.cheeseVC?.buttonEvent.onNext((action,retainModel,retainSelf.indexPath))
+        
+        
       }).disposed(by: disposeBag)
     
     Observable<MainSurveyAction>
