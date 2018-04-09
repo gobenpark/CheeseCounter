@@ -22,9 +22,8 @@ class MainTabBarController: UITabBarController
 {
   let disposeBag = DisposeBag()
   let cheeseViewController: UINavigationController = {
-    let cv = CheeseViewController()
+    let cv = CheesePageViewController()
     let nvc = UINavigationController(rootViewController: cv)
-    nvc.navigationBar.setBottomBorderColor(color: #colorLiteral(red: 0.9978943467, green: 0.8484466672, blue: 0.1216805503, alpha: 1), height: 2)
     let tabBar = UITabBarItem(title: "응답", image: #imageLiteral(resourceName: "btnAnswer"), tag: 0)
     tabBar.selectedImage = #imageLiteral(resourceName: "btnAnswerP").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     let cheeseColor: UIColor = UIColor(gradientStyle: .leftToRight

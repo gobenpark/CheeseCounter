@@ -146,6 +146,8 @@
 		B183FD301F90A5C400AF5CBA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */; };
 		B183FD321F90A95800AF5CBA /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = B183FD311F90A95800AF5CBA /* privacy.txt */; };
 		B183FD341F9712D100AF5CBA /* CycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD331F9712D100AF5CBA /* CycleViewController.swift */; };
+		B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B623207AF9B500D5587C /* CheesePageViewController.swift */; };
+		B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */; };
 		B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A12791E94AD4100D3A578 /* DetailResult.swift */; };
 		B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */; };
 		B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */; };
@@ -389,6 +391,8 @@
 		B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B183FD311F90A95800AF5CBA /* privacy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		B183FD331F9712D100AF5CBA /* CycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleViewController.swift; sourceTree = "<group>"; };
+		B185B623207AF9B500D5587C /* CheesePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheesePageViewController.swift; sourceTree = "<group>"; };
+		B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseFilterViewController.swift; sourceTree = "<group>"; };
 		B18A12791E94AD4100D3A578 /* DetailResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailResult.swift; sourceTree = "<group>"; };
 		B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultOtherViewCell.swift; sourceTree = "<group>"; };
 		B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectViewController.swift; sourceTree = "<group>"; };
@@ -604,7 +608,9 @@
 		B15CBC481E6E94FF00FC42D5 /* Cheese */ = {
 			isa = PBXGroup;
 			children = (
+				B185B623207AF9B500D5587C /* CheesePageViewController.swift */,
 				440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */,
+				B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */,
 				B1B46A8620293D8E00E962E7 /* ReplyViewController.swift */,
 				B17083B31EF75D3900E1641F /* ShareController.swift */,
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
@@ -1445,6 +1451,7 @@
 				B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */,
 				B172D69E2021657900CFD97B /* PointModel.swift in Sources */,
 				B1E1AA592057AF1C00FAE93E /* ImageRow.swift in Sources */,
+				B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */,
 				B16A10731E9B5109007D83CF /* AlertViewController.swift in Sources */,
 				B12B9FAA1E6552B200404602 /* item.swift in Sources */,
 				B17947A11E8A55DC0053BAC7 /* SurveyResult.swift in Sources */,
@@ -1477,6 +1484,7 @@
 				B1548E5D1E7F659300D46149 /* SplashViewController.swift in Sources */,
 				B15E4C741E8CCE4F00C059D0 /* AreaCell.swift in Sources */,
 				B154FE831E77B35700F4A2F5 /* DropOutViewController.swift in Sources */,
+				B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */,
 				B1CC9193203A5F860068CF46 /* SympathyViewController.swift in Sources */,
 				B1B46A8720293D8E00E962E7 /* ReplyViewController.swift in Sources */,
 				440A5B921E6AD41B00D8C74C /* CheeseViewController.swift in Sources */,

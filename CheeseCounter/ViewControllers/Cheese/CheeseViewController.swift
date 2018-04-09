@@ -15,13 +15,14 @@ import RxDataSources
 import Moya
 import SwiftyJSON
 import Toaster
+import XLPagerTabStrip
 
 enum PagingType{
   case premium(id: String)
   case ordinary(id: String)
 }
 
-final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate
+final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate, IndicatorInfoProvider
 {
   // 검색
   let searchText = BehaviorRelay<String>(value: String())
@@ -46,7 +47,6 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   /// 검색인지
   let isSearch: Bool
   
-  //static let updateSurvey = PublishSubject<(String,IndexPath)>()
   let disposeBag = DisposeBag()
   let cheeseDatas = Variable<[CheeseViewModel]>([])
   let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData,IndexPath?)>()
@@ -136,31 +136,6 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 100
     
-
-//    CheeseViewController
-//      .updateSurvey
-//      .flatMap { (data) in
-//        return CheeseService.provider
-//          .request(.getSurveyByIdV2(id: data.0))
-//          .filter(statusCode: 200)
-//          .map(MainSurveyList.self)
-//          .map{model in return (model, data.1)}
-//      }.subscribe(onNext: {[weak self] (data) in
-//        guard let `self` = self , let result = data.0.result.data.first else {return}
-//        log.info(data)
-//        self.cheeseDatas.value[data.1.section].items[data.1.item] = result
-//        self.collectionView.reloadItems(at: [data.1])
-//
-//        },onError:{error in
-//          log.error(error)
-//      }).disposed(by: disposeBag)
-    
-    myPageButton.rx.tap
-      .map{ _ in return MypageNaviViewController()}
-      .subscribe(onNext: { [weak self] (vc) in
-        self?.present(vc, animated: true, completion: nil)
-      })
-      .disposed(by: disposeBag)
     
     cheeseDatas.asDriver()
       .drive(collectionView.rx.items(dataSource: dataSources))
@@ -239,13 +214,6 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
         guard let `self` = self else {return}
         self.present(vc, animated: true, completion: nil)
       }).disposed(by: disposeBag)
-    
-    //검색버튼 이벤트
-    searchButton
-      .rx
-      .tap.subscribe {[weak self] (_) in
-        self?.navigationController?.pushViewController(CheeseViewController(isSearch: true), animated: false)
-      }.disposed(by: disposeBag)
     
     if #available(iOS 11.0, *) {
       collectionView.contentInsetAdjustmentBehavior = .never
@@ -418,6 +386,11 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   }
   func presentSearchController(_ searchController: UISearchController) {
     searchController.searchBar.becomeFirstResponder()
+  }
+  
+  
+  func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    return IndicatorInfo(title: "최신 질문")
   }
 }
 
