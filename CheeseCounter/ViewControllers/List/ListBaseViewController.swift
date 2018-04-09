@@ -49,6 +49,25 @@ class BaseListViewController: UIViewController{
       .subscribe({[weak self] (_) in
         self?.request(requestType: .reload)
       }).disposed(by: disposeBag)
+    
+    collectionView.rx
+      .willEndDragging
+      .map {$0.0}
+      .asDriver(onErrorJustReturn: .zero)
+      .drive(onNext: navigationHidden)
+      .disposed(by: disposeBag)
+  }
+  
+  func navigationHidden(point: CGPoint){
+    if point.y > 0{
+      UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+      }, completion: nil)
+    }else{
+      UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+      }, completion: nil)
+    }
   }
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView,
@@ -62,6 +81,5 @@ class BaseListViewController: UIViewController{
       request(requestType: .paging(dataSources.sectionModels.last?.items.last?.id ?? String()))
     }
   }
-  
   open func request(requestType: RequestAction){}
 }

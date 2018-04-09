@@ -16,6 +16,7 @@ import Toaster
 import GameplayKit
 import PMAlertController
 import Kingfisher
+import CryptoSwift
 
 enum StageStatus: Int{
   case first = 1
@@ -463,8 +464,9 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }
   
   private func request(index: Int){
-    CheeseService.provider.request(.regRoulette(gift_id: model.id, level: "\(index+1)"))
-      .filter(statusCode: 200)
+    CheeseService.provider
+      .request(.regRoulette(gift_id: model.id, level: "\(index+1)"))
+      .filterSuccessfulStatusCodes()
       .map(RouletteModel.self)
       .do(onSuccess: { (_) in
         self.threeButton.isUserInteractionEnabled = false
@@ -473,10 +475,17 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
         self.userRouletteFirstTouch = true
         self.buttonTouch()
       })
-      .flatMap {[weak self] (model)  in
-        guard let retainSelf = self else {return Single<Response>.error(NSError())}
-        return retainSelf.provider
-          .request(.getRouletteBoard(id: model.result.data.id ?? ""))}
+      .subscribe(onSuccess: {[weak self] (model) in
+        guard let `self` = self else {return}
+        self.requestRouletteBoard(model: model)
+      }, onError: { (error) in
+        log.error(error)
+      }).disposed(by: disposeBag)
+  }
+  
+  private func requestRouletteBoard(model: RouletteModel){
+    CheeseService.provider.request(.getRouletteBoard(id: model.result.data.id ?? String()))
+    .filterSuccessfulStatusCodes()
       .map(RouletteModel.self)
       .asObservable()
       .bind(onNext: gameSetting)
@@ -484,17 +493,27 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
   }
   
   private func updateRequest(id: String, stage: String,re: String, isDone: Bool){
-    
+    guard let result = cryptoGenerate(of: re) else {return}
     if !isDone{
-      provider.request(.updateRouletteRun(id: id, stage: stage, re: re))
+      provider.request(.updateRouletteRun(id: id, stage: stage, re: result))
         .filter(statusCode: 200)
         .mapJSON()
-        .subscribe(onSuccess: { (result) in
-        }, onError: { (error) in
+        .map{JSON($0)}
+        .subscribe(onSuccess: {[weak self] (json) in
+          guard let `self` = self else {return}
+          if json["result"]["code"].intValue != 200{
+            let AlertView = UIAlertController(title: json["result"]["data"].stringValue, message: nil, preferredStyle: .alert)
+            AlertView.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self](_) in
+              self?.navigationController?.popViewController(animated: true)
+            }))
+            self.present(AlertView, animated: true, completion: nil)
+          }
+        }) { (error) in
           log.error(error)
-        }).disposed(by: disposeBag)
+        }.disposed(by: disposeBag)
+      
     }else{
-      provider.request(.updateRouletteRun(id: id, stage: stage, re: re))
+      provider.request(.updateRouletteRun(id: id, stage: stage, re: result))
         .filter(statusCode: 200)
         .flatMap({[weak self] _ in
           guard let retainSelf = self else {return Single<Response>.error(NSError())}
@@ -509,6 +528,21 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
     }
   }
   
+  /// 암호화 (AES)
+  ///
+  /// - Parameter data: 암호화 대상
+  /// - Returns: 암호화 결과
+  private func cryptoGenerate(of data: String) -> String?{
+    let key = "xiilabxiilabxiil"
+    let index = key.index(key.startIndex, offsetBy: 16)
+    let initVector = String(key[..<index])
+    do{
+      let result = try AES(key: key, iv: initVector, padding: .pkcs5).encrypt(Array(data.utf8))
+      return result.toBase64()
+    }catch{
+      return nil
+    }
+  }
   
   /// 스테이지당 이미지 셔플 및 세팅
   private func imagesSetting(stage: Int){

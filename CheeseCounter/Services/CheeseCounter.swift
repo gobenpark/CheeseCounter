@@ -80,6 +80,8 @@ public enum CheeseCounter{
   case getSurveyByIdV2(id: String)
   case getEventAllList
   case getTodayEventList
+  case getAvailableSurveyListV2
+  case isAvailableGame
 }
 
 extension CheeseCounter: TargetType{
@@ -87,6 +89,7 @@ extension CheeseCounter: TargetType{
   
   public var baseURL: URL {
     #if DEBUG
+//    return URL(string: "http://192.168.1.20:8081/CheeseCounter")!
       return URL(string: "http://192.168.1.103:8088")!
     #else
       return URL(string: "https://cheesecounter.co.kr/")!
