@@ -15,10 +15,6 @@ import RxOptional
 import DZNEmptyDataSet
 import NVActivityIndicatorView
 
-protocol SelectProvider {
-  func navigationHidden(point: CGPoint)
-}
-
 class GameSelectViewController: UIViewController, IndicatorInfoProvider{
   
 
