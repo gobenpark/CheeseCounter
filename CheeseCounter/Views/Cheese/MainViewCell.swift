@@ -19,6 +19,8 @@ enum MainSurveyAction{
 final class MainViewCell: UICollectionViewCell{
   
   weak var cheeseVC: CheeseViewController?
+//  weak var filterVC: CheeseFilterViewController
+
   private let disposeBag = DisposeBag()
   
 //  let selectImage: UIImageView = UIImageView(image: #imageLiteral(resourceName: "img_select@1x"))

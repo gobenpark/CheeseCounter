@@ -17,7 +17,7 @@ import SwiftyJSON
 import Toaster
 import XLPagerTabStrip
 
-final class AnswerableCheeseViewController: CheeseViewController {
+class AnswerableCheeseViewController: CheeseViewController {
   
   override func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "응답 가능 질문")

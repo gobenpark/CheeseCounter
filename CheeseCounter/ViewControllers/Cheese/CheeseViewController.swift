@@ -22,12 +22,12 @@ enum PagingType{
   case ordinary(id: String)
 }
 
-final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate, IndicatorInfoProvider
+protocol CheeseDataRequestProtocol {
+  func initRequest()
+}
+
+class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate, IndicatorInfoProvider, CheeseDataRequestProtocol
 {
-  func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-    return IndicatorInfo(title: "최신 질문")
-  }
-  
   // 검색
   let searchText = BehaviorRelay<String>(value: String())
   lazy var searchController: UISearchController = {
@@ -162,6 +162,12 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     
     collectionView.rx
       .setDelegate(self)
+      .disposed(by: disposeBag)
+    
+    collectionView.rx.willEndDragging
+      .map{$0.0}
+      .asDriver(onErrorJustReturn: .zero)
+      .drive(onNext: navigationHidden)
       .disposed(by: disposeBag)
     
     // 메인뷰 2 or 4  이벤트
@@ -452,9 +458,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
 
 extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   
-  func collectionView(_ collectionView: UICollectionView
-    , layout collectionViewLayout: UICollectionViewLayout
-    , sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
     let sectionModel = self.dataSources.sectionModels
     
@@ -477,9 +481,7 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
 
 extension CheeseViewController{
   
-  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                 withVelocity velocity: CGPoint,
-                                 targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     
     let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
     let didReachBottom = scrollView.contentSize.height > 0

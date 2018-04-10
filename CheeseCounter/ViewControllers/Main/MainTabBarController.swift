@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController
 {
   let disposeBag = DisposeBag()
   let cheeseViewController: UINavigationController = {
-    let cv = CheesePageViewController()
+    let cv = CheeseTabViewController()
     let nvc = UINavigationController(rootViewController: cv)
     let tabBar = UITabBarItem(title: "응답", image: #imageLiteral(resourceName: "btnAnswer"), tag: 0)
     tabBar.selectedImage = #imageLiteral(resourceName: "btnAnswerP").withRenderingMode(UIImageRenderingMode.alwaysOriginal)

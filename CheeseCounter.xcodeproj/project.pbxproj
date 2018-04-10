@@ -1019,7 +1019,6 @@
 				B1F960F41E63E90D00E87B02 /* Resources */,
 				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 				C6DB123CCD9E86B2CB4D3D88 /* [CP] Embed Pods Frameworks */,
-				2F7C9598F87A9247C8E6B0D6 /* [CP] Copy Pods Resources */,
 				B1F5BFED1EB1760A004A43D4 /* ShellScript */,
 			);
 			buildRules = (
@@ -1040,7 +1039,6 @@
 				B1F961071E63E90E00E87B02 /* Frameworks */,
 				B1F961081E63E90E00E87B02 /* Resources */,
 				B7DC4AC864A748DF2724ABF4 /* [CP] Embed Pods Frameworks */,
-				E68A179E5229084716A19521 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1145,21 +1143,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2F7C9598F87A9247C8E6B0D6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6F09AC68488332B30709BADD /* [Carte] Post Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1375,21 +1358,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb pre";
-			showEnvVarsInLog = 0;
-		};
-		E68A179E5229084716A19521 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounterTests/Pods-CheeseCounterTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

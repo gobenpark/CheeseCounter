@@ -15,7 +15,7 @@ import RxCocoa
 class CheesePageViewController: ButtonBarPagerTabStripViewController{
   
   let disposeBag = DisposeBag()
-
+  let tabViewControllers = [CheeseViewController(), CheeseFilterViewController()]
   var bottomView: UIView?
   let myPageButton: UIBarButtonItem = {
     let button = UIBarButtonItem()
@@ -43,6 +43,8 @@ class CheesePageViewController: ButtonBarPagerTabStripViewController{
     super.viewDidLoad()
     navigationBarSetup()
     
+    self.pagerBehaviour = PagerTabStripBehaviour.common(skipIntermediateViewControllers: true)
+    
     myPageButton.rx.tap
       .map{ _ in return MypageNaviViewController()}
       .subscribe(onNext: { [weak self] (vc) in
@@ -68,6 +70,8 @@ class CheesePageViewController: ButtonBarPagerTabStripViewController{
       newCell?.label.textColor = .black
     }
     self.automaticallyAdjustsScrollViewInsets = false
+    
+    
   }
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -81,6 +85,13 @@ class CheesePageViewController: ButtonBarPagerTabStripViewController{
     settings.style.selectedBarHeight = 1.5
   }
   
+  private func getIndicatorViewController(){
+    
+    log.info(viewControllers)
+    
+    
+  }
+  
   private func navigationBarSetup(){
     self.navigationItem.setRightBarButtonItems([myPageButton,searchButton], animated: true)
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
@@ -89,9 +100,27 @@ class CheesePageViewController: ButtonBarPagerTabStripViewController{
   
   override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
     return [CheeseViewController(),CheeseFilterViewController()]
+    
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int) {
+    super.updateIndicator(for: viewController, fromIndex: fromIndex, toIndex: toIndex)
+    let tabViewControllers = [CheeseViewController(), CheeseFilterViewController()]
+
+    if fromIndex != toIndex {
+      (tabViewControllers[toIndex] as! CheeseDataRequestProtocol).initRequest()
+    }
+  }
+  
+//  override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat, indexWasChanged: Bool) {
+//    super.updateIndicator(for: viewController, fromIndex: fromIndex, toIndex: toIndex, withProgressPercentage: progressPercentage, indexWasChanged: indexWasChanged)
+//
+//    if fromIndex != toIndex {
+//      (tabViewControllers[toIndex] as! CheeseDataRequestProtocol).initRequest()
+//    }
+//  }
 }
