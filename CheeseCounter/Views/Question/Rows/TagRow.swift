@@ -38,7 +38,7 @@ public class TagCell: Cell<QuestionType>, CellType {
     field.selectedColor = .lightGray
     field.selectedTextColor = .white
     field.delimiter = " "
-    field.placeholder = "태그 입력"
+    field.placeholder = "태그 작성 후 Enter 입력(필수)"
     field.layer.borderWidth = 0.5
     field.layer.borderColor = UIColor.lightGray.cgColor
     return field

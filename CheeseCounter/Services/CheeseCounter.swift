@@ -37,6 +37,7 @@ public enum CheeseCounter{
   case getMyInfo
   
   case getSurveyResult(surveyId: String)
+  case getAvailableSurveyListV2(id: String)
   case getDetailResult(survey_id: String, selectAsk: String, address: String)
   
   case getQnaList
@@ -69,6 +70,7 @@ public enum CheeseCounter{
   case getRouletteBoard(id: String)
   case updateRouletteRun(id: String, stage: String, re: String)
   case updateRouletteDone(id: String)
+  case isAvailableGame
   case getSurveyListV2(id: String)
   case getSurveyListV2Search(id: String, search: String)
   case getWinList
@@ -81,10 +83,11 @@ public enum CheeseCounter{
 }
 
 extension CheeseCounter: TargetType{
-//  public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
+  //public var baseURL: URL {return URL(string: "https://cheesecounter.co.kr/")!}
   
   public var baseURL: URL {
     #if DEBUG
+//    return URL(string: "http://192.168.1.20:8081/CheeseCounter")!
       return URL(string: "http://192.168.1.103:8088")!
     #else
       return URL(string: "https://cheesecounter.co.kr/")!
@@ -203,7 +206,12 @@ extension CheeseCounter: TargetType{
       return "/event/getEventAllList.json"
     case .getTodayEventList:
       return "/event/getTodayEventList.json"
+    case .isAvailableGame:
+      return "/game/isAvailableGame.json"
+    case .getAvailableSurveyListV2:
+      return "/survey/getAvailableSurveyListV2.json"
     }
+    
   }
   
   public var method: Moya.Method {
@@ -239,6 +247,7 @@ extension CheeseCounter: TargetType{
          .getSurveyListV2(let id),
          .getMyCouponById(let id),
          .getSurveyByIdV2(let id),
+         .getAvailableSurveyListV2(let id),
          .insertEmpathy(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
     case .insertSurveyResult(let survey_id, let select_ask):
@@ -263,6 +272,8 @@ extension CheeseCounter: TargetType{
       return .requestParameters(
         parameters: ["id":id,"fcm_token":fcm_token,"img_url":img_url,"access_token":access_token,"version": version],
         encoding: URLEncoding.httpBody)
+    case .deleteReply(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
     default:
       return .requestPlain
     }

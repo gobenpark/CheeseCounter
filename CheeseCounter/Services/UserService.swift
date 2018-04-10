@@ -32,6 +32,7 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/uploadFile"
     case .test:
+//      return "http://192.168.1.20:8081/CheeseCounter"
       return "http://192.168.1.103:8088/uploadFile"
     }
   }
@@ -39,8 +40,8 @@ public enum serverType{
 
 struct UserService {
   
-  static let url = serverType.release.url
-  static let imgString = serverType.release.imgString
+  static let url = serverType.test.url
+  static let imgString = serverType.test.imgString
   
   static var kakao_ID: NSNumber?
   static var isLogin: Bool = false

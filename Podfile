@@ -44,10 +44,10 @@ pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
 pod 'PMAlertController'
-pod 'iCarousel'
 pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
 pod 'SwiftyUserDefaults'
+pod 'CryptoSwift'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
@@ -58,7 +58,6 @@ pod 'RxKeyboard'
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-pod 'Reveal-SDK', :configurations => ['Debug']
 #Color
 pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter

@@ -15,13 +15,18 @@ import RxDataSources
 import Moya
 import SwiftyJSON
 import Toaster
+import XLPagerTabStrip
 
 enum PagingType{
   case premium(id: String)
   case ordinary(id: String)
 }
 
-final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate
+protocol CheeseDataRequestProtocol {
+  func initRequest()
+}
+
+class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchControllerDelegate, IndicatorInfoProvider, CheeseDataRequestProtocol
 {
   // 검색
   let searchText = BehaviorRelay<String>(value: String())
@@ -46,7 +51,6 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   /// 검색인지
   let isSearch: Bool
   
-  static let updateSurvey = PublishSubject<(String,IndexPath)>()
   let disposeBag = DisposeBag()
   let cheeseDatas = Variable<[CheeseViewModel]>([])
   let buttonEvent = PublishSubject<(MainSurveyAction,MainSurveyList.CheeseData,IndexPath?)>()
@@ -55,13 +59,19 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   let empathyEvent = PublishSubject<(String, IndexPath)>()
   let shareEvent = PublishSubject<IndexPath>()
   
+  lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { [weak self] model, indexPath in
+    guard let `self` = self else { return }
+    self.cheeseDatas.value[indexPath.section].items[indexPath.item] = model
+    self.collectionView.reloadItems(at: [indexPath])
+  }
+  
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: MainViewCell.self), for: idx) as! MainViewCell
     cell.model = item
     cell.cheeseVC = self
     cell.indexPath = idx
     return cell
-    })
+  })
   
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -103,7 +113,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   }()
   
   //MARK: - View Life Cycle
-
+  
   init(isSearch: Bool = false) {
     self.isSearch = isSearch
     super.init(nibName: nil, bundle: nil)
@@ -116,12 +126,26 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   override func loadView() {
     super.loadView()
     view = collectionView
+    self.navigationController?.navigationBar.shadowImage = UIImage()
+    
     if !isSearch{
       title = "응답"
       collectionView.addSubview(refreshView)
-      self.navigationController?.hidesBarsOnSwipe = true
+      //self.navigationController?.hidesBarsOnSwipe = true
     }else{
       title = "검색"
+    }
+  }
+  
+  func navigationHidden(point: CGPoint){
+    if point.y > 0{
+      UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+      }, completion: nil)
+    }else{
+      UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+      }, completion: nil)
     }
   }
   
@@ -130,29 +154,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 100
-
-    CheeseViewController
-      .updateSurvey
-      .flatMap { (data) in
-        return CheeseService.provider
-          .request(.getSurveyByIdV2(id: data.0))
-          .filter(statusCode: 200)
-          .map(MainSurveyList.self)
-          .map{model in return (model, data.1)}
-      }.subscribe(onNext: {[weak self] (data) in
-        guard let `self` = self , let result = data.0.result.data.first else {return}
-        self.cheeseDatas.value[data.1.section].items[data.1.item] = result
-        self.collectionView.reloadItems(at: [data.1])
-        },onError:{error in
-          log.error(error)
-      }).disposed(by: disposeBag)
     
-    myPageButton.rx.tap
-      .map{ _ in return MypageNaviViewController()}
-      .subscribe(onNext: { [weak self] (vc) in
-        self?.present(vc, animated: true, completion: nil)
-      })
-      .disposed(by: disposeBag)
     
     cheeseDatas.asDriver()
       .drive(collectionView.rx.items(dataSource: dataSources))
@@ -160,6 +162,12 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     
     collectionView.rx
       .setDelegate(self)
+      .disposed(by: disposeBag)
+    
+    collectionView.rx.willEndDragging
+      .map{$0.0}
+      .asDriver(onErrorJustReturn: .zero)
+      .drive(onNext: navigationHidden)
       .disposed(by: disposeBag)
     
     // 메인뷰 2 or 4  이벤트
@@ -219,7 +227,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
         if model.0.survey_result == nil{
           Toast(text: "질문에 먼저 응답해주세요", delay: 0.4, duration: 1).show()
         }else{
-          self.navigationController?.pushViewController(ReplyViewController(model: model.0, indexPath: model.1), animated: true)
+          self.navigationController?.pushViewController(ReplyViewController(model: model.0, indexPath: model.1, updateSurvey: self.updateSurvey), animated: true)
         }
       }).disposed(by: disposeBag)
     
@@ -231,13 +239,6 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
         guard let `self` = self else {return}
         self.present(vc, animated: true, completion: nil)
       }).disposed(by: disposeBag)
-    
-    //검색버튼 이벤트
-    searchButton
-      .rx
-      .tap.subscribe {[weak self] (_) in
-        self?.navigationController?.pushViewController(CheeseViewController(isSearch: true), animated: false)
-      }.disposed(by: disposeBag)
     
     if #available(iOS 11.0, *) {
       collectionView.contentInsetAdjustmentBehavior = .never
@@ -303,9 +304,14 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
           .filter(statusCode: 200)
           .map(MainSurveyList.self)
           .subscribe(onSuccess: {[weak self] (response) in
-            guard let `self` = self ,let idx = data.2 ,
-              let data = response.result.data.first else {return}
-            let cell = self.collectionView.cellForItem(at: idx) as! MainViewCell
+            guard let `self` = self ,let idx = data.2,
+              let data = response.result.data.first,
+              let cell = self.collectionView.cellForItem(at: idx) as? MainViewCell
+              else {return}
+            
+            
+            
+            
             cell.selectImage.removeFromSuperview()
             cell.selectImage.snp.removeConstraints()
             self.cheeseDatas.value[idx.section].items[idx.item] = data
@@ -324,42 +330,74 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
     }
   }
   
-  private func initRequest(){
-    let event = CheeseService.provider.request(.getEventSurveyList)
-      .filter(statusCode: 200)
-      .map(MainSurveyList.self)
-      .map {[CheeseViewModel(items: $0.result.data)]}
-      .asObservable()
+  func initRequest(){
+    //    let event = CheeseService.provider.request(.getEventSurveyList)
+    //      .filter(statusCode: 200)
+    //      .map(MainSurveyList.self)
+    //      .map {[CheeseViewModel(items: $0.result.data)]}
+    //      .asObservable()
+    //
+    //    let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: String()))
+    //      .filter(statusCode: 200)
+    //      .map(MainSurveyList.self)
+    //      .map {[CheeseViewModel(items: $0.result.data)]}
+    //      .asObservable()
+    //
+    //    Observable<[CheeseViewModel]>
+    //      .combineLatest(event, nonEvent) { (ev, nonev) -> [CheeseViewModel] in
+    //      var data = ev
+    //      data.append(contentsOf: nonev)
+    //      return data
+    //    }.bind(to: cheeseDatas)
+    //    .disposed(by: disposeBag)
     
-    let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: String()))
-      .filter(statusCode: 200)
-      .map(MainSurveyList.self)
-      .map {[CheeseViewModel(items: $0.result.data)]}
-      .asObservable()
-    
-    Observable<[CheeseViewModel]>
-      .combineLatest(event, nonEvent) { (ev, nonev) -> [CheeseViewModel] in
-      var data = ev
-      data.append(contentsOf: nonev)
-      return data
-    }.bind(to: cheeseDatas)
-    .disposed(by: disposeBag)
+    networkRequest(reload: true)
   }
   
-  private func networkRequest(id: String){
-    
-    CheeseService.provider.request(.getSurveyListV2(id: id))
-      .filter(statusCode: 200)
-      .map(MainSurveyList.self)
-      .map {CheeseViewModel(items: $0.result.data)}
-      .asObservable()
+  func requestSurveyList(reload: Bool) -> Observable<CheeseViewModel> {
+    if !reload {
+      let id = dataSources.sectionModels.last?.items.last?.id ?? ""
+      return CheeseService.provider.request(.getSurveyListV2(id: id))
+        .filter(statusCode: 200)
+        .map(MainSurveyList.self)
+        .map {CheeseViewModel(items: $0.result.data)}
+        .asObservable()
+    } else {
+      let event = CheeseService.provider.request(.getEventSurveyList)
+        .filter(statusCode: 200)
+        .map(MainSurveyList.self)
+        .map {CheeseViewModel(items: $0.result.data)}
+        .asObservable()
+      let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: String()))
+        .filter(statusCode: 200)
+        .map(MainSurveyList.self)
+        .map {CheeseViewModel(items: $0.result.data)}
+        .asObservable()
+      return Observable<CheeseViewModel>
+        .combineLatest(event, nonEvent) { (ev, nonev) -> CheeseViewModel in
+          log.info(ev)
+          log.info(nonev)
+          return CheeseViewModel(items: ev.items + nonev.items)
+      }
+    }
+  }
+  
+  private func networkRequest(reload: Bool) {
+    requestSurveyList(reload: reload)
       .catchErrorJustReturn(CheeseViewModel(items: []))
       .filter({ (viewModel) -> Bool in
         return viewModel.items.count != 0
       })
       .scan(cheeseDatas.value){ (state: [CheeseViewModel], viewModel: CheeseViewModel) -> [CheeseViewModel] in
-        return state + viewModel
-    }.bind(to: cheeseDatas)
+        if reload {
+//          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
+//           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+//          }
+          return [viewModel]
+        } else {
+          return state + viewModel
+        }
+      }.bind(to: cheeseDatas)
       .disposed(by: disposeBag)
   }
   
@@ -396,7 +434,7 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     guard isSearch else {return}
-      self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).image, for: .default)
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage.resizable().color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).image, for: .default)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -411,13 +449,16 @@ final class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UIS
   func presentSearchController(_ searchController: UISearchController) {
     searchController.searchBar.becomeFirstResponder()
   }
+  
+  
+  func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    return IndicatorInfo(title: "최신 질문")
+  }
 }
 
 extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   
-  func collectionView(_ collectionView: UICollectionView
-    , layout collectionViewLayout: UICollectionViewLayout
-    , sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
     let sectionModel = self.dataSources.sectionModels
     
@@ -439,22 +480,20 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension CheeseViewController{
-    
-  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                 withVelocity velocity: CGPoint,
-                                 targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     
     let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.height
     let didReachBottom = scrollView.contentSize.height > 0
       && contentOffsetBottom >= scrollView.contentSize.height - 300
-     if didReachBottom{
-      networkRequest(id: dataSources.sectionModels.last?.items.last?.id ?? "")
+    if didReachBottom{
+      networkRequest(reload: false)
     }
   }
 }
 
 extension CheeseViewController: DZNEmptyDataSetSource{
-
+  
   func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
     let label = UILabel()
     label.textAlignment = .center
@@ -462,17 +501,17 @@ extension CheeseViewController: DZNEmptyDataSetSource{
     label.attributedText = NSAttributedString(string: "모든 질문에 응답하셨거나\n\n아직 등록된 질문이 없어요.\n\n직접 질문을 등록해보세요."
       , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)
         ,NSAttributedStringKey.foregroundColor:UIColor.gray])
-
+    
     activityView.startAnimating()
     return activityView
-
-//    if isLoading{
-//      return activityView
-//    }else {
-//      return label
-//    }
+    
+    //    if isLoading{
+    //      return activityView
+    //    }else {
+    //      return label
+    //    }
   }
-
+  
   func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
     return #colorLiteral(red: 0.9489366412, green: 0.9490727782, blue: 0.9489067197, alpha: 1)
   }

@@ -207,16 +207,15 @@ class QuestionViewController: FormViewController{
     let section = sectionType?.value?.rawValue
     let image1 = imgrow?.cell.firstImgView.image
     let image2 = imgrow?.cell.secondImgView.image
-    let image3 = imgrow?.cell.firstImgView.image
-    let image4 = imgrow?.cell.secondImgView.image
+    let image3 = imgrow1?.cell.firstImgView.image
+    let image4 = imgrow1?.cell.secondImgView.image
     let ask1 = askrow?.cell.ask1Field.text
     let ask2 = askrow?.cell.ask2Field.text
     let ask3 = askrow1?.cell.ask1Field.text
-    let ask4 = askrow1?.cell.ask1Field.text
+    let ask4 = askrow1?.cell.ask2Field.text
     let tags = tagRow?.cell.tagText
     let image1Data = UIImageJPEGRepresentation(image1!, 1)
     let image2Data = UIImageJPEGRepresentation(image2!, 1)
-    
     
     var multiparts:[MultipartFormData] = []
     

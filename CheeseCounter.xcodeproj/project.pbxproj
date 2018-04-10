@@ -31,6 +31,8 @@
 		B114BB882044F1B400D6264E /* CounterCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114BB872044F1B400D6264E /* CounterCollectionHeaderView.swift */; };
 		B11910A72027E4E300A1A88C /* HistoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11910A62027E4E300A1A88C /* HistoryViewCell.swift */; };
 		B11910A92027E83600A1A88C /* CouponHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11910A82027E83600A1A88C /* CouponHistoryViewController.swift */; };
+		B119716B20761BB900FB283F /* CheeseTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716A20761BB900FB283F /* CheeseTabViewController.swift */; };
+		B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */; };
 		B123381B1E977F9C00DE9640 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381A1E977F9C00DE9640 /* Paging.swift */; };
 		B123381D1E97936F00DE9640 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381C1E97936F00DE9640 /* HistoryData.swift */; };
 		B1254A2820524FE10022EC23 /* SurveyResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1254A2720524FE10022EC23 /* SurveyResultModel.swift */; };
@@ -146,6 +148,8 @@
 		B183FD301F90A5C400AF5CBA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */; };
 		B183FD321F90A95800AF5CBA /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = B183FD311F90A95800AF5CBA /* privacy.txt */; };
 		B183FD341F9712D100AF5CBA /* CycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD331F9712D100AF5CBA /* CycleViewController.swift */; };
+		B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B623207AF9B500D5587C /* CheesePageViewController.swift */; };
+		B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */; };
 		B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A12791E94AD4100D3A578 /* DetailResult.swift */; };
 		B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */; };
 		B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */; };
@@ -265,6 +269,8 @@
 		B114BB872044F1B400D6264E /* CounterCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionHeaderView.swift; sourceTree = "<group>"; };
 		B11910A62027E4E300A1A88C /* HistoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewCell.swift; sourceTree = "<group>"; };
 		B11910A82027E83600A1A88C /* CouponHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryViewController.swift; sourceTree = "<group>"; };
+		B119716A20761BB900FB283F /* CheeseTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseTabViewController.swift; sourceTree = "<group>"; };
+		B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerableCheeseViewController.swift; sourceTree = "<group>"; };
 		B123381A1E977F9C00DE9640 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		B123381C1E97936F00DE9640 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
 		B1254A2720524FE10022EC23 /* SurveyResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyResultModel.swift; sourceTree = "<group>"; };
@@ -389,6 +395,8 @@
 		B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B183FD311F90A95800AF5CBA /* privacy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		B183FD331F9712D100AF5CBA /* CycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleViewController.swift; sourceTree = "<group>"; };
+		B185B623207AF9B500D5587C /* CheesePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheesePageViewController.swift; sourceTree = "<group>"; };
+		B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseFilterViewController.swift; sourceTree = "<group>"; };
 		B18A12791E94AD4100D3A578 /* DetailResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailResult.swift; sourceTree = "<group>"; };
 		B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultOtherViewCell.swift; sourceTree = "<group>"; };
 		B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectViewController.swift; sourceTree = "<group>"; };
@@ -604,12 +612,16 @@
 		B15CBC481E6E94FF00FC42D5 /* Cheese */ = {
 			isa = PBXGroup;
 			children = (
+				B185B623207AF9B500D5587C /* CheesePageViewController.swift */,
 				440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */,
+				B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */,
 				B1B46A8620293D8E00E962E7 /* ReplyViewController.swift */,
 				B17083B31EF75D3900E1641F /* ShareController.swift */,
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
 				B1D33A0A1F7DED3100CFF19A /* SearchListViewController.swift */,
 				B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */,
+				B119716A20761BB900FB283F /* CheeseTabViewController.swift */,
+				B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */,
 			);
 			path = Cheese;
 			sourceTree = "<group>";
@@ -1007,7 +1019,6 @@
 				B1F960F41E63E90D00E87B02 /* Resources */,
 				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 				C6DB123CCD9E86B2CB4D3D88 /* [CP] Embed Pods Frameworks */,
-				2F7C9598F87A9247C8E6B0D6 /* [CP] Copy Pods Resources */,
 				B1F5BFED1EB1760A004A43D4 /* ShellScript */,
 			);
 			buildRules = (
@@ -1028,7 +1039,6 @@
 				B1F961071E63E90E00E87B02 /* Frameworks */,
 				B1F961081E63E90E00E87B02 /* Resources */,
 				B7DC4AC864A748DF2724ABF4 /* [CP] Embed Pods Frameworks */,
-				E68A179E5229084716A19521 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1133,21 +1143,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2F7C9598F87A9247C8E6B0D6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6F09AC68488332B30709BADD /* [Carte] Post Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1251,6 +1246,7 @@
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleProgressBar/CircleProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleProgressView/CircleProgressView.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
@@ -1267,7 +1263,6 @@
 				"${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
@@ -1289,7 +1284,6 @@
 				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/YLGIFImage/YLGIFImage.framework",
-				"${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1305,6 +1299,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleProgressView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
@@ -1321,7 +1316,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMAlertController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
@@ -1343,7 +1337,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLGIFImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iCarousel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1367,21 +1360,6 @@
 			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb pre";
 			showEnvVarsInLog = 0;
 		};
-		E68A179E5229084716A19521 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheeseCounterTests/Pods-CheeseCounterTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1393,6 +1371,7 @@
 				B159368B1F300A6C009C29A6 /* StartWithCheeseViewController.swift in Sources */,
 				B183FD291F90953500AF5CBA /* Bundle+Extension.swift in Sources */,
 				B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */,
+				B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */,
 				B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */,
 				B1F5BFFE1EB851A6004A43D4 /* ListDetailTitleCell.swift in Sources */,
 				B1486FFD205F4638004197AA /* PhotoLibraryViewController.swift in Sources */,
@@ -1447,6 +1426,7 @@
 				B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */,
 				B172D69E2021657900CFD97B /* PointModel.swift in Sources */,
 				B1E1AA592057AF1C00FAE93E /* ImageRow.swift in Sources */,
+				B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */,
 				B16A10731E9B5109007D83CF /* AlertViewController.swift in Sources */,
 				B12B9FAA1E6552B200404602 /* item.swift in Sources */,
 				B17947A11E8A55DC0053BAC7 /* SurveyResult.swift in Sources */,
@@ -1479,6 +1459,7 @@
 				B1548E5D1E7F659300D46149 /* SplashViewController.swift in Sources */,
 				B15E4C741E8CCE4F00C059D0 /* AreaCell.swift in Sources */,
 				B154FE831E77B35700F4A2F5 /* DropOutViewController.swift in Sources */,
+				B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */,
 				B1CC9193203A5F860068CF46 /* SympathyViewController.swift in Sources */,
 				B1B46A8720293D8E00E962E7 /* ReplyViewController.swift in Sources */,
 				440A5B921E6AD41B00D8C74C /* CheeseViewController.swift in Sources */,
@@ -1573,6 +1554,7 @@
 				B114BB882044F1B400D6264E /* CounterCollectionHeaderView.swift in Sources */,
 				B1C81CCC1FC545960099ADF7 /* ResultSurveyModel.swift in Sources */,
 				B1C9E9BE20451F7000B697C9 /* CouponHistoryCell.swift in Sources */,
+				B119716B20761BB900FB283F /* CheeseTabViewController.swift in Sources */,
 				B1730FD11E9225550023FE7B /* ReplyViewCell.swift in Sources */,
 				B101A4D020117B2400313748 /* SpinWheelControlDataSource.swift in Sources */,
 				B1C81CCE1FC5544D0099ADF7 /* SurveyDetailViewModel.swift in Sources */,

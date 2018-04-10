@@ -14,14 +14,10 @@ import Moya
 import RxOptional
 import DZNEmptyDataSet
 import NVActivityIndicatorView
+import SwiftyJSON
 
-protocol SelectProvider {
-  func navigationHidden(point: CGPoint)
-}
-
-class GameSelectViewController: UIViewController, IndicatorInfoProvider{
+class GameSelectViewController: UIViewController, IndicatorInfoProvider {
   
-
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorRelay<[GiftViewModel]>(value: [])
@@ -49,7 +45,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     collectionView.register(CounterCollectionHeaderView.self,
                             forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                             withReuseIdentifier: String(describing: CounterCollectionHeaderView.self))
-//    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
+    //    collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 44, right: 0)
     collectionView.backgroundColor = .white
     collectionView.alwaysBounceVertical = true
     collectionView.emptyDataSetSource = self
@@ -80,7 +76,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     
     collectionView.rx
       .itemSelected
-      .bind(onNext: selectedItem)
+      .bind(onNext: requestAvailableGame)
       .disposed(by: disposeBag)
   }
   
@@ -98,12 +94,31 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
     request()
   }
   
-  func selectedItem(item: IndexPath){
+  func requestAvailableGame(item: IndexPath){
+    CheeseService.provider
+      .request(.isAvailableGame)
+      .filter(statusCode: 200)
+      .mapJSON()
+      .map{JSON($0)}
+      .asObservable()
+      .bind(onNext: {[weak self] (json) in
+        guard let `self` = self else { return }
+        self.selectItem(json: json, item: item)})
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func selectItem(json: JSON, item: IndexPath){
     let images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseGorgonzola")]
     
-    if let model = dataSources.sectionModels.first?.items[item.item]{
-      guard model.coupon_count != nil && model.coupon_count != "0" else {return}
-      self.navigationController?.pushViewController(GameViewController(images: images, model: model), animated: true)
+    if json["result"]["code"].intValue == 200 && json["result"]["data"] == false{
+      let alert = UIAlertController(title: nil, message: "아쉽지만 금일 당첨 되었습니다.\n내일 도전!", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+      self.present(alert, animated: true, completion: nil)
+    } else{
+      if let model = dataSources.sectionModels.first?.items[item.item]{
+        guard model.coupon_count != nil && model.coupon_count != "0" else {return}
+        self.navigationController?.pushViewController(GameViewController(images: images, model: model), animated: true)
+      }
     }
   }
   
@@ -118,7 +133,7 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider{
       }, completion: nil)
     }
   }
-
+  
   func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
     return IndicatorInfo(title: "게임")
   }

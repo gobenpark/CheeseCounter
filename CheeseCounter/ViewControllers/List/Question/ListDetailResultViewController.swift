@@ -119,12 +119,6 @@ class ListDetailResultViewController: FormViewController{
     CheeseService.provider
       .request(.getDetailResult(survey_id: model.id, selectAsk: "\(self.selectedNum)", address: ""))
       .asObservable()
-      .do(onSubscribed: {[weak self] in
-        self?.indicatorView.startAnimating()
-        self?.tableView.isHidden = true })
-      .do(onDispose: {[weak self] in
-        self?.indicatorView.stopAnimating()
-        self?.tableView.isHidden = false })
       .map(ResultSurveyModel.self)
       .bind(onNext: showForm)
       .disposed(by: disposeBag)
