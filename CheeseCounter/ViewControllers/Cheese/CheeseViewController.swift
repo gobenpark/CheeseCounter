@@ -393,9 +393,9 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       })
       .scan(cheeseDatas.value){ (state: [CheeseViewModel], viewModel: CheeseViewModel) -> [CheeseViewModel] in
         if reload {
-//          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
-//           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-//          }
+          //          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
+          //           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+          //          }
           return [viewModel]
         } else {
           return state + viewModel
@@ -464,22 +464,66 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
     let sectionModel = self.dataSources.sectionModels
-    log.info(collectionView.frame.width)
+//    log.info(collectionView.frame.width)
     
     switch sectionModel[indexPath.section].items[indexPath.item].type{
     case "2":
       if sectionModel[indexPath.section].items[indexPath.item].isExpand{
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 25)
       }
-      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 50)
+      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 35)
     case "4":
       if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 195)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 200)
       }
       return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 165)
     default:
-      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 25)
+      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 35)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//
+//    let sectionModel = self.dataSources.sectionModels
+//
+//    if UIScreen.main.scale == 3.0 {
+//      switch sectionModel[indexPath.section].items[indexPath.item].type{
+//
+//      case "2":
+//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+//          return CGSize(width: collectionView.frame.width, height: 420)
+//        }
+//        return CGSize(width: collectionView.frame.width, height: 360)
+//      case "4":
+//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+//          return CGSize(width: collectionView.frame.width, height: 620)
+//        }
+//        return CGSize(width: collectionView.frame.width, height: 560)
+//      default:
+//        return CGSize(width: collectionView.frame.width, height: 360)
+//      }
+//    } else {
+//      switch sectionModel[indexPath.section].items[indexPath.item].type{
+//      case "2":
+//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+//          return CGSize(width: collectionView.frame.width, height: 400)
+//        }
+//        return CGSize(width: collectionView.frame.width, height: 340)
+//      case "4":
+//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
+//          return CGSize(width: collectionView.frame.width, height: 570)
+//        }
+//        return CGSize(width: collectionView.frame.width, height: 520)
+//      default:
+//        return CGSize(width: collectionView.frame.width, height: 340)
+//      }
+//    }
   }
 }
 

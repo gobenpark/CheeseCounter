@@ -1,7 +1,7 @@
 PODS:
   - AAFragmentManager (0.1.1)
   - Alamofire (4.7.1)
-  - AnyDate (1.0.4)
+  - AnyDate (1.0.5)
   - BetterSegmentedControl (0.9)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
@@ -29,37 +29,37 @@ PODS:
     - Bolts (~> 1.7)
   - FBSDKShareKit (4.31.1):
     - FBSDKCoreKit (~> 4.31.1)
-  - Firebase/Core (4.11.0):
+  - Firebase/Core (4.12.0):
     - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.18)
-  - Firebase/DynamicLinks (4.11.0):
+    - FirebaseCore (= 4.0.19)
+  - Firebase/DynamicLinks (4.12.0):
     - Firebase/Core
     - FirebaseDynamicLinks (= 2.3.2)
-  - Firebase/Messaging (4.11.0):
+  - Firebase/Messaging (4.12.0):
     - Firebase/Core
-    - FirebaseMessaging (= 2.1.1)
+    - FirebaseMessaging (= 2.2.0)
   - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.18):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (4.0.19):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseDynamicLinks (2.3.2):
     - FirebaseAnalytics (~> 4.0)
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.1.1):
+  - FirebaseMessaging (2.2.0):
     - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.5)
-  - FlexibleImage (1.8)
+  - FlexibleImage (1.9)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/Logger (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - Hero (1.1.0)
   - KakaoOpenSDK (1.7.0):
@@ -97,7 +97,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.1.1)
   - NVActivityIndicatorView/Presenter (4.1.1)
   - ObjectMapper (3.1.0)
-  - PMAlertController (3.2.0)
+  - PMAlertController (3.3.0)
   - Protobuf (3.5.0)
   - Quick (1.2.0)
   - Result (3.2.4)
@@ -194,6 +194,69 @@ DEPENDENCIES:
   - XLPagerTabStrip
   - YLGIFImage
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AAFragmentManager
+    - Alamofire
+    - AnyDate
+    - BetterSegmentedControl
+    - Bolts
+    - Carte
+    - Charts
+    - CircleProgressBar
+    - CircleProgressView
+    - Crashlytics
+    - CryptoSwift
+    - Differentiator
+    - DZNEmptyDataSet
+    - Eureka
+    - Fabric
+    - FBSDKCoreKit
+    - FBSDKShareKit
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseDynamicLinks
+    - FirebaseInstanceID
+    - FirebaseMessaging
+    - FlexibleImage
+    - GoogleToolboxForMac
+    - Hero
+    - KakaoOpenSDK
+    - Kingfisher
+    - lottie-ios
+    - Moya
+    - nanopb
+    - NextGrowingTextView
+    - Nimble
+    - NVActivityIndicatorView
+    - ObjectMapper
+    - PMAlertController
+    - Protobuf
+    - Quick
+    - Result
+    - RxCocoa
+    - RxDataSources
+    - RxGesture
+    - RxKeyboard
+    - RxOptional
+    - RxSwift
+    - SnapKit
+    - Stubber
+    - SwiftyBeaver
+    - SwiftyImage
+    - SwiftyJSON
+    - SwiftyUserDefaults
+    - TLPhotoPicker
+    - Toaster
+    - TTTAttributedLabel
+    - UPCarouselFlowLayout
+    - URLNavigator
+    - WSTagsField
+    - XLActionController
+    - XLPagerTabStrip
+    - YLGIFImage
+
 EXTERNAL SOURCES:
   ChameleonFramework:
     :branch: wip/swift4
@@ -212,7 +275,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AAFragmentManager: ece927d46c1b64c6bf9a79fc0fd77de0abc32dd2
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
-  AnyDate: 71846ac55f25c3e78ff5aa87ad173deb196f6b40
+  AnyDate: c522b2f9798b061d642dec9c252bf766194d35c8
   BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Carte: c8200bfb59b77336aa2f02e84cc4ac0fa820034d
@@ -228,13 +291,13 @@ SPEC CHECKSUMS:
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
   FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
-  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
+  Firebase: d7fdf40e4d6c841849c52919f437fd3a0009ded0
   FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
+  FirebaseCore: ff49ebb37e0f63a570d78c4f1c1c0befe8659d5c
   FirebaseDynamicLinks: 38b68641d24e78d0277a9205d988ce22875d5a25
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
-  FirebaseMessaging: db0e01c52ef7e1f42846431273558107d084ede4
-  FlexibleImage: 2beceba1bb67bc7cd9297cd2778f1fc6c5f23ada
+  FirebaseMessaging: 75cdb862e86c30e0913a2ff307e48d49357c5b73
+  FlexibleImage: 6b66e0df34c51ca2954d5501205a9902fd3c9f35
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Hero: ce59e81c79390613d97b43da7179e2c5e1017e04
   KakaoOpenSDK: 82e9c4d57c7d273360e4b49c2d8a0d8626216143
@@ -246,7 +309,7 @@ SPEC CHECKSUMS:
   Nimble: 9c6651c3021af6de54c3ed90a4a0a87d548f7359
   NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
-  PMAlertController: 46047b840f6e1833c2a5395c91ccad29e72ae2c0
+  PMAlertController: 15dd20ca343bd7761ca254542cc561f05ad6b89c
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -275,4 +338,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4f1160e4cdafe48ce2f70280a82c259c9a5d970c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
