@@ -40,8 +40,13 @@ public enum serverType{
 
 struct UserService {
   
+  #if DEBUG
   static let url = serverType.test.url
   static let imgString = serverType.test.imgString
+  #else
+  static let url = serverType.release.url
+  static let imgString = serverType.release.imgString
+  #endif
   
   static var kakao_ID: NSNumber?
   static var isLogin: Bool = false

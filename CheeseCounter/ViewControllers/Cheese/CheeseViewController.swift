@@ -6,6 +6,8 @@
 //  Copyright © 2017년 xiilab. All rights reserved.
 //
 
+
+
 import UIKit
 
 import DZNEmptyDataSet
@@ -476,50 +478,6 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
     default:
       return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 35)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//
-//    let sectionModel = self.dataSources.sectionModels
-//
-//    if UIScreen.main.scale == 3.0 {
-//      switch sectionModel[indexPath.section].items[indexPath.item].type{
-//
-//      case "2":
-//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-//          return CGSize(width: collectionView.frame.width, height: 420)
-//        }
-//        return CGSize(width: collectionView.frame.width, height: 360)
-//      case "4":
-//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-//          return CGSize(width: collectionView.frame.width, height: 620)
-//        }
-//        return CGSize(width: collectionView.frame.width, height: 560)
-//      default:
-//        return CGSize(width: collectionView.frame.width, height: 360)
-//      }
-//    } else {
-//      switch sectionModel[indexPath.section].items[indexPath.item].type{
-//      case "2":
-//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-//          return CGSize(width: collectionView.frame.width, height: 400)
-//        }
-//        return CGSize(width: collectionView.frame.width, height: 340)
-//      case "4":
-//        if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-//          return CGSize(width: collectionView.frame.width, height: 570)
-//        }
-//        return CGSize(width: collectionView.frame.width, height: 520)
-//      default:
-//        return CGSize(width: collectionView.frame.width, height: 340)
-//      }
-//    }
   }
 }
 
