@@ -221,7 +221,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     }
     
     sympathyButton.snp.remakeConstraints { (make) in
-      make.right.equalTo(self.snp.rightMargin).inset(10)
+      make.right.equalTo(self.contentView.snp.rightMargin).inset(10)
       make.height.equalTo(21)
       make.width.equalTo(21)
       make.centerY.equalToSuperview()

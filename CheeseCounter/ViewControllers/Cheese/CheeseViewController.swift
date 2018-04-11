@@ -387,9 +387,9 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       })
       .scan(cheeseDatas.value){ (state: [CheeseViewModel], viewModel: CheeseViewModel) -> [CheeseViewModel] in
         if reload {
-//          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
-//           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-//          }
+          //          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
+          //           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+          //          }
           return [viewModel]
         } else {
           return state + viewModel
@@ -456,26 +456,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
 extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
-//    let approximateHeightOfTextView = view.frame.height
-//    let size = CGSize(width: collectionView.frame.width, height: approximateHeightOfTextView)
-//    let attributes = []
-//    let estimatedFrame =
-//
-//
-//
-//      let size = (string as NSString)
-//        .boundingRect(with: CGSize(width: self.frame.width
-//          , height: .greatestFiniteMagnitude)
-//          , options: .usesLineFragmentOrigin
-//          , attributes: [NSAttributedStringKey.font: self.font]
-//          , context: nil).size
-  
-    
-    
-    
     let sectionModel = self.dataSources.sectionModels
-    
     
     switch sectionModel[indexPath.section].items[indexPath.item].type{
     case "2":
