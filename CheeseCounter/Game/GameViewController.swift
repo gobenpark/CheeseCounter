@@ -275,7 +275,7 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       .map{Int($0)}
       .filterNil()
       .map { [unowned self] index in
-        return (index > self.levelConverter(index: self.currentLevel),index)
+        return (index >= self.levelConverter(index: self.currentLevel),index)
       }.bind(onNext: navigationSetting)
       .disposed(by: disposeBag)
     

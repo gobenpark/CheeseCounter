@@ -78,6 +78,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
     layout.minimumLineSpacing = 6.5
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 6.5, right: 0)
     layout.scrollDirection = .vertical
+    
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(MainViewCell.self, forCellWithReuseIdentifier: String(describing: MainViewCell.self))
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
@@ -309,9 +310,6 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
               let cell = self.collectionView.cellForItem(at: idx) as? MainViewCell
               else {return}
             
-            
-            
-            
             cell.selectImage.removeFromSuperview()
             cell.selectImage.snp.removeConstraints()
             self.cheeseDatas.value[idx.section].items[idx.item] = data
@@ -327,6 +325,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       }
     case .Image(let num):
       self.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
+      log.info("model : \(data.1), selectedNum: \(num)")
     }
   }
   
@@ -375,8 +374,6 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
         .asObservable()
       return Observable<CheeseViewModel>
         .combineLatest(event, nonEvent) { (ev, nonev) -> CheeseViewModel in
-          log.info(ev)
-          log.info(nonev)
           return CheeseViewModel(items: ev.items + nonev.items)
       }
     }
@@ -460,7 +457,25 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
+//    let approximateHeightOfTextView = view.frame.height
+//    let size = CGSize(width: collectionView.frame.width, height: approximateHeightOfTextView)
+//    let attributes = []
+//    let estimatedFrame =
+//
+//
+//
+//      let size = (string as NSString)
+//        .boundingRect(with: CGSize(width: self.frame.width
+//          , height: .greatestFiniteMagnitude)
+//          , options: .usesLineFragmentOrigin
+//          , attributes: [NSAttributedStringKey.font: self.font]
+//          , context: nil).size
+  
+    
+    
+    
     let sectionModel = self.dataSources.sectionModels
+    
     
     switch sectionModel[indexPath.section].items[indexPath.item].type{
     case "2":

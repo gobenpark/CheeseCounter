@@ -181,8 +181,8 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
   
   private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
-      make.top.equalTo(self.snp.topMargin)
-      constraint = make.left.equalTo(self.snp.leftMargin).constraint
+      make.top.equalTo(self.contentView.snp.topMargin)
+      constraint = make.left.equalTo(self.contentView.snp.leftMargin).constraint
       make.height.equalTo(50)
       make.width.equalTo(50)
     }
