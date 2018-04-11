@@ -181,8 +181,8 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
   
   private func addConstraint(){
     profileimg.snp.remakeConstraints{ (make) in
-      make.top.equalTo(self.snp.topMargin)
-      constraint = make.left.equalTo(self.snp.leftMargin).constraint
+      make.top.equalTo(self.contentView.snp.topMargin)
+      constraint = make.left.equalTo(self.contentView.snp.leftMargin).constraint
       make.height.equalTo(50)
       make.width.equalTo(50)
     }
@@ -221,7 +221,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     }
     
     sympathyButton.snp.remakeConstraints { (make) in
-      make.right.equalTo(self.snp.rightMargin).inset(10)
+      make.right.equalTo(self.contentView.snp.rightMargin).inset(10)
       make.height.equalTo(21)
       make.width.equalTo(21)
       make.centerY.equalToSuperview()
