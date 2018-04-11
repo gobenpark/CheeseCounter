@@ -758,27 +758,6 @@ class GameViewController: UIViewController , SpinWheelControlDataSource, SpinWhe
       make.height.equalTo(75)
     }
     
-//    fiveButton.snp.makeConstraints { (make) in
-//      make.centerX.equalToSuperview()
-//      make.bottom.equalToSuperview().inset(27)
-//      make.height.equalTo(42)
-//      make.width.equalTo(98)
-//    }
-//
-//    threeButton.snp.makeConstraints { (make) in
-//      make.height.equalTo(fiveButton)
-//      make.width.equalTo(fiveButton)
-//      make.centerY.equalTo(fiveButton)
-//      make.right.equalTo(fiveButton.snp.left).offset(-5.5)
-//    }
-//
-//    sevenButton.snp.makeConstraints { (make) in
-//      make.height.equalTo(fiveButton)
-//      make.width.equalTo(fiveButton)
-//      make.centerY.equalTo(fiveButton)
-//      make.left.equalTo(fiveButton.snp.right).offset(5.5)
-//    }
-    
     constraintFromServer()
     
     selectedImageButton[1].snp.makeConstraints { (make) in

@@ -99,7 +99,7 @@ extension ObservableType where E == (AlertType, String){
       case .notice:
         return Observable.just(NoticeViewController())
       case .qna:
-        return Observable.just(QnAQViewController())
+        return Observable.just(MyInquireViewController())
       case .reply:
         return cheeseData.map{ReplyViewController(model: $0)}
       case .survey_done:

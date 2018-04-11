@@ -62,7 +62,10 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { [weak self] model, indexPath in
     guard let `self` = self else { return }
     self.cheeseDatas.value[indexPath.section].items[indexPath.item] = model
-    self.collectionView.reloadItems(at: [indexPath])
+    UIView.performWithoutAnimation { [weak self] in
+      guard let `self` = self else {return}
+      self.collectionView.reloadItems(at: [indexPath])
+    }
   }
   
   lazy var dataSources = RxCollectionViewSectionedReloadDataSource<CheeseViewModel>(configureCell: {[weak self] ds,cv,idx,item in
@@ -461,20 +464,21 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
     let sectionModel = self.dataSources.sectionModels
+    log.info(collectionView.frame.width)
     
     switch sectionModel[indexPath.section].items[indexPath.item].type{
     case "2":
       if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-        return CGSize(width: collectionView.frame.width, height: 400)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 25)
       }
-      return CGSize(width: collectionView.frame.width, height: 340)
+      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 50)
     case "4":
       if sectionModel[indexPath.section].items[indexPath.item].isExpand{
-        return CGSize(width: collectionView.frame.width, height: 570)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 195)
       }
-      return CGSize(width: collectionView.frame.width, height: 520)
+      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width + 165)
     default:
-      return CGSize(width: collectionView.frame.width, height: 340)
+      return CGSize(width: collectionView.frame.width, height: collectionView.frame.width - 25)
     }
   }
 }

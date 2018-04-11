@@ -109,7 +109,6 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider {
   
   private func selectItem(json: JSON, item: IndexPath){
     let images = [#imageLiteral(resourceName: "cheeseBrie"),#imageLiteral(resourceName: "cheeseFeta"),#imageLiteral(resourceName: "cheeseBrick"),#imageLiteral(resourceName: "cheeseGauda"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseBrie2"),#imageLiteral(resourceName: "cheeseGorgonzola")]
-    
     if json["result"]["code"].intValue == 200 && json["result"]["data"] == false{
       let alert = UIAlertController(title: nil, message: "아쉽지만 금일 당첨 되었습니다.\n내일 도전!", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
