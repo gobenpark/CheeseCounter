@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -14,11 +15,14 @@ import SwiftyJSON
 import Moya
 import DZNEmptyDataSet
 
-class WinViewController: UIViewController {
+
+class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
   
   let provider = CheeseService.provider
   let disposeBag = DisposeBag()
   let dataSubject = BehaviorRelay<[WinViewModel]>(value: [])
+  var timer: Disposable?
+  var page = 0
   
   private let dataSources = RxCollectionViewSectionedReloadDataSource<WinViewModel>(configureCell: { (ds, cv, idx, item) -> UICollectionViewCell in
     let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: WinViewCell.self), for: idx) as! WinViewCell
@@ -26,35 +30,136 @@ class WinViewController: UIViewController {
     return cell
   })
   
-  lazy var winnerView: WinnerView = {
-    let view = WinnerView(direction: .horizontal)
-    view.register(WinViewCell.self, forCellWithReuseIdentifier: String(describing: WinViewCell.self))
-    return view
+  lazy var winnerView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.register(WinViewCell.self, forCellWithReuseIdentifier: String(describing: WinViewCell.self))
+    collectionView.delegate = self
+    collectionView.isUserInteractionEnabled = false
+    collectionView.alwaysBounceVertical = true
+    collectionView.backgroundColor = .white
+    
+    return collectionView
   }()
   
-  public func initView() {
-    requestWinList()
-    
-    dataSubject.asDriver(onErrorJustReturn: [])
-      .drive(winnerView.rx.items(dataSource: dataSources))
-      .disposed(by: disposeBag)
+  func requestReloadWithDelay(onlyItem: Bool) {
+//    log.info("request reload delay")
+    if onlyItem {
+      Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+        .subscribe(onCompleted: {
+          self.requestReload()
+        })
+        .disposed(by: disposeBag)
+    } else {
+      Observable<Int>.timer(0.2, scheduler: MainScheduler.instance)
+        .subscribe(onCompleted: {
+          self.requestReload()
+        })
+        .disposed(by: disposeBag)
+    }
   }
   
-  public func requestWinList() {
+  func requestReload() {
+//    log.info("request reload")
     provider.request(.getWinList)
       .filter(statusCode: 200)
       .map(WinListModel.self)
-      .map{
+      .map{ (model) in
         var items = [WinListModel.Result.Data]()
-        items.append(contentsOf: $0.result.data)
-        if items.count > 1 {
-          items.append(items[0])
+        if self.dataSources.sectionModels.count > 0 {
+          let itemCount = self.dataSources.sectionModels[0].items.count
+          let lastItem = self.dataSources.sectionModels[0].items[itemCount - 1]
+          items.append(lastItem)
         }
+        items.append(contentsOf: model.result.data)
         return [WinViewModel(items: items)]
       }
       .asObservable()
+      .do(onNext: { _ in
+        if self.dataSources.sectionModels.count > 0 &&
+          self.dataSources.sectionModels[0].items.count > 0 {
+          self.winnerView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+        }
+      }, onCompleted: {
+        self.startTimer(resetPage: true)
+      })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
+  }
+  
+  func startTimer(resetPage: Bool = false) {
+//    log.info("start Timer")
+   
+    if timer != nil {
+      return
+    }
+    if resetPage {
+      page = 0
+    }
+    timer = Observable<Int>
+      .interval(3, scheduler: MainScheduler.instance)
+      .subscribe(onNext: {_ in
+         
+        if self.winnerView.numberOfSections == 0 {
+          self.stopTimer()
+          return
+        }
+        
+        let itemCount = self.winnerView.numberOfItems(inSection: 0)
+        if itemCount == 0 {
+          self.stopTimer()
+          return
+        }
+        
+        if self.page < itemCount - 1 {
+          self.page += 1
+          self.winnerView.scrollToItem(at: IndexPath(item: self.page, section: 0), at: .left, animated: true)
+        }
+        
+        if self.page == itemCount - 1 {
+          self.stopTimer()
+          self.requestReloadWithDelay(onlyItem: false)
+        }
+        
+        if self.page < 0 || self.page >= itemCount {
+          self.stopTimer()
+        }
+      }, onError: { (err) in
+        log.error(err)
+      })
+  }
+  
+  func stopTimer(){
+//    log.info("stop Timer")
+    timer?.dispose()
+    timer = nil
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    dataSubject.asDriver(onErrorJustReturn: [])
+      .drive(self.winnerView.rx.items(dataSource: dataSources))
+      .disposed(by: disposeBag)
+    
+    startTimer(resetPage: true)
+    requestReload()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    startTimer()
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: self.winnerView.frame.width, height: 50)
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    stopTimer()
   }
 }
 
@@ -70,70 +175,3 @@ extension WinViewController: DZNEmptyDataSetSource {
     return label
   }
 }
-
-class WinnerView: UICollectionView, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-  
-  private var timer: Disposable? = nil
-  private var direction: UICollectionViewScrollDirection = .horizontal
-  
-  init(direction: UICollectionViewScrollDirection) {
-    let layout = UICollectionViewFlowLayout()
-    self.direction = direction
-    layout.scrollDirection = direction
-    
-    super.init(frame: .zero, collectionViewLayout: layout)
-    
-    self.delegate = self
-    self.backgroundColor = .clear
-    self.isUserInteractionEnabled = false
-  }
-  
-//  deinit {
-//    timer?.dispose()
-//    timer = nil
-//  }
-//
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: self.frame.width, height: 50)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func startAutoScroll() {
-    //    self.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
-    timer = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
-      .subscribe(onNext: { [weak self] _ in
-        guard let `self` = self else { return }
-        //        log.info("startAutoScroll")
-        let itemCount = self.numberOfItems(inSection: 0)
-        
-        if self.indexPathsForVisibleItems.count == 0 || itemCount <= 1 {
-          return
-        }
-        
-        var currentIndexPath = self.indexPathsForVisibleItems[0]
-        if self.direction == .horizontal {
-          if currentIndexPath.item == itemCount - 1 {
-            var nextIndexPath = IndexPath(item: 0, section: currentIndexPath.section)
-            self.scrollToItem(at: nextIndexPath, at: .left, animated: false)
-            
-            nextIndexPath = IndexPath(item: 1, section: currentIndexPath.section)
-            self.scrollToItem(at: nextIndexPath, at: .left, animated: true)
-          } else {
-            let nextIndexPath = IndexPath(item: currentIndexPath.item + 1, section: currentIndexPath.section)
-            self.scrollToItem(at: nextIndexPath, at: .left, animated: true)
-          }
-        }
-        }, onError: {(err) in log.error(err)})
-  }
-  
-  func stopAutoScroll() {
-    timer?.dispose()
-    timer = nil
-    //    log.info("stop!!!!")
-  }
-}
-
-

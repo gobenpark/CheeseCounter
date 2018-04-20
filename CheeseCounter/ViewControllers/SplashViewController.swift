@@ -54,7 +54,8 @@ class SplashViewController: UIViewController {
         
         let id = user.id
         let profile = user.property(forKey: KOUserProfileImagePropertyKey) as? String
-        CheeseService.provider.request(.loginUser(id: "\(id ?? 0)", fcm_token: String(), img_url: profile ?? String(), access_token: KOSession.shared().accessToken, version: "1.0.4i"))
+        CheeseService.provider
+          .request(.loginUser(id: "\(id ?? 0)", fcm_token: String(), img_url: profile ?? String(), access_token: KOSession.shared().accessToken, version: "1.0.4i"))
           .filter(statusCode: 200)
           .mapJSON()
           .map{JSON($0)}
