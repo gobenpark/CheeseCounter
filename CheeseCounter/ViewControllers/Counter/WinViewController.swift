@@ -47,7 +47,7 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
   func requestReloadWithDelay(onlyItem: Bool) {
 //    log.info("request reload delay")
     if onlyItem {
-      Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+      Observable<Int>.timer(10, scheduler: MainScheduler.instance)
         .subscribe(onCompleted: {
           self.requestReload()
         })
@@ -71,7 +71,9 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
         if self.dataSources.sectionModels.count > 0 {
           let itemCount = self.dataSources.sectionModels[0].items.count
           let lastItem = self.dataSources.sectionModels[0].items[itemCount - 1]
-          items.append(lastItem)
+          if itemCount != 1 {
+            items.append(lastItem)
+          }
         }
         items.append(contentsOf: model.result.data)
         return [WinViewModel(items: items)]
@@ -108,6 +110,8 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
         }
         
         let itemCount = self.winnerView.numberOfItems(inSection: 0)
+        log.info("itemCount : \(itemCount), page : \(self.page)")
+        
         if itemCount == 0 {
           self.stopTimer()
           return
@@ -120,7 +124,7 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
         
         if self.page == itemCount - 1 {
           self.stopTimer()
-          self.requestReloadWithDelay(onlyItem: false)
+          self.requestReloadWithDelay(onlyItem: (itemCount - 1))
         }
         
         if self.page < 0 || self.page >= itemCount {
