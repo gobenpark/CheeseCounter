@@ -124,7 +124,7 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
         
         if self.page == itemCount - 1 {
           self.stopTimer()
-          self.requestReloadWithDelay(onlyItem: (itemCount - 1))
+          self.requestReloadWithDelay(onlyItem: (itemCount == 1))
         }
         
         if self.page < 0 || self.page >= itemCount {

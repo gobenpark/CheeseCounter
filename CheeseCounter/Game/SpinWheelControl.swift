@@ -347,7 +347,6 @@ open class SpinWheelControl: UIControl {
         self.reloadRotate()
       }
     }
-    log.info(radiansPerWedge)
     
 //    log.info("startTouchRadians : \(startTouchRadians), currentTouchRadians : \(currentTouchRadians)")
     
