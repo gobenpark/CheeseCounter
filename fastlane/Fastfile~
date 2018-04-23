@@ -1,0 +1,133 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.35.0"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :beta do
+    # match(type: "appstore") # more information: https://codesigning.guide
+    # ensure_git_status_clean
+
+    gym(scheme: "CheeseCounter",
+      output_directory: "fastlane/ipa/",
+      workspace: "CheeseCounter.xcworkspace",
+      include_bitcode: false,
+      silent: true,
+        clean: true) # Build your app - more options available
+    testFlight
+
+    version = get_version_number    
+
+    # commit_version_bump(xcodeproj: "CheeseCounter.xcodeproj")
+    add_git_tag(
+      grouping: "v#{version}",
+      build_number: buildNumber
+      )
+    git_commit(path: ".", message: "v#{version} B#{buildNumber}/TestFlight")
+   
+    push_to_git_remote(
+      remote: "origin",
+      local_branch: "develop",
+      remote_branch: "develop"
+      )
+
+    push_git_tags
+    slack(message: "테스트 배포했으니 다운이나 받으세요")
+    
+    buildNumber =  increment_build_number(
+      build_number: latest_testflight_build_number + 1,
+      xcodeproj: "CheeseCounter.xcodeproj"
+    )
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    # match(type: "appstore")
+    # snapshot
+    gym(scheme: "CheeseCounter",
+      output_directory: "fastlane/ipa/",
+      workspace: "CheeseCounter.xcworkspace",
+      include_bitcode: false,
+      silent: true,
+        clean: true) # Build your app - more options available
+
+    appstore
+
+    git_add(path: "./")
+
+    commitMessage = changelog_from_git_commits(
+      pretty: "- %s",
+      between: ["v#{version}/release", "HEAD"]
+      )
+
+    add_git_tag(
+      tag: "#{commitVersion}")
+
+    push_to_git_remote(
+      remote: "origin",
+      local_branch: "master",
+      remote_branch: "master"
+      )
+
+    slack(message: "엡스토어에 업로드 했어요")
+    increment_build_number(build_number: app_store_build_number + 1, xcodeproj: "CheeseCounter.xcodeproj")
+
+    commitVersion = increment_version_number(
+      bump_type: "patch" # Automatically increment patch version number
+    )
+    # frameit
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+
+
+
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://docs.fastlane.tools/actions
+
+# fastlane reports which actions are used. No personal data is recorded.
+# Learn more at https://github.com/fastlane/fastlane#metrics

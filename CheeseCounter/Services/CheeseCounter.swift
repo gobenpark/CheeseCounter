@@ -85,7 +85,13 @@ public enum CheeseCounter{
 extension CheeseCounter: TargetType{
   public var baseURL: URL {
     #if DEBUG
+<<<<<<< HEAD
       return URL(string: "http://192.168.1.19:8088")!
+=======
+//    return URL(string: "http://192.168.1.20:8081/CheeseCounter")!
+      return URL(string: "http://192.168.1.19:8088")!
+    
+>>>>>>> develop
     #else
       return URL(string: "https://cheesecounter.co.kr/")!
     #endif

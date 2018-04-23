@@ -91,7 +91,7 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
     view.addSubview(indicatorView)
     
     collectionView.snp.makeConstraints { (make) in
-      make.top.equalToSuperview()
+      make.top.equalTo(50)
       make.right.equalToSuperview()
       make.bottom.equalToSuperview()
       make.left.equalToSuperview()
