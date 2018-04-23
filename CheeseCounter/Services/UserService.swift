@@ -32,13 +32,7 @@ public enum serverType{
     case .release:
       return "https://cheesecounter.co.kr/uploadFile"
     case .test:
-<<<<<<< HEAD
       return "http://192.168.1.19:8088/uploadFile"
-=======
-//      return "http://192.168.1.20:8081/CheeseCounter"
-      return "http://192.168.1.19:8088/uploadFile"
-      
->>>>>>> develop
     }
   }
 }

@@ -334,17 +334,10 @@ open class SpinWheelControl: UIControl {
     previousTouchRadians = currentTouchRadians
     currentTouchRadians = radiansForTouch(touch: touch)
     
-    if (sign(startTouchRadians) != sign(currentTouchRadians)) {
-      if (abs(abs(startTouchRadians) - abs(currentTouchRadians)) > 0.7) {
-        self.reloadRotate()
-      }
-    } else {
-      if (abs(abs(startTouchRadians) - abs(currentTouchRadians)) > 1.1) {
-        self.reloadRotate()
-      }
+    if (abs(startTouchRadians - currentTouchRadians) > 0.8) {
+      self.reloadRotate()
     }
-    
-//    log.info("startTouchRadians : \(startTouchRadians), currentTouchRadians : \(currentTouchRadians)")
+
     
     var touchRadiansDifference: Radians = currentTouchRadians - previousTouchRadians
   
