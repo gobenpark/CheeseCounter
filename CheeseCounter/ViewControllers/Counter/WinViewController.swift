@@ -110,7 +110,6 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
         }
         
         let itemCount = self.winnerView.numberOfItems(inSection: 0)
-        log.info("itemCount : \(itemCount), page : \(self.page)")
         
         if itemCount == 0 {
           self.stopTimer()

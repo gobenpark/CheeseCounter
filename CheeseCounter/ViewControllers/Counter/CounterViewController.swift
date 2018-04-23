@@ -76,13 +76,10 @@ class CounterViewController: ButtonBarPagerTabStripViewController{
       newCell?.label.textColor = .black
       
     }
-    log.info("counter view Did Load")
-    
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    log.info("counter view WillAppear")
   }
 
   override func viewWillDisappear(_ animated: Bool) {

@@ -138,9 +138,6 @@ open class SpinWheelControl: UIControl {
   
   @objc public var selectedIndex: Int = 0
   
-  var previousVelocity: Velocity = 0
-  
-  
   //MARK: Computed Properties
   @objc var spinWheelCenter: CGPoint {
     return convert(center, from: superview)
@@ -177,24 +174,15 @@ open class SpinWheelControl: UIControl {
     if endTrackingTime != startTrackingTime &&
       abs(previousTouchRadians - currentTouchRadians) >= SpinWheelControl.kMinimumRadiansForSpin {
       computedVelocity = (previousTouchRadians - currentTouchRadians) / CGFloat(endTrackingTime - startTrackingTime)
+      log.info("speed : \(computedVelocity)")
     }
     
     //If the velocity is beyond the maximum allowed velocity, throttle it
     if computedVelocity > SpinWheelControl.kMaxVelocity {
-      repeat {
-        computedVelocity = Velocity(Int(arc4random_uniform(11)) + 25)
-      }
-        while previousVelocity == computedVelocity
-      
-      previousVelocity = computedVelocity
+      computedVelocity = Velocity(Double.random(min: 25, max: 35))
     }
     else if computedVelocity < -SpinWheelControl.kMaxVelocity {
-      repeat {
-        computedVelocity = Velocity(Int(arc4random_uniform(11)) - 35)
-      }
-        while previousVelocity == computedVelocity
-      
-      previousVelocity = computedVelocity
+      computedVelocity = Velocity(Double.random(min: 25, max: 35) * (-1))
     }
     return computedVelocity
   }

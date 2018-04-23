@@ -14,6 +14,14 @@ extension Double {
     let divisor = pow(10.0,Double(places))
     return Darwin.round(self * divisor) / divisor
   }
+  
+  public static var random: Double {
+    return Double(arc4random()) / 0xFFFFFFFF
+  }
+  
+  public static func random(min: Double, max: Double) -> Double {
+    return Double.random * (max - min) + min
+  }
 }
 
 extension Int {
