@@ -66,13 +66,11 @@ open class SpinWheelControl: UIControl {
     }
   }
   
-  
   @IBInspectable var borderColor: UIColor? {
     didSet {
       layer.borderColor = borderColor?.cgColor
     }
   }
-  
   
   @IBInspectable var cornerRadius: CGFloat = 0 {
     didSet {
@@ -80,7 +78,6 @@ open class SpinWheelControl: UIControl {
       layer.masksToBounds = cornerRadius > 0
     }
   }
-  
   
   @IBInspectable var snapOrientation: CGFloat = SpinWheelDirection.up.degreesValue {
     didSet {
@@ -97,14 +94,13 @@ open class SpinWheelControl: UIControl {
   
   /// 중앙으로부터 거리
   @objc static let kMinDistanceFromCenter: CGFloat = 30.0
-  /// 최대 가속도
+  /// 최대 가속도 threshold
   @objc static let kMaxVelocity: Velocity = 30
   /// 감속 배율 0.98 설정 낮을수록 감속이 빠름
   @objc static let kDecelerationVelocityMultiplier: CGFloat = 0.99
   @objc static let kSpeedToSnap: CGFloat = 0.05
   @objc static let kSnapRadiansProximity: Radians = 0.001
   @objc static let kWedgeSnapVelocityMultiplier: CGFloat = 10.0
-  @objc static let kZoomZoneThreshold = 1.5
   @objc static let kPreferredFramesPerSecond: Int = 60
   
   //A circle = 360 degrees = 2 * pi radians

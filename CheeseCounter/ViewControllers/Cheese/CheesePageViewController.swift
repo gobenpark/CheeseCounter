@@ -14,7 +14,7 @@ import RxCocoa
 
 class CheesePageViewController: ButtonBarPagerTabStripViewController{
   
-  let disposeBag = DisposeBag()
+  let disposeBag = DisposeBag() 
   let tabViewControllers = [CheeseViewController(), CheeseFilterViewController()]
   var bottomView: UIView?
   let myPageButton: UIBarButtonItem = {

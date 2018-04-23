@@ -25,6 +25,34 @@ platform :ios do
     scan
   end
 
+  lane :beta2 do
+
+
+    # 1. 빌드 시작
+    gym(scheme: "CheeseCounter",
+      output_directory: "fastlane/ipa/",
+      workspace: "CheeseCounter.xcworkspace",
+      include_bitcode: false,
+      xcargs: "-allowProvisioningUpdates",
+      silent: true,
+        clean: true)
+
+    # 버전 가져오기
+    version = get_version_number  
+
+    #  2. 테스트 플라이트 배포
+    testFlight
+
+
+    # 3. 슬랙에 알림
+    slack(message: "테스트 배포했으니 다운이나 받으세요")
+
+
+  end
+
+
+
+
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
@@ -35,6 +63,7 @@ platform :ios do
       output_directory: "fastlane/ipa/",
       workspace: "CheeseCounter.xcworkspace",
       include_bitcode: false,
+      export_xcargs: "-allowProvisioningUpdates",
       silent: true,
         clean: true) # Build your app - more options available
     testFlight
@@ -73,6 +102,7 @@ platform :ios do
     gym(scheme: "CheeseCounter",
       output_directory: "fastlane/ipa/",
       workspace: "CheeseCounter.xcworkspace",
+      export_xcargs: "-allowProvisioningUpdates",
       include_bitcode: false,
       silent: true,
         clean: true) # Build your app - more options available
