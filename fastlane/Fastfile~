@@ -35,7 +35,6 @@ platform :ios do
       output_directory: "fastlane/ipa/",
       workspace: "CheeseCounter.xcworkspace",
       include_bitcode: false,
-      export_xcargs: "-allowProvisioningUpdates",
       silent: true,
         clean: true) # Build your app - more options available
     testFlight

@@ -52,13 +52,15 @@ class GameSelectViewController: UIViewController, IndicatorInfoProvider {
     return collectionView
   }()
   
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     //view = collectionView
     view.addSubview(collectionView)
-    
+  
     collectionView.snp.makeConstraints { (make) in
-      make.top.equalToSuperview()
+      make.top.equalToSuperview().offset(50)
       make.right.equalToSuperview()
       make.bottom.equalToSuperview()
       make.left.equalToSuperview()

@@ -164,6 +164,7 @@
 		B1ACA8FA203AD41D0096E61B /* RxSwift+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ACA8F9203AD41D0096E61B /* RxSwift+Extension.swift */; };
 		B1ACA8FC203BC3500096E61B /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */; };
 		B1AD63251F049C23000BBB35 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD63241F049C23000BBB35 /* SignUp.swift */; };
+		B1ADAEDA2085F1A80052981F /* WinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ADAED92085F1A80052981F /* WinnerView.swift */; };
 		B1AE29E6203D1C9B0078DB3C /* QuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE29E5203D1C9B0078DB3C /* QuestionViewCell.swift */; };
 		B1AE29E9203D33710078DB3C /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE29E8203D33710078DB3C /* Operators.swift */; };
 		B1AE29EB203D3C8D0078DB3C /* ListBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE29EA203D3C8D0078DB3C /* ListBaseViewController.swift */; };
@@ -177,6 +178,8 @@
 		B1BB43911EBAF8F8004D2462 /* DropOutConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BB43901EBAF8F8004D2462 /* DropOutConfirmViewController.swift */; };
 		B1BBB15C203A5D4F00EBE71F /* ListQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BBB15B203A5D4F00EBE71F /* ListQuestionViewController.swift */; };
 		B1BBB15E203A5DD000EBE71F /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BBB15D203A5DD000EBE71F /* AnswerViewController.swift */; };
+		B1BC4D4F207F081000125F0F /* WinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC4D4E207F081000125F0F /* WinViewController.swift */; };
+		B1BC4D51207F08FC00125F0F /* WinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC4D50207F08FC00125F0F /* WinViewModel.swift */; };
 		B1BCB15F1E97725800929B8D /* PointService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BCB15E1E97725800929B8D /* PointService.swift */; };
 		B1C6AAAF1EC2A97E00B29E19 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */; };
 		B1C74805200C37AF007D14D6 /* CheeseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C74804200C37AF007D14D6 /* CheeseViewModel.swift */; };
@@ -185,7 +188,7 @@
 		B1C9E9BE20451F7000B697C9 /* CouponHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9BD20451F7000B697C9 /* CouponHistoryCell.swift */; };
 		B1C9E9C020453A6A00B697C9 /* CouponDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9BF20453A6A00B697C9 /* CouponDownViewController.swift */; };
 		B1C9E9C32045569300B697C9 /* ReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9C22045569200B697C9 /* ReplyModel.swift */; };
-		B1C9E9C6204558A500B697C9 /* AdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9C5204558A500B697C9 /* AdView.swift */; };
+		B1C9E9C6204558A500B697C9 /* WinViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9C5204558A500B697C9 /* WinViewCell.swift */; };
 		B1C9E9CB204652D000B697C9 /* CouponDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C9E9CA204652D000B697C9 /* CouponDetailViewController.swift */; };
 		B1CA65B82019DB1100EB7E89 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65B72019DB1100EB7E89 /* UIButton+Extension.swift */; };
 		B1CA65BA201AB29400EB7E89 /* ShopDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */; };
@@ -412,6 +415,7 @@
 		B1ACA8F9203AD41D0096E61B /* RxSwift+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxSwift+Extension.swift"; sourceTree = "<group>"; };
 		B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		B1AD63241F049C23000BBB35 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		B1ADAED92085F1A80052981F /* WinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerView.swift; sourceTree = "<group>"; };
 		B1AE29E5203D1C9B0078DB3C /* QuestionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewCell.swift; sourceTree = "<group>"; };
 		B1AE29E8203D33710078DB3C /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		B1AE29EA203D3C8D0078DB3C /* ListBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBaseViewController.swift; sourceTree = "<group>"; };
@@ -425,6 +429,8 @@
 		B1BB43901EBAF8F8004D2462 /* DropOutConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropOutConfirmViewController.swift; sourceTree = "<group>"; };
 		B1BBB15B203A5D4F00EBE71F /* ListQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListQuestionViewController.swift; sourceTree = "<group>"; };
 		B1BBB15D203A5DD000EBE71F /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		B1BC4D4E207F081000125F0F /* WinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinViewController.swift; sourceTree = "<group>"; };
+		B1BC4D50207F08FC00125F0F /* WinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinViewModel.swift; sourceTree = "<group>"; };
 		B1BCB15E1E97725800929B8D /* PointService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointService.swift; sourceTree = "<group>"; };
 		B1C6AAAE1EC2A97E00B29E19 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		B1C74804200C37AF007D14D6 /* CheeseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseViewModel.swift; sourceTree = "<group>"; };
@@ -433,7 +439,7 @@
 		B1C9E9BD20451F7000B697C9 /* CouponHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryCell.swift; sourceTree = "<group>"; };
 		B1C9E9BF20453A6A00B697C9 /* CouponDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDownViewController.swift; sourceTree = "<group>"; };
 		B1C9E9C22045569200B697C9 /* ReplyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyModel.swift; sourceTree = "<group>"; };
-		B1C9E9C5204558A500B697C9 /* AdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdView.swift; sourceTree = "<group>"; };
+		B1C9E9C5204558A500B697C9 /* WinViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinViewCell.swift; sourceTree = "<group>"; };
 		B1C9E9CA204652D000B697C9 /* CouponDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDetailViewController.swift; sourceTree = "<group>"; };
 		B1CA65B72019DB1100EB7E89 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
@@ -737,6 +743,7 @@
 				B1CA65B9201AB29400EB7E89 /* ShopDetailViewController.swift */,
 				B1447DE3203FB12D008085B1 /* ConfigViewController.swift */,
 				B163A72C204CE19300A98346 /* CounterEventViewController.swift */,
+				B1BC4D4E207F081000125F0F /* WinViewController.swift */,
 			);
 			path = Counter;
 			sourceTree = "<group>";
@@ -767,7 +774,8 @@
 				B11910A62027E4E300A1A88C /* HistoryViewCell.swift */,
 				B114BB872044F1B400D6264E /* CounterCollectionHeaderView.swift */,
 				B1C9E9BD20451F7000B697C9 /* CouponHistoryCell.swift */,
-				B1C9E9C5204558A500B697C9 /* AdView.swift */,
+				B1C9E9C5204558A500B697C9 /* WinViewCell.swift */,
+				B1ADAED92085F1A80052981F /* WinnerView.swift */,
 			);
 			path = Counter;
 			sourceTree = "<group>";
@@ -982,6 +990,7 @@
 				B127625620451EBA0059DBBE /* CouponHistoryViewModel.swift */,
 				B163A733204D2D3500A98346 /* EventViewModel.swift */,
 				B1486FFE205F65C3004197AA /* BaseImageViewModel.swift */,
+				B1BC4D50207F08FC00125F0F /* WinViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1370,6 +1379,7 @@
 				B172D6A02023FA4E00CFD97B /* MyPageViewController.swift in Sources */,
 				B159368B1F300A6C009C29A6 /* StartWithCheeseViewController.swift in Sources */,
 				B183FD291F90953500AF5CBA /* Bundle+Extension.swift in Sources */,
+				B1ADAEDA2085F1A80052981F /* WinnerView.swift in Sources */,
 				B1D5104820105B1100ADE68C /* UILabel+Extension.swift in Sources */,
 				B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */,
 				B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */,
@@ -1388,6 +1398,7 @@
 				B175066B1E93985A00D6FA94 /* CollectionActivityIndicatorView.swift in Sources */,
 				B15EB0F51ECA84D5004726C5 /* CheeseCounter.swift in Sources */,
 				B1AE29EB203D3C8D0078DB3C /* ListBaseViewController.swift in Sources */,
+				B1BC4D4F207F081000125F0F /* WinViewController.swift in Sources */,
 				B101A4D320117B4300313748 /* GameViewController.swift in Sources */,
 				B141FC26200D9DFC00114BA7 /* MainSurveyImageView.swift in Sources */,
 				B1CA65BE201AF13600EB7E89 /* RouletteModel.swift in Sources */,
@@ -1475,6 +1486,7 @@
 				B127625720451EBA0059DBBE /* CouponHistoryViewModel.swift in Sources */,
 				B16A10711E9B25B7007D83CF /* RegionData.swift in Sources */,
 				B157BB011E6FF9C0008F50AF /* ListDetailResultViewCell.swift in Sources */,
+				B1BC4D51207F08FC00125F0F /* WinViewModel.swift in Sources */,
 				B15993BD1E6D5E5900FCEF85 /* ListQuestionTableViewCell.swift in Sources */,
 				B1D33A091F7DEB1600CFF19A /* SearchViewModel.swift in Sources */,
 				B1447DE4203FB12D008085B1 /* ConfigViewController.swift in Sources */,
@@ -1487,7 +1499,7 @@
 				B1AE29E6203D1C9B0078DB3C /* QuestionViewCell.swift in Sources */,
 				B1F960FA1E63E90D00E87B02 /* AppDelegate.swift in Sources */,
 				B11910A92027E83600A1A88C /* CouponHistoryViewController.swift in Sources */,
-				B1C9E9C6204558A500B697C9 /* AdView.swift in Sources */,
+				B1C9E9C6204558A500B697C9 /* WinViewCell.swift in Sources */,
 				B15E4C661E8CC07500C059D0 /* UserSetupViewController.swift in Sources */,
 				B1EA8F85203FF9DD00961333 /* WinListModel.swift in Sources */,
 				B1548E641E7F66FE00D46149 /* UserResult.swift in Sources */,
@@ -1711,8 +1723,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CheeseCounter/production.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MQT2B82NTD;
@@ -1764,8 +1777,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CheeseCounter/production.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = MQT2B82NTD;
 				DYLIB_CURRENT_VERSION = 5;

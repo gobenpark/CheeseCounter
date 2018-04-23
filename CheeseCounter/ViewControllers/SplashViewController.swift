@@ -36,7 +36,14 @@ class SplashViewController: UIViewController {
     activityView.snp.makeConstraints{
       $0.center.equalToSuperview()
     }
-    self.viewLoadAction()
+//    log.info(TARGET_IPHONE_SIMULATOR)
+    if isJailBrokenDevice() == true {
+      AlertView(title: "탈옥폰은 썩 물러가렴").addChildAction(title: "확인", style: .default, handeler: { (action) in
+        exit(0)
+      }).show()
+    } else {
+      self.viewLoadAction()
+    }
   }
   
   func viewLoadAction(){
@@ -47,7 +54,8 @@ class SplashViewController: UIViewController {
         
         let id = user.id
         let profile = user.property(forKey: KOUserProfileImagePropertyKey) as? String
-        CheeseService.provider.request(.loginUser(id: "\(id ?? 0)", fcm_token: String(), img_url: profile ?? String(), access_token: KOSession.shared().accessToken, version: "1.0.3i"))
+        CheeseService.provider
+          .request(.loginUser(id: "\(id ?? 0)", fcm_token: String(), img_url: profile ?? String(), access_token: KOSession.shared().accessToken, version: "1.0.4i"))
           .filter(statusCode: 200)
           .mapJSON()
           .map{JSON($0)}
@@ -71,6 +79,31 @@ class SplashViewController: UIViewController {
             log.error(error)
           }).disposed(by: self.disposeBag)
       }
+    }
+  }
+  
+  func isJailBrokenDevice() -> Bool {
+    if TARGET_IPHONE_SIMULATOR != 1 {
+      if FileManager.default.fileExists(atPath: "/Applications/Cydia.app")
+        || FileManager.default.fileExists(atPath: "/Library/MobileSubstrate/MobileSubstrate.dylib")
+        || FileManager.default.fileExists(atPath: "/bin/bash")
+        || FileManager.default.fileExists(atPath: "/usr/sbin/sshd")
+        || FileManager.default.fileExists(atPath: "/etc/apt")
+        || FileManager.default.fileExists(atPath: "/private/var/lib/apt/")
+        || UIApplication.shared.canOpenURL(URL(string: "cydia://package/com.example.package")!) {
+        
+        return true
+      }
+      let stringToWrite = "Jailbreak Test"
+      
+      do {
+        try stringToWrite.write(toFile: "/private/JailbreakTest.txt", atomically: true, encoding: String.Encoding.utf8)
+        return true
+      } catch {
+        return false
+      }
+    } else {
+      return false
     }
   }
 }

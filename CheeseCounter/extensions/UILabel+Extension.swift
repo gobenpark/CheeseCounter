@@ -21,8 +21,8 @@ extension UILabel{
           , attributes: [NSAttributedStringKey.font: self.font]
           , context: nil).size
       
-      log.info("text: \(size.height), view: \(self.frame.size.height)")
-      // && (size.height - self.frame.size.height) >= 9 
+//      log.info("text: \(size.height), view: \(self.frame.size.height)")
+      // && (size.height - self.frame.size.height) >= 9
       if (size.height > self.frame.size.height){
         return true
       }

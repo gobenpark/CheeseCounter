@@ -12,6 +12,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toaster
+
 
 public typealias Degrees = CGFloat
 public typealias Radians = CGFloat
@@ -140,7 +142,9 @@ open class SpinWheelControl: UIControl {
   
   @objc public var selectedIndex: Int = 0
   
-
+  var previousVelocity: Velocity = 0
+  
+  
   //MARK: Computed Properties
   @objc var spinWheelCenter: CGPoint {
     return convert(center, from: superview)
@@ -181,12 +185,21 @@ open class SpinWheelControl: UIControl {
     
     //If the velocity is beyond the maximum allowed velocity, throttle it
     if computedVelocity > SpinWheelControl.kMaxVelocity {
-      computedVelocity = SpinWheelControl.kMaxVelocity
+      repeat {
+        computedVelocity = Velocity(Int(arc4random_uniform(11)) + 25)
+      }
+        while previousVelocity == computedVelocity
+      
+      previousVelocity = computedVelocity
     }
     else if computedVelocity < -SpinWheelControl.kMaxVelocity {
-      computedVelocity = -SpinWheelControl.kMaxVelocity
+      repeat {
+        computedVelocity = Velocity(Int(arc4random_uniform(11)) - 35)
+      }
+        while previousVelocity == computedVelocity
+      
+      previousVelocity = computedVelocity
     }
-    
     return computedVelocity
   }
   
@@ -231,7 +244,7 @@ open class SpinWheelControl: UIControl {
   //Draw the spinWheelView
   @objc public func drawWheel() {
     
-  
+    
     spinWheelView = UIView(frame: self.bounds)
     
     guard self.dataSource?.numberOfWedgesInSpinWheel(spinWheel: self) != nil else {
@@ -268,7 +281,7 @@ open class SpinWheelControl: UIControl {
     }
     
     self.spinWheelView.isUserInteractionEnabled = false
-//    self.spinWheelView.transform = CGAffineTransform(rotationAngle: -(snappingPositionRadians) - (radiansPerWedge / 2))
+    //    self.spinWheelView.transform = CGAffineTransform(rotationAngle: -(snappingPositionRadians) - (radiansPerWedge / 2))
     self.addSubview(self.spinWheelView)
   }
   
@@ -314,23 +327,38 @@ open class SpinWheelControl: UIControl {
     endTrackingTime = CACurrentMediaTime()
     
     let touchPoint: CGPoint = touch.location(in: self)
+    
     let distanceFromCenterOfSpinWheel: CGFloat = distanceFromCenter(point: touchPoint)
     
     if distanceFromCenterOfSpinWheel < SpinWheelControl.kMinDistanceFromCenter {
       return true
     }
     
-    // 현재 저장된 radians를 previous에 저장 후  터치 좌표 받아 current에 저장
+    // 현재 저장된 radians를 previous에 저장 후 터치 좌표 받아 current에 저장
     previousTouchRadians = currentTouchRadians
     currentTouchRadians = radiansForTouch(touch: touch)
     
+    if (sign(startTouchRadians) != sign(currentTouchRadians)) {
+      if (abs(abs(startTouchRadians) - abs(currentTouchRadians)) > 0.7) {
+        self.reloadRotate()
+      }
+    } else {
+      if (abs(abs(startTouchRadians) - abs(currentTouchRadians)) > 1.1) {
+        self.reloadRotate()
+      }
+    }
+    
+//    log.info("startTouchRadians : \(startTouchRadians), currentTouchRadians : \(currentTouchRadians)")
+    
     var touchRadiansDifference: Radians = currentTouchRadians - previousTouchRadians
+  
     if touchRadiansDifference > 5 && touchRadiansDifference < -5{
       touchRadiansDifference = currentTouchRadians + previousTouchRadians
     }
+    
     self.spinWheelView.transform = self.spinWheelView.transform.rotated(by: touchRadiansDifference)
     delegate?.spinWheelDidRotateByRadians?(radians: touchRadiansDifference)
-    
+
     endSnap()
     return true
   }
@@ -354,6 +382,7 @@ open class SpinWheelControl: UIControl {
   @objc func beginDeceleration() {
     
     currentDecelerationVelocity = velocity
+    
     if velocity < 0{
       spinDirection = SpinDirection.right
     }else{
@@ -367,7 +396,7 @@ open class SpinWheelControl: UIControl {
     }
     
     velocitySubject.onNext(currentDecelerationVelocity)
-   
+    
     delegate?.spinStart?(velocity: currentDecelerationVelocity)
     //If the wheel was spun, begin deceleration
     if currentDecelerationVelocity != 0 {
@@ -411,7 +440,7 @@ open class SpinWheelControl: UIControl {
     
     endSnap()
   }
-
+  
   //정지 될때
   @objc func endDeceleration() {
     decelerationDisplayLink?.invalidate()
@@ -422,7 +451,7 @@ open class SpinWheelControl: UIControl {
   //Snap to the nearest wedge
   @objc func snapToNearestWedge() {
     currentStatus = .snapping
-  
+    
     let nearestWedge: Int = Int(round(((currentRadians + (radiansPerWedge / 2)) + snappingPositionRadians) / radiansPerWedge))
     selectWedgeAtIndexOffset(index: nearestWedge, animated: true)
     endSnap()
@@ -507,6 +536,14 @@ open class SpinWheelControl: UIControl {
   @objc public func reloadData() {
     clear()
     drawWheel()
+  }
+  
+  func sign(_ rad: Radians) -> Int {
+    if (rad > 0) {
+      return 1
+    } else {
+      return -1
+    }
   }
 }
 
