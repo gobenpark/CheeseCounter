@@ -130,6 +130,8 @@ open class SpinWheelControl: UIControl {
   var currentStatus: SpinWheelStatus = .idle
   
   var currentDecelerationVelocity: Velocity!
+  var previousVelocity: Velocity = 0
+
   
   /// 시작시 고정방향 Radians.pi / 2
   @objc var snappingPositionRadians: Radians = SpinWheelDirection.up.radiansValue
@@ -179,11 +181,22 @@ open class SpinWheelControl: UIControl {
     
     //If the velocity is beyond the maximum allowed velocity, throttle it
     if computedVelocity > SpinWheelControl.kMaxVelocity {
-      computedVelocity = Velocity(Double.random(min: 25, max: 35))
+      repeat {
+        computedVelocity = Velocity(Int(arc4random_uniform(11)) + 25)
+//        computedVelocity = Velocity(Double.random(min: 25, max: 35))
+      } while computedVelocity == previousVelocity
+      previousVelocity = computedVelocity
+
+      
+    } else if computedVelocity < -SpinWheelControl.kMaxVelocity {
+      repeat {
+        computedVelocity = Velocity(Int(arc4random_uniform(11)) - 35)
+      } while computedVelocity == previousVelocity
+      previousVelocity = computedVelocity
+//      computedVelocity = Velocity(Double.random(min: 25, max: 35) * (-1))
     }
-    else if computedVelocity < -SpinWheelControl.kMaxVelocity {
-      computedVelocity = Velocity(Double.random(min: 25, max: 35) * (-1))
-    }
+    log.info("Computed : \(computedVelocity), Previous : \(previousVelocity)")
+
     return computedVelocity
   }
   
@@ -399,7 +412,7 @@ open class SpinWheelControl: UIControl {
   //Deceleration step run for each frame of decelerationDisplayLink
   /// display link 프레임 스텝 당 감속도 계산
   @objc func decelerationStep() {
-    
+  
     let newVelocity: Velocity = currentDecelerationVelocity * SpinWheelControl.kDecelerationVelocityMultiplier
     let radiansToRotate: Radians = currentDecelerationVelocity / CGFloat(SpinWheelControl.kPreferredFramesPerSecond)
     
@@ -513,14 +526,6 @@ open class SpinWheelControl: UIControl {
   @objc public func reloadData() {
     clear()
     drawWheel()
-  }
-  
-  func sign(_ rad: Radians) -> Int {
-    if (rad > 0) {
-      return 1
-    } else {
-      return -1
-    }
   }
 }
 

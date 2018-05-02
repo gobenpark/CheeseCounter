@@ -86,11 +86,23 @@ class MainTabBarController: UITabBarController
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    var retryCount = 3
+    
     CheeseService.provider
       .request(.getTodayEventList)
       .filter(statusCode: 200)
       .map(EventModel.self)
       .asObservable()
+      .retryWhen{ (errorObservable: Observable<Error>) in
+        return errorObservable.flatMap({ (err) -> Observable<Int> in
+          if retryCount > 0 {
+            retryCount -= 1
+            return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+          } else {
+            return Observable<Int>.error(err)
+          }
+        })}
+      .catchErrorJustReturn(EventModel(result: EventModel.Result(code: "", data:[])))
       .filter{$0.result.data.count > 0}
       .bind(onNext: popUpEvent)
       .disposed(by: disposeBag)

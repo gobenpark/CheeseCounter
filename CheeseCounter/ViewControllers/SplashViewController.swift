@@ -54,12 +54,22 @@ class SplashViewController: UIViewController {
         
         let id = user.id
         let profile = user.property(forKey: KOUserProfileImagePropertyKey) as? String
+        var retryCount = 3
         
         CheeseService.provider.request(.loginUser(id: "\(id ?? 0)", fcm_token: String(), img_url: profile ?? String(), access_token: KOSession.shared().accessToken, version: CheeseService.version))
           .filter(statusCode: 200)
           .mapJSON()
           .map{JSON($0)}
           .debug()
+          .retryWhen{ (errorObservable: Observable<Error>) in
+            return errorObservable.flatMap({ (err) -> Observable<Int> in
+              if retryCount > 0 {
+                retryCount -= 1
+                return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+              } else {
+                return Observable<Int>.error(err)
+              }
+            })}
           .subscribe(onSuccess: { (json) in
             if json["result"]["code"].intValue == 200{
               if json["result"]["data"]["is_enable"].intValue == 0{
@@ -78,7 +88,8 @@ class SplashViewController: UIViewController {
             self.activityView.stopAnimating()
           }, onError: { (error) in
             log.error(error)
-          }).disposed(by: self.disposeBag)
+          })
+          .disposed(by: self.disposeBag)
       }
     }
   }
