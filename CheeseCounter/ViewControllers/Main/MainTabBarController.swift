@@ -163,7 +163,6 @@ class MainTabBarController: UITabBarController
 }
 
 func ==(lhs: [String], rhs: [EventModel.Data]) -> Bool{
-  var result = false
   for lh in lhs{
     for rh in rhs{
       return lh == rh.id

@@ -290,7 +290,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func generateDynamicLinkMessage(_ dynamicLink: DynamicLink) -> String {
-    if dynamicLink.matchConfidence == .weak {
+    if dynamicLink.matchType == .weak {
     } else {
     }
     return (dynamicLink.url?.query?.components(separatedBy: "=")[1]) ?? "0"

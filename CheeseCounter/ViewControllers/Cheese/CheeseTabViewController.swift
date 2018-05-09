@@ -44,6 +44,7 @@ class CheeseTabViewController: ButtonBarPagerTabStripViewController {
     myPageButton.rx.tap
       .map {return MypageNaviViewController()}
       .subscribe(onNext: { [weak self](vc) in
+        self?.navigationController?.definesPresentationContext = false
         vc.modalPresentationStyle = .overCurrentContext
         self?.present(vc, animated: true, completion: nil)
       })
