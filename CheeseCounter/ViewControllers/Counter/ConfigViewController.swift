@@ -24,15 +24,6 @@ final class ConfigViewController: FormViewController{
       }).onCellSelection({[weak self] (cell, row) in
         self?.navigationController?.pushViewController(SetupProfileViewController(), animated: true)
       })
-      <<< LabelRow().cellSetup({ (cell, row) in
-        row.title = "추천인 코드"
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: cell.bounds.height))
-        label.textColor = .gray
-        label.text = UserData.instance.userID.components(separatedBy: "_")[1]
-        label.sizeToFit()
-        label.textAlignment = .right
-        cell.accessoryView = label
-      })
     
     +++ Section("알림 설정")
       <<< LabelRow().cellSetup({ (cell, row) in

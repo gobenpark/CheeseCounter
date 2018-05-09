@@ -18,6 +18,7 @@
 		449049FE1E93E3D300DC9ACD /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449049FD1E93E3D300DC9ACD /* NoticeViewController.swift */; };
 		55F22436C4D2727A69DCC465 /* Pods_CheeseCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */; };
 		7289EAB599C99EECC0600FE6 /* Pods_CheeseCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4884F79C2A713B719F462E79 /* Pods_CheeseCounterTests.framework */; };
+		B1003E4D209AE773001C1017 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1003E4C209AE773001C1017 /* RecommendViewController.swift */; };
 		B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */; };
 		B101A4CE20117B2400313748 /* Degrees+MathMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C920117B2300313748 /* Degrees+MathMethods.swift */; };
 		B101A4CF20117B2400313748 /* SpinWheelWedge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4CA20117B2300313748 /* SpinWheelWedge.swift */; };
@@ -258,6 +259,7 @@
 		735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheeseCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA19A0115BF6039BCCB9393 /* Pods-CheeseCounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounterTests/Pods-CheeseCounterTests.release.xcconfig"; sourceTree = "<group>"; };
 		AB38F771B36AD214FE790B61 /* Pods-CheeseCounter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounter.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter.release.xcconfig"; sourceTree = "<group>"; };
+		B1003E4C209AE773001C1017 /* RecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
 		B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelControlDelegate.swift; sourceTree = "<group>"; };
 		B101A4C920117B2300313748 /* Degrees+MathMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Degrees+MathMethods.swift"; sourceTree = "<group>"; };
 		B101A4CA20117B2300313748 /* SpinWheelWedge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelWedge.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				B104EF2B1ECC66F60075D80C /* CoachViewController.swift */,
 				B1B2DBB71F00917300C91CEA /* LoginConfirmController.swift */,
 				0A05A97D2047A7F900C526CA /* EventViewController.swift */,
+				B1003E4C209AE773001C1017 /* RecommendViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1510,6 +1513,7 @@
 				B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */,
 				B1F9611D1E63EA7E00E87B02 /* UIView+Extension.swift in Sources */,
 				B15A4CF61EB04836006F8022 /* QnAViewController.swift in Sources */,
+				B1003E4D209AE773001C1017 /* RecommendViewController.swift in Sources */,
 				B1AE29EF203D423A0078DB3C /* BaseListViewCell.swift in Sources */,
 				B15A4CFF1EB0B483006F8022 /* VersionViewController.swift in Sources */,
 				B1F961241E63EE4800E87B02 /* Page.swift in Sources */,

@@ -33,12 +33,34 @@ final class CounterHeaderView: UIView {
     return label
   }()
   
+  let recommendCodeLabel: UILabel = {
+    let label = UILabel()
+    return label
+  }()
+  
+  let copyButton: UIButton = {
+    let button = UIButton()
+    let attribute = NSAttributedString(string: "복사하기",
+                                       attributes: [NSAttributedStringKey.foregroundColor : UIColor.white,
+                                                    NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
+    button.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
+    button.setAttributedTitle(attribute, for: .normal)
+    button.contentEdgeInsets = UIEdgeInsets(top: 0.5, left: 5, bottom: 0.5, right: 5)
+    button.layer.cornerRadius = 5
+    button.layer.borderWidth = 1
+    button.layer.borderColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
+    
+    return button
+  }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(icon)
     addSubview(topLabel)
+    addSubview(recommendCodeLabel)
     addSubview(configureButton)
+    addSubview(copyButton)
+    
     configureButton.isUserInteractionEnabled = true
     
     CheeseService.provider.request(.getMyRank)
@@ -66,8 +88,12 @@ final class CounterHeaderView: UIView {
             attributes: [.font:UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)]))
         attribute.append(
           NSAttributedString(string: "보유치즈: \(rank["cheese"].intValue.stringFormattedWithSeparator())치즈",
-                             attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)]))
+            attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)]))
+        
         self?.topLabel.attributedText = attribute
+        self?.recommendCodeLabel.attributedText = NSAttributedString(string: "내 추천코드: \(UserData.instance.userID.components(separatedBy: "_")[1])",
+          attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)])
+
     }).disposed(by: disposeBag)
 
     addConstraint()
@@ -96,9 +122,20 @@ final class CounterHeaderView: UIView {
     topLabel.snp.makeConstraints { (make) in
       make.left.equalTo(icon.snp.right).offset(13.5)
       make.top.equalTo(icon)
-      make.bottom.equalTo(topLabel)
+      make.bottom.equalTo(recommendCodeLabel.snp.top)
       make.right.equalTo(configureButton.snp.left)
     }
+    
+    recommendCodeLabel.snp.makeConstraints{ (make) in
+      make.left.equalTo(icon.snp.right).offset(13.5)
+      make.top.equalTo(topLabel.snp.bottom)
+    }
+    
+    copyButton.snp.makeConstraints{ (make) in
+      make.left.equalTo(recommendCodeLabel.snp.right).offset(5)
+      make.bottom.equalTo(recommendCodeLabel)
+    }
+    
     defer {
       setNeedsLayout()
       layoutIfNeeded()

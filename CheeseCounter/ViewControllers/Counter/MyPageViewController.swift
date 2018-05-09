@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 import XLPagerTabStrip
 import Moya
+import Toaster
 
 final class MypageNaviViewController: UINavigationController{
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -57,6 +58,9 @@ final class MyPageViewController: UIViewController{
     self.view.addSubview(titleLabel)
     self.view.addSubview(dismissButton)
     
+    ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
+    ToastView.appearance().bottomOffsetPortrait = 100
+    
     provider.request(.getMyInfo)
       .filter(statusCode: 200)
       .map(UserInfoModel.self)
@@ -75,6 +79,12 @@ final class MyPageViewController: UIViewController{
         self?.navigationController?.pushViewController(vc, animated: true)
       }).disposed(by: disposeBag)
     
+    headerView.copyButton.rx.tap
+      .subscribe(onNext: { _ in 
+        UIPasteboard.general.string = UserData.instance.userID.components(separatedBy: "_")[1]
+        Toast(text: "복사되었습니다.", delay: 0.1, duration: 0.5).show()
+      })
+      .disposed(by: disposeBag)
     
     addConstraint()
   }
@@ -106,7 +116,7 @@ final class MyPageViewController: UIViewController{
       make.top.equalTo(titleLabel.snp.bottom).offset(24)
       make.left.equalToSuperview()
       make.right.equalToSuperview()
-      make.height.equalTo(70)
+      make.height.equalTo(80)
     }
     
     containerVC.view.snp.makeConstraints { (make) in

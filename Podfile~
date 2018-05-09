@@ -3,6 +3,7 @@
 target 'CheeseCounter' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  inbit_all_warnings!
 # NetWork
 pod 'Alamofire'
 pod 'Moya/RxSwift'
@@ -25,7 +26,7 @@ pod 'XLPagerTabStrip'
 pod 'FlexibleImage', '~> 1.8'
 pod 'Toaster'
 pod 'BetterSegmentedControl'
-pod 'CircleProgressBar', '~> 0.32’
+pod 'CircleProgressBar', '~> 0.32'
 # Etc
 pod 'FBSDKShareKit'
 pod 'FBSDKCoreKit'
@@ -44,10 +45,10 @@ pod 'URLNavigator'
 pod 'AnyDate'
 pod 'Hero'
 pod 'PMAlertController'
-pod 'iCarousel'
 pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
 pod 'SwiftyUserDefaults'
+pod 'CryptoSwift'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'
@@ -58,7 +59,6 @@ pod 'RxKeyboard'
 #Animation
 pod 'YLGIFImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-pod 'Reveal-SDK', :configurations => ['Debug']
 #Color
 pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 # Pods for CheeseCounter
