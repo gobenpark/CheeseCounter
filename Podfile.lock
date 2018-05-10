@@ -100,6 +100,7 @@ PODS:
   - PMAlertController (3.3.0)
   - Protobuf (3.5.0)
   - Quick (1.2.0)
+  - ReachabilitySwift (4.1.0)
   - Result (3.2.4)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
@@ -170,6 +171,7 @@ DEPENDENCIES:
   - ObjectMapper
   - PMAlertController
   - Quick
+  - ReachabilitySwift
   - RxCocoa
   - RxDataSources
   - RxGesture
@@ -234,6 +236,7 @@ SPEC REPOS:
     - PMAlertController
     - Protobuf
     - Quick
+    - ReachabilitySwift
     - Result
     - RxCocoa
     - RxDataSources
@@ -312,6 +315,7 @@ SPEC CHECKSUMS:
   PMAlertController: 15dd20ca343bd7761ca254542cc561f05ad6b89c
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
@@ -336,6 +340,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: 4f1160e4cdafe48ce2f70280a82c259c9a5d970c
+PODFILE CHECKSUM: 0c8d839e96e568b98568fd3d1dce69a8e8074c39
 
 COCOAPODS: 1.5.0

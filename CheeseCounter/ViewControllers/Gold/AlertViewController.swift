@@ -125,17 +125,32 @@ class AlertViewController: UIViewController{
   private func request(of type: RequestAction){
     switch type{
     case .reload:
+      var retryCount = 3
       currentPage = 1
       provider.request(.getMyNotification(pageNum: "0"))
         .filter(statusCode: 200)
         .map(NotiModel.self)
         .map{[AlertViewModel(items: $0.result.data)]}
         .asObservable()
+        .retryWhen{ (errorObservable: Observable<Error>) in
+          return errorObservable.flatMap({ (err) -> Observable<Int> in
+            if retryCount > 0 {
+              retryCount -= 1
+              return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+            } else {
+              return Observable<Int>.error(err)
+            }
+          })}
+        .catchErrorJustReturn([AlertViewModel(items: [])])
+        .filter( {(model) in
+          return model[0].items.count > 0
+        })
         .bind(to: datas)
         .disposed(by: disposeBag)
     case .paging(let id):
       guard !isPaging else {return}
       isPaging = true
+      var retryCount = 3
       provider.request(.getMyNotification(pageNum: id))
         .filter(statusCode: 200)
         .map(NotiModel.self)
@@ -147,9 +162,23 @@ class AlertViewController: UIViewController{
           self?.currentPage += 1
           self?.isPaging = false
         })
+        .retryWhen{ (errorObservable: Observable<Error>) in
+          return errorObservable.flatMap({ (err) -> Observable<Int> in
+            if retryCount > 0 {
+              retryCount -= 1
+              return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+            } else {
+              return Observable<Int>.error(err)
+            }
+          })}
+        .catchErrorJustReturn([AlertViewModel(items: [])])
+        .filter({ (model) in
+          return model[0].items.count > 0
+        })
         .scan(datas.value){ (state, viewModel) in
           return state + viewModel
-        }.bind(to: datas)
+        }
+        .bind(to: datas)
         .disposed(by: disposeBag)
     }
   }

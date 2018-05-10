@@ -59,11 +59,23 @@ final class ShopViewController: UIViewController, IndicatorInfoProvider{
   
 
   private func request() {
+    var retryCount = 3
     
     provider.request(.getGiftList)
       .map(GiftModel.self)
       .map {[GiftViewModel(items: $0.result.data)]}
       .asObservable()
+      .retryWhen{ (errorObservable: Observable<Error>) in
+        return errorObservable.flatMap({ (err) -> Observable<Int> in
+          if retryCount > 0 {
+            retryCount -= 1
+            return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+          } else {
+            return Observable<Int>.error(err)
+          }
+        })}
+      .catchErrorJustReturn([GiftViewModel(items: [])])
+      .filter({ return $0[0].items.count > 0 })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
   }

@@ -92,12 +92,23 @@ class CheeseFilterViewController: UIViewController, DZNEmptyDataSetDelegate, Ind
 
   private func requestSurveyList(reload: Bool) {
     let id = reload ? "" : (dataSources.sectionModels.last?.items.last?.id ?? "")
+    var retryCount = 3
     
     CheeseService.provider.request(.getAvailableSurveyListV2(id: id))
       .filterSuccessfulStatusCodes()
       .map(MainSurveyList.self)
       .map {CheeseViewModel(items: $0.result.data)}
       .asObservable()
+      .retryWhen({ (errorObservable: Observable<Error>) in
+        return errorObservable.flatMap( { (err) -> Observable<Int> in
+          if retryCount > 0 {
+            retryCount -= 1
+            return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+          } else {
+            return Observable<Int>.error(err)
+          }
+        })
+      })
       .catchErrorJustReturn(CheeseViewModel(items: []))
       .filter({ (model) -> Bool in
         return model.items.count != 0
@@ -108,7 +119,8 @@ class CheeseFilterViewController: UIViewController, DZNEmptyDataSetDelegate, Ind
         } else {
           return state + viewModel
         }
-      }.bind(to: cheeseDatas)
+      }
+      .bind(to: cheeseDatas)
       .disposed(by: disposeBag)
   }
   

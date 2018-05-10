@@ -6,6 +6,7 @@ target 'CheeseCounter' do
 # NetWork
 pod 'Alamofire'
 pod 'Moya/RxSwift'
+pod 'ReachabilitySwift'
 # UI
 pod 'XLActionController'
 pod 'XLActionController/Twitter'
