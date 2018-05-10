@@ -273,7 +273,7 @@ final class ReplyViewController: UIViewController{
           }, onError: { (error) in
             Toast(text: "댓글 작성 실패.", delay: 0.5, duration: 1.5).show()
           }).map{[weak self] _ in return self?.messageInputBar}
-          .do(onSuccess: {[weak self] (bar) in
+          .do(onSuccess: { (bar) in
             bar?.reloadData()
           })
       }.share()

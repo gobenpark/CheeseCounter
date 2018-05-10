@@ -41,14 +41,14 @@ final class CounterHeaderView: UIView {
   let copyButton: UIButton = {
     let button = UIButton()
     let attribute = NSAttributedString(string: "복사하기",
-                                       attributes: [NSAttributedStringKey.foregroundColor : UIColor.white,
-                                                    NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
-    button.backgroundColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
+                                       attributes: [NSAttributedStringKey.foregroundColor : UIColor.black,
+                                                    NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 12)])
+    button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     button.setAttributedTitle(attribute, for: .normal)
     button.contentEdgeInsets = UIEdgeInsets(top: 0.5, left: 5, bottom: 0.5, right: 5)
     button.layer.cornerRadius = 5
     button.layer.borderWidth = 1
-    button.layer.borderColor = #colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)
+    button.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     
     return button
   }()
@@ -81,7 +81,7 @@ final class CounterHeaderView: UIView {
         let gender = info["gender"].stringValue == "male" ? "남자" : "여자"
         
         let attribute = NSMutableAttributedString(
-          string: "\(rank["nickname"].stringValue) (\(rank["title"].stringValue))\n",
+          string: "\(rank["nickname"].stringValue) (\(rank["title"].stringValue), \(rank["rank"].stringValue)위)\n",
           attributes: [.font : UIFont.CheeseFontMedium(size: 12)])
         attribute.append(
           NSAttributedString(string: "\(gender)/\(info["age"].stringValue)세/\(info["addr2"].stringValue)\n",
