@@ -36,7 +36,7 @@ class SplashViewController: UIViewController {
     activityView.snp.makeConstraints{
       $0.center.equalToSuperview()
     }
-//    log.info(TARGET_IPHONE_SIMULATOR)
+    //    log.info(TARGET_IPHONE_SIMULATOR)
     if isJailBrokenDevice() == true {
       AlertView(title: "탈옥폰은 썩 물러가렴").addChildAction(title: "확인", style: .default, handeler: { (action) in
         exit(0)
@@ -69,6 +69,9 @@ class SplashViewController: UIViewController {
                 AppDelegate.instance?.window?.rootViewController = MainTabBarController()
                 UserData.instance.userID = json["result"]["data"]["id"].stringValue
                 NotificationCenter.default.post(name: NSNotification.Name("splashEnd"), object: ["isEnable":true])
+                if let refreshed = AppDelegate.instance?.isTokenRefreshed, refreshed{
+                  UserService.sendFcmToken()
+                }
               }
             }else{
               AlertView(title: "최신버전 업데이트를 위해 스토어로 이동합니다.").addChildAction(title: "확인", style: .default, handeler: { (action) in

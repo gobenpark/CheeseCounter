@@ -271,6 +271,8 @@ extension CheeseCounter: TargetType{
         encoding: URLEncoding.httpBody)
     case .deleteReply(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
+    case .fcmSender(let fcm_token):
+      return .requestParameters(parameters: ["fcm_token": fcm_token], encoding: URLEncoding.httpBody)
     default:
       return .requestPlain
     }

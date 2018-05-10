@@ -13,6 +13,8 @@ import Firebase
 import Moya
 import Crashlytics
 import FirebaseMessaging
+import RxSwift
+import RxCocoa
 
 public enum serverType{
   case release
@@ -53,120 +55,122 @@ struct UserService {
   
   static let dispatchGroup: DispatchGroup = DispatchGroup()
   
+  let disposeBag = DisposeBag()
+  
   /// 초기 로딩시 프로필정보 가져옴
-  static func me(_ completion: @escaping (DataResponse<UserResult>) -> Void){
+  //  static func me(_ completion: @escaping (DataResponse<UserResult>) -> Void){
+  //    let urlString = "\(url)/auth/loginUser.json"
+  //    let manager = Alamofire.SessionManager.default
+  //    manager.session.configuration.timeoutIntervalForRequest = 120
+  //
+  //    kakaoTask()
+  //
+  //    dispatchGroup.notify(queue: DispatchQueue.main) {
+  //      manager.request(urlString,method: .post, parameters: mainParameter)
+  //        .validate(statusCode: 200..<400)
+  //        .responseJSON { (response) in
+  //          let response: DataResponse<UserResult> = response.flatMap{ json in
+  //            if let user = Mapper<UserResult>().map(JSONObject: json){
+  //              Answers.logLogin(withMethod: "MainLogin", success: true, customAttributes: nil)
+  //              isLogin = true
+  //              return .success(user)
+  //            } else {
+  //              Answers.logLogin(withMethod: "MainLogin", success: false, customAttributes: nil)
+  //              let error = MappingError(from: json, to: UserResult.self)
+  //              return .failure(error)
+  //            }
+  //          }
+  //          completion(response)
+  //          sendFcmToken()
+  //      }
+  //    }
+  //  }
+  
+  static func sendFcmToken(){
+    guard let fcmtoken = Messaging.messaging().fcmToken else {return}
+    log.info("FCM token : \(fcmtoken)")
     
-    let urlString = "\(url)/auth/loginUser.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
+    _ = CheeseService.provider
+      .request(.fcmSender(fcm_token: fcmtoken))
+      .filter(statusCode: 200)
+      .asObservable()
+      .subscribe(onNext:  { _ in
+        AppDelegate.instance?.isTokenRefreshed = true
+      }, onError: { (err) in
+        Crashlytics.sharedInstance().recordError(err)
+      })
+    }
     
-    kakaoTask()
     
-    dispatchGroup.notify(queue: DispatchQueue.main) {
-      manager.request(urlString,method: .post, parameters: mainParameter)
+    //  static func kakaoTask(){
+    //
+    //    dispatchGroup.enter()
+    //    KOSessionTask.meTask { (result, error) in
+    //      guard let result = result else {return}
+    //      if let user = result as? KOUser {
+    //
+    //        self.kakao_ID = user.id
+    //        let profile = user.property(forKey: KOUserProfileImagePropertyKey) as? String
+    //        mainParameter["img_url"] = profile ?? ""
+    //        mainParameter["id"] = user.id
+    //        mainParameter["access_token"] = KOSession.shared().accessToken
+    //        mainParameter["version"] = "1.0.2i"
+    //      }
+    //      dispatchGroup.leave()
+    //    }
+    //  }
+    
+    /// 닉네임의 중복체크
+    static func check(nickname: String, _ completion: @escaping (DataResponse<NickResult>) -> Void) {
+      let urlString = "\(url)/auth/checkNickname.json"
+      let parameter:[String:String] = ["nickname":nickname]
+      let manager = Alamofire.SessionManager.default
+      manager.session.configuration.timeoutIntervalForRequest = 120
+      
+      manager.request(urlString, method: .post, parameters: parameter)
         .validate(statusCode: 200..<400)
         .responseJSON { (response) in
-          let response: DataResponse<UserResult> = response.flatMap{ json in
-            if let user = Mapper<UserResult>().map(JSONObject: json){
-              Answers.logLogin(withMethod: "MainLogin", success: true, customAttributes: nil)
-              isLogin = true
+          let response: DataResponse<NickResult> = response.flatMap{ json in
+            if let user = Mapper<NickResult>().map(JSONObject: json){
               return .success(user)
             } else {
-              Answers.logLogin(withMethod: "MainLogin", success: false, customAttributes: nil)
-              let error = MappingError(from: json, to: UserResult.self)
+              let error = MappingError(from: json, to: NickResult.self)
               return .failure(error)
             }
           }
           completion(response)
-          sendFcmToken()
       }
     }
-  }
-  
-  static func sendFcmToken(){
-    guard let fcmtoken = Messaging.messaging().fcmToken else {return}
     
-    Alamofire.request("\(url)/auth/updateFcmToken.json", method: .post, parameters: ["fcm_token":fcmtoken])
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        switch response.result{
-        case .success(_):
-          break
-        case .failure(let error):
-          Crashlytics.sharedInstance().recordError(error)
-        }
-    }
-  }
-  
-  static func kakaoTask(){
-    
-    dispatchGroup.enter()
-    KOSessionTask.meTask { (result, error) in
-      guard let result = result else {return}
-      if let user = result as? KOUser {
-        
-        self.kakao_ID = user.id
-        let profile = user.property(forKey: KOUserProfileImagePropertyKey) as? String
-        mainParameter["img_url"] = profile ?? ""
-        mainParameter["id"] = user.id
-        mainParameter["access_token"] = KOSession.shared().accessToken
-        mainParameter["version"] = "1.0.2i"
+    /// 유저정보 가져오기 (현재 로그인 되어있는 사용자)
+    ///
+    /// - Parameter completion: 콜백
+    static func getMyInfo(_ completion: @escaping (DataResponse<UserResult>) -> Void) {
+      let urlString = "\(url)/auth/getMyInfo.json"
+      let manager = Alamofire.SessionManager.default
+      manager.session.configuration.timeoutIntervalForRequest = 120
+      manager.request(urlString, method: .post)
+        .validate(statusCode: 200..<400)
+        .responseJSON { (response) in
+          
+          let response: DataResponse<UserResult> = response.flatMap{ json in
+            if let user = Mapper<UserResult>().map(JSONObject: json){
+              return .success(user)
+            } else {
+              let error = MappingError(from: json, to: UserResult.self)
+              
+              return .failure(error)
+            }
+          }
+          completion(response)
       }
-      dispatchGroup.leave()
     }
-  }
-  
-  /// 닉네임의 중복체크
-  static func check(nickname: String, _ completion: @escaping (DataResponse<NickResult>) -> Void) {
-    let urlString = "\(url)/auth/checkNickname.json"
-    let parameter:[String:String] = ["nickname":nickname]
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
     
-    manager.request(urlString, method: .post, parameters: parameter)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        let response: DataResponse<NickResult> = response.flatMap{ json in
-          if let user = Mapper<NickResult>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: NickResult.self)
-            return .failure(error)
-          }
-        }
-        completion(response)
+    static func sessionExpireAction(){
+      let alertController = UIAlertController(title: "세션이 만료되어 재로그인 합니다.", message: "", preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { (_) in
+        AppDelegate.instance?.reloadRootViewController()
+      }))
+      AppDelegate.instance?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
-  }
-    
-  /// 유저정보 가져오기 (현재 로그인 되어있는 사용자)
-  ///
-  /// - Parameter completion: 콜백
-  static func getMyInfo(_ completion: @escaping (DataResponse<UserResult>) -> Void) {
-    let urlString = "\(url)/auth/getMyInfo.json"
-    let manager = Alamofire.SessionManager.default
-    manager.session.configuration.timeoutIntervalForRequest = 120
-    manager.request(urlString, method: .post)
-      .validate(statusCode: 200..<400)
-      .responseJSON { (response) in
-        
-        let response: DataResponse<UserResult> = response.flatMap{ json in
-          if let user = Mapper<UserResult>().map(JSONObject: json){
-            return .success(user)
-          } else {
-            let error = MappingError(from: json, to: UserResult.self)
-            
-            return .failure(error)
-          }
-        }
-        completion(response)
-    }
-  }
-  
-  static func sessionExpireAction(){
-    let alertController = UIAlertController(title: "세션이 만료되어 재로그인 합니다.", message: "", preferredStyle: .alert)
-    alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { (_) in
-      AppDelegate.instance?.reloadRootViewController()
-    }))
-    AppDelegate.instance?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-  }
 }

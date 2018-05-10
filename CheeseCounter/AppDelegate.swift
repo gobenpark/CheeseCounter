@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   var urlCheeseData: CheeseResultByDate.Data?
+  var isTokenRefreshed: Bool = false
   
 //  var paymentViewController: PaymentViewController?
   let gcmMessageIDKey = "gcm.message_id"
@@ -343,7 +344,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 extension AppDelegate : MessagingDelegate {
   // [START refresh_token]
   func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-    UserService.sendFcmToken()
+    isTokenRefreshed = true
     log.info("Firebase registration token: \(fcmToken)")
   }
 
