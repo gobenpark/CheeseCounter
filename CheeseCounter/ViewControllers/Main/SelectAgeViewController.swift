@@ -86,7 +86,7 @@ extension SelectAgeViewController: UITextFieldDelegate{
   
   func textFieldDidEndEditing(_ textField: UITextField) {
     guard let text = textField.text else {return}
-    if text.characters.count != 0{
+    if text.count != 0{
       if (Int(text) ?? 0) < 14 {
         
         AlertView(title: "알림", message: "14세 미만은\n사용할 수 없습니다.", preferredStyle: .alert)

@@ -187,13 +187,13 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
             .filter(statusCode: 200)
             .map{ _ in
               return data
-          }
+            }
         case .Image:
           return Observable<(MainSurveyAction, MainSurveyList.CheeseData,IndexPath?)>.just(data)
         }
       }
       .bind(onNext: showGiftView)
-      .disposed(by: disposeBag)
+      .disposed(by: disposeBag)  
     
     // 더보기 이벤트
     moreEvent.observeOn(MainScheduler.instance)
@@ -306,6 +306,8 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       
       giftView.dismissCompleteAction = {[weak self] in
         guard let `self` = self else {return}
+        self.checkUserLevelUp()
+        
         CheeseService.provider.request(.getSurveyByIdV2(id: data.1.id))
           .filter(statusCode: 200)
           .map(MainSurveyList.self)
@@ -321,7 +323,8 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
             self.collectionView.reloadItems(at: [idx])
           }) { (error) in
             log.error(error)
-          }.disposed(by: self.disposeBag)
+          }
+          .disposed(by: self.disposeBag)
       }
       if isSearch{
         self.searchController.present(giftView, animated: true, completion: nil)
@@ -330,7 +333,6 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       }
     case .Image(let num):
       self.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
-      log.info("model : \(data.1), selectedNum: \(num)")
     }
   }
   
@@ -356,6 +358,18 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
     //    .disposed(by: disposeBag)
     
     networkRequest(reload: true)
+  }
+  
+  fileprivate func checkUserLevelUp() {
+    let alertController = UIAlertController(title: nil, message: "축하합니다!\n새로운 프로필을 얻었습니다.", preferredStyle: UIAlertControllerStyle.alert)
+    let okAction = UIAlertAction(title: "프로필 확인하기", style: UIAlertActionStyle.default, handler: { [weak self] (action) in
+      guard let `self` = self else { return }
+      self.present(MypageNaviViewController(), animated: true, completion: nil)
+    })
+    let cancelAction = UIAlertAction(title: "나중에 하기", style: .default, handler: nil)
+    alertController.addAction(okAction)
+    alertController.addAction(cancelAction)
+    self.present(alertController, animated: true, completion: nil)
   }
   
   func requestSurveyList(reload: Bool) -> Observable<CheeseViewModel> {
