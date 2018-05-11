@@ -10,17 +10,40 @@ import UIKit
 
 class RecommendViewController: BaseSetupViewController {
   
+  let recommenderNicknameLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.CheeseFontBold(size: 12)
+    label.text = "mynameis20 님께"
+    label.textColor = UIColor.rgb(red: 51, green: 51, blue: 51)
+    label.textAlignment = .center
+    label.sizeToFit()
+    return label
+  }()
+  
   let recommendLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.CheeseFontRegular(size: 15)
+    label.font = UIFont.CheeseFontRegular(size: 18)
     label.numberOfLines = 0
+    label.text = "500치즈를 지급해드립니다!"
+    label.textColor = UIColor.rgb(red: 51, green: 51, blue: 51)
+    label.textAlignment = .center
+    label.sizeToFit()
+    return label
+  }()
+  
+  let recommendLabel2: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.CheeseFontRegular(size: 14)
+    label.textColor = UIColor.rgb(red: 85, green: 85, blue: 85)
+    label.numberOfLines = 2
+    label.text = "치즈카운터를 추천해주신 분의\n코드를 입력해주세요."
     label.textAlignment = .center
     label.sizeToFit()
     return label
   }()
   
   let mainImgView: UIImageView = {
-    let img = UIImageView(image: #imageLiteral(resourceName: "bg_illust_nickname@1x"))
+    let img = UIImageView(image: #imageLiteral(resourceName: "imgInviteCode"))
     img.contentMode = .scaleAspectFit
     return img
   }()
@@ -65,40 +88,45 @@ class RecommendViewController: BaseSetupViewController {
   }()
   
   override func setup() {
-    self.titleLabel.text = "추천인 입력"
+    self.titleLabel.text = "회원정보 추가"
     
-    guard let nickName = self.userSetupViewController?.signUp.nickName else {
-      recommendLabel.text = "치즈카운터를 추천해주신 분의\n코드를 입력해주세요.\n\n500치즈를 지급해드립니다!"
-      return
-    }
-    recommendLabel.text = "\(nickName)님께\n\n치즈카운터를 추천해주신 분의\n코드를 입력해주세요.\n\n500치즈를 지급해드립니다!"
-    
-    view.addSubview(recommendLabel)
-    view.addSubview(recommendCodeTextField)
+    view.addSubview(recommenderNicknameLabel)
     view.addSubview(mainImgView)
+    view.addSubview(recommendLabel)
+    view.addSubview(recommendLabel2)
+    view.addSubview(recommendCodeTextField)
     view.addSubview(confirmButton)
     view.addSubview(skipButton)
     recommendCodeTextField.rightView = deleteButton
     recommendCodeTextField.rightViewMode = .whileEditing
     
-    recommendLabel.snp.makeConstraints { (make) in
+    recommenderNicknameLabel.snp.makeConstraints{ (make) in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().inset(100)
-      make.left.equalToSuperview()
-      make.right.equalToSuperview()
-      make.bottom.equalTo(mainImgView.snp.top).offset(10)
+      make.top.equalToSuperview().offset(10)
+      make.bottom.equalTo(mainImgView.snp.top)
     }
+    
     mainImgView.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(recommendLabel.snp.bottom)
+      make.bottom.equalTo(recommendLabel.snp.top)
       make.height.lessThanOrEqualTo(200)
       make.width.equalTo(mainImgView.snp.height)
     }
     
-    recommendCodeTextField.snp.makeConstraints{ (make) in
+    recommendLabel.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
       make.top.equalTo(mainImgView.snp.bottom)
-      make.left.right.equalToSuperview().inset(25)
+    }
+    
+    recommendLabel2.snp.makeConstraints { (make) in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(recommendLabel.snp.bottom)
+      make.bottom.equalTo(recommendCodeTextField.snp.top)
+    }
+
+    recommendCodeTextField.snp.makeConstraints{ (make) in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(recommendLabel2.snp.bottom)
       make.height.greaterThanOrEqualTo(20)
       make.height.lessThanOrEqualTo(50)
     }

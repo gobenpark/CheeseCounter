@@ -36,6 +36,7 @@
 		B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */; };
 		B123381B1E977F9C00DE9640 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381A1E977F9C00DE9640 /* Paging.swift */; };
 		B123381D1E97936F00DE9640 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381C1E97936F00DE9640 /* HistoryData.swift */; };
+		B123A37220A54E320053E36B /*  .xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B123A37120A54E300053E36B /*  .xcassets */; };
 		B1254A2820524FE10022EC23 /* SurveyResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1254A2720524FE10022EC23 /* SurveyResultModel.swift */; };
 		B126699E1E9F90CE00D9C1C9 /* CheeseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126699D1E9F90CE00D9C1C9 /* CheeseResult.swift */; };
 		B127625520451A0E0059DBBE /* GiftListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127625420451A0E0059DBBE /* GiftListModel.swift */; };
@@ -221,7 +222,6 @@
 		B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFFF1EB85C09004A43D4 /* ListDetailHeaderViewCell.swift */; };
 		B1F960FA1E63E90D00E87B02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F960F91E63E90D00E87B02 /* AppDelegate.swift */; };
 		B1F960FF1E63E90D00E87B02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1F960FD1E63E90D00E87B02 /* Main.storyboard */; };
-		B1F961011E63E90E00E87B02 /*  .xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1F961001E63E90E00E87B02 /*  .xcassets */; };
 		B1F9610F1E63E90E00E87B02 /* CheeseCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9610E1E63E90E00E87B02 /* CheeseCounterTests.swift */; };
 		B1F9611D1E63EA7E00E87B02 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9611C1E63EA7E00E87B02 /* UIView+Extension.swift */; };
 		B1F961201E63EBAB00E87B02 /* WelcomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9611F1E63EBAB00E87B02 /* WelcomeViewCell.swift */; };
@@ -276,6 +276,7 @@
 		B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerableCheeseViewController.swift; sourceTree = "<group>"; };
 		B123381A1E977F9C00DE9640 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		B123381C1E97936F00DE9640 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
+		B123A37120A54E300053E36B /*  .xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = " .xcassets"; sourceTree = "<group>"; };
 		B1254A2720524FE10022EC23 /* SurveyResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyResultModel.swift; sourceTree = "<group>"; };
 		B126699D1E9F90CE00D9C1C9 /* CheeseResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseResult.swift; sourceTree = "<group>"; };
 		B127625420451A0E0059DBBE /* GiftListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftListModel.swift; sourceTree = "<group>"; };
@@ -472,7 +473,6 @@
 		B1F960F61E63E90D00E87B02 /* CheeseCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheeseCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F960F91E63E90D00E87B02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1F960FE1E63E90D00E87B02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B1F961001E63E90E00E87B02 /*  .xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = " .xcassets"; sourceTree = "<group>"; };
 		B1F961051E63E90E00E87B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1F9610A1E63E90E00E87B02 /* CheeseCounterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheeseCounterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F9610E1E63E90E00E87B02 /* CheeseCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseCounterTests.swift; sourceTree = "<group>"; };
@@ -826,6 +826,7 @@
 		B1F960ED1E63E90D00E87B02 = {
 			isa = PBXGroup;
 			children = (
+				B123A37120A54E300053E36B /*  .xcassets */,
 				B1539BCE1EA0B1EA00EF811B /* Resource */,
 				B12338191E977F8A00DE9640 /* Types */,
 				B1F960F81E63E90D00E87B02 /* CheeseCounter */,
@@ -863,7 +864,6 @@
 				B16A10B21E9BB138007D83CF /* GoogleService-Info.plist */,
 				B1F960FD1E63E90D00E87B02 /* Main.storyboard */,
 				B15A4CF31EAF2FA3006F8022 /* Launch Screen.storyboard */,
-				B1F961001E63E90E00E87B02 /*  .xcassets */,
 				B1F961051E63E90E00E87B02 /* Info.plist */,
 				B17030181E78E2FC006896E6 /* CheeseCounter-Bridging-Header.h */,
 			);
@@ -1116,6 +1116,7 @@
 			files = (
 				B1539BD31EA0B22200EF811B /* NotoSans-Regular.otf in Resources */,
 				B183FD321F90A95800AF5CBA /* privacy.txt in Resources */,
+				B123A37220A54E320053E36B /*  .xcassets in Resources */,
 				B1307B171EF2234600BECD7A /* img_0_1.png in Resources */,
 				B1539BD41EA0B22200EF811B /* NotoSans-Light.otf in Resources */,
 				B1539BD51EA0B22200EF811B /* NotoSans-Medium.otf in Resources */,
@@ -1132,7 +1133,6 @@
 				B183FD2C1F90A0D300AF5CBA /* provision.txt in Resources */,
 				B1307B161EF2234600BECD7A /* img_0.png in Resources */,
 				B167D3DD1EEA90E000A8EEA4 /* gold_reward.gif in Resources */,
-				B1F961011E63E90E00E87B02 /*  .xcassets in Resources */,
 				B1307B181EF2234600BECD7A /* img_1.png in Resources */,
 				B1307B1D1EF225C500BECD7A /* cheese_reward.json in Resources */,
 				B1F960FF1E63E90D00E87B02 /* Main.storyboard in Resources */,
@@ -1255,6 +1255,7 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -1267,6 +1268,7 @@
 				"${BUILT_PRODUCTS_DIR}/NextGrowingTextView/NextGrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -1308,6 +1310,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -1320,6 +1323,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NextGrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMAlertController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",

@@ -22,6 +22,7 @@ PODS:
     - Fabric (~> 1.7.5)
   - CryptoSwift (0.9.0)
   - Differentiator (3.0.2)
+  - DynamicBlurView (2.0.2)
   - DZNEmptyDataSet (1.8.1)
   - Eureka (4.1.1)
   - Fabric (1.7.6)
@@ -98,6 +99,8 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.1.1)
   - ObjectMapper (3.1.0)
   - PMAlertController (3.3.0)
+  - PopupDialog (0.7.1):
+    - DynamicBlurView (~> 2.0)
   - Protobuf (3.5.0)
   - Quick (1.2.0)
   - Result (3.2.4)
@@ -169,6 +172,7 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - ObjectMapper
   - PMAlertController
+  - PopupDialog (~> 0.7)
   - Quick
   - RxCocoa
   - RxDataSources
@@ -208,6 +212,7 @@ SPEC REPOS:
     - Crashlytics
     - CryptoSwift
     - Differentiator
+    - DynamicBlurView
     - DZNEmptyDataSet
     - Eureka
     - Fabric
@@ -232,6 +237,7 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - ObjectMapper
     - PMAlertController
+    - PopupDialog
     - Protobuf
     - Quick
     - Result
@@ -286,6 +292,7 @@ SPEC CHECKSUMS:
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
+  DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
@@ -310,6 +317,7 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   PMAlertController: 15dd20ca343bd7761ca254542cc561f05ad6b89c
+  PopupDialog: 39598b7d41719f5c025b4b70e62728bae7734fef
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -336,6 +344,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: 026f17f12021bbd8281028b8df9c323f32c9e362
+PODFILE CHECKSUM: 1150526ba7fdb2baef8c6a7bbb65b6da3d35c670
 
 COCOAPODS: 1.5.0
