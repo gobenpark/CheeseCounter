@@ -17,7 +17,7 @@ struct UserInfoModel: Codable{
     
     struct Data: Codable{
       let access_token: String?
-      let addr: String
+      let addr: String?
       let addr1: String
       let addr2: String
       let age: String
@@ -33,11 +33,12 @@ struct UserInfoModel: Codable{
       let recent_date: String?
       let type: String?
       let version: String?
+      let recommend_code: String?
       
       init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         access_token = try? values.decode(String.self, forKey: .access_token)
-        addr = try values.decode(String.self, forKey: .addr)
+        addr = try? values.decode(String.self, forKey: .addr)
         addr1 = try values.decode(String.self, forKey: .addr1)
         addr2 = try values.decode(String.self, forKey: .addr2)
         age = try values.decode(String.self, forKey: .age)
@@ -53,6 +54,7 @@ struct UserInfoModel: Codable{
         recent_date = try? values.decode(String.self, forKey: .recent_date)
         type = try? values.decode(String.self, forKey: .type)
         version = try? values.decode(String.self, forKey: .version)
+        recommend_code = try? values.decode(String.self, forKey: .recommend_code)
       }
     }
     

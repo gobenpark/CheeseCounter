@@ -65,7 +65,7 @@ final class MyPageViewController: UIViewController{
       .filter(statusCode: 200)
       .map(UserInfoModel.self)
       .asObservable()
-      .bind(onNext: headerView.mapper)
+      .bind(onNext: headerView.mapper)      
       .disposed(by: disposeBag)
     
     dismissButton.rx.tap
@@ -88,6 +88,7 @@ final class MyPageViewController: UIViewController{
     
     addConstraint()
   }
+  
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

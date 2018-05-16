@@ -35,6 +35,7 @@ public enum CheeseCounter{
   case deleteSecession
   case getBankList
   case getMyInfo
+  case checkRecommend(id: String)
   
   case getSurveyResult(surveyId: String)
   case getAvailableSurveyListV2(id: String)
@@ -208,6 +209,8 @@ extension CheeseCounter: TargetType{
       return "/game/isAvailableGame.json"
     case .getAvailableSurveyListV2:
       return "/survey/getAvailableSurveyListV2.json"
+    case .checkRecommend:
+      return "/auth/checkRecommend.json"
     }
   }
   
@@ -270,6 +273,8 @@ extension CheeseCounter: TargetType{
         parameters: ["id":id,"fcm_token":fcm_token,"img_url":img_url,"access_token":access_token,"version": version],
         encoding: URLEncoding.httpBody)
     case .deleteReply(let id):
+      return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
+    case .checkRecommend(let id):
       return .requestParameters(parameters: ["id": id], encoding: URLEncoding.httpBody)
     default:
       return .requestPlain

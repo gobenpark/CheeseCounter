@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SwiftyJSON
 
 class RecommendViewController: BaseSetupViewController {
   
+  private let disposeBag = DisposeBag()
   let recommenderNicknameLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.CheeseFontBold(size: 12)
@@ -22,7 +26,7 @@ class RecommendViewController: BaseSetupViewController {
   
   let recommendLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.CheeseFontRegular(size: 18)
+    label.font = UIFont.CheeseFontBold(size: 18)
     label.numberOfLines = 0
     label.text = "500치즈를 지급해드립니다!"
     label.textColor = UIColor.rgb(red: 51, green: 51, blue: 51)
@@ -56,6 +60,7 @@ class RecommendViewController: BaseSetupViewController {
     textField.textAlignment = .center
     textField.backgroundColor = .white
     textField.placeholder = "ex)123456789"
+    textField.keyboardType = .decimalPad
     textField.layer.borderWidth = 0.5
     textField.layer.borderColor = UIColor.lightGray.cgColor
     textField.delegate = self
@@ -81,7 +86,7 @@ class RecommendViewController: BaseSetupViewController {
   lazy var skipButton : UIButton = {
     let btn = UIButton()
     btn.setTitle("건너뛰기", for: .normal)
-    btn.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+    btn.backgroundColor = #colorLiteral(red: 0.6823529412, green: 0.7176470588, blue: 0.7411764706, alpha: 1)
     btn.setTitleColor(.white, for: .normal)
     btn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
     return btn
@@ -102,32 +107,31 @@ class RecommendViewController: BaseSetupViewController {
     
     recommenderNicknameLabel.snp.makeConstraints{ (make) in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().offset(10)
-      make.bottom.equalTo(mainImgView.snp.top)
+      make.top.equalTo(self.titleLabel.snp.bottom).offset(20)
     }
     
     mainImgView.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.bottom.equalTo(recommendLabel.snp.top)
       make.height.lessThanOrEqualTo(200)
+      make.top.equalTo(recommenderNicknameLabel.snp.bottom).offset(20)
       make.width.equalTo(mainImgView.snp.height)
     }
     
     recommendLabel.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(mainImgView.snp.bottom)
+      make.top.equalTo(mainImgView.snp.bottom).offset(23)
     }
     
     recommendLabel2.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(recommendLabel.snp.bottom)
-      make.bottom.equalTo(recommendCodeTextField.snp.top)
+      make.top.equalTo(recommendLabel.snp.bottom).offset(8.5)
     }
 
     recommendCodeTextField.snp.makeConstraints{ (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(recommendLabel2.snp.bottom)
-      make.height.greaterThanOrEqualTo(20)
+      make.top.equalTo(recommendLabel2.snp.bottom).offset(10)
+//      make.height.greaterThanOrEqualTo(20)
+      make.left.right.equalToSuperview().inset(25)
       make.height.lessThanOrEqualTo(50)
     }
     
@@ -199,11 +203,38 @@ class RecommendViewController: BaseSetupViewController {
   }
   
   @objc fileprivate dynamic func nextAction(){
-      self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 6)
+    self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 6)
   }
   
   @objc fileprivate dynamic func confirmAction() {
-    log.info("confirm")
+    self.recommendCodeTextField.endEditing(true)
+    let recommendCode = recommendCodeTextField.text
+    
+    if recommendCode?.count == 9 {
+      CheeseService.provider
+        .request(.checkRecommend(id: recommendCode ?? ""))
+        .filter(statusCode: 200)
+        .mapJSON()
+        .map{JSON($0)}
+        .subscribe(onSuccess: { (json) in
+          if (json["result"]["code"].intValue == 200) {
+            self.userSetupViewController?.signUp.recommend_code = recommendCode
+            self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 6)
+          } else {
+            AlertView(title: json["result"]["data"].stringValue)
+              .addChildAction(title: "확인", style: .default, handeler: nil)
+              .show()
+          }
+        }, onError: { (err) in
+          log.info(err)
+        })
+        .disposed(by: disposeBag)
+    } else {
+      let alertController = UIAlertController(title: "알림", message: "추천인 코드를 정확히 입력해주세요.", preferredStyle: .alert)
+      let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+      alertController.addAction(alertAction)
+      self.present(alertController, animated: true, completion: nil)
+    }
   }
 }
 

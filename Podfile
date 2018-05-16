@@ -49,7 +49,7 @@ pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
 pod 'SwiftyUserDefaults'
 pod 'CryptoSwift'
-pod 'PopupDialog', '~> 0.7'
+pod 'SwiftMessages'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'

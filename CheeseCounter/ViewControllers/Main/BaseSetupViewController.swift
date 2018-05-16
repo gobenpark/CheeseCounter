@@ -28,13 +28,13 @@ class BaseSetupViewController: UIViewController{
     let leftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction))
     leftGesture.direction = .left
     leftGesture.delegate = self
-    let rightGesture = UISwipeGestureRecognizer(target: self, action: nil)
-    rightGesture.direction = .right
-    rightGesture.delegate = self
+//    let rightGesture = UISwipeGestureRecognizer(target: self, action: nil)
+//    rightGesture.direction = .right
+//    rightGesture.delegate = self
     let longtapGesture = UILongPressGestureRecognizer(target: self, action: #selector(emptyAction))
     longtapGesture.delegate = self
     self.view.addGestureRecognizer(leftGesture)
-    self.view.addGestureRecognizer(rightGesture)
+//    self.view.addGestureRecognizer(rightGesture)
     self.view.addGestureRecognizer(longtapGesture)
     
     titleLabel.snp.makeConstraints { (make) in

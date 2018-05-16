@@ -40,15 +40,16 @@ final class CounterHeaderView: UIView {
   
   let copyButton: UIButton = {
     let button = UIButton()
-    let attribute = NSAttributedString(string: "복사하기",
+    let attribute = NSAttributedString(string: "복사",
                                        attributes: [NSAttributedStringKey.foregroundColor : UIColor.black,
-                                                    NSAttributedStringKey.font:UIFont.CheeseFontBold(size: 12)])
+                                                    NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 12)])
+                                                    
     button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     button.setAttributedTitle(attribute, for: .normal)
-    button.contentEdgeInsets = UIEdgeInsets(top: 0.5, left: 5, bottom: 0.5, right: 5)
-    button.layer.cornerRadius = 5
+    button.contentEdgeInsets = UIEdgeInsets(top: 0.5, left: 10, bottom: 0.5, right: 10)
+    button.layer.cornerRadius = 10
     button.layer.borderWidth = 1
-    button.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    button.layer.borderColor = #colorLiteral(red: 0.9294117647, green: 0.9294117647, blue: 0.9294117647, alpha: 1)
     
     return button
   }()
@@ -93,15 +94,17 @@ final class CounterHeaderView: UIView {
         self?.topLabel.attributedText = attribute
         self?.recommendCodeLabel.attributedText = NSAttributedString(string: "내 추천코드: \(UserData.instance.userID.components(separatedBy: "_")[1])",
           attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)])
+        
+        log.info(info["img_url"].stringValue)
+        self?.icon.kf.setImage(with: URL(string: UserService.imgString + info["img_url"].stringValue))
 
     }).disposed(by: disposeBag)
-
     addConstraint()
   }
   
   func mapper(model: UserInfoModel){
     let data = model.result.data
-    icon.kf.setImage(with: URL(string:data.img_url))
+    icon.kf.setImage(with: URL(string:UserService.imgString + data.img_url))
   }
   
   private func addConstraint(){

@@ -104,6 +104,9 @@
 		B15EB0F51ECA84D5004726C5 /* CheeseCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15EB0F41ECA84D5004726C5 /* CheeseCounter.swift */; };
 		B15EC46F1E8257D900CE52D6 /* DataParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15EC46E1E8257D900CE52D6 /* DataParameter.swift */; };
 		B15FC2B11E9E5A3A0040B2F2 /* SelectAgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15FC2B01E9E5A3A0040B2F2 /* SelectAgeViewController.swift */; };
+		B1606C8220AAB5880016E4D1 /* CenteredView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1606C8120AAB5880016E4D1 /* CenteredView.xib */; };
+		B1606C8420AAB6350016E4D1 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */; };
+		B1606C8620AABB8E0016E4D1 /* TwoButtonMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */; };
 		B163A72D204CE19300A98346 /* CounterEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A72C204CE19300A98346 /* CounterEventViewController.swift */; };
 		B163A72F204CE5F000A98346 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A72E204CE5F000A98346 /* EventModel.swift */; };
 		B163A734204D2D3500A98346 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A733204D2D3500A98346 /* EventViewModel.swift */; };
@@ -345,6 +348,9 @@
 		B15EB0F41ECA84D5004726C5 /* CheeseCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseCounter.swift; sourceTree = "<group>"; };
 		B15EC46E1E8257D900CE52D6 /* DataParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParameter.swift; sourceTree = "<group>"; };
 		B15FC2B01E9E5A3A0040B2F2 /* SelectAgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAgeViewController.swift; sourceTree = "<group>"; };
+		B1606C8120AAB5880016E4D1 /* CenteredView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CenteredView.xib; sourceTree = "<group>"; };
+		B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
+		B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonMessageView.swift; sourceTree = "<group>"; };
 		B163A72C204CE19300A98346 /* CounterEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterEventViewController.swift; sourceTree = "<group>"; };
 		B163A72E204CE5F000A98346 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		B163A733204D2D3500A98346 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
@@ -584,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				B1307B1C1EF225C500BECD7A /* cheese_reward.json */,
+				B1606C8120AAB5880016E4D1 /* CenteredView.xib */,
 				B1307B1E1EF225CA00BECD7A /* gold_reward.json */,
 				B1307B101EF2234600BECD7A /* img_0.png */,
 				B1307B111EF2234600BECD7A /* img_0_1.png */,
@@ -624,6 +631,7 @@
 				B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */,
 				B119716A20761BB900FB283F /* CheeseTabViewController.swift */,
 				B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */,
+				B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */,
 			);
 			path = Cheese;
 			sourceTree = "<group>";
@@ -996,6 +1004,7 @@
 			isa = PBXGroup;
 			children = (
 				B1FFDFC51F70B3CC004591B3 /* AlertViewCell.swift */,
+				B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */,
 			);
 			name = Alert;
 			sourceTree = "<group>";
@@ -1129,6 +1138,7 @@
 				B1307B1F1EF225CA00BECD7A /* gold_reward.json in Resources */,
 				B1307B1B1EF2234600BECD7A /* img_4.png in Resources */,
 				B167D3DA1EEA253D00A8EEA4 /* g_reward.gif in Resources */,
+				B1606C8220AAB5880016E4D1 /* CenteredView.xib in Resources */,
 				B1307B1A1EF2234600BECD7A /* img_3.png in Resources */,
 				B183FD2C1F90A0D300AF5CBA /* provision.txt in Resources */,
 				B1307B161EF2234600BECD7A /* img_0.png in Resources */,
@@ -1255,7 +1265,6 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -1268,7 +1277,6 @@
 				"${BUILT_PRODUCTS_DIR}/NextGrowingTextView/NextGrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework",
-				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -1279,6 +1287,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyImage/SwiftyImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -1310,7 +1319,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -1323,7 +1331,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NextGrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMAlertController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -1334,6 +1341,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -1406,9 +1414,11 @@
 				B12E6A85202ACFF3006C296E /* CircleView.swift in Sources */,
 				B154FE811E7799EF00F4A2F5 /* SetupCounterViewController.swift in Sources */,
 				44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */,
+				B1606C8620AABB8E0016E4D1 /* TwoButtonMessageView.swift in Sources */,
 				B177206C1EA9E1A700BE1B08 /* SubProfileCell.swift in Sources */,
 				B18130461F79F644006F4FCB /* ResultOtherViewModel.swift in Sources */,
 				B14530CF1F45636300339D47 /* URLNavigationMap.swift in Sources */,
+				B1606C8420AAB6350016E4D1 /* LevelUpViewController.swift in Sources */,
 				B17174061E766AF80015F7EB /* CurrentGoldViewCell.swift in Sources */,
 				B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */,
 				B173D7AB20243EB5001FCEB0 /* UserInfoModel.swift in Sources */,
