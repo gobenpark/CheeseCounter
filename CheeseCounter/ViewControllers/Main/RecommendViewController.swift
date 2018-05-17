@@ -14,10 +14,10 @@ import SwiftyJSON
 class RecommendViewController: BaseSetupViewController {
   
   private let disposeBag = DisposeBag()
+  
   let recommenderNicknameLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.CheeseFontBold(size: 12)
-    label.text = "mynameis20 님께"
     label.textColor = UIColor.rgb(red: 51, green: 51, blue: 51)
     label.textAlignment = .center
     label.sizeToFit()
@@ -59,7 +59,7 @@ class RecommendViewController: BaseSetupViewController {
     textField.leftView = spacerView
     textField.textAlignment = .center
     textField.backgroundColor = .white
-    textField.placeholder = "ex)123456789"
+    textField.placeholder = "추천인 코드"
     textField.keyboardType = .decimalPad
     textField.layer.borderWidth = 0.5
     textField.layer.borderColor = UIColor.lightGray.cgColor
@@ -95,6 +95,14 @@ class RecommendViewController: BaseSetupViewController {
   override func setup() {
     self.titleLabel.text = "회원정보 추가"
     
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+    view.addGestureRecognizer(tap)
+    
+    guard let nickname = self.userSetupViewController?.signUp.nickName else { return }
+    self.recommenderNicknameLabel.text = "\(nickname) 님께"
+    recommendCodeTextField.rightView = deleteButton
+    recommendCodeTextField.rightViewMode = .whileEditing
+
     view.addSubview(recommenderNicknameLabel)
     view.addSubview(mainImgView)
     view.addSubview(recommendLabel)
@@ -102,48 +110,52 @@ class RecommendViewController: BaseSetupViewController {
     view.addSubview(recommendCodeTextField)
     view.addSubview(confirmButton)
     view.addSubview(skipButton)
-    recommendCodeTextField.rightView = deleteButton
-    recommendCodeTextField.rightViewMode = .whileEditing
     
     recommenderNicknameLabel.snp.makeConstraints{ (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(self.titleLabel.snp.bottom).offset(20)
+      make.top.equalTo(titleLabel.snp.bottom)
+      make.bottom.equalTo(mainImgView.snp.top).offset(-22)
     }
-    
+
     mainImgView.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.height.lessThanOrEqualTo(200)
-      make.top.equalTo(recommenderNicknameLabel.snp.bottom).offset(20)
-      make.width.equalTo(mainImgView.snp.height)
+      make.left.right.equalToSuperview().inset(91)
+//      make.top.equalTo(recommenderNicknameLabel.snp.bottom).offset(22)
+      make.bottom.equalTo(recommendLabel.snp.top).offset(-34)
     }
-    
+
     recommendLabel.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(mainImgView.snp.bottom).offset(23)
+//      make.bottom.equalTo(recommendLabel2.snp.top).offset(-10.5)
     }
-    
+
     recommendLabel2.snp.makeConstraints { (make) in
+      make.top.equalTo(recommendLabel.snp.bottom).offset(10.5)
       make.centerX.equalToSuperview()
-      make.top.equalTo(recommendLabel.snp.bottom).offset(8.5)
     }
 
     recommendCodeTextField.snp.makeConstraints{ (make) in
       make.centerX.equalToSuperview()
-      make.top.equalTo(recommendLabel2.snp.bottom).offset(10)
-//      make.height.greaterThanOrEqualTo(20)
+      make.top.equalTo(recommendLabel2.snp.bottom).offset(44)
       make.left.right.equalToSuperview().inset(25)
-      make.height.lessThanOrEqualTo(50)
+      make.height.greaterThanOrEqualTo(20)
+      make.height.lessThanOrEqualTo(36)
     }
-    
+
     confirmButton.snp.makeConstraints { (make) in
       make.top.equalTo(recommendCodeTextField.snp.bottom).offset(5)
       make.left.right.height.equalTo(recommendCodeTextField)
     }
-    
+
     skipButton.snp.makeConstraints{ (make) in
       make.top.equalTo(confirmButton.snp.bottom).offset(5)
       make.left.right.height.equalTo(recommendCodeTextField)
+      make.bottom.equalToSuperview().offset(-100)
     }
+  }
+  
+  @objc func dismissKeyboard() {
+    view.endEditing(true)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -151,11 +163,11 @@ class RecommendViewController: BaseSetupViewController {
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    if self.userSetupViewController?.signUp.provisionComple == nil ||
-      self.userSetupViewController?.signUp.provisionComple == false{
-      AlertView(title: "알림", message: "약관동의를 해주세요", preferredStyle: .alert)
+    if self.userSetupViewController?.signUp.addr1 == nil ||
+      self.userSetupViewController?.signUp.addr2 == nil{
+      AlertView(title: "알림", message: "지역을 입력해 주세요", preferredStyle: .alert)
         .addChildAction(title: "확인", style: .default, handeler: { (_) in
-          self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 0)
+          self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 4)
         })
         .show()
     }

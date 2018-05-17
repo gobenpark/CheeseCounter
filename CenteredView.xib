@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment version="2304" identifier="iOS"/>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,16 +17,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Mj-jC-BX6" userLabel="Background view">
-                    <rect key="frame" x="71" y="10" width="195" height="250"/>
+                    <rect key="frame" x="86.5" y="10" width="164" height="250"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="96n-J9-0VD">
-                            <rect key="frame" x="0.0" y="10" width="195" height="230"/>
+                            <rect key="frame" x="0.0" y="0.0" width="164" height="234"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="hUK-sr-A3U" userLabel="Icon image view">
-                                    <rect key="frame" x="0.0" y="40" width="195" height="64.5"/>
+                                    <rect key="frame" x="49" y="35" width="66" height="80"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="[Title]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggW-gB-SWF">
-                                    <rect key="frame" x="0.0" y="127.5" width="195" height="20.5"/>
+                                    <rect key="frame" x="35.5" y="138" width="93" height="20.5"/>
                                     <accessibility key="accessibilityConfiguration">
                                         <bool key="isElement" value="NO"/>
                                     </accessibility>
@@ -35,17 +35,17 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" tag="5" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aA4-H6-lud">
-                                    <rect key="frame" x="0.0" y="203" width="195" height="27"/>
+                                    <rect key="frame" x="0.0" y="207" width="164" height="27"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOA-Iy-PCr" userLabel="Button1">
-                                            <rect key="frame" x="0.0" y="0.0" width="92.5" height="27"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="77" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="나중에 하기">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCc-xO-7DX" userLabel="Button2">
-                                            <rect key="frame" x="102.5" y="0.0" width="92.5" height="27"/>
+                                            <rect key="frame" x="87" y="0.0" width="77" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="프로필 확인하기">
                                                 <color key="titleColor" red="1" green="0.49019607840000001" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -54,7 +54,7 @@
                                     </subviews>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fnn-bG-GTE">
-                                    <rect key="frame" x="0.0" y="192" width="195" height="1"/>
+                                    <rect key="frame" x="0.0" y="196" width="164" height="1"/>
                                     <color key="backgroundColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="j74-PJ-MQj"/>
@@ -66,19 +66,18 @@
                                 <constraint firstItem="ggW-gB-SWF" firstAttribute="top" secondItem="hUK-sr-A3U" secondAttribute="bottom" constant="23" id="8xw-ZO-qao"/>
                                 <constraint firstAttribute="trailing" secondItem="aA4-H6-lud" secondAttribute="trailing" id="D9Q-4P-IRK"/>
                                 <constraint firstItem="aA4-H6-lud" firstAttribute="top" secondItem="fnn-bG-GTE" secondAttribute="bottom" constant="10" id="ED9-5J-7GP"/>
-                                <constraint firstItem="hUK-sr-A3U" firstAttribute="top" secondItem="96n-J9-0VD" secondAttribute="top" constant="40" id="Nov-0f-h55"/>
-                                <constraint firstItem="ggW-gB-SWF" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" id="Qdp-NX-hlf"/>
-                                <constraint firstItem="hUK-sr-A3U" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" id="XHO-Bx-sdI"/>
+                                <constraint firstItem="hUK-sr-A3U" firstAttribute="top" secondItem="96n-J9-0VD" secondAttribute="top" constant="35" id="Nov-0f-h55"/>
+                                <constraint firstItem="ggW-gB-SWF" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" constant="35.5" id="UkH-Ho-0Kk"/>
+                                <constraint firstItem="hUK-sr-A3U" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" constant="49" id="XHO-Bx-sdI"/>
                                 <constraint firstAttribute="trailing" secondItem="fnn-bG-GTE" secondAttribute="trailing" id="cYR-wB-7kg"/>
                                 <constraint firstItem="hUK-sr-A3U" firstAttribute="centerX" secondItem="96n-J9-0VD" secondAttribute="centerX" id="dDg-BP-SzW"/>
-                                <constraint firstItem="ggW-gB-SWF" firstAttribute="top" secondItem="hUK-sr-A3U" secondAttribute="bottom" constant="23" id="dGp-3o-mpM"/>
                                 <constraint firstItem="fnn-bG-GTE" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" id="fBQ-nM-8dA"/>
                                 <constraint firstItem="aA4-H6-lud" firstAttribute="leading" secondItem="96n-J9-0VD" secondAttribute="leading" id="hyd-9o-X8P"/>
-                                <constraint firstAttribute="trailing" secondItem="ggW-gB-SWF" secondAttribute="trailing" id="oie-9f-Chc"/>
+                                <constraint firstAttribute="bottom" secondItem="ggW-gB-SWF" secondAttribute="bottom" constant="75.5" id="jhS-zn-BYC"/>
                                 <constraint firstItem="ggW-gB-SWF" firstAttribute="centerX" secondItem="96n-J9-0VD" secondAttribute="centerX" id="rLY-cE-d7p"/>
-                                <constraint firstItem="aA4-H6-lud" firstAttribute="top" secondItem="ggW-gB-SWF" secondAttribute="bottom" constant="55" id="rPh-6H-rJ4"/>
-                                <constraint firstAttribute="trailing" secondItem="hUK-sr-A3U" secondAttribute="trailing" id="vO6-4b-HXE"/>
+                                <constraint firstAttribute="trailing" secondItem="hUK-sr-A3U" secondAttribute="trailing" constant="49" id="vO6-4b-HXE"/>
                                 <constraint firstAttribute="bottom" secondItem="aA4-H6-lud" secondAttribute="bottom" id="vVr-Od-ouI"/>
+                                <constraint firstAttribute="trailing" secondItem="ggW-gB-SWF" secondAttribute="trailing" constant="35.5" id="xFu-a4-mwc"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -90,9 +89,9 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="96n-J9-0VD" firstAttribute="leading" secondItem="0Mj-jC-BX6" secondAttribute="leading" id="70g-Vc-JBs"/>
-                        <constraint firstAttribute="bottom" secondItem="96n-J9-0VD" secondAttribute="bottom" constant="10" id="B7C-29-ZSZ"/>
+                        <constraint firstAttribute="bottom" secondItem="96n-J9-0VD" secondAttribute="bottom" constant="16" id="B7C-29-ZSZ"/>
                         <constraint firstAttribute="trailing" secondItem="96n-J9-0VD" secondAttribute="trailing" id="Yq5-4v-pRq"/>
-                        <constraint firstItem="96n-J9-0VD" firstAttribute="top" secondItem="0Mj-jC-BX6" secondAttribute="top" constant="10" id="bxm-if-ztA"/>
+                        <constraint firstItem="96n-J9-0VD" firstAttribute="top" secondItem="0Mj-jC-BX6" secondAttribute="top" id="bxm-if-ztA"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -105,8 +104,8 @@
             <constraints>
                 <constraint firstItem="0Mj-jC-BX6" firstAttribute="top" secondItem="g5x-hF-D0u" secondAttribute="topMargin" constant="10" id="GWI-aH-o7P"/>
                 <constraint firstItem="0Mj-jC-BX6" firstAttribute="centerX" secondItem="g5x-hF-D0u" secondAttribute="centerX" priority="950" id="XqM-pB-dF4"/>
-                <constraint firstItem="0Mj-jC-BX6" firstAttribute="leading" secondItem="g5x-hF-D0u" secondAttribute="leadingMargin" priority="900" constant="55" id="bQ3-k8-0v0"/>
-                <constraint firstAttribute="trailingMargin" secondItem="0Mj-jC-BX6" secondAttribute="trailing" priority="900" constant="55" id="rSj-h2-U7z"/>
+                <constraint firstItem="0Mj-jC-BX6" firstAttribute="leading" secondItem="g5x-hF-D0u" secondAttribute="leadingMargin" priority="900" constant="82.5" id="bQ3-k8-0v0"/>
+                <constraint firstAttribute="trailingMargin" secondItem="0Mj-jC-BX6" secondAttribute="trailing" priority="900" constant="-82.5" id="rSj-h2-U7z"/>
                 <constraint firstAttribute="bottomMargin" secondItem="0Mj-jC-BX6" secondAttribute="bottom" constant="10" id="wRH-k8-J8S"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

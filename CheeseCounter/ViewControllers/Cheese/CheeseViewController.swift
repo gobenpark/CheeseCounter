@@ -161,6 +161,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   override func viewDidLoad() {
     super.viewDidLoad()
     
+   
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 100
     

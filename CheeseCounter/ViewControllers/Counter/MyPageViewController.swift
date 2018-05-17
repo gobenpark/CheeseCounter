@@ -18,8 +18,8 @@ final class MypageNaviViewController: UINavigationController{
     super.init(nibName: nil, bundle: nil)
   }
   
-  init() {
-    super.init(rootViewController: MyPageViewController())
+  init(initialPage: Int = -1) {
+    super.init(rootViewController: MyPageViewController(initialPage: initialPage))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -29,10 +29,18 @@ final class MypageNaviViewController: UINavigationController{
 
 final class MyPageViewController: UIViewController{
   
-  let containerVC = MyPageContainerViewController()
+  var initialPage = -1
+//  let containerVC = MyPageContainerViewController()
+  
   let disposeBag = DisposeBag()
   let provider = MoyaProvider<CheeseCounter>().rx
-  
+
+  lazy var containerVC: MyPageContainerViewController = {
+    let vc = MyPageContainerViewController()
+    vc.initialPage = self.initialPage
+    return vc
+  }()
+
   let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "마이페이지"
@@ -47,6 +55,16 @@ final class MyPageViewController: UIViewController{
   }()
   
   let headerView = CounterHeaderView()
+  
+  init(initialPage: Int = -1) {
+    super.init(nibName: nil, bundle: nil)
+    
+    self.initialPage = initialPage
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -89,7 +107,6 @@ final class MyPageViewController: UIViewController{
     addConstraint()
   }
   
-  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.navigationBar.isHidden = true
@@ -131,7 +148,8 @@ final class MyPageViewController: UIViewController{
 
 
 final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
-  
+ 
+  var initialPage = -1
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
@@ -152,6 +170,7 @@ final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
     super.viewDidLoad()
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white
+    
     changeCurrentIndexProgressive = {
       (oldCell: ButtonBarViewCell?
       , newCell: ButtonBarViewCell?
@@ -164,7 +183,22 @@ final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
       newCell?.label.textColor = .black
     }
   }
+//
+//  override func viewDidAppear(_ animated: Bool) {
+//    super.viewDidAppear(false)
+//    self.moveToViewController(at: 1)
+//  }
+
   
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    if self.initialPage > 0 {
+      self.moveToViewController(at: self.initialPage, animated: false)
+//      self.initialPage = -1
+    }
+//    self.initialPage = -1
+  }
+
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
     return [RankViewController(),HistoryViewController(),CouponHistoryViewController()]
   }
