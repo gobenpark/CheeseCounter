@@ -60,6 +60,7 @@ class SympathyViewController: BaseListViewController, IndicatorInfoProvider{
         .catchError({ _ in
           return Observable<[CheeseViewModel]>.of([])
         })
+        
         .bind(to: datas)
         .disposed(by: disposeBag)
       break

@@ -63,6 +63,7 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
   
   func requestReload() {
 //    log.info("request reload")
+    var retryCount = 3
     provider.request(.getWinList)
       .filter(statusCode: 200)
       .map(WinListModel.self)
@@ -87,6 +88,17 @@ class WinViewController: UIViewController, UICollectionViewDelegateFlowLayout, U
       }, onCompleted: {
         self.startTimer(resetPage: true)
       })
+      .retryWhen{ (errorObservable: Observable<Error>) in
+        return errorObservable.flatMap({ (err) -> Observable<Int> in
+          if retryCount > 0 {
+            retryCount -= 1
+            return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+          } else {
+            return Observable<Int>.error(err)
+          }
+        })}
+      .catchErrorJustReturn([WinViewModel(items: [])])
+      .filter({ return $0[0].items.count > 0 })
       .bind(to: dataSubject)
       .disposed(by: disposeBag)
   }

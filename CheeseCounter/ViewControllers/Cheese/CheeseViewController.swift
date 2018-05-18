@@ -19,6 +19,7 @@ import SwiftyJSON
 import Toaster
 import XLPagerTabStrip
 import SwiftMessages
+import NVActivityIndicatorView
 
 enum PagingType{
   case premium(id: String)
@@ -351,26 +352,6 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   }
   
   func initRequest(){
-    //    let event = CheeseService.provider.request(.getEventSurveyList)
-    //      .filter(statusCode: 200)
-    //      .map(MainSurveyList.self)
-    //      .map {[CheeseViewModel(items: $0.result.data)]}
-    //      .asObservable()
-    //
-    //    let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: String()))
-    //      .filter(statusCode: 200)
-    //      .map(MainSurveyList.self)
-    //      .map {[CheeseViewModel(items: $0.result.data)]}
-    //      .asObservable()
-    //
-    //    Observable<[CheeseViewModel]>
-    //      .combineLatest(event, nonEvent) { (ev, nonev) -> [CheeseViewModel] in
-    //      var data = ev
-    //      data.append(contentsOf: nonev)
-    //      return data
-    //    }.bind(to: cheeseDatas)
-    //    .disposed(by: disposeBag)
-    
     networkRequest(reload: true)
   }
   
@@ -414,20 +395,22 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   }
   
   func requestSurveyList(reload: Bool) -> Observable<CheeseViewModel> {
+    let id = dataSources.sectionModels.last?.items.last?.id ?? ""
     if !reload {
-      let id = dataSources.sectionModels.last?.items.last?.id ?? ""
+//      let id = dataSources.sectionModels.last?.items.last?.id ?? ""
       return CheeseService.provider.request(.getSurveyListV2(id: id))
         .filter(statusCode: 200)
         .map(MainSurveyList.self)
         .map {CheeseViewModel(items: $0.result.data)}
         .asObservable()
+    
     } else {
       let event = CheeseService.provider.request(.getEventSurveyList)
         .filter(statusCode: 200)
         .map(MainSurveyList.self)
         .map {CheeseViewModel(items: $0.result.data)}
         .asObservable()
-      let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: String()))
+      let nonEvent = CheeseService.provider.request(.getSurveyListV2(id: id))
         .filter(statusCode: 200)
         .map(MainSurveyList.self)
         .map {CheeseViewModel(items: $0.result.data)}
@@ -438,27 +421,36 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       }
     }
   }
-  
+
   private func networkRequest(reload: Bool) {
+    var retryCount = 3
+    
     requestSurveyList(reload: reload)
+      .retryWhen{ (errorObservable: Observable<Error>) in
+        return errorObservable.flatMap({ (err) -> Observable<Int> in
+          if retryCount > 0 {
+            retryCount -= 1
+            return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+          } else {
+            return Observable<Int>.error(err)
+          }
+        })}
       .catchErrorJustReturn(CheeseViewModel(items: []))
       .filter({ (viewModel) -> Bool in
         return viewModel.items.count != 0
       })
       .scan(cheeseDatas.value){ (state: [CheeseViewModel], viewModel: CheeseViewModel) -> [CheeseViewModel] in
         if reload {
-          //          if (self.cheeseDatas.value.count > 0 && self.cheeseDatas.value[0].items.count > 0) {
-          //           self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-          //          }
           return [viewModel]
         } else {
           return state + viewModel
         }
-      }.bind(to: cheeseDatas)
+      }
+      .bind(to: cheeseDatas)
       .disposed(by: disposeBag)
   }
   
-  /// 검색용 request
+  /// 검색용 Zzzzfsrequest
   ///
   /// - Parameter data:
   private func searchRequest(data:(String, String)){
@@ -558,7 +550,7 @@ extension CheeseViewController: DZNEmptyDataSetSource{
     label.attributedText = NSAttributedString(string: "모든 질문에 응답하셨거나\n\n아직 등록된 질문이 없어요.\n\n직접 질문을 등록해보세요."
       , attributes: [NSAttributedStringKey.font:UIFont.CheeseFontMedium(size: 15)
         ,NSAttributedStringKey.foregroundColor:UIColor.gray])
-    
+
     activityView.startAnimating()
     return activityView
     
@@ -568,6 +560,7 @@ extension CheeseViewController: DZNEmptyDataSetSource{
     //      return label
     //    }
   }
+  
   
   func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
     return #colorLiteral(red: 0.9489366412, green: 0.9490727782, blue: 0.9489067197, alpha: 1)

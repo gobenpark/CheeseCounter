@@ -53,6 +53,7 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
   override func request(requestType: RequestAction) {
     switch requestType{
     case .reload:
+      var retryCount = 3
         provider.request(.getMyAnswerSurveyList(pageNum: "0"))
           .filter(statusCode: 200)
           .map(MainSurveyList.self)
@@ -61,9 +62,23 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
             self?.refreshView.endRefreshing()
           })
           .asObservable()
+          .retryWhen{ (errorObservable: Observable<Error>) in
+            return errorObservable.flatMap({ (err) -> Observable<Int> in
+              if retryCount > 0 {
+                retryCount -= 1
+                return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+              } else {
+                return Observable<Int>.error(err)
+              }
+            })}
+          .catchErrorJustReturn([CheeseViewModel(items: [])])
+          .filter({ (model) in
+            return model[0].items.count > 0
+          })
           .bind(to: datas)
           .disposed(by: disposeBag)
     case .paging(let pageNum):
+      var retryCount = 3
       provider.request(.getMyAnswerSurveyList(pageNum: pageNum))
         .filter(statusCode: 200)
         .map(MainSurveyList.self)
@@ -72,9 +87,23 @@ class AnswerViewController: BaseListViewController, IndicatorInfoProvider{
           self?.refreshView.endRefreshing()
         })
         .asObservable()
+        .retryWhen{ (errorObservable: Observable<Error>) in
+          return errorObservable.flatMap({ (err) -> Observable<Int> in
+            if retryCount > 0 {
+              retryCount -= 1
+              return Observable<Int>.timer(3, scheduler: MainScheduler.instance)
+            } else {
+              return Observable<Int>.error(err)
+            }
+          })}
+        .catchErrorJustReturn([CheeseViewModel(items: [])])
+        .filter({ (model) in
+          return model[0].items.count > 0
+        })
         .scan(datas.value){ (state, viewModel) in
           return state + viewModel
-        }.bind(to: datas)
+        }
+        .bind(to: datas)
         .disposed(by: disposeBag)
     }
   }
