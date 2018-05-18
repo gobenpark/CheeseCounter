@@ -32,7 +32,7 @@ class DropOutViewController: UIViewController
   
     lazy var dropoutButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "btn_gradation@1x"), for: .selected)
+        button.setBackgroundColor(color: UIColor.rgb(red: 255, green: 102, blue: 48), forState: .selected)
         button.setBackgroundImage(#imageLiteral(resourceName: "txt_box_2_nomal@1x"), for: .normal)
         button.setTitle("탈퇴요청하기", for: .normal)
         button.sizeToFit()
