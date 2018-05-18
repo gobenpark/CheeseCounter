@@ -59,15 +59,6 @@ class CompleteJoinViewController: BaseSetupViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    if self.userSetupViewController?.signUp.addr1 == nil ||
-      self.userSetupViewController?.signUp.addr2 == nil{
-      AlertView(title: "알림", message: "지역을 입력해 주세요", preferredStyle: .alert)
-        .addChildAction(title: "확인", style: .default, handeler: { (_) in
-          self.userSetupViewController?.setUpPageViewController.scrollToViewController(index: 4)
-        })
-        .show()
-    }
-
   }
   
   func setUp(){

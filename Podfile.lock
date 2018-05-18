@@ -1,6 +1,6 @@
 PODS:
   - AAFragmentManager (0.1.1)
-  - Alamofire (4.7.1)
+  - Alamofire (4.7.2)
   - AnyDate (1.0.5)
   - BetterSegmentedControl (0.9)
   - Bolts (1.9.0):
@@ -25,25 +25,25 @@ PODS:
   - DZNEmptyDataSet (1.8.1)
   - Eureka (4.1.1)
   - Fabric (1.7.6)
-  - FBSDKCoreKit (4.31.1):
+  - FBSDKCoreKit (4.32.0):
     - Bolts (~> 1.7)
-  - FBSDKShareKit (4.31.1):
-    - FBSDKCoreKit (~> 4.31.1)
-  - Firebase/Core (4.12.0):
-    - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.19)
-  - Firebase/DynamicLinks (4.12.0):
+  - FBSDKShareKit (4.32.0):
+    - FBSDKCoreKit (~> 4.32.0)
+  - Firebase/Core (4.13.0):
+    - FirebaseAnalytics (= 4.2.0)
+    - FirebaseCore (= 4.0.20)
+  - Firebase/DynamicLinks (4.13.0):
     - Firebase/Core
     - FirebaseDynamicLinks (= 2.3.2)
-  - Firebase/Messaging (4.12.0):
+  - Firebase/Messaging (4.13.0):
     - Firebase/Core
     - FirebaseMessaging (= 2.2.0)
-  - FirebaseAnalytics (4.1.0):
+  - FirebaseAnalytics (4.2.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.19):
+  - FirebaseCore (4.0.20):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseDynamicLinks (2.3.2):
     - FirebaseAnalytics (~> 4.0)
@@ -61,7 +61,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - Hero (1.1.0)
+  - Hero (1.2.0)
   - KakaoOpenSDK (1.7.0):
     - KakaoOpenSDK/KakaoCommon (= 1.7.0)
     - KakaoOpenSDK/KakaoLink (= 1.7.0)
@@ -92,14 +92,14 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - NextGrowingTextView (1.2.2)
-  - Nimble (7.1.0)
-  - NVActivityIndicatorView (4.1.1):
-    - NVActivityIndicatorView/Presenter (= 4.1.1)
-  - NVActivityIndicatorView/Presenter (4.1.1)
+  - Nimble (7.1.1)
+  - NVActivityIndicatorView (4.2.0):
+    - NVActivityIndicatorView/Presenter (= 4.2.0)
+  - NVActivityIndicatorView/Presenter (4.2.0)
   - ObjectMapper (3.1.0)
-  - PMAlertController (3.3.0)
+  - PMAlertController (3.4.0)
   - Protobuf (3.5.0)
-  - Quick (1.2.0)
+  - Quick (1.3.0)
   - ReachabilitySwift (4.1.0)
   - Result (3.2.4)
   - RxCocoa (4.1.2):
@@ -121,9 +121,10 @@ PODS:
   - SnapKit (4.0.0)
   - Spring (1.0.5)
   - Stubber (1.2.0)
+  - SwiftMessages (4.1.2)
   - SwiftyBeaver (1.5.2)
   - SwiftyImage (1.2.0)
-  - SwiftyJSON (4.0.0)
+  - SwiftyJSON (4.1.0)
   - SwiftyUserDefaults (3.0.1)
   - TLPhotoPicker (1.5.9)
   - Toaster (2.1.1)
@@ -181,6 +182,7 @@ DEPENDENCIES:
   - SnapKit
   - Spring (from `https://github.com/MengTo/Spring.git`)
   - Stubber
+  - SwiftMessages
   - SwiftyBeaver
   - SwiftyImage
   - SwiftyJSON
@@ -197,7 +199,7 @@ DEPENDENCIES:
   - YLGIFImage
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - AAFragmentManager
     - Alamofire
     - AnyDate
@@ -246,6 +248,7 @@ SPEC REPOS:
     - RxSwift
     - SnapKit
     - Stubber
+    - SwiftMessages
     - SwiftyBeaver
     - SwiftyImage
     - SwiftyJSON
@@ -272,12 +275,12 @@ CHECKOUT OPTIONS:
     :commit: db432ca1b1a3d8f83ee1f881208c0c960a325e73
     :git: https://github.com/ViccAlexander/Chameleon.git
   Spring:
-    :commit: 19b04d730d3edabbb02a39e58121d1d3220690ee
+    :commit: c540239f3590bbaf4a35c3959c329dd5ed4e3eee
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
   AAFragmentManager: ece927d46c1b64c6bf9a79fc0fd77de0abc32dd2
-  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AnyDate: c522b2f9798b061d642dec9c252bf766194d35c8
   BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -292,29 +295,29 @@ SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
-  FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
-  FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
-  Firebase: d7fdf40e4d6c841849c52919f437fd3a0009ded0
-  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseCore: ff49ebb37e0f63a570d78c4f1c1c0befe8659d5c
+  FBSDKCoreKit: 55d7f2ac45d9c4b9b6119f4e43900fe84b9b7b1b
+  FBSDKShareKit: 658780d0d108b8ad590a54afb5ac1427bdc8de28
+  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
+  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
+  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseDynamicLinks: 38b68641d24e78d0277a9205d988ce22875d5a25
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FirebaseMessaging: 75cdb862e86c30e0913a2ff307e48d49357c5b73
   FlexibleImage: 6b66e0df34c51ca2954d5501205a9902fd3c9f35
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  Hero: ce59e81c79390613d97b43da7179e2c5e1017e04
+  Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   KakaoOpenSDK: 82e9c4d57c7d273360e4b49c2d8a0d8626216143
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NextGrowingTextView: 78c8b96f7ac6dc845f5babb27dcf7c18dd3210ec
-  Nimble: 9c6651c3021af6de54c3ed90a4a0a87d548f7359
-  NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
+  Nimble: 391f07782af4b37914f9bd7b2ffbb952731b8202
+  NVActivityIndicatorView: 75c9634073e03b31d7e2748cd2417feab1206195
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
-  PMAlertController: 15dd20ca343bd7761ca254542cc561f05ad6b89c
+  PMAlertController: efb781925d741d50e0200018a00c53cecb8b4910
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  Quick: 03278013f71aa05fe9ecabc94fbcc6835f1ee76f
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
@@ -324,11 +327,12 @@ SPEC CHECKSUMS:
   RxOptional: fabc37fc8e3cf4c336ebaeb5c92b576c64b2e6c5
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Spring: 48aad470f3ead043b2da98b64e0bf0630b7ebc42
+  Spring: 3c7666eccefdeb87140008dc81043f89f8dbb787
   Stubber: 68c7f9fad366d10dd256bd88b5247580effef62d
+  SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
   SwiftyBeaver: 85daaaa2b3ae6e31b7b55c99430e8b91dac088af
   SwiftyImage: ebaa7c7b6163cd4ad102f3bb05a8fb276d35b4f3
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   TLPhotoPicker: ec5cd5b3380ed1b6bd176d34a429024ceb80ef01
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
@@ -340,6 +344,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: 0c8d839e96e568b98568fd3d1dce69a8e8074c39
+PODFILE CHECKSUM: a2ce8e6ad1faa60bc5287ad9aaf017f45a7c0d4a
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2

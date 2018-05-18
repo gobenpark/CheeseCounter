@@ -29,7 +29,7 @@ class SetupNotificationViewController: BaseCounterViewController{
     self.navigationItem.title = "알림설정"
     pushFetch()
   }
-  
+
   //MARK: - NetWork
   func pushFetch(){
     
@@ -38,10 +38,12 @@ class SetupNotificationViewController: BaseCounterViewController{
       case .success(let value):
         guard let data = value.data else {return}
         var sample:[(String,String)] = []
+        
         for (name, value) in Mirror(reflecting: data).children {
-          guard let name = name else { continue }
-          sample.append((name,"\(value)"))
-          if "\(value)" == "0"{
+          guard let name = name, let value = value as? String else { continue }
+          sample.append((name,value))
+          
+          if value == "0"{
             self.isSelectAll = false
           }
         }
@@ -97,23 +99,41 @@ class SetupNotificationViewController: BaseCounterViewController{
     sampleAlert[sender.tag].1 = sender.isOn ? "1" : "0"
     if !sender.isOn{
       self.isSelectAll = false
-      self.tableView.reloadRows(at:
-        [IndexPath(item: sender.tag, section: 1)
-          ,IndexPath(item: 0, section: 0)]
-        , with: .automatic)
-      
+    } else {
+      for i in 0..<sampleAlert.count {
+        if sampleAlert[i].1 == "1" {
+          self.isSelectAll = true
+        } else {
+          self.isSelectAll = false
+          break
+        }
+      }
     }
+    self.tableView.reloadRows(at:
+      [IndexPath(item: sender.tag, section: 1)
+        ,IndexPath(item: 0, section: 0)]
+      , with: .automatic)
     pushUpdate()
   }
   
   @objc func allChangeAction(_ sender: UISwitch){
     
-    if sender.isOn{
+//    if sender.isOn{
+//      for i in 0..<sampleAlert.count {
+//        sampleAlert[i].1 = "1"
+//      }
+//      pushUpdate()
+//    }
+    if sender.isOn {
       for i in 0..<sampleAlert.count {
         sampleAlert[i].1 = "1"
       }
-      pushUpdate()
+    } else {
+      for i in 0..<sampleAlert.count {
+        sampleAlert[i].1 = "0"
+      }
     }
+    pushUpdate()
   }
   
   //MARK: - Get Korean Language Name
@@ -184,8 +204,7 @@ extension SetupNotificationViewController: UITableViewDataSource{
       pushSwitch.addTarget(self, action: #selector(changePushSetting(_:)), for: .valueChanged)
       cell.accessoryView = pushSwitch
       
-      pushSwitch.isOn = sampleAlert[indexPath.row].1 == "1" ? true : false
-      
+      pushSwitch.isOn = sampleAlert[indexPath.row].1 == "1"
       return cell
     default:
       return UITableViewCell()

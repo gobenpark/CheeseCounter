@@ -163,7 +163,7 @@ class NickNameViewController: BaseSetupViewController{
   
   @objc fileprivate dynamic func confirmDuplicated(_ sender: UIButton){
     self.nickNameTextField.endEditing(true)
-    let textCount = nickNameTextField.text?.characters.count
+    let textCount = nickNameTextField.text?.count
     if textCount! > 1 && textCount! < 12{
       let nickname = self.nickNameTextField.text
       UserService.check(nickname: nickname!){ [weak self] response in
@@ -243,7 +243,7 @@ class NickNameViewController: BaseSetupViewController{
 extension NickNameViewController: UITextFieldDelegate
 {
   func textFieldDidEndEditing(_ textField: UITextField) {
-    if (textField.text?.characters.count ?? 0) <= 1 {
+    if (textField.text?.count ?? 0) <= 1 {
       self.duplicateButton.isSelected = false
       isdisableScroll = true
     }

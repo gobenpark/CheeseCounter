@@ -18,6 +18,7 @@ import Moya
 import SwiftyJSON
 import Toaster
 import XLPagerTabStrip
+import SwiftMessages
 import NVActivityIndicatorView
 
 enum PagingType{
@@ -61,6 +62,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   let replyEvent = PublishSubject<IndexPath>()
   let empathyEvent = PublishSubject<(String, IndexPath)>()
   let shareEvent = PublishSubject<IndexPath>()
+  var userData: UserResult.Data?
   
   lazy var updateSurvey: (MainSurveyList.CheeseData, IndexPath) -> Void = { [weak self] model, indexPath in
     guard let `self` = self else { return }
@@ -119,6 +121,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
     return view
   }()
   
+  
   //MARK: - View Life Cycle
   
   init(isSearch: Bool = false) {
@@ -159,6 +162,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
   override func viewDidLoad() {
     super.viewDidLoad()
     
+   
     ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
     ToastView.appearance().bottomOffsetPortrait = 100
     
@@ -179,22 +183,30 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
     
     // 메인뷰 2 or 4  이벤트
     buttonEvent.observeOn(MainScheduler.instance)
-      .flatMap { (data) -> Observable<(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?)> in
+      .flatMap { (data) -> Observable<(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?, Bool)> in
         switch data.0{
         case .Button(let index):
           return CheeseService.provider
             .request(.insertSurveyResult(surveyId: data.1.id, select: "\(index)"))
             .asObservable()
             .filter(statusCode: 200)
-            .map{ _ in
-              return data
-          }
+            .mapJSON()
+            .map({JSON($0)})
+            .map({ (json) in
+              var isLevelUp = false
+              if json["result"]["etc"] == "LevelUp" {
+                isLevelUp = true
+              }
+              return (data.0, data.1, data.2, isLevelUp)
+            })
         case .Image:
-          return Observable<(MainSurveyAction, MainSurveyList.CheeseData,IndexPath?)>.just(data)
+          //          return Observable<(MainSurveyAction, MainSurveyList.CheeseData,IndexPath?)>.just(data)
+          return Observable<(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?, Bool)>.just((data.0, data.1, data.2, false))
+          
         }
       }
       .bind(onNext: showGiftView)
-      .disposed(by: disposeBag)
+      .disposed(by: disposeBag)  
     
     // 더보기 이벤트
     moreEvent.observeOn(MainScheduler.instance)
@@ -295,7 +307,7 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
     navigationItem.titleView = searchController.searchBar
   }
   
-  private func showGiftView(data:(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?)){
+  private func showGiftView(data:(MainSurveyAction, MainSurveyList.CheeseData, IndexPath?, Bool)){
     
     switch data.0{
     case .Button:
@@ -307,6 +319,10 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       
       giftView.dismissCompleteAction = {[weak self] in
         guard let `self` = self else {return}
+        if data.3 {
+          self.showLevelUpView()
+        }
+        
         CheeseService.provider.request(.getSurveyByIdV2(id: data.1.id))
           .filter(statusCode: 200)
           .map(MainSurveyList.self)
@@ -322,7 +338,8 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
             self.collectionView.reloadItems(at: [idx])
           }) { (error) in
             log.error(error)
-          }.disposed(by: self.disposeBag)
+          }
+          .disposed(by: self.disposeBag)
       }
       if isSearch{
         self.searchController.present(giftView, animated: true, completion: nil)
@@ -331,12 +348,50 @@ class CheeseViewController: UIViewController, DZNEmptyDataSetDelegate, UISearchC
       }
     case .Image(let num):
       self.navigationController?.pushViewController(ListDetailResultViewController(model: data.1, selectedNum: num), animated: true)
-      log.info("model : \(data.1), selectedNum: \(num)")
     }
   }
   
   func initRequest(){
     networkRequest(reload: true)
+  }
+  
+  fileprivate func showLevelUpView() {
+    
+    let view: TwoButtonMessageView = MessageView.viewFromNib(layout: .centeredView)
+    view.configureDropShadow()
+    
+    view.titleLabel?.font = UIFont.CheeseFontMedium(size: 18)
+    view.titleLabel?.text = "축하합니다!\n새로운 프로필을 얻었습니다."
+    view.button?.titleLabel?.font = UIFont.CheeseFontMedium(size: 12)
+    view.button?.setTitle("나중에 하기", for: .normal)
+    view.button?.setTitleColor(UIColor.rgb(red: 153, green: 153, blue: 153), for: .normal)
+    
+    view.myPageViewButton?.titleLabel?.font = UIFont.CheeseFontMedium(size: 12)
+    view.myPageViewButton?.setTitle("프로필 확인하기", for: .normal)
+    view.myPageViewButton?.setTitleColor(UIColor.rgb(red: 255, green: 125, blue: 81), for: .normal)
+    
+    view.iconImageView?.image = #imageLiteral(resourceName: "imgLevelUpPopup")
+    
+    var config = SwiftMessages.Config()
+    config.presentationStyle = .center
+    config.duration = .forever
+//    config.dimMode = .gray(interactive: false)
+    config.dimMode = .color(color: UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.75), interactive: false)
+//    config.dimMode = .blur(style: .dark, alpha: 0.75, interactive: false)
+    config.interactiveHide = false
+    
+    
+    view.buttonTapHandler = { _ in
+      SwiftMessages.hide()
+    }
+    
+    view.myPageViewButtonTapHandler = { [weak self] _ in
+      SwiftMessages.hide()
+      guard let `self` = self else { return }
+      self.present(MypageNaviViewController(), animated: true, completion: nil)
+    }
+    
+    SwiftMessages.show(config: config, view: view)
   }
   
   func requestSurveyList(reload: Bool) -> Observable<CheeseViewModel> {
@@ -454,7 +509,7 @@ extension CheeseViewController: UICollectionViewDelegateFlowLayout{
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let sectionModel = self.dataSources.sectionModels
-//    log.info(collectionView.frame.width)
+    //    log.info(collectionView.frame.width)
     
     switch sectionModel[indexPath.section].items[indexPath.item].type{
     case "2":

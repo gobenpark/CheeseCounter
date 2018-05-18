@@ -71,11 +71,12 @@ class SplashViewController: UIViewController {
               }
             })}
           .subscribe(onSuccess: { (json) in
+            log.info(json)
             if json["result"]["code"].intValue == 200{
               if json["result"]["data"]["is_enable"].intValue == 0{
                 AppDelegate.instance?.window?.rootViewController = UserSetupViewController()
                 NotificationCenter.default.post(name: NSNotification.Name("splashEnd"), object: ["isEnable":false])
-              }else if json["result"]["data"]["is_enable"].intValue == 1{
+              }else if json["result"]["data"]["is_enable"].intValue == 1 {
                 AppDelegate.instance?.window?.rootViewController = MainTabBarController()
                 UserData.instance.userID = json["result"]["data"]["id"].stringValue
                 NotificationCenter.default.post(name: NSNotification.Name("splashEnd"), object: ["isEnable":true])
@@ -91,8 +92,8 @@ class SplashViewController: UIViewController {
             self.activityView.stopAnimating()
           }, onError: { (error) in
             log.error(error)
-          })
-          .disposed(by: self.disposeBag)
+            log.error(error.localizedDescription)
+          }).disposed(by: self.disposeBag)
       }
     }
   }

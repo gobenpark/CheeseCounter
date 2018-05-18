@@ -20,7 +20,7 @@ struct SignUp{
   var age: String?
   var addr1: String?
   var addr2: String?
-  
+  var recommend_code: String?
   init() {
   }
   
@@ -31,6 +31,7 @@ struct SignUp{
     parameter["addr1"] = addr1!
     parameter["addr2"] = addr2!
     parameter["age"] = age!
+    parameter["recommend_code"] = recommend_code
     return parameter
   }
   

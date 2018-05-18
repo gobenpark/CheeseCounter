@@ -3,6 +3,7 @@
 target 'CheeseCounter' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  inhibit_all_warnings!
 # NetWork
 pod 'Alamofire'
 pod 'Moya/RxSwift'
@@ -49,6 +50,7 @@ pod 'Carte'
 pod 'TLPhotoPicker', '~> 1.5.3'
 pod 'SwiftyUserDefaults'
 pod 'CryptoSwift'
+pod 'SwiftMessages'
 # RX
 pod 'RxSwift'
 pod 'RxCocoa'

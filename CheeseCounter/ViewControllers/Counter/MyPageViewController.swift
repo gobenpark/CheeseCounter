@@ -11,14 +11,15 @@ import RxCocoa
 import RxSwift
 import XLPagerTabStrip
 import Moya
+import Toaster
 
 final class MypageNaviViewController: UINavigationController{
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
   }
   
-  init() {
-    super.init(rootViewController: MyPageViewController())
+  init(initialPage: Int = -1) {
+    super.init(rootViewController: MyPageViewController(initialPage: initialPage))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -28,10 +29,18 @@ final class MypageNaviViewController: UINavigationController{
 
 final class MyPageViewController: UIViewController{
   
-  let containerVC = MyPageContainerViewController()
+  var initialPage = -1
+//  let containerVC = MyPageContainerViewController()
+  
   let disposeBag = DisposeBag()
   let provider = MoyaProvider<CheeseCounter>().rx
-  
+
+  lazy var containerVC: MyPageContainerViewController = {
+    let vc = MyPageContainerViewController()
+    vc.initialPage = self.initialPage
+    return vc
+  }()
+
   let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "마이페이지"
@@ -47,6 +56,16 @@ final class MyPageViewController: UIViewController{
   
   let headerView = CounterHeaderView()
   
+  init(initialPage: Int = -1) {
+    super.init(nibName: nil, bundle: nil)
+    
+    self.initialPage = initialPage
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
@@ -57,11 +76,14 @@ final class MyPageViewController: UIViewController{
     self.view.addSubview(titleLabel)
     self.view.addSubview(dismissButton)
     
+    ToastView.appearance().font = UIFont.CheeseFontMedium(size: 15)
+    ToastView.appearance().bottomOffsetPortrait = 100
+    
     provider.request(.getMyInfo)
       .filter(statusCode: 200)
       .map(UserInfoModel.self)
       .asObservable()
-      .bind(onNext: headerView.mapper)
+      .bind(onNext: headerView.mapper)      
       .disposed(by: disposeBag)
     
     dismissButton.rx.tap
@@ -75,6 +97,12 @@ final class MyPageViewController: UIViewController{
         self?.navigationController?.pushViewController(vc, animated: true)
       }).disposed(by: disposeBag)
     
+    headerView.copyButton.rx.tap
+      .subscribe(onNext: { _ in 
+        UIPasteboard.general.string = UserData.instance.userID.components(separatedBy: "_")[1]
+        Toast(text: "복사되었습니다.", delay: 0.1, duration: 0.5).show()
+      })
+      .disposed(by: disposeBag)
     
     addConstraint()
   }
@@ -106,7 +134,7 @@ final class MyPageViewController: UIViewController{
       make.top.equalTo(titleLabel.snp.bottom).offset(24)
       make.left.equalToSuperview()
       make.right.equalToSuperview()
-      make.height.equalTo(70)
+      make.height.equalTo(80)
     }
     
     containerVC.view.snp.makeConstraints { (make) in
@@ -120,7 +148,8 @@ final class MyPageViewController: UIViewController{
 
 
 final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
-  
+ 
+  var initialPage = -1
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
@@ -141,6 +170,7 @@ final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
     super.viewDidLoad()
     self.buttonBarView.selectedBar.backgroundColor = #colorLiteral(red: 0.9882352941, green: 0.8588235294, blue: 0.1019607843, alpha: 1)
     self.buttonBarView.backgroundColor = .white
+    
     changeCurrentIndexProgressive = {
       (oldCell: ButtonBarViewCell?
       , newCell: ButtonBarViewCell?
@@ -153,7 +183,22 @@ final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
       newCell?.label.textColor = .black
     }
   }
+//
+//  override func viewDidAppear(_ animated: Bool) {
+//    super.viewDidAppear(false)
+//    self.moveToViewController(at: 1)
+//  }
+
   
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    if self.initialPage > 0 {
+      self.moveToViewController(at: self.initialPage, animated: false)
+//      self.initialPage = -1
+    }
+//    self.initialPage = -1
+  }
+
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
     return [RankViewController(),HistoryViewController(),CouponHistoryViewController()]
   }

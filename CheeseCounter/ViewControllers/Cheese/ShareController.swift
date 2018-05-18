@@ -144,7 +144,6 @@ class ShareController{
   
 
   static func kakaoStoryLink(model:CheeseViewModel.Item){
-    
    
       guard let imgURL = URL(string: model.main_img_url?.getUrlWithEncoding() ?? String()) else {return}
 
@@ -164,7 +163,7 @@ class ShareController{
                                                 log.error(error!)
                                               }
             })
-          }else {
+          } else {
             log.error(error!)
           }
         })
@@ -177,7 +176,7 @@ class ShareController{
     if let bundleId = bundle.bundleIdentifier, let appVersion: String = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
       let appName: String = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String {
       
-      return "storylink://posting?post=\("네임")&appid=\(bundleId)&appver=\(appVersion)&apiver=1.0&appname=치즈카운터"
+      return "storylink://posting?post=\("네임")&appid=\(bundleId)&appver=\(appVersion)&apiver=1.0&appname=\(appName)"
     }
     return nil
   }
@@ -186,7 +185,8 @@ class ShareController{
 
     if let urlString = dummyStoryLinkURLString(title,desc,imgURL) {
       let url = URL(string: urlString)
-      UIApplication.shared.openURL(url!)
+//      UIApplication.shared.openURL(url!)
+      UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
   }
 }

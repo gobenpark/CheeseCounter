@@ -18,6 +18,7 @@
 		449049FE1E93E3D300DC9ACD /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449049FD1E93E3D300DC9ACD /* NoticeViewController.swift */; };
 		55F22436C4D2727A69DCC465 /* Pods_CheeseCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */; };
 		7289EAB599C99EECC0600FE6 /* Pods_CheeseCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4884F79C2A713B719F462E79 /* Pods_CheeseCounterTests.framework */; };
+		B1003E4D209AE773001C1017 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1003E4C209AE773001C1017 /* RecommendViewController.swift */; };
 		B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */; };
 		B101A4CE20117B2400313748 /* Degrees+MathMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4C920117B2300313748 /* Degrees+MathMethods.swift */; };
 		B101A4CF20117B2400313748 /* SpinWheelWedge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101A4CA20117B2300313748 /* SpinWheelWedge.swift */; };
@@ -35,6 +36,7 @@
 		B119716D20761D1800FB283F /* AnswerableCheeseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */; };
 		B123381B1E977F9C00DE9640 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381A1E977F9C00DE9640 /* Paging.swift */; };
 		B123381D1E97936F00DE9640 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123381C1E97936F00DE9640 /* HistoryData.swift */; };
+		B123A37220A54E320053E36B /*  .xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B123A37120A54E300053E36B /*  .xcassets */; };
 		B1254A2820524FE10022EC23 /* SurveyResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1254A2720524FE10022EC23 /* SurveyResultModel.swift */; };
 		B126699E1E9F90CE00D9C1C9 /* CheeseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126699D1E9F90CE00D9C1C9 /* CheeseResult.swift */; };
 		B127625520451A0E0059DBBE /* GiftListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127625420451A0E0059DBBE /* GiftListModel.swift */; };
@@ -102,6 +104,9 @@
 		B15EB0F51ECA84D5004726C5 /* CheeseCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15EB0F41ECA84D5004726C5 /* CheeseCounter.swift */; };
 		B15EC46F1E8257D900CE52D6 /* DataParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15EC46E1E8257D900CE52D6 /* DataParameter.swift */; };
 		B15FC2B11E9E5A3A0040B2F2 /* SelectAgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15FC2B01E9E5A3A0040B2F2 /* SelectAgeViewController.swift */; };
+		B1606C8220AAB5880016E4D1 /* CenteredView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1606C8120AAB5880016E4D1 /* CenteredView.xib */; };
+		B1606C8420AAB6350016E4D1 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */; };
+		B1606C8620AABB8E0016E4D1 /* TwoButtonMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */; };
 		B163A72D204CE19300A98346 /* CounterEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A72C204CE19300A98346 /* CounterEventViewController.swift */; };
 		B163A72F204CE5F000A98346 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A72E204CE5F000A98346 /* EventModel.swift */; };
 		B163A734204D2D3500A98346 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163A733204D2D3500A98346 /* EventViewModel.swift */; };
@@ -148,8 +153,6 @@
 		B183FD301F90A5C400AF5CBA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */; };
 		B183FD321F90A95800AF5CBA /* privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = B183FD311F90A95800AF5CBA /* privacy.txt */; };
 		B183FD341F9712D100AF5CBA /* CycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B183FD331F9712D100AF5CBA /* CycleViewController.swift */; };
-		B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B623207AF9B500D5587C /* CheesePageViewController.swift */; };
-		B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */; };
 		B18A127A1E94AD4100D3A578 /* DetailResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A12791E94AD4100D3A578 /* DetailResult.swift */; };
 		B18A12801E94B8ED00D3A578 /* ResultOtherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */; };
 		B18ECC852011CEA00004CC41 /* GameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */; };
@@ -222,7 +225,6 @@
 		B1F5C0001EB85C09004A43D4 /* ListDetailHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5BFFF1EB85C09004A43D4 /* ListDetailHeaderViewCell.swift */; };
 		B1F960FA1E63E90D00E87B02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F960F91E63E90D00E87B02 /* AppDelegate.swift */; };
 		B1F960FF1E63E90D00E87B02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1F960FD1E63E90D00E87B02 /* Main.storyboard */; };
-		B1F961011E63E90E00E87B02 /*  .xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1F961001E63E90E00E87B02 /*  .xcassets */; };
 		B1F9610F1E63E90E00E87B02 /* CheeseCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9610E1E63E90E00E87B02 /* CheeseCounterTests.swift */; };
 		B1F9611D1E63EA7E00E87B02 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9611C1E63EA7E00E87B02 /* UIView+Extension.swift */; };
 		B1F961201E63EBAB00E87B02 /* WelcomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F9611F1E63EBAB00E87B02 /* WelcomeViewCell.swift */; };
@@ -258,6 +260,7 @@
 		735B5E01460725DEF7CB52B0 /* Pods_CheeseCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheeseCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA19A0115BF6039BCCB9393 /* Pods-CheeseCounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounterTests/Pods-CheeseCounterTests.release.xcconfig"; sourceTree = "<group>"; };
 		AB38F771B36AD214FE790B61 /* Pods-CheeseCounter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheeseCounter.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheeseCounter/Pods-CheeseCounter.release.xcconfig"; sourceTree = "<group>"; };
+		B1003E4C209AE773001C1017 /* RecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
 		B101A4C820117B2300313748 /* SpinWheelControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelControlDelegate.swift; sourceTree = "<group>"; };
 		B101A4C920117B2300313748 /* Degrees+MathMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Degrees+MathMethods.swift"; sourceTree = "<group>"; };
 		B101A4CA20117B2300313748 /* SpinWheelWedge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelWedge.swift; sourceTree = "<group>"; };
@@ -276,6 +279,7 @@
 		B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerableCheeseViewController.swift; sourceTree = "<group>"; };
 		B123381A1E977F9C00DE9640 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		B123381C1E97936F00DE9640 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
+		B123A37120A54E300053E36B /*  .xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = " .xcassets"; sourceTree = "<group>"; };
 		B1254A2720524FE10022EC23 /* SurveyResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyResultModel.swift; sourceTree = "<group>"; };
 		B126699D1E9F90CE00D9C1C9 /* CheeseResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseResult.swift; sourceTree = "<group>"; };
 		B127625420451A0E0059DBBE /* GiftListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftListModel.swift; sourceTree = "<group>"; };
@@ -344,6 +348,9 @@
 		B15EB0F41ECA84D5004726C5 /* CheeseCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheeseCounter.swift; sourceTree = "<group>"; };
 		B15EC46E1E8257D900CE52D6 /* DataParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParameter.swift; sourceTree = "<group>"; };
 		B15FC2B01E9E5A3A0040B2F2 /* SelectAgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAgeViewController.swift; sourceTree = "<group>"; };
+		B1606C8120AAB5880016E4D1 /* CenteredView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CenteredView.xib; sourceTree = "<group>"; };
+		B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
+		B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonMessageView.swift; sourceTree = "<group>"; };
 		B163A72C204CE19300A98346 /* CounterEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterEventViewController.swift; sourceTree = "<group>"; };
 		B163A72E204CE5F000A98346 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		B163A733204D2D3500A98346 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
@@ -398,8 +405,6 @@
 		B183FD2F1F90A5C400AF5CBA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B183FD311F90A95800AF5CBA /* privacy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy.txt; sourceTree = "<group>"; };
 		B183FD331F9712D100AF5CBA /* CycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleViewController.swift; sourceTree = "<group>"; };
-		B185B623207AF9B500D5587C /* CheesePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheesePageViewController.swift; sourceTree = "<group>"; };
-		B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseFilterViewController.swift; sourceTree = "<group>"; };
 		B18A12791E94AD4100D3A578 /* DetailResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailResult.swift; sourceTree = "<group>"; };
 		B18A127F1E94B8ED00D3A578 /* ResultOtherViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultOtherViewCell.swift; sourceTree = "<group>"; };
 		B18ECC842011CEA00004CC41 /* GameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectViewController.swift; sourceTree = "<group>"; };
@@ -474,7 +479,6 @@
 		B1F960F61E63E90D00E87B02 /* CheeseCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheeseCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F960F91E63E90D00E87B02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1F960FE1E63E90D00E87B02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B1F961001E63E90E00E87B02 /*  .xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = " .xcassets"; sourceTree = "<group>"; };
 		B1F961051E63E90E00E87B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1F9610A1E63E90E00E87B02 /* CheeseCounterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheeseCounterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F9610E1E63E90E00E87B02 /* CheeseCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeseCounterTests.swift; sourceTree = "<group>"; };
@@ -586,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				B1307B1C1EF225C500BECD7A /* cheese_reward.json */,
+				B1606C8120AAB5880016E4D1 /* CenteredView.xib */,
 				B1307B1E1EF225CA00BECD7A /* gold_reward.json */,
 				B1307B101EF2234600BECD7A /* img_0.png */,
 				B1307B111EF2234600BECD7A /* img_0_1.png */,
@@ -618,9 +623,7 @@
 		B15CBC481E6E94FF00FC42D5 /* Cheese */ = {
 			isa = PBXGroup;
 			children = (
-				B185B623207AF9B500D5587C /* CheesePageViewController.swift */,
 				440A5B911E6AD41B00D8C74C /* CheeseViewController.swift */,
-				B185B625207AFAF500D5587C /* CheeseFilterViewController.swift */,
 				B1B46A8620293D8E00E962E7 /* ReplyViewController.swift */,
 				B17083B31EF75D3900E1641F /* ShareController.swift */,
 				B17173F51E761F2E0015F7EB /* ListDetailResultViewController.swift */,
@@ -628,6 +631,7 @@
 				B1ACA8FB203BC3500096E61B /* MessageInputBar.swift */,
 				B119716A20761BB900FB283F /* CheeseTabViewController.swift */,
 				B119716C20761D1800FB283F /* AnswerableCheeseViewController.swift */,
+				B1606C8320AAB6350016E4D1 /* LevelUpViewController.swift */,
 			);
 			path = Cheese;
 			sourceTree = "<group>";
@@ -665,6 +669,7 @@
 				B104EF2B1ECC66F60075D80C /* CoachViewController.swift */,
 				B1B2DBB71F00917300C91CEA /* LoginConfirmController.swift */,
 				0A05A97D2047A7F900C526CA /* EventViewController.swift */,
+				B1003E4C209AE773001C1017 /* RecommendViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -829,6 +834,7 @@
 		B1F960ED1E63E90D00E87B02 = {
 			isa = PBXGroup;
 			children = (
+				B123A37120A54E300053E36B /*  .xcassets */,
 				B1539BCE1EA0B1EA00EF811B /* Resource */,
 				B12338191E977F8A00DE9640 /* Types */,
 				B1F960F81E63E90D00E87B02 /* CheeseCounter */,
@@ -866,7 +872,6 @@
 				B16A10B21E9BB138007D83CF /* GoogleService-Info.plist */,
 				B1F960FD1E63E90D00E87B02 /* Main.storyboard */,
 				B15A4CF31EAF2FA3006F8022 /* Launch Screen.storyboard */,
-				B1F961001E63E90E00E87B02 /*  .xcassets */,
 				B1F961051E63E90E00E87B02 /* Info.plist */,
 				B17030181E78E2FC006896E6 /* CheeseCounter-Bridging-Header.h */,
 			);
@@ -999,6 +1004,7 @@
 			isa = PBXGroup;
 			children = (
 				B1FFDFC51F70B3CC004591B3 /* AlertViewCell.swift */,
+				B1606C8520AABB8E0016E4D1 /* TwoButtonMessageView.swift */,
 			);
 			name = Alert;
 			sourceTree = "<group>";
@@ -1066,7 +1072,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = xiilab;
 				TargetAttributes = {
 					B1F960F51E63E90D00E87B02 = {
@@ -1122,6 +1128,7 @@
 			files = (
 				B1539BD31EA0B22200EF811B /* NotoSans-Regular.otf in Resources */,
 				B183FD321F90A95800AF5CBA /* privacy.txt in Resources */,
+				B123A37220A54E320053E36B /*  .xcassets in Resources */,
 				B1307B171EF2234600BECD7A /* img_0_1.png in Resources */,
 				B1539BD41EA0B22200EF811B /* NotoSans-Light.otf in Resources */,
 				B1539BD51EA0B22200EF811B /* NotoSans-Medium.otf in Resources */,
@@ -1134,11 +1141,11 @@
 				B1307B1F1EF225CA00BECD7A /* gold_reward.json in Resources */,
 				B1307B1B1EF2234600BECD7A /* img_4.png in Resources */,
 				B167D3DA1EEA253D00A8EEA4 /* g_reward.gif in Resources */,
+				B1606C8220AAB5880016E4D1 /* CenteredView.xib in Resources */,
 				B1307B1A1EF2234600BECD7A /* img_3.png in Resources */,
 				B183FD2C1F90A0D300AF5CBA /* provision.txt in Resources */,
 				B1307B161EF2234600BECD7A /* img_0.png in Resources */,
 				B167D3DD1EEA90E000A8EEA4 /* gold_reward.gif in Resources */,
-				B1F961011E63E90E00E87B02 /*  .xcassets in Resources */,
 				B1307B181EF2234600BECD7A /* img_1.png in Resources */,
 				B1307B1D1EF225C500BECD7A /* cheese_reward.json in Resources */,
 				B1F960FF1E63E90D00E87B02 /* Main.storyboard in Resources */,
@@ -1284,6 +1291,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyImage/SwiftyImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -1338,6 +1346,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -1410,9 +1419,11 @@
 				B12E6A85202ACFF3006C296E /* CircleView.swift in Sources */,
 				B154FE811E7799EF00F4A2F5 /* SetupCounterViewController.swift in Sources */,
 				44017B451EA30E8B00BA1D23 /* PushData.swift in Sources */,
+				B1606C8620AABB8E0016E4D1 /* TwoButtonMessageView.swift in Sources */,
 				B177206C1EA9E1A700BE1B08 /* SubProfileCell.swift in Sources */,
 				B18130461F79F644006F4FCB /* ResultOtherViewModel.swift in Sources */,
 				B14530CF1F45636300339D47 /* URLNavigationMap.swift in Sources */,
+				B1606C8420AAB6350016E4D1 /* LevelUpViewController.swift in Sources */,
 				B17174061E766AF80015F7EB /* CurrentGoldViewCell.swift in Sources */,
 				B1E55C6F1F724B3D005B3108 /* Rx_AlertAction+Extensions.swift in Sources */,
 				B173D7AB20243EB5001FCEB0 /* UserInfoModel.swift in Sources */,
@@ -1442,7 +1453,6 @@
 				B18ECC872011DC090004CC41 /* GiftItemViewCell.swift in Sources */,
 				B172D69E2021657900CFD97B /* PointModel.swift in Sources */,
 				B1E1AA592057AF1C00FAE93E /* ImageRow.swift in Sources */,
-				B185B626207AFAF500D5587C /* CheeseFilterViewController.swift in Sources */,
 				B16A10731E9B5109007D83CF /* AlertViewController.swift in Sources */,
 				B12B9FAA1E6552B200404602 /* item.swift in Sources */,
 				B17947A11E8A55DC0053BAC7 /* SurveyResult.swift in Sources */,
@@ -1475,7 +1485,6 @@
 				B1548E5D1E7F659300D46149 /* SplashViewController.swift in Sources */,
 				B15E4C741E8CCE4F00C059D0 /* AreaCell.swift in Sources */,
 				B154FE831E77B35700F4A2F5 /* DropOutViewController.swift in Sources */,
-				B185B624207AF9B500D5587C /* CheesePageViewController.swift in Sources */,
 				B1CC9193203A5F860068CF46 /* SympathyViewController.swift in Sources */,
 				B1B46A8720293D8E00E962E7 /* ReplyViewController.swift in Sources */,
 				440A5B921E6AD41B00D8C74C /* CheeseViewController.swift in Sources */,
@@ -1515,6 +1524,7 @@
 				B101A4CD20117B2400313748 /* SpinWheelControlDelegate.swift in Sources */,
 				B1F9611D1E63EA7E00E87B02 /* UIView+Extension.swift in Sources */,
 				B15A4CF61EB04836006F8022 /* QnAViewController.swift in Sources */,
+				B1003E4D209AE773001C1017 /* RecommendViewController.swift in Sources */,
 				B1AE29EF203D423A0078DB3C /* BaseListViewCell.swift in Sources */,
 				B15A4CFF1EB0B483006F8022 /* VersionViewController.swift in Sources */,
 				B1F961241E63EE4800E87B02 /* Page.swift in Sources */,
@@ -1624,6 +1634,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1631,6 +1642,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1683,6 +1695,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1690,6 +1703,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1751,11 +1765,7 @@
 				INFOPLIST_FILE = CheeseCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/1_SDKLibrary",
-					"$(PROJECT_DIR)/1_SDKLibrary",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				NEW_SETTING = "-fembed-bitcode-marker";
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1798,11 +1808,7 @@
 				INFOPLIST_FILE = CheeseCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/1_SDKLibrary",
-					"$(PROJECT_DIR)/1_SDKLibrary",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				NEW_SETTING = "-fembed-bitcode-marker";
 				OTHER_CFLAGS = (
 					"$(inherited)",

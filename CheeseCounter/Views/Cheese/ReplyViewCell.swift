@@ -27,7 +27,7 @@ class ReplyViewCell: UICollectionViewCell, UIGestureRecognizerDelegate{
     didSet{
       guard let model = model else {return}
       self.nickNameLabel.text = model.nickname
-      self.profileimg.kf.setImage(with: URL(string:model.img_url))
+      self.profileimg.kf.setImage(with: URL(string: UserService.imgString + model.img_url))
       self.replyLabel.text = model.contents
       self.hartCount.text = model.like_count
       

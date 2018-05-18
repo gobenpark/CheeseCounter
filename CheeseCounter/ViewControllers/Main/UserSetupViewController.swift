@@ -27,19 +27,22 @@ class UserSetupViewController: UIViewController {
     let view3 = SelectGenderViewController()
     let view4 = SelectAgeViewController()
     let view5 = SelectAreaViewController()
-    let view6 = CompleteJoinViewController()
+    let view6 = RecommendViewController()
+    let view7 = CompleteJoinViewController()
     view1.userSetupViewController = self
     view2.userSetupViewController = self
     view3.userSetupViewController = self
     view4.userSetupViewController = self
     view5.userSetupViewController = self
     view6.userSetupViewController = self
+    view7.userSetupViewController = self
     VCS.append(view1)
     VCS.append(view2)
     VCS.append(view3)
     VCS.append(view4)
     VCS.append(view5)
     VCS.append(view6)
+    VCS.append(view7)
     return VCS
   }()
   
@@ -122,7 +125,7 @@ extension UserSetupViewController: SetUpPageViewControllerDelegate{
   }
   
   func setUpPageViewController(_ PageViewController: SetUpPageViewController,didUpdatePageIndex index: Int){
-    if index >= 1 && index != 5{
+    if index >= 1 && index != 6{
       UIView.animate(withDuration: 0.5, animations: {
         self.bottomLayout?.update(offset: -60)
       })

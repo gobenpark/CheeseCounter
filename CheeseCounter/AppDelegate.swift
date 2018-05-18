@@ -24,6 +24,7 @@ import URLNavigator
 import RxSwift
 import RxCocoa
 import ChameleonFramework
+import XLPagerTabStrip
 
 
 let log = SwiftyBeaver.self
@@ -171,17 +172,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if let messageID = userInfo[gcmMessageIDKey] {
       log.verbose(messageID)
     }
+    log.info("push!!!!!!!")
   }
   
   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    
     if let messageID = userInfo[gcmMessageIDKey] {
       log.info("메시지 아이디 \(messageID)")
     }
     
     // Print full message.
     log.info("userInfo:\(userInfo)")
-    
+    log.info("push!!!!!!22")
     completionHandler(UIBackgroundFetchResult.newData)
   }
   
@@ -291,7 +294,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func generateDynamicLinkMessage(_ dynamicLink: DynamicLink) -> String {
-    if dynamicLink.matchConfidence == .weak {
+    if dynamicLink.matchType == .weak {
     } else {
     }
     return (dynamicLink.url?.query?.components(separatedBy: "=")[1]) ?? "0"
@@ -336,6 +339,20 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     
     // Print full message.
     log.debug(userInfo)
+    
+
+//    guard let rootViewController = self.window?.rootViewController as? UITabBarController else {
+//      return
+//    }
+//    rootViewController.present(MypageNaviViewController(initialPage: 1), animated: true, completion: nil)
+//    
+    guard let rootViewController = AppDelegate.instance?.window?.rootViewController as? UITabBarController else {
+      return
+    }
+    rootViewController.present(MypageNaviViewController(initialPage: 1), animated: true, completion: nil)
+    
+    
+    
     
     completionHandler()
   }

@@ -12,6 +12,7 @@ import ObjectMapper
 
 struct UserResult: Mappable{
     var code: String?
+    var etc: String?
     var data: Data?
     
     init?(map: Map) {
@@ -19,6 +20,7 @@ struct UserResult: Mappable{
     
     mutating func mapping(map: Map) {
         self.code <- map["result.code"]
+        self.etc <- map["result.etc"]
         self.data <- map["result.data"]
     }
     
@@ -38,6 +40,7 @@ struct UserResult: Mappable{
         var level: String?
         var nickname: String?
         var type: String?
+        var recommend_code: String?
 
         init?(map: Map) {
         }
@@ -56,6 +59,7 @@ struct UserResult: Mappable{
             self.level <- map["level"]
             self.nickname <- map["nickname"]
             self.type <- map["type"]
+            self.recommend_code <- map["recommend_code"]
         }
     }
     
