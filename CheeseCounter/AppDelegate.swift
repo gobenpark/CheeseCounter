@@ -171,8 +171,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func processPendingRemoteNotificationInfo() {
     guard pendingRemoteNotificationInfo != nil else { return }
-    pendingRemoteNotificationInfo = nil
     guard let rootViewController = self.window?.rootViewController as? UITabBarController else { return }
+    pendingRemoteNotificationInfo = nil
     rootViewController.selectedIndex = 3
   }
   
@@ -340,9 +340,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                               withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo
     self.pendingRemoteNotificationInfo = userInfo
-//    self.processPendingRemoteNotificationInfo()
-    guard let rootViewController = self.window?.rootViewController as? UITabBarController else { return }
-    rootViewController.selectedIndex = 3
+    processPendingRemoteNotificationInfo()
+//    guard let rootViewController = self.window?.rootViewController as? UITabBarController else { return }
+//    rootViewController.selectedIndex = 3
     completionHandler()
     
 //    if let messageID = userInfo[gcmMessageIDKey] {
