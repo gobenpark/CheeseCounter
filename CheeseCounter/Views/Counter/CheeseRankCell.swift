@@ -15,7 +15,9 @@ class CheeseRankViewCell: UICollectionViewCell{
     didSet{
       guard let item = item else {return}
       rankLabel.text = item.rank
-      profileImg.kf.setImage(with: URL(string: UserService.imgString + item.img_url))
+      
+      let url = item.img_url.hasPrefix("http") ? item.img_url : UserService.imgString + item.img_url
+      profileImg.kf.setImage(with: URL(string: url))
       let attribute = NSMutableAttributedString(string: item.nickname,
                                                 attributes: [NSAttributedStringKey.font: UIFont.CheeseFontMedium(size: 14)])
       attribute.append(NSAttributedString(string: "\n\(item.title ?? "")",

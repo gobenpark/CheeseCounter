@@ -95,8 +95,8 @@ final class CounterHeaderView: UIView {
         self?.recommendCodeLabel.attributedText = NSAttributedString(string: "내 추천코드: \(UserData.instance.userID.components(separatedBy: "_")[1])",
           attributes: [.font: UIFont.CheeseFontMedium(size: 12),.foregroundColor:#colorLiteral(red: 1, green: 0.4, blue: 0.1882352941, alpha: 1)])
         
-        log.info(info["img_url"].stringValue)
-        self?.icon.kf.setImage(with: URL(string: UserService.imgString + info["img_url"].stringValue))
+        let url = info["img_url"].stringValue.hasPrefix("http") ? info["img_url"].stringValue : UserService.imgString + info["img_url"].stringValue
+        self?.icon.kf.setImage(with: URL(string: url))
 
     }).disposed(by: disposeBag)
     addConstraint()
@@ -104,7 +104,8 @@ final class CounterHeaderView: UIView {
   
   func mapper(model: UserInfoModel){
     let data = model.result.data
-    icon.kf.setImage(with: URL(string:UserService.imgString + data.img_url))
+    let url = data.img_url.hasPrefix("http") ? data.img_url : UserService.imgString + data.img_url
+    icon.kf.setImage(with: URL(string: url))
   }
   
   private func addConstraint(){

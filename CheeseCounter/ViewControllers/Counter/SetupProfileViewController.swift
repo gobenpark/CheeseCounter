@@ -68,9 +68,9 @@ extension SetupProfileViewController: UITableViewDataSource{
     switch indexPath.row {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: CounterProfileCell.ID, for: indexPath) as! CounterProfileCell
-      guard let data = userData else {return cell}
-      let url = URL(string: UserService.imgString + (data.img_url ?? ""))
-      cell.imgView.kf.setImage(with: url)
+      guard let data = userData, let imgUrl = data.img_url else {return cell}
+      let url = imgUrl.hasPrefix("http") ? imgUrl : UserService.imgString + (data.img_url ?? "")
+      cell.imgView.kf.setImage(with: URL(string: url))
       return cell
     case 1...4:
       let cell = tableView.dequeueReusableCell(withIdentifier: SubProfileCell.ID, for: indexPath) as! SubProfileCell
