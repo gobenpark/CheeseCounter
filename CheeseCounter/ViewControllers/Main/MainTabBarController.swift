@@ -106,6 +106,8 @@ class MainTabBarController: UITabBarController
       .filter{$0.result.data.count > 0}
       .bind(onNext: popUpEvent)
       .disposed(by: disposeBag)
+    
+    
   }
   
   private func popUpEvent(models: EventModel){
@@ -167,6 +169,7 @@ class MainTabBarController: UITabBarController
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.navigationBar.isHidden = true
+    AppDelegate.instance?.processPendingRemoteNotificationInfo()
   }
   
   override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

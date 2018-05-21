@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let parameter: [String:String] = [:]
   let customURLScheme = "cheesecounter"
   let urlMapper = URLNavigationMap(key: "kWGPa9nW")
+  var pendingRemoteNotificationInfo: Any?
 
   
   func application(
@@ -111,6 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       log.info(dictionary["UIApplicationLaunchOptionsUserActivityTypeKey"] is String)
     }
     
+    pendingRemoteNotificationInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification]
     return true
   }
   
@@ -167,12 +169,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UITabBar.appearance().tintColor = .white
   }
   
+  func processPendingRemoteNotificationInfo() {
+    guard pendingRemoteNotificationInfo != nil else { return }
+    pendingRemoteNotificationInfo = nil
+    guard let rootViewController = self.window?.rootViewController as? UITabBarController else { return }
+    rootViewController.selectedIndex = 3
+  }
+  
   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
     
     if let messageID = userInfo[gcmMessageIDKey] {
       log.verbose(messageID)
     }
-    log.info("push!!!!!!!")
   }
   
   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -184,7 +192,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Print full message.
     log.info("userInfo:\(userInfo)")
-    log.info("push!!!!!!22")
     completionHandler(UIBackgroundFetchResult.newData)
   }
   
@@ -323,7 +330,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     
     // Print full message.
     log.debug(userInfo)
-    
+
     // Change this to your preferred presentation option
     completionHandler([.alert,.badge,.sound])
   }
@@ -332,29 +339,16 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                               didReceive response: UNNotificationResponse,
                               withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      log.debug("메시지 ID: \(messageID)")
-    }
-    
-    // Print full message.
-    log.debug(userInfo)
-    
-
-//    guard let rootViewController = self.window?.rootViewController as? UITabBarController else {
-//      return
-//    }
-//    rootViewController.present(MypageNaviViewController(initialPage: 1), animated: true, completion: nil)
-//    
-    guard let rootViewController = AppDelegate.instance?.window?.rootViewController as? UITabBarController else {
-      return
-    }
-    rootViewController.present(MypageNaviViewController(initialPage: 1), animated: true, completion: nil)
-    
-    
-    
-    
+    self.pendingRemoteNotificationInfo = userInfo
+//    self.processPendingRemoteNotificationInfo()
+    guard let rootViewController = self.window?.rootViewController as? UITabBarController else { return }
+    rootViewController.selectedIndex = 3
     completionHandler()
+    
+//    if let messageID = userInfo[gcmMessageIDKey] {
+//      log.debug("메시지 ID: \(messageID)")
+//    }
+//    log.debug(userInfo)
   }
 }
 

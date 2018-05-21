@@ -22,6 +22,7 @@ enum AlertType{
   case survey_done
   case gold_return
   case qna
+  case recommend
   case answer_survey_done
   case reply_empathy
   
@@ -46,6 +47,8 @@ enum AlertType{
         return " 응답질문만료 "
       case .reply_empathy:
         return " 댓글공감 "
+      case .recommend:
+        return " 추천참여 "
       }
     }
   }
@@ -68,6 +71,8 @@ extension String{
       return .gold_return
     case "qna":
       return .qna
+    case "recommend":
+      return .recommend
     case "answer_survey_done":
       return .answer_survey_done
     case "reply_empathy":
@@ -100,6 +105,8 @@ extension ObservableType where E == (AlertType, String){
         return Observable.just(NoticeViewController())
       case .qna:
         return Observable.just(MyInquireViewController())
+      case .recommend:
+        return Observable.just(MypageNaviViewController(initialPage: 1))
       case .reply:
         return cheeseData.map{ReplyViewController(model: $0)}
       case .survey_done:

@@ -20,7 +20,7 @@ import Crashlytics
 
 struct CheeseService {
   
-  static let version: String = "1.0.4i"
+  static let version: String = "1.0.5i"
   
   #if DEBUG
   static let provider = MoyaProvider<CheeseCounter>(plugins:[NetworkLoggerPlugin(verbose:true)]).rx

@@ -16,7 +16,8 @@ class AlertViewCell: UICollectionViewCell{
   var model: NotiModel.Data? {
     didSet{
       self.titleLabel.text = model?.summary
-      self.createLabel.text = model?.created_date.components(separatedBy: " ")[0] ?? ""
+//      self.createLabel.text = model?.created_date.components(separatedBy: " ")[0] ?? ""
+      self.contentsLabel.text = model?.contents
       guard let type = model?.type else {return}
       self.typeLabel.text = type.convertAlertType()?.typeString
       self.typeLabel.sizeToFit()
@@ -42,7 +43,7 @@ class AlertViewCell: UICollectionViewCell{
     return img
   }()
   
-  let createLabel: UILabel = {
+  let contentsLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.CheeseFontMedium(size: 14)
     label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)
@@ -54,8 +55,8 @@ class AlertViewCell: UICollectionViewCell{
     
     self.addSubview(typeLabel)
     self.addSubview(titleLabel)
-    self.addSubview(createLabel)
-    self.addSubview(calenderImg)
+    self.addSubview(contentsLabel)
+//    self.addSubview(calenderImg)
     
     self.backgroundColor = .white
     
@@ -65,14 +66,15 @@ class AlertViewCell: UICollectionViewCell{
       make.right.equalToSuperview().inset(10)
     }
     
-    calenderImg.snp.makeConstraints { (make) in
-      make.top.equalTo(typeLabel.snp.bottom).offset(10)
-      make.left.equalTo(self.typeLabel)
-    }
+//    calenderImg.snp.makeConstraints { (make) in
+//      make.top.equalTo(typeLabel.snp.bottom).offset(10)
+//      make.left.equalTo(self.typeLabel)
+//    }
     
-    createLabel.snp.makeConstraints { (make) in
-      make.left.equalTo(calenderImg.snp.right).offset(10)
-      make.centerY.equalTo(calenderImg)
+    contentsLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(typeLabel.snp.bottom).offset(10)
+      make.left.equalTo(typeLabel)
+      make.right.equalToSuperview().inset(10)
     }
   }
   

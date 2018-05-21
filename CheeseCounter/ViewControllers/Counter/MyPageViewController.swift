@@ -183,20 +183,12 @@ final class MyPageContainerViewController: ButtonBarPagerTabStripViewController{
       newCell?.label.textColor = .black
     }
   }
-//
-//  override func viewDidAppear(_ animated: Bool) {
-//    super.viewDidAppear(false)
-//    self.moveToViewController(at: 1)
-//  }
-
   
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     if self.initialPage > 0 {
       self.moveToViewController(at: self.initialPage, animated: false)
-//      self.initialPage = -1
     }
-//    self.initialPage = -1
   }
 
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

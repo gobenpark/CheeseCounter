@@ -86,7 +86,7 @@ class AlertViewController: UIViewController{
         self?.present(vc, animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
-    
+
     collectionView.rx
       .itemSelected
       .flatMap{(indexPath) -> Observable<(AlertType, String)> in
@@ -96,7 +96,11 @@ class AlertViewController: UIViewController{
         return Observable.of((type, id))
       }.alertViewMapper()
       .subscribe(onNext: {[weak self] (vc) in
-        self?.navigationController?.pushViewController(vc, animated: true)
+        if vc is MypageNaviViewController {
+          self?.navigationController?.present(vc, animated: true)
+        } else {
+          self?.navigationController?.pushViewController(vc, animated: true)
+        }
       }).disposed(by: disposeBag)
 
     
