@@ -137,8 +137,8 @@ class NickNameViewController: BaseSetupViewController{
     super.viewWillDisappear(animated)
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    NotificationCenter.default.removeObserver(self)
   }
+  
   @objc func keyboardWillHide(_ sender: Notification) {
     if let _ = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
       if self.view.frame.origin.y != 0{
