@@ -121,6 +121,7 @@ class NickNameViewController: BaseSetupViewController{
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    
     if self.userSetupViewController?.signUp.provisionComple == nil ||
       self.userSetupViewController?.signUp.provisionComple == false{
       AlertView(title: "알림", message: "약관동의를 해주세요", preferredStyle: .alert)
@@ -137,25 +138,19 @@ class NickNameViewController: BaseSetupViewController{
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
+  
   @objc func keyboardWillHide(_ sender: Notification) {
-    if let userInfo = (sender as NSNotification).userInfo {
-      if let _ = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
-        //key point 0,
-        
-        UIView.animate(withDuration: 0.25, animations: { () -> Void in
-          self.view.bounds.origin.y = 0
-        })
+    if let _ = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+      if self.view.frame.origin.y != 0{
+        self.view.frame.origin.y = 0
       }
     }
   }
   
   @objc func keyboardWillShow(_ sender: Notification) {
-    if let userInfo = (sender as NSNotification).userInfo {
-      if ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height) != nil {
-        
-        UIView.animate(withDuration: 0.25, animations: { () -> Void in
-          self.view.bounds.origin.y = 80
-        })
+    if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+      if self.view.frame.origin.y == 0{
+        self.view.frame.origin.y -= keyboardSize.height
       }
     }
   }

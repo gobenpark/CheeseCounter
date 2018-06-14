@@ -180,23 +180,17 @@ class RecommendViewController: BaseSetupViewController {
   }
   
   @objc func keyboardWillHide(_ sender: Notification) {
-    if let userInfo = (sender as NSNotification).userInfo {
-      if let _ = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
-        
-        UIView.animate(withDuration: 0.25, animations: { () -> Void in
-          self.view.bounds.origin.y = 0
-        })
+    if let _ = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+      if self.view.frame.origin.y != 0{
+        self.view.frame.origin.y = 0
       }
     }
   }
   
   @objc func keyboardWillShow(_ sender: Notification) {
-    if let userInfo = (sender as NSNotification).userInfo {
-      if ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height) != nil {
-        
-        UIView.animate(withDuration: 0.25, animations: { () -> Void in
-          self.view.bounds.origin.y = 80
-        })
+    if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+      if self.view.frame.origin.y == 0{
+        self.view.frame.origin.y -= keyboardSize.height
       }
     }
   }
